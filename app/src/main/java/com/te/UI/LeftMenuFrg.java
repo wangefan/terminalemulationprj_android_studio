@@ -84,11 +84,11 @@ public class LeftMenuFrg extends Fragment {
         View leftMenuView = inflater.inflate(R.layout.left_menu_fragment, container, false);
         mSessionsView = (SessionsView) leftMenuView.findViewById(R.id.drawerList);
         mSessionsView.setOnItemClickListener(new ListView.OnItemClickListener() {
-        	@Override
-    		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		mLeftMenuListener.onDrawerItemSelected(view, position);
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mLeftMenuListener.onDrawerItemSelected(position);
                 mDrawerLayout.closeDrawer(LeftMenuFrg.this.getView());
-    		}
+            }
         });
         
         LinearLayout layAbout = (LinearLayout) leftMenuView.findViewById(R.id.about);
@@ -111,7 +111,7 @@ public class LeftMenuFrg extends Fragment {
     }
  
     public interface LeftMenuListener {
-        public void onDrawerItemSelected(View view, int position);
+        public void onDrawerItemSelected(int position);
         public void onAbout();
         public void onExit();
     }

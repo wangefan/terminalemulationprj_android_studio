@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	}
 	
 	@Override
-	public void onDrawerItemSelected(View view, int position) {
+	public void onDrawerItemSelected(int position) {
 		switch(position)
 		{
 		case 0:
