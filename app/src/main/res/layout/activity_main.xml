@@ -1,0 +1,115 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+	    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include layout="@layout/toolbar" />
+        
+	<android.support.v4.widget.DrawerLayout 
+	    android:id="@+id/mainActivityDrawer"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:keepScreenOn="true"
+	    android:focusable="true" >
+	
+		    <FrameLayout
+		            android:id="@+id/container_body"
+		            android:layout_width="fill_parent"
+		            android:layout_height="0dp"
+		            android:layout_weight="1">
+		            
+			    <HorizontalScrollView
+			        android:id="@+id/mainHScroll"
+			        android:layout_width="fill_parent"
+			        android:layout_height="fill_parent"
+			        android:fillViewport="true" >
+			
+				        <ScrollView
+					        android:id="@+id/mainVScroll"
+					        android:layout_width="wrap_content"
+					        android:layout_height="fill_parent"
+					        android:fillViewport="true">
+					        <RelativeLayout
+					            android:id="@+id/mainRelLayout"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
+					            android:background="#FFFFFF"
+					            android:orientation="vertical"/>
+				    	</ScrollView>
+				 </HorizontalScrollView>
+			    
+			     <RelativeLayout android:id="@+id/ConnbuttonView" 
+			                              android:layout_width="fill_parent" 
+							        android:layout_height="fill_parent">
+			    
+			          <ImageButton  android:id="@+id/ConnectionButton" 
+			                        android:background="@drawable/connectico"
+						            android:layout_width="80dp"
+							        android:layout_height="80dp"
+							        android:onClick="onConnect" 
+							        android:layout_centerHorizontal="true"
+						            android:layout_centerVertical="true"/>
+			                
+		                <ImageView  android:id="@+id/ImgLogoView" 
+		                       		android:background="@drawable/logo1"
+					         		android:layout_width="253dp"
+						    		android:layout_height="118dp"
+						        	android:layout_above="@+id/ConnectionButton" 
+						        	android:layout_centerHorizontal="true"/>
+	
+		                <RelativeLayout
+		                    android:id="@+id/bottomView"
+		                    android:layout_width="fill_parent"
+		                    android:layout_height="64dp"
+		                    android:layout_alignParentBottom="true">
+	
+		                    <ImageButton
+		                        android:id="@+id/KeyButton"
+		                        android:layout_width="40dp"
+		                        android:layout_height="40dp"
+		                        android:layout_alignParentLeft="true"
+		                        android:layout_centerVertical="true"
+		                        android:background="@drawable/keyboardicon"
+		                        android:onClick="onClick" />
+	
+		                    <ImageButton
+		                        android:id="@+id/StopButton"
+		                        android:layout_width="22dp"
+		                        android:layout_height="22dp"
+		                        android:layout_alignParentRight="true"
+		                        android:layout_centerVertical="true"
+		                        android:background="@drawable/stopicon"
+		                        android:onClick="onClickStop" />
+	
+		                    <ImageButton
+		                        android:id="@+id/PlayButton"
+		                        android:layout_width="22dp"
+		                        android:layout_height="22dp"
+		                        android:layout_centerVertical="true"
+		                        android:layout_toLeftOf="@+id/StopButton"
+		                        android:background="@drawable/playicon"
+		                        android:onClick="onClickPlay" />
+	
+		                    <ImageButton
+		                        android:id="@+id/RecButton"
+		                        android:layout_width="22dp"
+		                        android:layout_height="22dp"
+		                        android:layout_centerVertical="true"
+		                        android:layout_toLeftOf="@+id/PlayButton"
+		                        android:background="@drawable/record"
+		                        android:onClick="onClickRec" />
+		                </RelativeLayout>
+	
+			     </RelativeLayout>
+			</FrameLayout>
+			<fragment
+		        android:id="@+id/fragment_left_drawer"
+		        android:name="com.te.UI.LeftMenuFrg"
+		        android:layout_width="@dimen/left_drawer_width"
+		        android:layout_height="match_parent"
+		        android:layout_gravity="start"
+		        tools:layout="@layout/left_menu_fragment" />
+	
+	</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

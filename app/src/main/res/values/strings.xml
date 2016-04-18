@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Terminal Emulation</string>
+    <string name="app_Version">0.0.0.4</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_Save">Save</string>
+    <string name="preference_file_key">File1</string>
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+    <string name="title_activity_symbol">SymbolActivity</string>
+    <string name="MSG_CharacterTenLimit">The maximum character limit reached! Up to 10 chars allowed.</string>
+    <string name="MSG_CharacterOneLimit">The maximum character limit reached! Only one char allowed.</string>
+    <string name="MSG_ChangeSession">Change sesssion to %s</string>
+    <string name="Format_Session">S%1$s:%2$s</string>
+    <string name="dot">.</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
+    
+    <string name="STR_CopyRight">Copyright © CipherLab Co. Ltd.</string>
+    <string name="STR_DllName">Reader Service</string>   
+    <string name="STR_OK">OK</string>   
+    <string name="strConnection">Connect</string>
+    <string name="strSessionSettings">Settings</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    
+    <string name="str_serverType">Server Type</string>
+    <string name="str_ip">IP Address</string>
+    <string name="str_serverPort">Port</string>
+    <string name="str_ntKeepAlive">Network Keep Alive</string>
+    <string name="str_upperCase">Data input uppercase</string>
+    <string name="str_network">Network</string>
+    <string name="str_autofullscreen">Auto full screen on connection</string>
+    <string name="str_detectoutofrange">Detect out of range</string>
+    <string name="str_autoconnect">Auto connect</string>
+    <string name="str_autosignon">Auto sign on</string>
+    <string name="str_signonName">User Name</string>
+    <string name="str_signonPwd">Password</string>
+    <string name="str_signonNameHint">Enter Name</string>
+    <string name="str_signonPwdHint">Enter Password</string>
+    <string name="str_generateLog">Generate Log</string>
+    
+</resources>

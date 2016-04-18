@@ -1,0 +1,82 @@
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="10%p"
+    android:horizontalGap="0px"
+    android:verticalGap="0px"  
+    android:keyHeight="40dp"
+>
+    <Row>
+        <Key android:codes="131" android:keyLabel="F1" android:keyEdgeFlags="left"/>
+        <Key android:codes="132" android:keyLabel="F2"/>
+        <Key android:codes="133" android:keyLabel="F3"/>
+        <Key android:codes="134" android:keyLabel="F4"/>
+        <Key android:codes="135" android:keyLabel="F5"/>
+        <Key android:codes="136" android:keyLabel="F6"/>
+        <Key android:codes="137" android:keyLabel="F7"/>
+        <Key android:codes="138" android:keyLabel="F8"/>
+        <Key android:codes="139" android:keyLabel="F9"/>
+        <Key android:codes="140" android:keyLabel="F10" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="141" android:keyLabel="F11" android:keyEdgeFlags="left"/>
+        <Key android:codes="142" android:keyLabel="F12"/>
+        <Key android:codes="-100" android:keyLabel="F13"/>
+        <Key android:codes="-101" android:keyLabel="F14"/>
+        <Key android:codes="-102" android:keyLabel="F15"/>
+        <Key android:codes="-103" android:keyLabel="F16"/>
+        <Key android:codes="-104" android:keyLabel="F17"/>
+        <Key android:codes="-105" android:keyLabel="F18"/>
+        <Key android:codes="-106" android:keyLabel="F19"/>
+        <Key android:codes="-107" android:keyLabel="F20" android:keyEdgeFlags="right"/>
+    </Row>
+     <Row>
+        <Key android:codes="-108" android:keyLabel="F21" android:keyEdgeFlags="left"/>
+        <Key android:codes="-109" android:keyLabel="F22"/>
+        <Key android:codes="-110" android:keyLabel="F23"/>
+        <Key android:codes="-111" android:keyLabel="F24"/>
+        <Key android:codes="-200" android:keyLabel="PA1"/>
+        <Key android:codes="-201" android:keyLabel="PA2"/>
+        <Key android:codes="-202" android:keyLabel="PA3"/>
+        <Key android:codes="-203" android:keyLabel="F+"/>
+        <Key android:codes="-204" android:keyLabel="F-"/>
+        <Key android:codes="-205" android:keyLabel="FEx" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-206" android:keyLabel="Attn" android:keyWidth="20%p"  android:keyEdgeFlags="left"/>   
+        <Key android:codes="-207" android:keyLabel="FBegin" android:keyWidth="20%p" />
+        <Key android:codes="-208" android:keyLabel="Del" android:keyWidth="20%p" android:isRepeatable="true"/>        
+        <Key android:codes="-209" android:keyLabel="FEnd" android:keyWidth="20%p" android:isRepeatable="true"/>
+        <Key android:codes="-210" android:keyLabel="Fmark" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+    </Row>    
+     <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-211" android:keyLabel="ErInp" android:keyWidth="20%p"  android:keyEdgeFlags="left"/>   
+        <Key android:codes="-212" android:keyLabel="SysRq" android:keyWidth="20%p" />
+        <Key android:codes="-213" android:keyLabel="Last" android:keyWidth="20%p" android:isRepeatable="true"/>        
+        <Key android:codes="-214" android:keyLabel="Next" android:keyWidth="20%p" android:isRepeatable="true"/>
+        <Key android:codes="-215" android:keyLabel="ClrEof" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+    </Row>   
+     <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-216" android:keyLabel="RolDn" android:keyWidth="20%p"  android:keyEdgeFlags="left"/>   
+        <Key android:codes="-217" android:keyLabel="RolUp" android:keyWidth="20%p" />
+        <Key android:codes="-218" android:keyLabel="Prev" android:keyWidth="20%p" android:isRepeatable="true"/>        
+        <Key android:codes="-219" android:keyLabel="Rec" android:keyWidth="20%p" android:isRepeatable="true"/>
+        <Key android:codes="-220" android:keyLabel="BkTab" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+    </Row>   
+      <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-221" android:keyLabel="Dup" android:keyWidth="20%p"  android:keyEdgeFlags="left"/>   
+        <Key android:codes="-222" android:keyLabel="Ins" android:keyWidth="20%p" />
+        <Key android:codes="-223" android:keyLabel="Reset" android:keyWidth="20%p" android:isRepeatable="true"/>        
+        <Key android:codes="-224" android:keyLabel="Home" android:keyWidth="20%p" android:isRepeatable="true"/>
+        <Key android:codes="-225" android:keyLabel="NL" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+    </Row>   
+    
+    
+      <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-226" android:keyLabel="BS" android:keyWidth="20%p"  android:keyEdgeFlags="left"/>   
+        <Key android:codes="09" android:keyLabel="Tab" android:keyWidth="20%p" />
+        <Key android:codes="-228" android:keyLabel="Clr" android:keyWidth="20%p" /> 
+        <Key android:codes="-8" android:keyLabel="ABC" android:keyWidth="20%p" android:keyEdgeFlags="right"/>       
+        
+    </Row>   
+      
+       
+</Keyboard>

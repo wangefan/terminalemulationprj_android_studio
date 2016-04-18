@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/selection"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:ems="10" >
+    </EditText>
+
+    <HorizontalScrollView
+		       
+		        android:id="@+id/gridHScroll"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:background="#FFFFFF"
+		        android:fillViewport="true">
+		     
+		    <ScrollView
+		        android:id="@+id/gridVScroll"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:fillViewport="true"
+		        android:background="#FFFFFF"
+		        android:layout_weight=".50">
+		
+		     <LinearLayout  
+		                android:id="@+id/linearLayout_gridtableLayout"  
+		                android:layout_width="300dp"  
+		                android:layout_height="match_parent"  
+		                android:orientation="horizontal" >    
+		             
+		        
+		           
+		             <GridView
+					        android:id="@+id/gridview"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:columnWidth="180dp"
+					        android:gravity="center"
+					        android:horizontalSpacing="10dp"
+					       android:numColumns="9" 
+					        android:stretchMode="columnWidth"
+					         android:scrollbarAlwaysDrawHorizontalTrack="true"  
+                            android:scrollbarAlwaysDrawVerticalTrack="true"  
+					        android:scrollbars="horizontal|vertical" 
+					        android:verticalSpacing="10dp" />
+		       
+		     </LinearLayout>        
+		
+		    </ScrollView>
+		    </HorizontalScrollView>
+   
+
+</LinearLayout>

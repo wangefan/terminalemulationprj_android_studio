@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="1573a7a3d05c28f9eb6f2b39459645b9c61c1fa7">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_887b03dd699e9916593327082a49cee4f065268c\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="5457e247db26af2f27e3244a08e7e29e574d027a">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_7879da2164fac1d5d3547b3f9d5e94d8cd3d846a\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.3.0_9c71b9c58ac8fb3ac04cc1549142c06c5ccc5e4f\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\yifan.wang\Android\android-sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.3.0_af54f698017e924673581fa4d2ac35e4471f980e\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.3.0_1f4c60b41ab3785a7ede4969d8a32815944611d7\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\libs\BarcodeAPI.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="dc89d615b83a418486a39488632d55dd4650adb9">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\2\BarcodeAPI_9b08598389e2f7320e399347b6180a06a5f867fd\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.3.0_c7cdcd777f6cfb830b04656513f04261cd171e4c\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.3.0_56d440ef526d9dd0111acf4f3c70e92045b807c0\classes.dex" />
+    </item>
+    <item
+        jar="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.3.0_3074d52c87f43bac177e8b89f9fa1b70051047df\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\yifan.wang\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.0\f7f0ca4ae3c64f0f35d518613aef95c3210ebd\gson-2.0.jar"
+        jumboMode="true"
+        revision="24.0.0 rc2"
+        sha1="00f7f0ca4ae3c64f0f35d518613aef95c3210ebd">
+        <dex dex="D:\Projects\TerminalEmulationPrj_Android_Studio\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.0_295d5c4bcdddd78b59b9c4ba1188859547f14c0f\classes.dex" />
+    </item>
+
+</items>

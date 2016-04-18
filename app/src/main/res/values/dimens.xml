@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="sertype_seperator_height">10dp</dimen>
+    <dimen name="key_height">60dip</dimen>
+    <dimen name="left_drawer_width">260dp</dimen>
+    <dimen name="serverTypeSettingLabelMargin">7dp</dimen>
+</resources>

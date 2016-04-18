@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_notification.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_notification.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_data_sync.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_data_sync.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_general.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\functiokeys.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\functiokeys.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\keymain.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\keymain.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_headers.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_headers.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_ssh.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_ssh.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\functiokeysibm.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\functiokeysibm.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\symbols_shift.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\symbols_shift.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_auto_connect_vt.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_auto_connect_vt.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_auto_connect_ibm.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_auto_connect_ibm.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general_vt.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_general_vt.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\symbols_none.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\symbols_none.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\method.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\method.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\qwerty.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\qwerty.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general_tn.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_general_tn.xml"
+    },
+    {
+        "merged": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_command.xml",
+        "source": "D:\\Projects\\TerminalEmulationPrj_Android_Studio\\app\\src\\main\\res\\xml\\pref_command.xml"
+    }
+]

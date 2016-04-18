@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    
+     
+        
+    <ListPreference
+        android:key="general_vt_charset"
+        android:title="@string/pref_header_remote_char"
+        android:entries="@array/pref_vt_charset_list"
+        android:entryValues="@array/pref_vt_charset_list"
+        android:defaultValue="ANSI"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+    
+     
+     <CheckBoxPreference
+       
+        android:key="is_line_buffer"
+        android:title="@string/pref_Title_LineBuffer"
+        android:defaultValue="false" />
+     
+      <CheckBoxPreference
+        android:dependency="is_line_buffer"
+        android:key="is_localecho"
+        android:title="@string/pref_Title_LocalEcho"
+        android:defaultValue="true" />
+      
+      <Preference
+            android:title="@string/pref_Title_SendToHost"
+            android:key="prefSendtoHost"
+            
+            />
+      
+     
+     
+
+</PreferenceScreen>
