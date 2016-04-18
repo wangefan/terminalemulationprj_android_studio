@@ -68,35 +68,7 @@ public class SessionsView extends ListView implements View.OnTouchListener {
 		}
 	}
 
-	private class MySimpleGesture implements GestureDetector.OnGestureListener {
-		@Override
-		public boolean onDown(MotionEvent e) {
-			if(BuildConfig.DEBUG) {
-				Log.d("TE", "onDown");
-			}
-			return false;
-		}
-
-		@Override
-		public void onShowPress(MotionEvent e) {
-
-		}
-
-		@Override
-		public boolean onSingleTapUp(MotionEvent e) {
-			return false;
-		}
-
-		@Override
-		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-			return false;
-		}
-
-		@Override
-		public void onLongPress(MotionEvent e) {
-
-		}
-
+	private class MySimpleGesture extends GestureDetector.SimpleOnGestureListener {
 		@Override
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 			if(BuildConfig.DEBUG) {
@@ -115,7 +87,7 @@ public class SessionsView extends ListView implements View.OnTouchListener {
 					if(BuildConfig.DEBUG)  Log.d("TE-MyGesture", "item = " + String.valueOf(pos));
 				}
 			}
-			return false;
+			return super.onFling(e1, e2, velocityX, velocityY);
 		}
 	}
 	//Inner classes end
