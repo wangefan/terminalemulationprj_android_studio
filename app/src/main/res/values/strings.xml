@@ -15,7 +15,7 @@
     <string name="dot">.</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
-    
+    <string name="remove_session">Remove Session</string>
     <string name="STR_CopyRight">Copyright © CipherLab Co. Ltd.</string>
     <string name="STR_DllName">Reader Service</string>   
     <string name="STR_OK">OK</string>   
