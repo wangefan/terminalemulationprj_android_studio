@@ -1,35 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/listview_item_bg" >
- 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <LinearLayout android:id="@+id/remove_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
-        android:paddingBottom="10dp"
-        android:paddingStart="30dp"
-        android:paddingTop="10dp"
-        android:textSize="15sp" />
+        android:background="@drawable/listview_item_bg"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="2"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove Session"
+            android:paddingBottom="10dp"
+            android:paddingStart="30dp"
+            android:paddingTop="10dp"
+            android:textSize="15sp"
+            android:id="@+id/remove" />
+    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/session_setting"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_settings_black_24dp" />
+    <LinearLayout android:id="@+id/session_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listview_item_bg" >
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:paddingBottom="10dp"
+            android:paddingStart="30dp"
+            android:paddingTop="10dp"
+            android:textSize="15sp" />
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true" >
+
+            <ImageView
+                android:id="@+id/session_setting"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_settings_black_24dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

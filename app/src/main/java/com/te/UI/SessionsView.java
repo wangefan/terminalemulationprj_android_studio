@@ -1,6 +1,7 @@
 package com.te.UI;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import com.example.terminalemulation.R;
 import android.content.Context;
@@ -12,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -85,10 +89,42 @@ public class SessionsView extends ListView implements View.OnTouchListener {
 				View item = getChildAt(pos);
 				if (item != null) {
 					if(BuildConfig.DEBUG)  Log.d("TE-MyGesture", "item = " + String.valueOf(pos));
+					if(isSNItemShowDelete(pos) == false) {
+						if(BuildConfig.DEBUG) Log.d("TE-MyGesture", "show delete");
+						snItemShowDelete(pos, true);
+						return false;
+					}
 				}
 			}
 			return super.onFling(e1, e2, velocityX, velocityY);
 		}
+	}
+
+	private abstract class ViewAnimationListener implements Animation.AnimationListener {
+
+		private final View mView;
+
+		protected ViewAnimationListener(View view) {
+			mView = view;
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			onAnimationStart(mView, animation);
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			onAnimationEnd(mView, animation);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+
+		}
+
+		protected abstract void onAnimationStart(View view, Animation animation);
+		protected abstract void onAnimationEnd(View view, Animation animation);
 	}
 	//Inner classes end
 
@@ -116,6 +152,39 @@ public class SessionsView extends ListView implements View.OnTouchListener {
 	}
 	
 	//Functions
+	private void animateShowView(View view, Animation animation) {
+		if (animation != null && view != null) {
+			animation.setAnimationListener(new ViewAnimationListener(view) {
+				@Override
+				protected void onAnimationStart(View view, Animation animation) {
+					view.setVisibility(View.VISIBLE);
+				}
+
+				@Override
+				protected void onAnimationEnd(View view, Animation animation) {
+
+				}
+			});
+			view.startAnimation(animation);
+		}
+	}
+
+	private void animateHideView(View view, Animation animation) {
+		if (animation != null && view != null) {
+			animation.setAnimationListener(new ViewAnimationListener(view) {
+				@Override
+				protected void onAnimationStart(View view, Animation animation) {
+				}
+
+				@Override
+				protected void onAnimationEnd(View view, Animation animation) {
+					view.setVisibility(View.GONE);
+				}
+			});
+			view.startAnimation(animation);
+		}
+	}
+
 	public void addSession(String strSessionTitle) {
 		mSessionItems.add(new SessionItem(strSessionTitle));
 	}
@@ -128,8 +197,42 @@ public class SessionsView extends ListView implements View.OnTouchListener {
 		return mSessionItems.get(nPos).mTitle;
 	}
 
+	public boolean isSNItemShowDelete(int position) {
+		View item = getChildAt(position);
+		if(item == null)
+			return false;
+
+		LinearLayout layRemove = (LinearLayout) item.findViewById(R.id.remove_layout);
+		if(layRemove != null && layRemove.getVisibility() == View.VISIBLE) {
+			return true;
+		}
+		return false;
+	}
+
+	public void snItemShowDelete(int position, boolean bShow) {
+		View item = getChildAt(position);
+		if(item == null)
+			return;
+		LinearLayout layRemove = (LinearLayout) item.findViewById(R.id.remove_layout);
+		LinearLayout laySession = (LinearLayout) item.findViewById(R.id.session_layout);
+		if(layRemove != null && laySession != null) {
+			if(bShow) {
+				animateShowView(layRemove, AnimationUtils.loadAnimation(layRemove.getContext(), R.anim.fade_in));
+				animateHideView(laySession, AnimationUtils.loadAnimation(layRemove.getContext(), R.anim.slide_out));
+			} else {
+				animateHideView(layRemove, AnimationUtils.loadAnimation(layRemove.getContext(), R.anim.fade_out));
+				animateShowView(laySession, AnimationUtils.loadAnimation(layRemove.getContext(), R.anim.slide_in));
+			}
+		}
+	}
+
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		return mGestDetector.onTouchEvent(event);
+		if(mGestDetector.onTouchEvent(event)) {
+			Log.d("TE-SessionView.onTouch", "mGestDetector.onTouchEvent() return true");
+			return true;
+		}
+		Log.d("TE-SessionView.onTouch", "mGestDetector.onTouchEvent() return false");
+		return super.onTouchEvent(event);
 	}
 }
