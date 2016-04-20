@@ -15,6 +15,12 @@ import android.widget.ListView;
 import com.example.terminalemulation.R;
  
 public class LeftMenuFrg extends Fragment {
+
+    public interface LeftMenuListener {
+        public void onDrawerItemSelected(int position);
+        public void onAbout();
+        public void onExit();
+    }
  
     //private static String TAG = FragmentLeftDrawer.class.getSimpleName();
  
@@ -113,11 +119,5 @@ public class LeftMenuFrg extends Fragment {
         });
  
         return leftMenuView;
-    }
- 
-    public interface LeftMenuListener {
-        public void onDrawerItemSelected(int position);
-        public void onAbout();
-        public void onExit();
     }
 }

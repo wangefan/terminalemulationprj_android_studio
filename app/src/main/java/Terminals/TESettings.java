@@ -11,8 +11,11 @@ public class TESettings {
     public SessionSetting getSessionSetting(int idxSession) {
         return SETTINGS.get(idxSession);
     }
-    private class TECommonSetting {
+    public class TECommonSetting {
         private ArrayList<CSsh_Keys> Ssh_Keys = new ArrayList<CSsh_Keys>();
+        @SerializedName("SessionCount")
+        public int mSessionCount;
+
         private class CSsh_Keys {
             private String Name;
             private String Path;

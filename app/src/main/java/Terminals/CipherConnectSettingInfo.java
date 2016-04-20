@@ -110,10 +110,7 @@ public class CipherConnectSettingInfo {
 	}
 	public static int GetSessionSettingListCount()
 	{
-		if (mTESettings.SETTINGS != null)
-			return mTESettings.SETTINGS.size();
-		
-		return 0;
+	    return mTESettings.Common.mSessionCount;
 	}
 	
     public static void initSharedPreferences(Context c) {
