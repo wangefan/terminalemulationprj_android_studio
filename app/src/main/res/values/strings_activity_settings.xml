@@ -22,17 +22,32 @@
         <item>@string/VT220Val</item>
         <item>@string/ANSIVal</item>
     </string-array>
-    
+
     <string name="pref_header_ip">IP:</string>
     <string name="pref_header_port">Port:</string>
-    <string name="pref_header_log">Log File</string>
+    <string name="more">More...</string>
+    <string name="emulation_setting">Emulation Settings</string>
+    <string name="server_setting">Server Settings</string>
+    <string name="screen">Screen</string>
+    <string name="alarm">Alarm</string>
+    <string name="key_mapping">Key Mapping</string>
+    <string name="ssh">SSH</string>
+    <string name="ssh_on">Use SSH</string>
+    <string name="ssh_off">Not use</string>
+    <string name="network">Network</string>
+    <string name="keep_alive">Network Keep Alive</string>
+    <string name="out_range">Detect Out Of Range</string>
+    <string name="barcode_setting">Barcode Settings</string>
+    <string name="config">Configuration</string>
+    <string name="debug">Debug</string>
+    <string name="generate_log">Generate Log</string>
      <string name="pref_cursor_type">Cursor Type</string>
        <string-array name="pref_cousor_type_list">
         <item>Default</item>
         <item>Full block</item>
         <item>Underline</item>
     </string-array>
-    
+
      <string name="pref_Title_CursorTracking">Cursor Tracking</string>
      <string name="pref_Title_ShowMacro">Macro</string>
        <string name="pref_OpenReaderConfig">Reader Config</string>

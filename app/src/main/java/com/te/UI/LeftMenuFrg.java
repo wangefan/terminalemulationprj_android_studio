@@ -10,20 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+
 import com.example.terminalemulation.R;
  
 public class LeftMenuFrg extends Fragment {
 
     public interface LeftMenuListener {
         public void onDrawerItemSelected(int position);
+        public void onAddSession();
         public void onAbout();
         public void onExit();
     }
- 
-    //private static String TAG = FragmentLeftDrawer.class.getSimpleName();
- 
+
+    private RelativeLayout mAddSession = null;
     private SessionsView mSessionsView = null;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -73,7 +76,7 @@ public class LeftMenuFrg extends Fragment {
         });
  
         // preparing session items
-        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionSettingListCount(); ++idxSession) {
+        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
             String strTitle = 
                     String.format(getResources().getString(R.string.Format_Session),
                                   idxSession,
@@ -88,6 +91,14 @@ public class LeftMenuFrg extends Fragment {
                              Bundle savedInstanceState) {
         // Inflating view layout
         View leftMenuView = inflater.inflate(R.layout.left_menu_fragment, container, false);
+        mAddSession = (RelativeLayout) leftMenuView.findViewById(R.id.add_session);
+        mAddSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLeftMenuListener.onAddSession();
+            }
+        });
+
         mSessionsView = (SessionsView) leftMenuView.findViewById(R.id.drawerList);
         mSessionsView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override

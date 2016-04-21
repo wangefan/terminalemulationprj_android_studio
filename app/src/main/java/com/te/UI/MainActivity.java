@@ -34,10 +34,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class MainActivity extends AppCompatActivity implements LeftMenuListener {
-	    static Handler  mConnectHandler=new Handler() ;
-	    
-	    private int _currentuser= 0;
-	    private int _changeUser= 0;
+
 	    private Toolbar mToolbar;
 	    private LeftMenuFrg mFragmentLeftdrawer;
 	    ContentView mContentView;
@@ -65,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	           	ConnectBut.setVisibility(View.INVISIBLE);
 	           	//TextVer.setVisibility(View.INVISIBLE);
 	           	
-	             UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(_currentuser));
+	             UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
 	             UpdateRecordButton();
 	             updateConnMenuItem();
 	    	}
@@ -93,16 +90,15 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	    
     private void InitializeUserParm()
     {
-	        for(int i=0;i<5;i++)
-	        {
-	            TerminalProcess Process = new TerminalProcess();
-	            mCollSessions.add(Process);
-	        }
-	        CipherConnectSettingInfo.InitSessionParms(getApplicationContext());
+		CipherConnectSettingInfo.InitSessionParms(getApplicationContext());
+		for(int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
+			TerminalProcess Process = new TerminalProcess();
+			mCollSessions.add(Process);
+		}
 	}
     private void UpdateRecordButton()
     {
-    	 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+    	 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
     	 ImageButton ButStop = (ImageButton) findViewById(R.id.StopButton);
     	 ImageButton ButPlay = (ImageButton) findViewById(R.id.PlayButton);
     	 ImageButton ButRec = (ImageButton) findViewById(R.id.RecButton);
@@ -228,6 +224,32 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	    // put your code here...
 	     ShowKeyboard();
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch(requestCode){
+			case SessionSettings.REQ_EDIT:
+				Toast.makeText(this, data.getExtras().getString("B"), 0).show();
+				break;
+			case SessionSettings.REQ_ADD:
+			{
+				if(resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null)
+				{
+					CipherConnectSettingInfo.addSession(SessionSettings.gEditSessionSetting);
+					int nAddedSessionIdx = CipherConnectSettingInfo.GetSessionCount() - 1;
+					CipherConnectSettingInfo.SetSessionIndex(nAddedSessionIdx);
+					mCollSessions.add(new TerminalProcess());
+					SessionChange(nAddedSessionIdx);
+					SessionSettings.gEditSessionSetting = null;
+				}
+			}
+			break;
+			default:
+				break;
+		}
+	}
 	
 	@Override
 	public void onDrawerItemSelected(int position) {
@@ -238,15 +260,21 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 		case 2:
 		case 3:
 		case 4:
-			_changeUser = position;
-			mConnectHandler.post(this.RunChangeSession);
-			String strMsg = String.format(getResources().getString(R.string.MSG_ChangeSession), mFragmentLeftdrawer.getItemTitle(position));
-			Toast.makeText(this, strMsg, Toast.LENGTH_SHORT).show();
+			SessionChange(position);
 			break;
 		default: break;
 		}
 	}
-	
+
+	@Override
+	public void onAddSession() {
+		if(CipherConnectSettingInfo.GetSessionCount() < CipherConnectSettingInfo.MAX_SESSION_COUNT) {
+			Intent intent = new Intent(this, SessionSettings.class);
+			intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_ADD);
+			startActivityForResult(intent, SessionSettings.REQ_ADD);
+		}
+	}
+
 	public void onClick(View v) {
          
 	    //InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -260,13 +288,13 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     } 
 	public void onClickStop(View v) {
         
-		 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+		 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 		 termProc.StopRecMacro();
 		 UpdateRecordButton();
 		
     }  
 	public void onClickPlay(View v) {
-		 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+		 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 		 termProc.PlayMacro();
 		 UpdateRecordButton();
 		 
@@ -275,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     }  
 	public void onClickRec(View v) {
            
-		 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+		 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 		 termProc.RecMacro();
 		 UpdateRecordButton();
 		
@@ -379,19 +407,9 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
             //localHandler.post(local1);
         }
     };
-   
-    Runnable RunChangeSession = new Runnable()
-    {
-        public void run()
-        {
-        	 
-        	 SessionChange();
-            //localHandler.post(local1);
-        }
-    };
     
     private boolean isCurSessionConnected() {
-    	TerminalProcess termProc = (TerminalProcess)mCollSessions.get(_currentuser);
+    	TerminalProcess termProc = (TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 		return(termProc != null && termProc.isConnected());
     }
     
@@ -405,28 +423,25 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     	}
     }
     
-    private void SessionChange()
+    private void SessionChange(int idxSession)
     {
-        TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
-        TerminalProcess UserSessionNext=(TerminalProcess)mCollSessions.get(_changeUser);
-        
-        //termProc.ProcessTryAutoConnect();
-        //_changeUser
-        termProc.ProcessReleaseView();
+		if(CipherConnectSettingInfo.GetSessionIndex() == idxSession)
+			return;
+        TerminalProcess curSeesion = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess nextSession = (TerminalProcess) mCollSessions.get(idxSession);
+
+		curSeesion.ProcessReleaseView();
         mContentView.ResetView();
-        
-        _currentuser=_changeUser;
-        CipherConnectSettingInfo.SetSessionIndex(_currentuser);
-        
-        UserSessionNext.SetVewContainer(mContentView);
-        UserSessionNext.setListener(mOnTerminalProcessListener);
-        UserSessionNext.ResetSessionView();
-        
-        
+		nextSession.SetVewContainer(mContentView);
+		nextSession.setListener(mOnTerminalProcessListener);
+		nextSession.ResetSessionView();
+		CipherConnectSettingInfo.SetSessionIndex(idxSession);
+		String strMsg = String.format(getResources().getString(R.string.MSG_ChangeSession), mFragmentLeftdrawer.getItemTitle(idxSession));
+		Toast.makeText(this, strMsg, Toast.LENGTH_SHORT).show();
     }
     private void SessionAutoConnect()
     {
-        TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+        TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
 	
         if (!termProc.ProcessTryAutoConnect())
@@ -469,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     
     private void SessionConnect()
     {
-	    TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+	    TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 	    RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
        
         
@@ -511,18 +526,18 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     {
 	    RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
 	    
-	    TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+	    TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         termProc.ProcessDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
         ConnectBut.setVisibility(View.VISIBLE);
 
     }
     
-	private static final int EDIT=1;
+
 	private void SessionSetting() {
-		//Intent intent = new Intent(this, SettingsActivity.class);
 		Intent intent = new Intent(this, SessionSettings.class);
-        startActivityForResult(intent,EDIT);
+		intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
+        startActivityForResult(intent, SessionSettings.REQ_EDIT);
     }
 	 
 	 private final BroadcastReceiver myDataReceiver = new BroadcastReceiver() {
@@ -540,7 +555,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 					//e1.setText(data);
 				}else if (intent.getAction().equals(GeneralString.Intent_PASS_TO_APP)){
 					// If user disable KeyboardEmulation, barcode reader service will broadcast Intent_PASS_TO_APP
-					TerminalProcess termProc=(TerminalProcess)mCollSessions.get(_currentuser);
+					TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 					// extra string from intent
 					data = intent.getStringExtra(GeneralString.BcReaderData);
 					

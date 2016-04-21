@@ -13,9 +13,6 @@ public class TESettings {
     }
     public class TECommonSetting {
         private ArrayList<CSsh_Keys> Ssh_Keys = new ArrayList<CSsh_Keys>();
-        @SerializedName("SessionCount")
-        public int mSessionCount;
-
         private class CSsh_Keys {
             private String Name;
             private String Path;
@@ -26,28 +23,31 @@ public class TESettings {
             }
         }
     }
-    
-    public class SessionSetting {
+
+    public static class SessionSetting {
     	//Sync
-        @SerializedName("TermNameTN") 
+        @SerializedName("TermNameTN")
         String mTermNameTN="";
-    	
+
         String TermName="";
-    	
+
         int isTN = 1;
-    	
+
         boolean bAutoConnect;
-    	
-        @SerializedName("HostIPorName") 
+
+        @SerializedName("HostIPorName")
     	String mHostIP = "";
-    	
-    	@SerializedName("TelnetPort") 
+
+    	@SerializedName("TelnetPort")
     	ArrayList<Integer> mTelnetPort = new ArrayList<Integer>();// low[0] + high[1] * 256
-    	
+
     	@SerializedName("bAutoSignOn")
     	boolean mBAutoSignOn = false;
-    	
-    	String LoginName = "";
+
+        @SerializedName("isSelected")
+        boolean mIsSelected = false;
+
+        String LoginName = "";
         String LoginPassword = "";
     	int nCharSet = 0;	//0:Ansi, 1:UTF8
     	int CursorType = 0; //0:Default, 1:Underline, 2:Block
@@ -62,21 +62,21 @@ public class TESettings {
     	String PassPrompt="";
     	int TermLogin = 0;	//0:Tab, 1:Enter
     	ReaderParam g_ReaderParam = new ReaderParam();
-    	
-        //Sync but Not used 
+
+        //Sync but Not used
     	boolean bEcho = false;
-        
+
         //Not sync
     	String Language="Single Byte Character";
     	String Fieldexceed="Reject";
-       	byte[] SendtoHost=null; 
+       	byte[] SendtoHost=null;
 
-        
+
         public class ReaderParam {
         	boolean isEnableScannerByESCCmd = false;
             String scannerEnableESC = null;
             String scannerDisableESC = null;
-            String goodFeedBackESC = null;  
+            String goodFeedBackESC = null;
             String errorFeedBackESC = null;
         }
     }

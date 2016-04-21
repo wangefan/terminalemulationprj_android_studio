@@ -19,12 +19,13 @@ import java.io.InputStreamReader;
 public class CipherConnectSettingInfo {
     //public static final String TAG = "CipherConnectSettingInfo";
     final private static String mSettingFilename = "TE_settings.json";
+    final public static int MAX_SESSION_COUNT = 5;
     private static Context mContext = null;
     public static final boolean _DEBUG = false;
     public static int LastHostNumber = 0;
     public static final String _NAME = "TerminalEmulation";
     private static SharedPreferences _sp = null;
-    private static int CurrentIndex;
+    private static int mCurrentSessionIndex;
     
     static TESettings mTESettings = new TESettings();
     
@@ -80,6 +81,11 @@ public class CipherConnectSettingInfo {
             }
             
             mTESettings = deSerialize(teJsonFile);
+            //Get active session index
+            for(int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
+                if(mTESettings.SETTINGS.get(idxSession).mIsSelected)
+                    mCurrentSessionIndex = idxSession;
+            }
         } catch (Exception e) {
             
         }
@@ -92,6 +98,13 @@ public class CipherConnectSettingInfo {
         }
         try {
             if(teJsonFile.createNewFile()) {
+                //Set active session index
+                for(int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
+                    if(mCurrentSessionIndex == idxSession)
+                        mTESettings.SETTINGS.get(idxSession).mIsSelected = true;
+                    else
+                        mTESettings.SETTINGS.get(idxSession).mIsSelected = false;
+                }
                 serialize(teJsonFile);
             }
         } catch (IOException e) {
@@ -102,17 +115,25 @@ public class CipherConnectSettingInfo {
 	
 	public static void SetSessionIndex(int Index)
 	{
-		CurrentIndex=Index;
+        mCurrentSessionIndex = Index;
 	}
 	public static int GetSessionIndex()
 	{
-		return CurrentIndex;
+		return mCurrentSessionIndex;
 	}
-	public static int GetSessionSettingListCount()
-	{
-	    return mTESettings.Common.mSessionCount;
+	public static int GetSessionCount() {
+	    return mTESettings.SETTINGS.size();
 	}
-	
+
+    public static SessionSetting getSessionSetting(int index) {
+        return mTESettings.getSessionSetting(index);
+    }
+
+    public static void addSession(SessionSetting snSetting) {
+        if(snSetting != null)
+        mTESettings.SETTINGS.add(snSetting);
+    }
+
     public static void initSharedPreferences(Context c) {
         if (_sp==null) {
             _sp = c.getSharedPreferences(_NAME, 0);
