@@ -3,18 +3,12 @@ package com.te.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageButton;
 import android.support.v7.widget.Toolbar;
-import java.util.ArrayList;
-import java.util.List; 
-
+import android.view.View;
+import android.widget.RelativeLayout;
 import com.example.terminalemulation.R;
-
 import Terminals.CipherConnectSettingInfo;
 import Terminals.TESettings;
-
-import static Terminals.TESettings.*;
 
 public class SessionSettings extends AppCompatActivity {
     public static final int REQ_EDIT = 1;
@@ -31,31 +25,32 @@ public class SessionSettings extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.sessinsettingtoolbar);
         setSupportActionBar(toolbar);
-        ImageButton btnCancel = (ImageButton) toolbar.findViewById(R.id.idcancel);
-        ImageButton btnOK = (ImageButton) toolbar.findViewById(R.id.idok);
+        RelativeLayout layBack = (RelativeLayout) toolbar.findViewById(R.id.setting_back);
+        RelativeLayout layCancel = (RelativeLayout) toolbar.findViewById(R.id.setting_cancel);
+        RelativeLayout layOK = (RelativeLayout) toolbar.findViewById(R.id.setting_ok);
 
         //To determine action bar.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         Intent intent = getIntent();
         String act = intent.getStringExtra(ACT_SETTING);
         if(act.compareToIgnoreCase(ACT_SETTING_EDIT) == 0) {
             gEditSessionSetting = CipherConnectSettingInfo.getSessionSetting(CipherConnectSettingInfo.GetSessionIndex());
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            btnCancel.setVisibility(View.GONE);
-            btnOK.setVisibility(View.GONE);
+            layBack.setVisibility(View.VISIBLE);
+            layCancel.setVisibility(View.GONE);
+            layOK.setVisibility(View.GONE);
         } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
             gEditSessionSetting = new TESettings.SessionSetting();
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            btnCancel.setVisibility(View.VISIBLE);
-            btnOK.setVisibility(View.VISIBLE);
-            btnCancel.setOnClickListener(new View.OnClickListener() {
+            layBack.setVisibility(View.GONE);
+            layCancel.setVisibility(View.VISIBLE);
+            layOK.setVisibility(View.VISIBLE);
+            layCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     finish();
                 }
             });
-            btnOK.setOnClickListener(new View.OnClickListener() {
+            layOK.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      setResult(RESULT_OK);
