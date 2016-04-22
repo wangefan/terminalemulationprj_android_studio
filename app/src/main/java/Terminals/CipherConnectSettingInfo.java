@@ -159,13 +159,13 @@ public class CipherConnectSettingInfo {
 
     public static int getHostTypeByIndex(int index) {
         SessionSetting Setting=mTESettings.getSessionSetting(index);
-        return Setting.isTN;
+        return Setting.mIsTN;
          
     }
     
     public static void SetHostTypeByIndex(int index, int nIsTN) {
         SessionSetting Setting=mTESettings.getSessionSetting(index);
-        Setting.isTN = nIsTN;
+        Setting.mIsTN = nIsTN;
         SessionSettingSave();
     }
     
@@ -184,13 +184,13 @@ public class CipherConnectSettingInfo {
     
     public static String getHostTypeNameByIndex(int index) {
         SessionSetting Setting=mTESettings.getSessionSetting(index);
-        return Setting.TermName;
+        return Setting.mTermName;
          
     }
     
     public static void SetHostTypeNameByIndex(int index,String HostType) {
         SessionSetting Setting=mTESettings.getSessionSetting(index);
-        Setting.TermName = HostType;
+        Setting.mTermName = HostType;
         SessionSettingSave();
     }
    

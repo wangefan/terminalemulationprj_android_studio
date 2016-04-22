@@ -27,57 +27,59 @@ public class TESettings {
     public static class SessionSetting {
     	//Sync
         @SerializedName("TermNameTN")
-        String mTermNameTN="";
+        public String mTermNameTN="";
 
-        String TermName="";
+        @SerializedName("TermName")
+        public String mTermName="";
 
-        int isTN = 1;
+        @SerializedName("isTN")
+        public int mIsTN = 1;
 
-        boolean bAutoConnect;
+        public boolean bAutoConnect;
 
         @SerializedName("HostIPorName")
-    	String mHostIP = "";
+        public String mHostIP = "";
 
     	@SerializedName("TelnetPort")
-    	ArrayList<Integer> mTelnetPort = new ArrayList<Integer>();// low[0] + high[1] * 256
+        public ArrayList<Integer> mTelnetPort = new ArrayList<Integer>();// low[0] + high[1] * 256
 
     	@SerializedName("bAutoSignOn")
-    	boolean mBAutoSignOn = false;
+        public boolean mBAutoSignOn = false;
 
         @SerializedName("isSelected")
-        boolean mIsSelected = false;
+        public boolean mIsSelected = false;
 
-        String LoginName = "";
-        String LoginPassword = "";
-    	int nCharSet = 0;	//0:Ansi, 1:UTF8
-    	int CursorType = 0; //0:Default, 1:Underline, 2:Block
-    	int LineBuffer = 0;
-    	boolean isSaveLog = false;
-    	boolean bCursorTracking = false;
-    	boolean isShowMacro = false;
-    	boolean SSH = false;
-    	String SSHName = "";
-    	String SSHPassword="";
-    	String NamePrompt="";
-    	String PassPrompt="";
-    	int TermLogin = 0;	//0:Tab, 1:Enter
-    	ReaderParam g_ReaderParam = new ReaderParam();
+        public String LoginName = "";
+        public String LoginPassword = "";
+        public int nCharSet = 0;	//0:Ansi, 1:UTF8
+        public int CursorType = 0; //0:Default, 1:Underline, 2:Block
+        public int LineBuffer = 0;
+        public boolean isSaveLog = false;
+        public boolean bCursorTracking = false;
+        public boolean isShowMacro = false;
+        public boolean SSH = false;
+        public String SSHName = "";
+        public String SSHPassword="";
+        public String NamePrompt="";
+        public String PassPrompt="";
+        public int TermLogin = 0;	//0:Tab, 1:Enter
+        public ReaderParam g_ReaderParam = new ReaderParam();
 
         //Sync but Not used
-    	boolean bEcho = false;
+        public boolean bEcho = false;
 
         //Not sync
-    	String Language="Single Byte Character";
-    	String Fieldexceed="Reject";
-       	byte[] SendtoHost=null;
+        public String Language="Single Byte Character";
+        public String Fieldexceed="Reject";
+        public byte[] SendtoHost=null;
 
 
         public class ReaderParam {
-        	boolean isEnableScannerByESCCmd = false;
-            String scannerEnableESC = null;
-            String scannerDisableESC = null;
-            String goodFeedBackESC = null;
-            String errorFeedBackESC = null;
+            public boolean isEnableScannerByESCCmd = false;
+            public String scannerEnableESC = null;
+            public String scannerDisableESC = null;
+            public String goodFeedBackESC = null;
+            public String errorFeedBackESC = null;
         }
     }
 }

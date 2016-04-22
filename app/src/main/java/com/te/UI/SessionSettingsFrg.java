@@ -5,8 +5,11 @@ import com.example.terminalemulation.R;
 import Terminals.CipherConnectSettingInfo;
 import Terminals.TESettings;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -65,6 +68,14 @@ public class SessionSettingsFrg extends PreferenceFragment {
         mVT102HostTypeName = getResources().getString(R.string.VT102Val);
         mVT220HostTypeName = getResources().getString(R.string.VT220Val);
         mVTAnsiHostTypeName = getResources().getString(R.string.ANSIVal);
+
+        ListPreference prfServerType = (ListPreference) findPreference("host_type_key");
+        if(mSetting.mIsTN == 0) {
+            prfServerType.setSummary(mSetting.mTermName);
+        } else {
+            prfServerType.setSummary(mSetting.mTermNameTN);
+        }
+
     }
 
     @Override
