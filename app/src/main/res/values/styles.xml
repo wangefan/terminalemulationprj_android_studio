@@ -1,9 +1,7 @@
 <resources>
 <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-
-        
-        
+        <item name="android:preferenceCategoryStyle">@style/PreferenceCategoryStyle</item>
     </style>
     
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -17,6 +15,10 @@
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="SettingHeaderTextAppearance">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/material_grey_600</item>
+    </style>
     <style name="ListViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -24,8 +26,9 @@
         <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:choiceMode">singleChoice</item>
     </style>
-    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
-    </style>
-    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+    <style name="PreferenceCategoryStyle">
+        <item name="android:layout">@layout/settings_header</item>
+        <item name="android:shouldDisableView">false</item>
+        <item name="android:selectable">false</item>
     </style>
 </resources>

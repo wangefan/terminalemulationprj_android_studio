@@ -7,4 +7,5 @@
     <dimen name="key_height">60dip</dimen>
     <dimen name="left_drawer_width">260dp</dimen>
     <dimen name="serverTypeSettingLabelMargin">7dp</dimen>
+    <dimen name="setting_header_min_height">80dp</dimen>
 </resources>
