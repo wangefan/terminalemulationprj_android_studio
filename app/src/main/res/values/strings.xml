@@ -39,5 +39,7 @@
     <string name="str_signonNameHint">Enter Name</string>
     <string name="str_signonPwdHint">Enter Password</string>
     <string name="str_generateLog">Generate Log</string>
-    
+    <string name="setting_title">Session %s</string>
+    <string name="new_session">New Session</string>
+
 </resources>

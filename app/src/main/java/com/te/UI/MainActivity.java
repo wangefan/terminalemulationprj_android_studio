@@ -231,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 
 		switch(requestCode){
 			case SessionSettings.REQ_EDIT:
-				Toast.makeText(this, data.getExtras().getString("B"), 0).show();
 				break;
 			case SessionSettings.REQ_ADD:
 			{
@@ -271,6 +270,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 		if(CipherConnectSettingInfo.GetSessionCount() < CipherConnectSettingInfo.MAX_SESSION_COUNT) {
 			Intent intent = new Intent(this, SessionSettings.class);
 			intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_ADD);
+			String strTitle = getResources().getString(R.string.new_session);
+			intent.putExtra(SessionSettings.ACT_SETTING_GET_TITLE, strTitle);
 			startActivityForResult(intent, SessionSettings.REQ_ADD);
 		}
 	}
@@ -537,6 +538,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	private void SessionSetting() {
 		Intent intent = new Intent(this, SessionSettings.class);
 		intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
+		String strTitle = String.format(getResources().getString(R.string.setting_title), CipherConnectSettingInfo.GetSessionIndex());
+		intent.putExtra(SessionSettings.ACT_SETTING_GET_TITLE, strTitle);
         startActivityForResult(intent, SessionSettings.REQ_EDIT);
     }
 	 
