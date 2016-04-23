@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/ip_1"
+            android:labelFor="@id/ip_1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/dot_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ip_1"
+            android:layout_toEndOf="@id/ip_1"
+            android:layout_toRightOf="@id/ip_1"
+            android:singleLine="true"
+            android:text="@string/dot"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ip_2"
+            android:labelFor="@id/ip_2"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/dot_1"
+            android:layout_toRightOf="@id/dot_1"
+            android:gravity="bottom"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/dot_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ip_2"
+            android:layout_toEndOf="@id/ip_2"
+            android:layout_toRightOf="@id/ip_2"
+            android:singleLine="true"
+            android:text="@string/dot"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ip_3"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/dot_2"
+            android:layout_toRightOf="@id/dot_2"
+            android:gravity="bottom"
+            android:inputType="number"
+            android:labelFor="@id/ip_3"
+            android:maxLength="3"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/dot_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ip_3"
+            android:layout_toEndOf="@id/ip_3"
+            android:layout_toRightOf="@id/ip_3"
+            android:singleLine="true"
+            android:text="@string/dot"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ip_4"
+            android:labelFor="@id/ip_4"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/dot_3"
+            android:layout_toRightOf="@id/dot_3"
+            android:gravity="bottom"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true" />
+    </RelativeLayout>
+</RelativeLayout>

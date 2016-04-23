@@ -7,9 +7,9 @@
             android:entryValues="@array/sertype_array"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null" />
-        <EditTextPreference
+        <com.te.UI.MyIPPreference
             android:title="@string/pref_header_ip"
-            android:key="ip_key"/>
+            android:key="@string/host_ip_key"/>
         <EditTextPreference
             android:title="@string/pref_header_port"
             android:key="port_key"/>
