@@ -25,6 +25,21 @@ public class TESettings {
     }
 
     public static class SessionSetting {
+        public String getHostPort() {
+            Integer nPortLow = mTelnetPort.get(0);
+            Integer nPortHi = mTelnetPort.get(1);
+            Integer nPort = nPortLow + nPortHi * 256;
+            return nPort.toString();
+        }
+
+        public void setHostPort(String port) {
+            Integer nPort = Integer.valueOf(port);
+            Integer nPortLow = nPort % 256;
+            Integer nPortHi = nPort / 256;
+            mTelnetPort.set(0, nPortLow);
+            mTelnetPort.set(1, nPortHi);
+        }
+
     	//Sync
         @SerializedName("TermNameTN")
         public String mTermNameTN="";

@@ -235,21 +235,9 @@ public class CipherConnectSettingInfo {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.SendtoHost=Data;
     }
-    public static String GetHostPortByIndex(int index) {
+    public static String getHostPortByIndex(int index) {
     	 SessionSetting Setting = mTESettings.getSessionSetting(index);
-    	 Integer nPortLow = Setting.mTelnetPort.get(0);
-    	 Integer nPortHi = Setting.mTelnetPort.get(1);
-    	 Integer nPort = nPortLow + nPortHi * 256;
-     	 return nPort.toString();
-    }
-    
-    public static void SetHostPortByIndex(int index,String Port) {
-    	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Integer nPort = Integer.valueOf(Port);
-    	Integer nPortLow = nPort % 256;
-        Integer nPortHi = nPort / 256;
-        Setting.mTelnetPort.set(0, nPortLow);
-        Setting.mTelnetPort.set(1, nPortHi);
+     	 return Setting.getHostPort();
     }
     
     //0:ANSI , 1:utf-8

@@ -43,4 +43,5 @@
     <string name="new_session">New Session</string>
     <string name="host_type_key">host_type_key</string>
     <string name="host_ip_key">host_ip_key</string>
+    <string name="host_port_key">host_port_key</string>
 </resources>

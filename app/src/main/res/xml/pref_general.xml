@@ -12,7 +12,7 @@
             android:key="@string/host_ip_key"/>
         <EditTextPreference
             android:title="@string/pref_header_port"
-            android:key="port_key"/>
+            android:key="@string/host_port_key"/>
         <PreferenceScreen
             android:title="@string/more">
         </PreferenceScreen>

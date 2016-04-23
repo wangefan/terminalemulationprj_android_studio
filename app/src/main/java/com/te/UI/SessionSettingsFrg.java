@@ -25,6 +25,7 @@ public class SessionSettingsFrg extends PreferenceFragment implements
     private String mVTAnsiHostTypeName = "";
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
+    private EditTextPreference mPrefPort = null;
     private TESettings.SessionSetting mSetting = null;
 
     public SessionSettingsFrg() {
@@ -88,7 +89,8 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
         mLstServerIp.setIp(mSetting.mHostIP);
 
-        //Todo:Port
+        mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
+        mPrefPort.setText(mSetting.getHostPort());
 
         initSummary(getPreferenceScreen());
     }
@@ -143,6 +145,8 @@ public class SessionSettingsFrg extends PreferenceFragment implements
             }
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
             mSetting.mHostIP = mLstServerIp.getIp();
+        } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
+            mSetting.setHostPort(mPrefPort.getText());
         }
     }
 }

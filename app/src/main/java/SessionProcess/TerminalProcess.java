@@ -183,7 +183,7 @@ public class TerminalProcess {
     	 boolean IsOK;
     	 Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
     	 String Ip=CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	 String Port=CipherConnectSettingInfo.GetHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	 String Port=CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	 int nIsTN =  CipherConnectSettingInfo.getHostTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	 
     	 if(nIsTN == 0) {
