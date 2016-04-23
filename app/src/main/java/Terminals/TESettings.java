@@ -64,12 +64,20 @@ public class TESettings {
         @SerializedName("isSelected")
         public boolean mIsSelected = false;
 
+        @SerializedName("bNetKeepAlive")
+        public boolean mNetKeepAlive = false;
+
+        @SerializedName("bIsDetectOutRange")
+        public boolean mIsDetectOutRange = false;
+
+        @SerializedName("isSaveLog")
+        public boolean mIsSaveLog = false;
+
         public String LoginName = "";
         public String LoginPassword = "";
         public int nCharSet = 0;	//0:Ansi, 1:UTF8
         public int CursorType = 0; //0:Default, 1:Underline, 2:Block
         public int LineBuffer = 0;
-        public boolean isSaveLog = false;
         public boolean bCursorTracking = false;
         public boolean isShowMacro = false;
         public boolean SSH = false;

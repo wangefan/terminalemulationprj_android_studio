@@ -42,11 +42,11 @@
     <PreferenceCategory
         android:title="@string/network" >
         <CheckBoxPreference
-            android:key="keep_alive_key"
+            android:key="@string/keep_alive_key"
             android:title="@string/keep_alive"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:key="out_range_key"
+            android:key="@string/out_range_key"
             android:title="@string/out_range"
             android:defaultValue="false" />
     </PreferenceCategory>
@@ -59,7 +59,7 @@
     <PreferenceCategory
         android:title="@string/debug" >
         <CheckBoxPreference
-            android:key="log_key"
+            android:key="@string/log_key"
             android:title="@string/generate_log"
             android:defaultValue="false" />
     </PreferenceCategory>

@@ -268,11 +268,7 @@ public class CipherConnectSettingInfo {
     
     public static boolean getHostIsWriteLogkByIndex(int index) {
     	 SessionSetting Setting=mTESettings.getSessionSetting(index);
-     	 return Setting.isSaveLog;
-    }
-    public static void SetHostIsWriteLogByIndex(int index, boolean IsWriteLog) {
-    	SessionSetting Setting = mTESettings.getSessionSetting(index);
-    	Setting.isSaveLog = IsWriteLog;
+     	 return Setting.mIsSaveLog;
     }
     
     public static Boolean getHostIsShowMacroByIndex(int index) {

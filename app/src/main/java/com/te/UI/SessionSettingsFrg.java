@@ -2,6 +2,7 @@ package com.te.UI;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -26,6 +27,9 @@ public class SessionSettingsFrg extends PreferenceFragment implements
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
     private EditTextPreference mPrefPort = null;
+    private CheckBoxPreference mCkNetworkAlive = null;
+    private CheckBoxPreference mCkDetectOut = null;
+    private CheckBoxPreference mCkGenLog = null;
     private TESettings.SessionSetting mSetting = null;
 
     public SessionSettingsFrg() {
@@ -92,6 +96,15 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
         mPrefPort.setText(mSetting.getHostPort());
 
+        mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
+        mCkNetworkAlive.setChecked(mSetting.mNetKeepAlive);
+
+        mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
+        mCkDetectOut.setChecked(mSetting.mIsDetectOutRange);
+
+        mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
+        mCkGenLog.setChecked(mSetting.mIsSaveLog);
+
         initSummary(getPreferenceScreen());
     }
 
@@ -147,6 +160,12 @@ public class SessionSettingsFrg extends PreferenceFragment implements
             mSetting.mHostIP = mLstServerIp.getIp();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
             mSetting.setHostPort(mPrefPort.getText());
+        } else if(key.compareTo(getResources().getString(R.string.keep_alive_key)) == 0) {
+            mSetting.mNetKeepAlive = mCkNetworkAlive.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.out_range_key)) == 0) {
+            mSetting.mIsDetectOutRange = mCkDetectOut.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.log_key)) == 0) {
+            mSetting.mIsSaveLog = mCkGenLog.isChecked();
         }
     }
 }
