@@ -9,11 +9,11 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
    
-    <string name="IBM5250Val">IBM5250</string>
-    <string name="IBM3270Val">IBM3270</string>
+    <string name="IBM5250Val">ibm5250</string>
+    <string name="IBM3270Val">ibm3270</string>
 	<string name="VT100Val">vt100</string>
 	<string name="VT102Val">vt102</string>
-	<string name="VT220Val">VT220</string>
+	<string name="VT220Val">vt220</string>
 	<string name="ANSIVal">ansi</string>
     <string-array name="sertype_array">
         <item>@string/IBM5250Val</item>
@@ -23,8 +23,8 @@
         <item>@string/ANSIVal</item>
     </string-array>
 
-    <string name="pref_header_ip">IP:</string>
-    <string name="pref_header_port">Port:</string>
+    <string name="pref_header_ip">IP</string>
+    <string name="pref_header_port">Port</string>
     <string name="more">More...</string>
     <string name="emulation_setting">Emulation Settings</string>
     <string name="server_setting">Server Settings</string>

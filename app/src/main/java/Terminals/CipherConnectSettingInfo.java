@@ -166,7 +166,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostTypeByIndex(int index, int nIsTN) {
         SessionSetting Setting=mTESettings.getSessionSetting(index);
         Setting.mIsTN = nIsTN;
-        SessionSettingSave();
     }
     
     public static String getTNHostTypeNameByIndex(int index) {
@@ -178,7 +177,6 @@ public class CipherConnectSettingInfo {
     public static void SetTNHostTypeNameByIndex(int index,String HostType) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.mTermNameTN = HostType;
-    	SessionSettingSave();
     }
     
     
@@ -191,7 +189,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostTypeNameByIndex(int index,String HostType) {
         SessionSetting Setting=mTESettings.getSessionSetting(index);
         Setting.mTermName = HostType;
-        SessionSettingSave();
     }
    
     public static int getHostTermLoginByIndex(int index) {
@@ -227,7 +224,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostAddrByIndex(int index,String HostAddr) {
     	SessionSetting Setting= mTESettings.getSessionSetting(index);
     	Setting.mHostIP = HostAddr;
-    	SessionSettingSave();
     }
     //SendtoHost
     public static byte[] GetHostSendToHostByIndex(int index) {
@@ -238,7 +234,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostSendToHostByIndex(int index,byte[] Data) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.SendtoHost=Data;
-    	SessionSettingSave();
     }
     public static String GetHostPortByIndex(int index) {
     	 SessionSetting Setting = mTESettings.getSessionSetting(index);
@@ -319,7 +314,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostLanguageByIndex(int index,String Language) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.Language=Language;
-    	SessionSettingSave();
     }
     
     
@@ -331,7 +325,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostFieldexceedByIndex(int index,String Fieldexceed) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.Fieldexceed=Fieldexceed;
-    	SessionSettingSave();
     }
     
     public static Boolean getHostIsAutoconnectByIndex(int index) {
@@ -342,7 +335,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostIsAutoconnectByIndex(int index,Boolean IsAutoconnect) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.bAutoConnect=IsAutoconnect;
-    	SessionSettingSave();
     }
     
     
@@ -354,7 +346,6 @@ public class CipherConnectSettingInfo {
     public static void SetHostIsAutoSignByIndex(int index,Boolean IsAutoSign) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
     	Setting.mBAutoSignOn=IsAutoSign;
-    	SessionSettingSave();
     }
     
     public static String getHostLoginPromtByIndex(int index) {

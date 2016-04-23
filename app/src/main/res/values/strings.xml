@@ -41,5 +41,6 @@
     <string name="str_generateLog">Generate Log</string>
     <string name="setting_title">Session %s</string>
     <string name="new_session">New Session</string>
+    <string name="host_type_key">host_type_key</string>
 
 </resources>

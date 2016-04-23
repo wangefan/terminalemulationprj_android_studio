@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.terminalemulation.R;
 import Terminals.CipherConnectSettingInfo;
+import Terminals.CipherReaderControl;
 import Terminals.TESettings;
 
 public class SessionSettings extends AppCompatActivity {
@@ -72,8 +73,16 @@ public class SessionSettings extends AppCompatActivity {
             });
         }
          // Display the fragment as the main content.
+        SessionSettingsFrg settingsFrg = new SessionSettingsFrg();
+        settingsFrg.setSessionSeting(gEditSessionSetting);
         getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new SessionSettingsFrg(gEditSessionSetting))
+                .replace(R.id.content_frame, settingsFrg)
                 .commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CipherConnectSettingInfo.SessionSettingSave();
     }
 }

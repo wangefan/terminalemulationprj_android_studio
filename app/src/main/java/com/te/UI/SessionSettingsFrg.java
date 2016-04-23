@@ -1,22 +1,19 @@
 package com.te.UI;
 
-import com.cipherlab.barcode.BuildConfig;
-import com.example.terminalemulation.R;
-import Terminals.CipherConnectSettingInfo;
-import Terminals.TESettings;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import com.cipherlab.barcode.BuildConfig;
+import com.example.terminalemulation.R;
+import Terminals.TESettings;
 
-public class SessionSettingsFrg extends PreferenceFragment {
+public class SessionSettingsFrg extends PreferenceFragment implements
+        SharedPreferences.OnSharedPreferenceChangeListener {
     //constanct
     final String IP_SEP = "\\.";
     //Data members
@@ -26,34 +23,41 @@ public class SessionSettingsFrg extends PreferenceFragment {
     private String mVT102HostTypeName = "";
     private String mVT220HostTypeName = "";
     private String mVTAnsiHostTypeName = "";
+    private ListPreference mLstServerType = null;
     private TESettings.SessionSetting mSetting = null;
-    private EditText [] mEdIp = new EditText[4];
-    private EditText mEdPort;
-    private CheckBox mCkNetworkAlive = null;
-    private CheckBox mCkUpperCase = null;
-    private CheckBox mCkNetwork = null;
-    private CheckBox mCkAutoFullScreen = null;
-    private CheckBox mCkDetectOut = null;
-    private CheckBox mCkAutoConnect = null;
-    private LinearLayout mAutoSignOnLayout = null;
-    private CheckBox mCkAutoSignOn = null;
-    private LinearLayout mAutoSignOnNameLayout = null;
-    private EditText mEdAutoSignOnName = null;
-    private LinearLayout mAutoSignOnPwdLayout = null;
-    private EditText mEdAutoSignOnPwd = null;
-    private CheckBox mCkGenLog = null;
-    
-	public SessionSettingsFrg(TESettings.SessionSetting setting) {
+
+    public SessionSettingsFrg() {
+    }
+
+    public void setSessionSeting(TESettings.SessionSetting setting) {
         mSetting = setting;
     }
-	
-	private void setEnableAll(ViewGroup group, boolean bEnable) {
-	    for (int idxChild = 0; idxChild < group.getChildCount(); idxChild++) {
-	        View child = group.getChildAt(idxChild);
-	        child.setEnabled(bEnable);
-	    }
-	    group.setEnabled(bEnable);
-	}
+
+    private void initSummary(Preference p) {
+        if (p instanceof PreferenceGroup) {
+            PreferenceGroup pGrp = (PreferenceGroup) p;
+            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
+                initSummary(pGrp.getPreference(i));
+            }
+        } else {
+            updatePrefSummary(p);
+        }
+    }
+
+    private void updatePrefSummary(Preference p) {
+        if (p instanceof ListPreference) {
+            ListPreference listPref = (ListPreference) p;
+            p.setSummary(listPref.getEntry());
+        } else if (p instanceof EditTextPreference) {
+            EditTextPreference editTextPref = (EditTextPreference) p;
+            if (p.getTitle().toString().toLowerCase().contains("password"))
+            {
+                p.setSummary("******");
+            } else {
+                p.setSummary(editTextPref.getText());
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,13 +73,34 @@ public class SessionSettingsFrg extends PreferenceFragment {
         mVT220HostTypeName = getResources().getString(R.string.VT220Val);
         mVTAnsiHostTypeName = getResources().getString(R.string.ANSIVal);
 
-        ListPreference prfServerType = (ListPreference) findPreference("host_type_key");
+        //Server type UI
+        mLstServerType = (ListPreference) findPreference(getResources().getString(R.string.host_type_key));
         if(mSetting.mIsTN == 0) {
-            prfServerType.setSummary(mSetting.mTermName);
+            mLstServerType.setValue(mSetting.mTermName);
         } else {
-            prfServerType.setSummary(mSetting.mTermNameTN);
+            mLstServerType.setValue(mSetting.mTermNameTN);
         }
 
+        //Todo:IP address
+        //Todo:Port
+
+        initSummary(getPreferenceScreen());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set up a listener whenever a key changes
+        getPreferenceScreen().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Unregister the listener whenever a key changes
+        getPreferenceScreen().getSharedPreferences()
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -88,5 +113,28 @@ public class SessionSettingsFrg extends PreferenceFragment {
     public void onDestroyView() {
         if(BuildConfig.DEBUG) Log.d("TE", "onDestroyView");
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        updatePrefSummary(findPreference(key));
+        if(key.compareTo(getResources().getString(R.string.host_type_key)) == 0) {
+            String selHostTypeName = mLstServerType.getValue();
+            if(selHostTypeName.compareToIgnoreCase(mTN5250HostTypeName) == 0 ||
+                    selHostTypeName.compareToIgnoreCase(mTN3270HostTypeName) == 0) {
+                mSetting.mIsTN = 1;
+            } else if(selHostTypeName.compareToIgnoreCase(mVT100HostTypeName) == 0 ||
+                    selHostTypeName.compareToIgnoreCase(mVT102HostTypeName) == 0 ||
+                    selHostTypeName.compareToIgnoreCase(mVT220HostTypeName) == 0 ||
+                    selHostTypeName.compareToIgnoreCase(mVTAnsiHostTypeName) == 0){
+                mSetting.mIsTN = 0;
+            }
+
+            if(mSetting.mIsTN == 0) {
+                mSetting.mTermName = selHostTypeName;
+            } else {
+                mSetting.mTermNameTN = selHostTypeName;
+            }
+        }
     }
 }
