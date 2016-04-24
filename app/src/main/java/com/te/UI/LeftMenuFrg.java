@@ -103,13 +103,8 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
-                if(mSessionsView.isSNItemShowDelete(position) == false) {
-                    mLeftMenuListener.onDrawerItemSelected(position);
-                    mDrawerLayout.closeDrawer(LeftMenuFrg.this.getView());
-                } else {
-                    mSessionsView.snItemShowDelete(position, false);
-                }
+                mLeftMenuListener.onDrawerItemSelected(position);
+                mDrawerLayout.closeDrawer(LeftMenuFrg.this.getView());
             }
         });
         
