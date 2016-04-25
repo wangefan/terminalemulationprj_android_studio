@@ -266,12 +266,20 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	}
 
 	@Override
+	public void onDrawerItemDelete(int position) {
+
+	}
+
+	@Override
+	public void onDrawerItemSetting(int position) {
+		SessionSetting(position);
+	}
+
+	@Override
 	public void onAddSession() {
 		if(CipherConnectSettingInfo.GetSessionCount() < CipherConnectSettingInfo.MAX_SESSION_COUNT) {
 			Intent intent = new Intent(this, SessionSettings.class);
 			intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_ADD);
-			String strTitle = getResources().getString(R.string.new_session);
-			intent.putExtra(SessionSettings.ACT_SETTING_GET_TITLE, strTitle);
 			startActivityForResult(intent, SessionSettings.REQ_ADD);
 		}
 	}
@@ -337,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
         		 SessionDisConnect();
              break;
          case R.id.sessionSettings:
-        	 SessionSetting();
+        	 SessionSetting(CipherConnectSettingInfo.GetSessionIndex());
              break;
         }
 		return super.onOptionsItemSelected(item);
@@ -533,13 +541,11 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
         ConnectBut.setVisibility(View.VISIBLE);
 
     }
-    
 
-	private void SessionSetting() {
+	private void SessionSetting(int nSessionIdx) {
 		Intent intent = new Intent(this, SessionSettings.class);
 		intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
-		String strTitle = String.format(getResources().getString(R.string.setting_title), CipherConnectSettingInfo.GetSessionIndex());
-		intent.putExtra(SessionSettings.ACT_SETTING_GET_TITLE, strTitle);
+		intent.putExtra(SessionSettings.ACT_SETTING_EDIT_GET_SESSION_IDX, nSessionIdx);
         startActivityForResult(intent, SessionSettings.REQ_EDIT);
     }
 	 

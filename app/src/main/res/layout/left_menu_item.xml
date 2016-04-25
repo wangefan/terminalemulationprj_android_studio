@@ -42,11 +42,11 @@
             android:textSize="15sp"/>
 
         <RelativeLayout
+            android:id="@+id/session_setting_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="2"
-            android:clickable="true" >
+            android:layout_weight="2">
 
             <ImageView
                 android:id="@+id/session_setting"

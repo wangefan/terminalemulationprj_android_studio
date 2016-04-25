@@ -18,8 +18,9 @@ public class SessionSettings extends AppCompatActivity {
     public static final int REQ_ADD = 2;
     public static final String ACT_SETTING = "ACT_SETTING";
     public static final String ACT_SETTING_EDIT = "ACT_SETTING_EDIT";
+    public static final String ACT_SETTING_EDIT_GET_SESSION_IDX = "ACT_SETTING_EDIT_GET_SESSION_IDX";
     public static final String ACT_SETTING_ADD = "ACT_SETTING_ADD";
-    public static final String ACT_SETTING_GET_TITLE = "ACT_SETTING_GET_TITLE";
+
     public static TESettings.SessionSetting gEditSessionSetting = null;
  
     @Override
@@ -39,11 +40,12 @@ public class SessionSettings extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         Intent intent = getIntent();
         String act = intent.getStringExtra(ACT_SETTING);
-        String title = intent.getStringExtra(ACT_SETTING_GET_TITLE);
-        tvTitle.setText(title);
 
         if(act.compareToIgnoreCase(ACT_SETTING_EDIT) == 0) {
-            gEditSessionSetting = CipherConnectSettingInfo.getSessionSetting(CipherConnectSettingInfo.GetSessionIndex());
+            int nEditSessionIdx = intent.getIntExtra(ACT_SETTING_EDIT_GET_SESSION_IDX, 0);
+            String strTitle = String.format(getResources().getString(R.string.setting_title), nEditSessionIdx);
+            tvTitle.setText(strTitle);
+            gEditSessionSetting = CipherConnectSettingInfo.getSessionSetting(nEditSessionIdx);
             layBack.setVisibility(View.VISIBLE);
             layCancel.setVisibility(View.GONE);
             layOK.setVisibility(View.GONE);
@@ -54,6 +56,8 @@ public class SessionSettings extends AppCompatActivity {
                 }
             });
         } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
+            String strTitle = getResources().getString(R.string.new_session);
+            tvTitle.setText(strTitle);
             gEditSessionSetting = new TESettings.SessionSetting();
             layBack.setVisibility(View.GONE);
             layCancel.setVisibility(View.VISIBLE);

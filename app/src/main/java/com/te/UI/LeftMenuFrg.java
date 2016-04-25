@@ -21,6 +21,8 @@ public class LeftMenuFrg extends Fragment {
 
     public interface LeftMenuListener {
         public void onDrawerItemSelected(int position);
+        public void onDrawerItemDelete(int position);
+        public void onDrawerItemSetting(int position);
         public void onAddSession();
         public void onAbout();
         public void onExit();
@@ -105,6 +107,18 @@ public class LeftMenuFrg extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mLeftMenuListener.onDrawerItemSelected(position);
                 mDrawerLayout.closeDrawer(LeftMenuFrg.this.getView());
+            }
+        });
+
+        mSessionsView.setOnItemClickPartListener(new SessionsView.OnItemClickPartListener() {
+            @Override
+            public void onItemClickDelete(int pos) {
+                mLeftMenuListener.onDrawerItemDelete(pos);
+            }
+
+            @Override
+            public void onItemClickSetting(int pos) {
+                mLeftMenuListener.onDrawerItemSetting(pos);
             }
         });
         

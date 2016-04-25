@@ -19,12 +19,13 @@ import java.util.List;
 public class SessionsView extends ListView {
 	//Inner classes begin
 	private class SessionItem {
-		String mTitle;
+		public String mTitle;
+		public boolean mIsShowDelete = false;
 		SessionItem (String title) {
 			mTitle = title;
 		}
 	}
-	
+
 	public class SessionItemsAdapter extends BaseSwipeAdapter {
 		private Context mContext;
 		public SessionItemsAdapter(Context context) {
@@ -53,7 +54,7 @@ public class SessionsView extends ListView {
 		}
 
 		@Override
-		public View generateView(int position, ViewGroup viewGroup) {
+		public View generateView(final int position, ViewGroup viewGroup) {
 			View convertView = mInflater.inflate(R.layout.left_menu_item, null);
 			SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(getSwipeLayoutResourceId(position));
 			swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
@@ -61,22 +62,14 @@ public class SessionsView extends ListView {
 			swipeLayout.addSwipeListener(new SimpleSwipeListener() {
 				@Override
 				public void onOpen(SwipeLayout layout) {
-					//YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+					SessionItem item = (SessionItem) getItem(position);
+					item.mIsShowDelete = true;
+				}
+				public void onClose(SwipeLayout layout) {
+					SessionItem item = (SessionItem) getItem(position);
+					item.mIsShowDelete = false;
 				}
 			});
-			swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-				@Override
-				public void onDoubleClick(SwipeLayout layout, boolean surface) {
-					Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
-				}
-			});
-			convertView.findViewById(R.id.delete_layout).setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
-				}
-			});
-
 			return convertView;
 		}
 
@@ -85,51 +78,67 @@ public class SessionsView extends ListView {
 			SessionItem item = mSessionItems.get(position);
 			TextView tvTitle = (TextView) view.findViewById(R.id.title);
 			tvTitle.setText(item.mTitle);
+			final int posPass = position;
+
+			view.findViewById(R.id.delete_layout).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					if(mItemListener != null) {
+						mItemListener.onItemClickDelete(posPass);
+					}
+				}
+			});
+
+			view.findViewById(R.id.session_setting_layout).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					if(mItemListener != null) {
+						mItemListener.onItemClickSetting(posPass);
+					}
+				}
+			});
 		}
 	}
 	//Inner classes end
+	public interface OnItemClickPartListener {
+		void onItemClickDelete(int pos);
+		void onItemClickSetting(int pos);
+	}
 
 	//Members
 	private LayoutInflater mInflater;
 	private List<SessionItem> mSessionItems = new ArrayList<SessionItem>();
+	private OnItemClickPartListener mItemListener;
 
 	public SessionsView(Context context) {
 		super(context);
 		this.setAdapter(new SessionItemsAdapter(context));
 	}
-	
+
 	public SessionsView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.setAdapter(new SessionItemsAdapter(context));
 	}
-		
+
 	public SessionsView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		this.setAdapter(new SessionItemsAdapter(context));
 	}
-	
+
 	//Functions
+	public void setOnItemClickPartListener(OnItemClickPartListener itemListener) {
+		mItemListener = itemListener;
+	}
+
 	public void addSession(String strSessionTitle) {
 		mSessionItems.add(new SessionItem(strSessionTitle));
 	}
-	
+
 	public void setSelected(int nPos) {
 		setItemChecked(nPos, true);
 	}
-	
+
 	public String getSessionTitle(int nPos) {
 		return mSessionItems.get(nPos).mTitle;
-	}
-
-	public boolean isSNItemShowDelete(int position) {
-		View item = getChildAt(position);
-		if(item == null)
-			return false;
-
-		RelativeLayout layRemove = (RelativeLayout) item.findViewById(R.id.delete_layout);
-		if(layRemove != null && layRemove.getVisibility() == View.VISIBLE) {
-			return true;
-		}
-		return false;
 	}
 }
