@@ -1,0 +1,809 @@
+{
+  "LastFieldSuffix": 0,
+  "OtherFieldSuffix": 0,
+  "bCheckLeading": false,
+  "LeadingCode": "",
+  "bCheckCodeLength": false,
+  "CodeLength": 15,
+  "bPartial": false,
+  "PartialBegin": 1,
+  "PartialLength": 20,
+  "bScanControl": false,
+  "LocalName": "",
+  "HostIPorName": "192.168.1.100",
+  "ActiveHost": 0,
+  "TelnetPort": [
+    23,
+    0
+  ],
+  "WindowsTitle": "Terminal Emulation",
+  "LoginName": "guest",
+  "LoginPassword": "",
+  "NamePrompt": "Login:",
+  "PassPrompt": "Password:",
+  "TermName": "vt100",
+  "TermNameTN": "IBM5250",
+  "sendStringOnConnect": "",
+  "LineBuffer": 0,
+  "bEcho": false,
+  "Replace1": "",
+  "Replace2": "",
+  "Replace3": "",
+  "Replace4": "",
+  "isControlFeedbackByCmd": false,
+  "bWorkMode": false,
+  "TELanguage": 0,
+  "Navigator": 0,
+  "bCursorTracking": true,
+  "nCursorLockCol": 0,
+  "nCursorLockRow": 0,
+  "bCursorVisible": true,
+  "bCursorCenter": false,
+  "bCursorLocked": false,
+  "nTN3270KeyConfigCount": 49,
+  "TN3270KeyConfig": [
+    {
+      "TNPhyKeyCode": 8,
+      "TNFunKeyVal": 47
+    },
+    {
+      "TNPhyKeyCode": 9,
+      "TNFunKeyVal": 34
+    },
+    {
+      "TNPhyKeyCode": 13,
+      "TNFunKeyVal": 45
+    },
+    {
+      "TNPhyKeyCode": 27,
+      "TNFunKeyVal": 44
+    },
+    {
+      "TNPhyKeyCode": 34,
+      "TNFunKeyVal": 57
+    },
+    {
+      "TNPhyKeyCode": 35,
+      "TNFunKeyVal": 27
+    },
+    {
+      "TNPhyKeyCode": 37,
+      "TNFunKeyVal": 46
+    },
+    {
+      "TNPhyKeyCode": 38,
+      "TNFunKeyVal": 64
+    },
+    {
+      "TNPhyKeyCode": 39,
+      "TNFunKeyVal": 63
+    },
+    {
+      "TNPhyKeyCode": 40,
+      "TNFunKeyVal": 65
+    },
+    {
+      "TNPhyKeyCode": 112,
+      "TNFunKeyVal": 1
+    },
+    {
+      "TNPhyKeyCode": 113,
+      "TNFunKeyVal": 2
+    },
+    {
+      "TNPhyKeyCode": 114,
+      "TNFunKeyVal": 3
+    },
+    {
+      "TNPhyKeyCode": 115,
+      "TNFunKeyVal": 4
+    },
+    {
+      "TNPhyKeyCode": 116,
+      "TNFunKeyVal": 5
+    },
+    {
+      "TNPhyKeyCode": 117,
+      "TNFunKeyVal": 6
+    },
+    {
+      "TNPhyKeyCode": 118,
+      "TNFunKeyVal": 7
+    },
+    {
+      "TNPhyKeyCode": 119,
+      "TNFunKeyVal": 8
+    },
+    {
+      "TNPhyKeyCode": 120,
+      "TNFunKeyVal": 9
+    },
+    {
+      "TNPhyKeyCode": 121,
+      "TNFunKeyVal": 10
+    },
+    {
+      "TNPhyKeyCode": 122,
+      "TNFunKeyVal": 39
+    },
+    {
+      "TNPhyKeyCode": 123,
+      "TNFunKeyVal": 61
+    },
+    {
+      "TNPhyKeyCode": 186,
+      "TNFunKeyVal": 40
+    },
+    {
+      "TNPhyKeyCode": 188,
+      "TNFunKeyVal": 108
+    },
+    {
+      "TNPhyKeyCode": 189,
+      "TNFunKeyVal": 41
+    },
+    {
+      "TNPhyKeyCode": 190,
+      "TNFunKeyVal": 110
+    },
+    {
+      "TNPhyKeyCode": 192,
+      "TNFunKeyVal": 37
+    },
+    {
+      "TNPhyKeyCode": 219,
+      "TNFunKeyVal": 29
+    },
+    {
+      "TNPhyKeyCode": 220,
+      "TNFunKeyVal": 25
+    },
+    {
+      "TNPhyKeyCode": 221,
+      "TNFunKeyVal": 59
+    },
+    {
+      "TNPhyKeyCode": 222,
+      "TNFunKeyVal": 107
+    },
+    {
+      "TNPhyKeyCode": 1048,
+      "TNFunKeyVal": 20
+    },
+    {
+      "TNPhyKeyCode": 1049,
+      "TNFunKeyVal": 11
+    },
+    {
+      "TNPhyKeyCode": 1050,
+      "TNFunKeyVal": 12
+    },
+    {
+      "TNPhyKeyCode": 1051,
+      "TNFunKeyVal": 13
+    },
+    {
+      "TNPhyKeyCode": 1052,
+      "TNFunKeyVal": 14
+    },
+    {
+      "TNPhyKeyCode": 1053,
+      "TNFunKeyVal": 15
+    },
+    {
+      "TNPhyKeyCode": 1054,
+      "TNFunKeyVal": 16
+    },
+    {
+      "TNPhyKeyCode": 1055,
+      "TNFunKeyVal": 17
+    },
+    {
+      "TNPhyKeyCode": 1056,
+      "TNFunKeyVal": 18
+    },
+    {
+      "TNPhyKeyCode": 1057,
+      "TNFunKeyVal": 19
+    },
+    {
+      "TNPhyKeyCode": 1112,
+      "TNFunKeyVal": 21
+    },
+    {
+      "TNPhyKeyCode": 1113,
+      "TNFunKeyVal": 22
+    },
+    {
+      "TNPhyKeyCode": 1114,
+      "TNFunKeyVal": 23
+    },
+    {
+      "TNPhyKeyCode": 1115,
+      "TNFunKeyVal": 24
+    },
+    {
+      "TNPhyKeyCode": 1117,
+      "TNFunKeyVal": 36
+    },
+    {
+      "TNPhyKeyCode": 1118,
+      "TNFunKeyVal": 35
+    },
+    {
+      "TNPhyKeyCode": 2027,
+      "TNFunKeyVal": 43
+    },
+    {
+      "TNPhyKeyCode": 2078,
+      "TNFunKeyVal": 60
+    }
+  ],
+  "nTN5250KeyConfigCount": 50,
+  "TN5250KeyConfig": [
+    {
+      "TNPhyKeyCode": 8,
+      "TNFunKeyVal": 47
+    },
+    {
+      "TNPhyKeyCode": 9,
+      "TNFunKeyVal": 34
+    },
+    {
+      "TNPhyKeyCode": 13,
+      "TNFunKeyVal": 45
+    },
+    {
+      "TNPhyKeyCode": 27,
+      "TNFunKeyVal": 44
+    },
+    {
+      "TNPhyKeyCode": 34,
+      "TNFunKeyVal": 31
+    },
+    {
+      "TNPhyKeyCode": 35,
+      "TNFunKeyVal": 27
+    },
+    {
+      "TNPhyKeyCode": 37,
+      "TNFunKeyVal": 46
+    },
+    {
+      "TNPhyKeyCode": 38,
+      "TNFunKeyVal": 64
+    },
+    {
+      "TNPhyKeyCode": 39,
+      "TNFunKeyVal": 63
+    },
+    {
+      "TNPhyKeyCode": 40,
+      "TNFunKeyVal": 65
+    },
+    {
+      "TNPhyKeyCode": 112,
+      "TNFunKeyVal": 1
+    },
+    {
+      "TNPhyKeyCode": 113,
+      "TNFunKeyVal": 2
+    },
+    {
+      "TNPhyKeyCode": 114,
+      "TNFunKeyVal": 3
+    },
+    {
+      "TNPhyKeyCode": 115,
+      "TNFunKeyVal": 4
+    },
+    {
+      "TNPhyKeyCode": 116,
+      "TNFunKeyVal": 5
+    },
+    {
+      "TNPhyKeyCode": 117,
+      "TNFunKeyVal": 6
+    },
+    {
+      "TNPhyKeyCode": 118,
+      "TNFunKeyVal": 7
+    },
+    {
+      "TNPhyKeyCode": 119,
+      "TNFunKeyVal": 8
+    },
+    {
+      "TNPhyKeyCode": 120,
+      "TNFunKeyVal": 9
+    },
+    {
+      "TNPhyKeyCode": 121,
+      "TNFunKeyVal": 10
+    },
+    {
+      "TNPhyKeyCode": 122,
+      "TNFunKeyVal": 35
+    },
+    {
+      "TNPhyKeyCode": 123,
+      "TNFunKeyVal": 39
+    },
+    {
+      "TNPhyKeyCode": 186,
+      "TNFunKeyVal": 40
+    },
+    {
+      "TNPhyKeyCode": 188,
+      "TNFunKeyVal": 57
+    },
+    {
+      "TNPhyKeyCode": 189,
+      "TNFunKeyVal": 41
+    },
+    {
+      "TNPhyKeyCode": 190,
+      "TNFunKeyVal": 48
+    },
+    {
+      "TNPhyKeyCode": 192,
+      "TNFunKeyVal": 36
+    },
+    {
+      "TNPhyKeyCode": 219,
+      "TNFunKeyVal": 29
+    },
+    {
+      "TNPhyKeyCode": 220,
+      "TNFunKeyVal": 25
+    },
+    {
+      "TNPhyKeyCode": 221,
+      "TNFunKeyVal": 61
+    },
+    {
+      "TNPhyKeyCode": 222,
+      "TNFunKeyVal": 42
+    },
+    {
+      "TNPhyKeyCode": 1037,
+      "TNFunKeyVal": 58
+    },
+    {
+      "TNPhyKeyCode": 1038,
+      "TNFunKeyVal": 37
+    },
+    {
+      "TNPhyKeyCode": 1048,
+      "TNFunKeyVal": 20
+    },
+    {
+      "TNPhyKeyCode": 1049,
+      "TNFunKeyVal": 11
+    },
+    {
+      "TNPhyKeyCode": 1050,
+      "TNFunKeyVal": 12
+    },
+    {
+      "TNPhyKeyCode": 1051,
+      "TNFunKeyVal": 13
+    },
+    {
+      "TNPhyKeyCode": 1052,
+      "TNFunKeyVal": 14
+    },
+    {
+      "TNPhyKeyCode": 1053,
+      "TNFunKeyVal": 15
+    },
+    {
+      "TNPhyKeyCode": 1054,
+      "TNFunKeyVal": 16
+    },
+    {
+      "TNPhyKeyCode": 1055,
+      "TNFunKeyVal": 17
+    },
+    {
+      "TNPhyKeyCode": 1056,
+      "TNFunKeyVal": 18
+    },
+    {
+      "TNPhyKeyCode": 1057,
+      "TNFunKeyVal": 19
+    },
+    {
+      "TNPhyKeyCode": 1112,
+      "TNFunKeyVal": 21
+    },
+    {
+      "TNPhyKeyCode": 1113,
+      "TNFunKeyVal": 22
+    },
+    {
+      "TNPhyKeyCode": 1114,
+      "TNFunKeyVal": 23
+    },
+    {
+      "TNPhyKeyCode": 1115,
+      "TNFunKeyVal": 24
+    },
+    {
+      "TNPhyKeyCode": 2013,
+      "TNFunKeyVal": 32
+    },
+    {
+      "TNPhyKeyCode": 2027,
+      "TNFunKeyVal": 43
+    },
+    {
+      "TNPhyKeyCode": 2078,
+      "TNFunKeyVal": 60
+    }
+  ],
+  "nVT220KeyConfigCount": 36,
+  "VT220KeyConfig": [
+    {
+      "VTPhyKeyCode": 8,
+      "VTFunKeyVal": 26
+    },
+    {
+      "VTPhyKeyCode": 9,
+      "VTFunKeyVal": 25
+    },
+    {
+      "VTPhyKeyCode": 13,
+      "VTFunKeyVal": 29
+    },
+    {
+      "VTPhyKeyCode": 27,
+      "VTFunKeyVal": 34
+    },
+    {
+      "VTPhyKeyCode": 34,
+      "VTFunKeyVal": 27
+    },
+    {
+      "VTPhyKeyCode": 35,
+      "VTFunKeyVal": 30
+    },
+    {
+      "VTPhyKeyCode": 37,
+      "VTFunKeyVal": 28
+    },
+    {
+      "VTPhyKeyCode": 38,
+      "VTFunKeyVal": 31
+    },
+    {
+      "VTPhyKeyCode": 39,
+      "VTFunKeyVal": 33
+    },
+    {
+      "VTPhyKeyCode": 40,
+      "VTFunKeyVal": 32
+    },
+    {
+      "VTPhyKeyCode": 112,
+      "VTFunKeyVal": 1
+    },
+    {
+      "VTPhyKeyCode": 113,
+      "VTFunKeyVal": 2
+    },
+    {
+      "VTPhyKeyCode": 114,
+      "VTFunKeyVal": 3
+    },
+    {
+      "VTPhyKeyCode": 115,
+      "VTFunKeyVal": 4
+    },
+    {
+      "VTPhyKeyCode": 116,
+      "VTFunKeyVal": 5
+    },
+    {
+      "VTPhyKeyCode": 117,
+      "VTFunKeyVal": 6
+    },
+    {
+      "VTPhyKeyCode": 118,
+      "VTFunKeyVal": 7
+    },
+    {
+      "VTPhyKeyCode": 119,
+      "VTFunKeyVal": 8
+    },
+    {
+      "VTPhyKeyCode": 120,
+      "VTFunKeyVal": 9
+    },
+    {
+      "VTPhyKeyCode": 121,
+      "VTFunKeyVal": 10
+    },
+    {
+      "VTPhyKeyCode": 1048,
+      "VTFunKeyVal": 20
+    },
+    {
+      "VTPhyKeyCode": 1049,
+      "VTFunKeyVal": 11
+    },
+    {
+      "VTPhyKeyCode": 1050,
+      "VTFunKeyVal": 12
+    },
+    {
+      "VTPhyKeyCode": 1051,
+      "VTFunKeyVal": 13
+    },
+    {
+      "VTPhyKeyCode": 1052,
+      "VTFunKeyVal": 14
+    },
+    {
+      "VTPhyKeyCode": 1053,
+      "VTFunKeyVal": 15
+    },
+    {
+      "VTPhyKeyCode": 1054,
+      "VTFunKeyVal": 16
+    },
+    {
+      "VTPhyKeyCode": 1055,
+      "VTFunKeyVal": 17
+    },
+    {
+      "VTPhyKeyCode": 1056,
+      "VTFunKeyVal": 18
+    },
+    {
+      "VTPhyKeyCode": 1057,
+      "VTFunKeyVal": 19
+    },
+    {
+      "VTPhyKeyCode": 1188,
+      "VTFunKeyVal": 36
+    },
+    {
+      "VTPhyKeyCode": 1190,
+      "VTFunKeyVal": 38
+    },
+    {
+      "VTPhyKeyCode": 1219,
+      "VTFunKeyVal": 39
+    },
+    {
+      "VTPhyKeyCode": 1221,
+      "VTFunKeyVal": 40
+    },
+    {
+      "VTPhyKeyCode": 1222,
+      "VTFunKeyVal": 37
+    },
+    {
+      "VTPhyKeyCode": 2078,
+      "VTFunKeyVal": 35
+    }
+  ],
+  "nVT100_102KeyConfigCount": 21,
+  "VT100_102KeyConfig": [
+    {
+      "VTPhyKeyCode": 8,
+      "VTFunKeyVal": 26
+    },
+    {
+      "VTPhyKeyCode": 9,
+      "VTFunKeyVal": 25
+    },
+    {
+      "VTPhyKeyCode": 13,
+      "VTFunKeyVal": 29
+    },
+    {
+      "VTPhyKeyCode": 27,
+      "VTFunKeyVal": 34
+    },
+    {
+      "VTPhyKeyCode": 34,
+      "VTFunKeyVal": 27
+    },
+    {
+      "VTPhyKeyCode": 35,
+      "VTFunKeyVal": 30
+    },
+    {
+      "VTPhyKeyCode": 37,
+      "VTFunKeyVal": 28
+    },
+    {
+      "VTPhyKeyCode": 38,
+      "VTFunKeyVal": 31
+    },
+    {
+      "VTPhyKeyCode": 39,
+      "VTFunKeyVal": 33
+    },
+    {
+      "VTPhyKeyCode": 40,
+      "VTFunKeyVal": 32
+    },
+    {
+      "VTPhyKeyCode": 112,
+      "VTFunKeyVal": 1
+    },
+    {
+      "VTPhyKeyCode": 113,
+      "VTFunKeyVal": 2
+    },
+    {
+      "VTPhyKeyCode": 114,
+      "VTFunKeyVal": 3
+    },
+    {
+      "VTPhyKeyCode": 115,
+      "VTFunKeyVal": 4
+    },
+    {
+      "VTPhyKeyCode": 116,
+      "VTFunKeyVal": 5
+    },
+    {
+      "VTPhyKeyCode": 1188,
+      "VTFunKeyVal": 36
+    },
+    {
+      "VTPhyKeyCode": 1190,
+      "VTFunKeyVal": 38
+    },
+    {
+      "VTPhyKeyCode": 1219,
+      "VTFunKeyVal": 39
+    },
+    {
+      "VTPhyKeyCode": 1221,
+      "VTFunKeyVal": 40
+    },
+    {
+      "VTPhyKeyCode": 1222,
+      "VTFunKeyVal": 37
+    },
+    {
+      "VTPhyKeyCode": 2078,
+      "VTFunKeyVal": 35
+    }
+  ],
+  "bAutoSignOn": false,
+  "bNetKeepAlive": false,
+  "TermLogin": 0,
+  "cCheckFieldLength": 0,
+  "bUpperCase": false,
+  "bCheckNetwork": false,
+  "RepaceChar": " ",
+  "nFontHeight": 16,
+  "nFontWidth": 8,
+  "nCharSet": 0,
+  "nFontType": 0,
+  "g_ReaderParam": {
+    "isEnableScannerByESCCmd": true,
+    "scannerEnableESC": "\u001b[99h",
+    "scannerDisableESC": "\u001b[99l",
+    "FeedbackControlByCmd": 0,
+    "goodFeedBackESC": "",
+    "goodFeedBackSoundPath": "",
+    "goodFeedVibrationTime": 0,
+    "errorFeedBackESC": "",
+    "errorFeedBackSoundPath": "",
+    "errorFeedVibrationTime": 0,
+    "cmdScannerSoundPath": "",
+    "cmdScannerVibrationTime": 0,
+    "goodFeedBackText": "",
+    "errorFeedBackText": "",
+    "goodFeedBackType": 0,
+    "errorFeedBackType": 0
+  },
+  "LocalNameType": 1,
+  "bAutoConnect": false,
+  "bIBMAutoReset": false,
+  "bChooseRS232": false,
+  "PrtCom": 0,
+  "PrtBRate": 0,
+  "PrtDataBits": 0,
+  "PrtParity": 0,
+  "PrtStopBits": 0,
+  "PrtDTR": 0,
+  "PrtRTS": 0,
+  "bPrtCTS": false,
+  "bPrtDSR": false,
+  "bPrtXmit": false,
+  "bPrtRecv": false,
+  "RS232BRate": 0,
+  "RS232DataBits": 3,
+  "RS232Parity": 2,
+  "RS232StopBits": 0,
+  "RS232DTR": 0,
+  "RS232RTS": 2,
+  "bRS232CTS": false,
+  "bRS232DSR": false,
+  "bRS232Xmit": false,
+  "bRS232Recv": false,
+  "bDataUnConvert": false,
+  "isFullScreen": false,
+  "isAutoFullScreen": false,
+  "bIsDetectOutRange": false,
+  "isShowScrollBar": true,
+  "isShowTaskBarOnFullScreen": false,
+  "isShowSIP": false,
+  "isShowResize": true,
+  "isShowPrinter": false,
+  "isShowSessionStatus": true,
+  "isHWExit": false,
+  "isShowSIPESC": false,
+  "isShowBatteryItem": true,
+  "isShowWifiItem": true,
+  "isShowBatteryAlert": false,
+  "isShowWifiAlert": false,
+  "batteryAlertCBIndex": 5,
+  "batteryAlertCBValue": 0,
+  "wifiAlertCBIndex": 5,
+  "wifiAlertCBValue": 0,
+  "isUpdateBattery": false,
+  "isUpdateWifi": false,
+  "updateBatteryCBIndex": 3,
+  "updateBatteryCBValue": 0,
+  "updateWifiCBIndex": 3,
+  "updateWifiCBValue": 0,
+  "isShowMacro": false,
+  "isShowKeyBar": false,
+  "isShowSession": false,
+  "macroKeyList": [],
+  "isTN": 1,
+  "isSaveLog": false,
+  "isSaveSSHLog": false,
+  "errorRowIndex": 23,
+  "isPupUpErrorDialog": false,
+  "fontColor": [
+    0,
+    0,
+    0
+  ],
+  "fontBgColor": [
+    255,
+    255,
+    255
+  ],
+  "isSelected": true,
+  "ver": "3.0.2",
+  "isEnableProtect": false,
+  "protectorPassword": "",
+  "isProtectSettings": false,
+  "isProtectConnect": false,
+  "isProtectDisconnect": false,
+  "isProtectExit": false,
+  "isProtectExitFullScreen": false,
+  "isActivationed": false,
+  "CursorType": 0,
+  "IconSize": 1,
+  "SSH": false,
+  "Authtype": false,
+  "SSHName": "",
+  "SSHPassword": "",
+  "SSHKeyPath": "",
+  "Ssh_TcpNoDelay": false,
+  "Ssh_NoPseudoTer": false,
+  "Ssh_NoHostShell": false,
+  "Ssh_ReKey60min": false,
+  "Ssh_ReKey1G": false,
+  "Ssh_LogOverwrite": false,
+  "Ssh_ServerEnv": "",
+  "Ssh_ServerCommand": "",
+  "Ssh_ServerTTY": "",
+  "Ssh_ProxyType": "None",
+  "Ssh_ProxyHost": "",
+  "Ssh_ProxyPort": "",
+  "Ssh_ProxyUser": "",
+  "Ssh_ProxyPassword": ""
+}
