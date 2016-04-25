@@ -238,9 +238,9 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 				{
 					CipherConnectSettingInfo.addSession(SessionSettings.gEditSessionSetting);
 					int nAddedSessionIdx = CipherConnectSettingInfo.GetSessionCount() - 1;
-					CipherConnectSettingInfo.SetSessionIndex(nAddedSessionIdx);
 					mCollSessions.add(new TerminalProcess());
-					SessionChange(nAddedSessionIdx);
+					mFragmentLeftdrawer.syncSessionsViewFromSettings();
+					mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
 					SessionSettings.gEditSessionSetting = null;
 				}
 			}

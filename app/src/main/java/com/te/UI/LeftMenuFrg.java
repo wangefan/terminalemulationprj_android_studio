@@ -78,16 +78,31 @@ public class LeftMenuFrg extends Fragment {
         });
  
         // preparing session items
-        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
-            String strTitle = 
-                    String.format(getResources().getString(R.string.Format_Session),
-                                  idxSession,
-                                  CipherConnectSettingInfo.getHostAddrByIndex(idxSession));
-            mSessionsView.addSession(strTitle);
-        }
+        syncSessionsViewFromSettings();
         mSessionsView.setSelected(CipherConnectSettingInfo.GetSessionIndex());
     }
- 
+
+    void syncSessionsViewFromSettings() {
+        mSessionsView.removeAllSessions();
+        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
+            String strTitle =
+                    String.format(getResources().getString(R.string.Format_Session),
+                            idxSession,
+                            CipherConnectSettingInfo.getHostAddrByIndex(idxSession));
+            mSessionsView.addSession(strTitle);
+        }
+        SessionsView.SessionItemsAdapter adapter = (SessionsView.SessionItemsAdapter) mSessionsView.getAdapter();
+        if(adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void clickSession(int position) {
+        mLeftMenuListener.onDrawerItemSelected(position);
+        mDrawerLayout.closeDrawer(LeftMenuFrg.this.getView());
+        mSessionsView.setSelected(position);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -105,8 +120,7 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mLeftMenuListener.onDrawerItemSelected(position);
-                mDrawerLayout.closeDrawer(LeftMenuFrg.this.getView());
+                clickSession(position);
             }
         });
 

@@ -6,17 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.example.terminalemulation.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SessionsView extends ListView {
+
+
 	//Inner classes begin
 	private class SessionItem {
 		public String mTitle;
@@ -27,9 +29,7 @@ public class SessionsView extends ListView {
 	}
 
 	public class SessionItemsAdapter extends BaseSwipeAdapter {
-		private Context mContext;
 		public SessionItemsAdapter(Context context) {
-			mContext = context;
 			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 
@@ -132,6 +132,10 @@ public class SessionsView extends ListView {
 
 	public void addSession(String strSessionTitle) {
 		mSessionItems.add(new SessionItem(strSessionTitle));
+	}
+
+	public void removeAllSessions() {
+		mSessionItems.clear();
 	}
 
 	public void setSelected(int nPos) {
