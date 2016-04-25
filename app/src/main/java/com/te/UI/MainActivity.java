@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
-		
+
+		CipherConnectSettingInfo.SessionSettingSave();
 		// ***************************************************//
 		// Unregister Broadcast Receiver before app close
 		// ***************************************************//
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 
 	@Override
 	public void onDrawerItemDelete(int position) {
-
+		mCollSessions.remove(position);
 	}
 
 	@Override

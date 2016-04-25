@@ -147,7 +147,13 @@ public class CipherConnectSettingInfo {
 
     public static void addSession(SessionSetting snSetting) {
         if(snSetting != null)
-        mTESettings.SETTINGS.add(snSetting);
+            mTESettings.SETTINGS.add(snSetting);
+    }
+
+    public static void removeSession(int pos) {
+        mTESettings.SETTINGS.remove(pos);
+        if(mCurrentSessionIndex >= pos)
+            --mCurrentSessionIndex;
     }
 
     public static void initSharedPreferences(Context c) {

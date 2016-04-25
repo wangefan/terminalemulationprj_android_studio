@@ -134,6 +134,10 @@ public class SessionsView extends ListView {
 		mSessionItems.add(new SessionItem(strSessionTitle));
 	}
 
+	public void removeSession(int pos) {
+		mSessionItems.remove(pos);
+	}
+
 	public void removeAllSessions() {
 		mSessionItems.clear();
 	}

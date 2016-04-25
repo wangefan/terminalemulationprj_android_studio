@@ -124,7 +124,21 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setOnItemClickPartListener(new SessionsView.OnItemClickPartListener() {
             @Override
             public void onItemClickDelete(int pos) {
-                mLeftMenuListener.onDrawerItemDelete(pos);
+                if(pos == CipherConnectSettingInfo.GetSessionIndex()) {
+                    int nPrePos = CipherConnectSettingInfo.GetSessionIndex() - 1;
+                    clickSession(nPrePos); //select previous item
+                    mSessionsView.removeSession(pos);
+                    CipherConnectSettingInfo.removeSession(pos);
+                    mSessionsView.refresh();
+                    mSessionsView.setSelected(nPrePos);
+                    mLeftMenuListener.onDrawerItemDelete(pos);
+                } else {    //pos > CipherConnectSettingInfo.GetSessionIndex() || //pos < CipherConnectSettingInfo.GetSessionIndex()
+                    mSessionsView.removeSession(pos);
+                    CipherConnectSettingInfo.removeSession(pos);
+                    mSessionsView.refresh();
+                    mSessionsView.setSelected(CipherConnectSettingInfo.GetSessionIndex());
+                    mLeftMenuListener.onDrawerItemDelete(pos);
+                }
             }
 
             @Override
