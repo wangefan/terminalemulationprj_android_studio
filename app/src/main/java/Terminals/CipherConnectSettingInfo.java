@@ -27,7 +27,7 @@ public class CipherConnectSettingInfo {
     private static SharedPreferences _sp = null;
     private static int mCurrentSessionIndex;
     
-    static TESettings mTESettings = new TESettings();
+    static TESettings mTESettings = null;
     
 	JsonArray GsonSetting = new JsonArray();
 	
