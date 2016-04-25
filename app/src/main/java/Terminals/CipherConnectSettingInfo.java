@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 public class CipherConnectSettingInfo {
     //public static final String TAG = "CipherConnectSettingInfo";
     final private static String mSettingFilename = "TE_settings.json";
+    final private static String mDefaultSettingFilename = "TE_Default_setting.json";
     final public static int MAX_SESSION_COUNT = 5;
     private static Context mContext = null;
     public static final boolean _DEBUG = false;
@@ -89,6 +90,21 @@ public class CipherConnectSettingInfo {
         } catch (Exception e) {
             
         }
+    }
+
+    public static SessionSetting createNewDefaultSessionSetting()
+    {
+        SessionSetting setting = null;
+        try {
+            InputStream inputStream = mContext.getAssets().open(mDefaultSettingFilename);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            Gson gson = new Gson();
+            setting = gson.fromJson(reader, SessionSetting.class);
+        } catch (Exception e) {
+
+        }
+
+        return setting;
     }
 	
 	public static void SessionSettingSave() {

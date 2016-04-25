@@ -58,7 +58,7 @@ public class SessionSettings extends AppCompatActivity {
         } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
             String strTitle = getResources().getString(R.string.new_session);
             tvTitle.setText(strTitle);
-            gEditSessionSetting = new TESettings.SessionSetting();
+            gEditSessionSetting = CipherConnectSettingInfo.createNewDefaultSessionSetting();
             layBack.setVisibility(View.GONE);
             layCancel.setVisibility(View.VISIBLE);
             layOK.setVisibility(View.VISIBLE);
