@@ -108,7 +108,7 @@ public class LeftMenuFrg extends Fragment {
             }
         });
         
-        LinearLayout layAbout = (LinearLayout) leftMenuView.findViewById(R.id.about);
+        RelativeLayout layAbout = (RelativeLayout) leftMenuView.findViewById(R.id.about);
         layAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +116,7 @@ public class LeftMenuFrg extends Fragment {
             }
         });
         
-        LinearLayout layExit = (LinearLayout) leftMenuView.findViewById(R.id.exit);
+        RelativeLayout layExit = (RelativeLayout) leftMenuView.findViewById(R.id.exit);
         layExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

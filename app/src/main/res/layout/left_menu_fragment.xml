@@ -48,40 +48,42 @@
         style="@style/ListViewStyle"
         android:layout_below="@+id/nav_header_container" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+		android:minHeight="?android:attr/listPreferredItemHeight"
         android:layout_alignParentStart="true"
+		android:layout_alignParentLeft="true"
         android:layout_below="@+id/drawerList"
         android:clickable="true"
-        android:background="?android:attr/selectableItemBackground" 
-        android:orientation="vertical" >
+        android:background="?android:attr/selectableItemBackground">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:paddingStart = "30dp"
-            android:paddingTop="10dp"
+			android:paddingLeft = "30dp"
+			android:layout_centerVertical="true"
             android:text="@string/about"
             android:textSize="15sp" />
-    </LinearLayout>
-     <LinearLayout
+    </RelativeLayout>
+     <RelativeLayout
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+		android:minHeight="?android:attr/listPreferredItemHeight"
         android:layout_alignParentStart="true"
+		android:layout_alignParentLeft="true"
         android:layout_below="@+id/about"
         android:clickable="true"
-        android:background="?android:attr/selectableItemBackground" 
-        android:orientation="vertical" >
+        android:background="?android:attr/selectableItemBackground">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingStart ="30dp"
-            android:paddingTop="10dp"
+			android:paddingStart = "30dp"
+			android:paddingLeft = "30dp"
+			android:layout_centerVertical="true"
             android:text="@string/exit"
             android:textSize="15sp" />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
