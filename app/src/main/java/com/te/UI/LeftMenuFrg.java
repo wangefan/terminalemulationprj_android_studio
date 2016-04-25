@@ -91,10 +91,7 @@ public class LeftMenuFrg extends Fragment {
                             CipherConnectSettingInfo.getHostAddrByIndex(idxSession));
             mSessionsView.addSession(strTitle);
         }
-        SessionsView.SessionItemsAdapter adapter = (SessionsView.SessionItemsAdapter) mSessionsView.getAdapter();
-        if(adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+        mSessionsView.refresh();
     }
 
     public void clickSession(int position) {

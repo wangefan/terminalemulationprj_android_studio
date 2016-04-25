@@ -138,6 +138,14 @@ public class SessionsView extends ListView {
 		mSessionItems.clear();
 	}
 
+	public void refresh() {
+		SessionItemsAdapter adapter = new SessionItemsAdapter(getContext());
+		if(adapter != null) {
+			setAdapter(adapter);
+			adapter.notifyDataSetChanged();
+		}
+	}
+
 	public void setSelected(int nPos) {
 		setItemChecked(nPos, true);
 	}
