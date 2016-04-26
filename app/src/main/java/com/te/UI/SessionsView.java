@@ -19,6 +19,12 @@ import java.util.List;
 public class SessionsView extends ListView {
 
 
+	public void closeAllSessionDeleteView() {
+		for (int idxSession = 0; idxSession < mSessionItems.size(); idxSession++) {
+			((SwipeLayout)(getChildAt(idxSession - getFirstVisiblePosition()))).close(true);
+		}
+	}
+
 	//Inner classes begin
 	private class SessionItem {
 		public String mTitle;
@@ -128,6 +134,10 @@ public class SessionsView extends ListView {
 	//Functions
 	public void setOnItemClickPartListener(OnItemClickPartListener itemListener) {
 		mItemListener = itemListener;
+	}
+
+	public boolean isShowDelete(int pos) {
+		return mSessionItems.get(pos).mIsShowDelete;
 	}
 
 	public void addSession(String strSessionTitle) {

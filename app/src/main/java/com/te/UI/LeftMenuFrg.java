@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.example.terminalemulation.R;
  
 public class LeftMenuFrg extends Fragment {
@@ -119,6 +120,7 @@ public class LeftMenuFrg extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickSession(position);
+                mSessionsView.closeAllSessionDeleteView();
             }
         });
 
