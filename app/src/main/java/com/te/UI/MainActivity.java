@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 
 	    private Toolbar mToolbar;
 	    private LeftMenuFrg mFragmentLeftdrawer;
+		private FloatingActionButton mFAB = null;
 	    ContentView mContentView;
 	    RelativeLayout mMainRelLayout;
 	    CursorView  Cursor;
@@ -61,9 +63,11 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	           	ConnectBut.setVisibility(View.INVISIBLE);
 	           	//TextVer.setVisibility(View.INVISIBLE);
 	           	
-	             UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
-	             UpdateRecordButton();
-	             updateConnMenuItem();
+	            UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
+	            UpdateRecordButton();
+	            updateConnMenuItem();
+				//update FAB
+				mFAB.setImageResource(R.drawable.keyboard);
 	    	}
 	    	
 	    	@Override
@@ -77,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     	        //TextVer.setVisibility(View.VISIBLE);
 	    	    UpdateRecordButtonVisible(false);
 	    	    updateConnMenuItem();
+				//update FAB
+				mFAB.setImageResource(R.drawable.ic_link_variant_white_48dp);
 	    	}
 	    	
 	    	@Override
@@ -157,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
                 getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
         mFragmentLeftdrawer.setUp(mToolbar);
         mFragmentLeftdrawer.setDrawerListener(this);
+
+		mFAB = (FloatingActionButton) findViewById(R.id.fab);
         
         Cursor=new CursorView(this);  
         mContentView = new ContentView(this,Cursor);
