@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.terminalemulation.R;
  
@@ -124,14 +125,29 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setOnItemClickPartListener(new SessionsView.OnItemClickPartListener() {
             @Override
             public void onItemClickDelete(int pos) {
+                if(CipherConnectSettingInfo.GetSessionCount() <= 1) {
+                    Toast.makeText(getContext(), R.string.MSG_DeleteSession_Warn, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(pos == CipherConnectSettingInfo.GetSessionIndex()) {
-                    int nPrePos = CipherConnectSettingInfo.GetSessionIndex() - 1;
-                    clickSession(nPrePos); //select previous item
-                    mSessionsView.removeSession(pos);
-                    CipherConnectSettingInfo.removeSession(pos);
-                    mSessionsView.refresh();
-                    mSessionsView.setSelected(nPrePos);
-                    mLeftMenuListener.onDrawerItemDelete(pos);
+                    if(pos == 0) { //choose next one
+                        int nNextPos = CipherConnectSettingInfo.GetSessionIndex() + 1;
+                        clickSession(nNextPos); //select previous item
+                        mSessionsView.removeSession(pos);
+                        CipherConnectSettingInfo.removeSession(pos);
+                        mSessionsView.refresh();
+                        mSessionsView.setSelected(nNextPos - 1);
+                        mLeftMenuListener.onDrawerItemDelete(pos);
+                    }
+                    else { //choose previous
+                        int nPreviousPos = CipherConnectSettingInfo.GetSessionIndex() - 1;
+                        clickSession(nPreviousPos); //select previous item
+                        mSessionsView.removeSession(pos);
+                        CipherConnectSettingInfo.removeSession(pos);
+                        mSessionsView.refresh();
+                        mSessionsView.setSelected(nPreviousPos);
+                        mLeftMenuListener.onDrawerItemDelete(pos);
+                    }
                 } else {    //pos > CipherConnectSettingInfo.GetSessionIndex() || //pos < CipherConnectSettingInfo.GetSessionIndex()
                     mSessionsView.removeSession(pos);
                     CipherConnectSettingInfo.removeSession(pos);
