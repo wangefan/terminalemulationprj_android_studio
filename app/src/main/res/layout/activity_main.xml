@@ -1,12 +1,12 @@
  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
 	    xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <include layout="@layout/toolbar" />
-        
-	<android.support.v4.widget.DrawerLayout 
+
+	 <include layout="@layout/toolbar" />
+
+	<android.support.v4.widget.DrawerLayout
 	    android:id="@+id/mainActivityDrawer"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
@@ -18,7 +18,7 @@
 		            android:layout_width="fill_parent"
 		            android:layout_height="0dp"
 		            android:layout_weight="1">
-		            
+
 			    <HorizontalScrollView
 			        android:id="@+id/mainHScroll"
 			        android:layout_width="fill_parent"
@@ -42,21 +42,13 @@
 			     <RelativeLayout android:id="@+id/ConnbuttonView" 
 			                              android:layout_width="fill_parent" 
 							        android:layout_height="fill_parent">
-			    
-			          <ImageButton  android:id="@+id/ConnectionButton" 
-			                        android:background="@drawable/connectico"
-						            android:layout_width="80dp"
-							        android:layout_height="80dp"
-							        android:onClick="onConnect" 
-							        android:layout_centerHorizontal="true"
-						            android:layout_centerVertical="true"/>
-			                
-		                <ImageView  android:id="@+id/ImgLogoView" 
+
+					 <ImageView  android:id="@+id/ImgLogoView"
 		                       		android:background="@drawable/logo1"
 					         		android:layout_width="253dp"
 						    		android:layout_height="118dp"
-						        	android:layout_above="@+id/ConnectionButton" 
-						        	android:layout_centerHorizontal="true"/>
+							android:layout_centerHorizontal="true"
+							android:layout_centerVertical="true" />
 	
 		                <RelativeLayout
 		                    android:id="@+id/bottomView"
@@ -100,8 +92,16 @@
 		                        android:background="@drawable/record"
 		                        android:onClick="onClickRec" />
 		                </RelativeLayout>
-	
-			     </RelativeLayout>
+				 </RelativeLayout>
+				<android.support.design.widget.FloatingActionButton
+					android:id="@+id/fab"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_link_variant_white_48dp"
+					android:layout_gravity="bottom|right"
+					android:layout_marginRight="40dp"
+					android:layout_marginBottom="40dp"
+					android:onClick="onConnect" />
 			</FrameLayout>
 			<fragment
 		        android:id="@+id/fragment_left_drawer"
@@ -110,6 +110,6 @@
 		        android:layout_height="match_parent"
 		        android:layout_gravity="start"
 		        tools:layout="@layout/left_menu_fragment" />
-	
+
 	</android.support.v4.widget.DrawerLayout>
 </LinearLayout>

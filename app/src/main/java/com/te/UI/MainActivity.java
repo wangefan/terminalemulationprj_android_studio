@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	    ContentView mContentView;
 	    RelativeLayout mMainRelLayout;
 	    CursorView  Cursor;
-	    ImageView imageView;
 	    MenuItem mMenuItemConn;
 		//MacroRecorder  MacroRec=new MacroRecorder();
 		
