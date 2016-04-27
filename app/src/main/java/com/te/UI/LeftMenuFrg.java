@@ -93,6 +93,8 @@ public class LeftMenuFrg extends Fragment {
                             CipherConnectSettingInfo.getHostAddrByIndex(idxSession));
             mSessionsView.addSession(strTitle);
         }
+        mSessionsView.addSession(getResources().getString(R.string.about));
+        mSessionsView.addSession(getResources().getString(R.string.exit));
         mSessionsView.refresh();
     }
 
@@ -163,24 +165,17 @@ public class LeftMenuFrg extends Fragment {
             public void onItemClickSetting(int pos) {
                 mLeftMenuListener.onDrawerItemSetting(pos);
             }
-        });
-        
-        RelativeLayout layAbout = (RelativeLayout) leftMenuView.findViewById(R.id.about);
-        layAbout.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onItemClickAbout() {
                 mLeftMenuListener.onAbout();
             }
-        });
-        
-        RelativeLayout layExit = (RelativeLayout) leftMenuView.findViewById(R.id.exit);
-        layExit.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onItemClickExit() {
                 mLeftMenuListener.onExit();
             }
         });
- 
         return leftMenuView;
     }
 }

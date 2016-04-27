@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:minHeight="?android:attr/listPreferredItemHeight">
 
-    <!-- Bottom View End-->
+    <!-- Bottom View Begin-->
     <RelativeLayout
         android:id="@+id/delete_layout"
         android:visibility="gone"
