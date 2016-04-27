@@ -31,6 +31,13 @@ public class CipherConnectSettingInfo {
     static TESettings mTESettings = null;
     
 	JsonArray GsonSetting = new JsonArray();
+
+    static void deleteCurrentSetting() {
+        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        if (teJsonFile.exists()) {
+            teJsonFile.delete();
+        }
+    }
 	
 	private static TESettings deSerialize(File teJsonFile)
 	{
@@ -61,8 +68,7 @@ public class CipherConnectSettingInfo {
         }
     }
 	
-	public static void InitSessionParms(Context context)
-    {
+	public static boolean initSessionParms(Context context) {
         mContext = context;
         try {
             File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
@@ -82,14 +88,23 @@ public class CipherConnectSettingInfo {
             }
             
             mTESettings = deSerialize(teJsonFile);
+            if(mTESettings == null || mTESettings.SETTINGS == null)
+                return false;
+
             //Get active session index
             for(int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
                 if(mTESettings.SETTINGS.get(idxSession).mIsSelected)
                     mCurrentSessionIndex = idxSession;
             }
+            return true;
         } catch (Exception e) {
             
         }
+        return false;
+    }
+
+    public static void deleteCurSessionParms() {
+        deleteCurrentSetting();
     }
 
     public static SessionSetting createNewDefaultSessionSetting()
@@ -108,10 +123,10 @@ public class CipherConnectSettingInfo {
     }
 	
 	public static void SessionSettingSave() {
-	    File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
-        if (teJsonFile.exists()) {
-            teJsonFile.delete();
-        }
+        if(mTESettings == null || mTESettings.SETTINGS == null)
+            return;
+        deleteCurrentSetting();
+        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
         try {
             if(teJsonFile.createNewFile()) {
                 //Set active session index

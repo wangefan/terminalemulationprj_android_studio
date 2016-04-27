@@ -13,17 +13,18 @@
 	    android:keepScreenOn="true"
 	    android:focusable="true" >
 	
-		    <FrameLayout
-		            android:id="@+id/container_body"
-		            android:layout_width="fill_parent"
-		            android:layout_height="0dp"
-		            android:layout_weight="1">
+		    <RelativeLayout
+		        android:id="@+id/container_body"
+				android:layout_width="fill_parent"
+		        android:layout_height="0dp"
+				android:layout_weight="1">
 
 			    <HorizontalScrollView
 			        android:id="@+id/mainHScroll"
 			        android:layout_width="fill_parent"
 			        android:layout_height="fill_parent"
-			        android:fillViewport="true" >
+			        android:fillViewport="true"
+					android:layout_above="@+id/software_keyboard_view">
 			
 				        <ScrollView
 					        android:id="@+id/mainVScroll"
@@ -49,8 +50,8 @@
 						    		android:layout_height="118dp"
 							android:layout_centerHorizontal="true"
 							android:layout_centerVertical="true" />
-	
-		                <RelativeLayout
+
+					 <RelativeLayout
 		                    android:id="@+id/bottomView"
 		                    android:layout_width="fill_parent"
 		                    android:layout_height="64dp"
@@ -98,11 +99,21 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:src="@drawable/ic_link_variant_white_48dp"
-					android:layout_gravity="bottom|right"
-					android:layout_marginRight="40dp"
-					android:layout_marginBottom="40dp"
-					android:onClick="onConnect" />
-			</FrameLayout>
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:layout_alignParentBottom="true"
+					android:layout_marginEnd="10dp"
+					android:layout_marginRight="10dp"
+					android:layout_marginBottom="10dp" />
+				<android.inputmethodservice.KeyboardView
+					android:id="@+id/software_keyboard_view"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:focusable="true"
+					android:focusableInTouchMode="true"
+					android:visibility="gone"
+					android:layout_alignParentBottom="true" />
+			</RelativeLayout>
 			<fragment
 		        android:id="@+id/fragment_left_drawer"
 		        android:name="com.te.UI.LeftMenuFrg"

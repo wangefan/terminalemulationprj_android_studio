@@ -9,6 +9,8 @@ import Terminals.ContentView;
 import Terminals.CipherReaderControl;
 import android.content.Context;
 import android.content.Intent;
+import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -35,72 +37,93 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class MainActivity extends AppCompatActivity implements LeftMenuListener {
+	enum FABStatus {
+		Connect,
+		Keyboard,
+		Gone
+	}
+	private Toolbar mToolbar;
+	private LeftMenuFrg mFragmentLeftdrawer;
+	private FloatingActionButton mFAB = null;
+	private KeyboardView mKeyboardView = null;
+	private Keyboard mABCKeyboard = null;
+	ContentView mContentView;
+	RelativeLayout mMainRelLayout;
+	CursorView  Cursor;
+	MenuItem mMenuItemConn;
+	//MacroRecorder  MacroRec=new MacroRecorder();
 
-	    private Toolbar mToolbar;
-	    private LeftMenuFrg mFragmentLeftdrawer;
-		private FloatingActionButton mFAB = null;
-	    ContentView mContentView;
-	    RelativeLayout mMainRelLayout;
-	    CursorView  Cursor;
-	    MenuItem mMenuItemConn;
-		//MacroRecorder  MacroRec=new MacroRecorder();
-		
-		
-		// ReaderManager is using to communicate with Barcode Reader Service
-		//private com.cipherlab.barcode.ReaderManager mReaderManager;
-	    List<TerminalProcess> mCollSessions =new ArrayList<TerminalProcess>();
-	    
-	  
-	    private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() 
-	    {   
-	    	@Override
-	    	public void onConnected()
-	    	{
-	    		RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-	    		//RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);   
-	    		 
-	    		mMainRelLayout.setVisibility(View.VISIBLE);
-	           	ConnectBut.setVisibility(View.INVISIBLE);
-	           	//TextVer.setVisibility(View.INVISIBLE);
-	           	
-	            UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
-	            UpdateRecordButton();
-	            updateConnMenuItem();
-				//update FAB
-				mFAB.setImageResource(R.drawable.keyboard);
-	    	}
-	    	
-	    	@Override
-	    	public void onDisConnected()
-	    	{
-	    		RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-	    		//RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);   
-	    	
-	    		mMainRelLayout.setVisibility(View.INVISIBLE);
-    	        ConnectBut.setVisibility(View.VISIBLE);
-    	        //TextVer.setVisibility(View.VISIBLE);
-	    	    UpdateRecordButtonVisible(false);
-	    	    updateConnMenuItem();
-				//update FAB
-				mFAB.setImageResource(R.drawable.ic_link_variant_white_48dp);
-	    	}
-	    	
-	    	@Override
-	    	public void onDataInputEvent()
-	    	{
-	    		  UpdateRecordButton();
-	    	}
-	    };
 
-	    
-    private void InitializeUserParm()
-    {
-		CipherConnectSettingInfo.InitSessionParms(getApplicationContext());
-		for(int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
-			TerminalProcess Process = new TerminalProcess();
-			mCollSessions.add(Process);
+	// ReaderManager is using to communicate with Barcode Reader Service
+	//private com.cipherlab.barcode.ReaderManager mReaderManager;
+	List<TerminalProcess> mCollSessions =new ArrayList<TerminalProcess>();
+
+
+	private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener()
+	{
+		@Override
+		public void onConnected()
+		{
+			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
+			//RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);
+
+			mMainRelLayout.setVisibility(View.VISIBLE);
+			ConnectBut.setVisibility(View.INVISIBLE);
+			//TextVer.setVisibility(View.INVISIBLE);
+
+			UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
+			UpdateRecordButton();
+			updateConnMenuItem();
+			updateFABStatus(FABStatus.Keyboard);
+		}
+
+		@Override
+		public void onDisConnected()
+		{
+			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
+			//RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);
+
+			mMainRelLayout.setVisibility(View.INVISIBLE);
+			ConnectBut.setVisibility(View.VISIBLE);
+			//TextVer.setVisibility(View.VISIBLE);
+			UpdateRecordButtonVisible(false);
+			updateConnMenuItem();
+			updateFABStatus(FABStatus.Connect);
+		}
+
+		@Override
+		public void onDataInputEvent()
+		{
+			  UpdateRecordButton();
+		}
+	};
+
+	private void updateFABStatus(FABStatus fabStatus) {
+		if(fabStatus == FABStatus.Connect) {
+			mFAB.setImageResource(R.drawable.ic_link_variant_white_48dp);
+			mFAB.setVisibility(View.VISIBLE);
+			mFAB.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					SessionConnect();
+				}
+			});
+		} else if(fabStatus == FABStatus.Keyboard) {
+			mFAB.setImageResource(R.drawable.keyboard);
+			mFAB.setVisibility(View.VISIBLE);
+			mFAB.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mKeyboardView.setVisibility(View.VISIBLE);
+					mKeyboardView.setEnabled(true);
+					updateFABStatus(FABStatus.Gone);
+				}
+			});
+		}else if(fabStatus == FABStatus.Gone) {
+			mFAB.setVisibility(View.GONE);
 		}
 	}
+
     private void UpdateRecordButton()
     {
     	 TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
@@ -147,54 +170,84 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     	 }
     	
     }
+
+	private void initInOnCreate() {
+		for(int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
+			TerminalProcess Process = new TerminalProcess();
+			mCollSessions.add(Process);
+		}
+		mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
+		mToolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(mToolbar);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		mFragmentLeftdrawer = (LeftMenuFrg)
+		getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
+		mFragmentLeftdrawer.setUp(mToolbar);
+		mFragmentLeftdrawer.setDrawerListener(this);
+
+		mFAB = (FloatingActionButton) findViewById(R.id.fab);
+		updateFABStatus(FABStatus.Connect);
+
+		mKeyboardView = (KeyboardView) findViewById(R.id.software_keyboard_view);
+		mABCKeyboard = new Keyboard(this, R.xml.keymain);
+		mKeyboardView.setKeyboard(mABCKeyboard);
+
+		Cursor=new CursorView(this);
+		mContentView = new ContentView(this,Cursor);
+
+		mMainRelLayout.addView(mContentView);
+		mMainRelLayout.addView(Cursor);
+		mMainRelLayout.setVisibility(View.INVISIBLE);
+
+	   /* mReaderManager = ReaderManager.InitInstance(this);
+		filter = new IntentFilter();
+		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_SOFTTRIGGER_DATA);
+		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_PASS_TO_APP);
+		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_READERSERVICE_CONNECTED);*/
+
+		//mReaderManager.SetActive(false);
+
+		this.registerForContextMenu(mMainRelLayout);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
         stdActivityRef.SetCurrActivity(this);
-        InitializeUserParm();
-			
-        mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mFragmentLeftdrawer = (LeftMenuFrg)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
-        mFragmentLeftdrawer.setUp(mToolbar);
-        mFragmentLeftdrawer.setDrawerListener(this);
+		CipherReaderControl.InitReader(this, myDataReceiver);
+		// Initialize User Parm
+		if (true == CipherConnectSettingInfo.initSessionParms(getApplicationContext())) {
+			initInOnCreate();
+		}
+		else {
+			//ask user to try to clear setting, or exit app
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+						case DialogInterface.BUTTON_POSITIVE:
+							CipherConnectSettingInfo.deleteCurSessionParms();
+							if (!CipherConnectSettingInfo.initSessionParms(getApplicationContext())) {
+								//Todo:popup warninig window
+								finish();
+							} else {
+								initInOnCreate();
+							}
+							break;
+						case DialogInterface.BUTTON_NEGATIVE:
+							finish();
+							break;
+					}
+				}
+			};
 
-		mFAB = (FloatingActionButton) findViewById(R.id.fab);
-        
-        Cursor=new CursorView(this);  
-        mContentView = new ContentView(this,Cursor);
-         
-        
-        mMainRelLayout.addView(mContentView);
-        mMainRelLayout.addView(Cursor);
-        mMainRelLayout.setVisibility(View.INVISIBLE);
-        
-      
-       /* mReaderManager = ReaderManager.InitInstance(this);
-    	filter = new IntentFilter(); 
-		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_SOFTTRIGGER_DATA);
-		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_PASS_TO_APP);
-		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_READERSERVICE_CONNECTED);*/
-		 
-		//mReaderManager.SetActive(false);
-        CipherReaderControl.InitReader(this, myDataReceiver);
-		//registerReceiver(myDataReceiver, filter);
-	    //mConnectHandler.post(this.AutoConnRun);
-	    
-	    
-	    this.registerForContextMenu(mMainRelLayout);
-	    
-	   
-       // if (tv!=null)
-			//tv.showSoftKeyboard(tv);
-        
-        //HideKeyboard();
-       // ShowKeyboard();
+			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			builder.setMessage(R.string.MSG_clear_setting).setPositiveButton(R.string.str_positive, dialogClickListener)
+					.setNegativeButton(R.string.str_negative, dialogClickListener);
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
 	}
 	
 	@Override
@@ -324,11 +377,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 		 UpdateRecordButton();
 		
     }  
-    public void onConnect(View v) {
-         
-    	SessionConnect(); 
-		
-    }  
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

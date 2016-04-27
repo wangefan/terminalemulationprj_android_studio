@@ -48,4 +48,7 @@
     <string name="keep_alive_key">keep_alive_key</string>
     <string name="out_range_key">out_range_key</string>
     <string name="log_key">log_key</string>
+    <string name="MSG_clear_setting">Can`t load your setting.</string>
+    <string name="str_positive">Reset setting to default</string>
+    <string name="str_negative">Exit</string>
 </resources>
