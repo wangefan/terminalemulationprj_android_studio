@@ -487,8 +487,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
     {
 		if(CipherConnectSettingInfo.GetSessionIndex() == idxSession)
 			return;
-        TerminalProcess curSeesion = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
-        TerminalProcess nextSession = (TerminalProcess) mCollSessions.get(idxSession);
+        TerminalProcess curSeesion = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess nextSession = mCollSessions.get(idxSession);
 
 		curSeesion.ProcessReleaseView();
         mContentView.ResetView();
