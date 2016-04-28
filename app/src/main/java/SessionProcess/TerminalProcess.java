@@ -65,34 +65,15 @@ public class TerminalProcess {
     
     public void ResetSessionView()
     {
-    	if (mTerminal==null || mTelConn == null)
-    	{
+    	if (mTerminal == null || mTelConn == null) {
     		 if (mListener != null)
     			 mListener.onDisConnected();
-    		 
     		 return;
-    	
         }
-    		
-    	if (mTelConn == null)
-    	{
-    		
-    		{
-       		 if (mListener != null)
-       			mListener.onDisConnected();
-       		 
-       		 return;
-       	
-           }
-    		
-    		
-    	}
     	
-    	if  (!mTelConn.IsConnect())
-        {
+    	if  (!mTelConn.IsConnect()) {
        		 if (mListener != null)
-       			mListener.onDisConnected();
-       		 
+				 mListener.onDisConnected();
        		 return;
         }
     	
