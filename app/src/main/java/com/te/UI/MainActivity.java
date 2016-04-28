@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 			UpdateRecordButton();
 			updateConnMenuItem();
 			updateFABStatus(FABStatus.Keyboard);
+			mKeyboardViewUtility.showTEKeyboard();
 		}
 
 		@Override

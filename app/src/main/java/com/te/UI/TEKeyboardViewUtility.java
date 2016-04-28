@@ -27,7 +27,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_SYMBOL = -13;
     private final int MY_KEYCODE_FUNC = -14;
     private final int MY_KEYCODE_SERVER = -15;
-    private final int MY_KEYCODE_SYSKEY = -16;
+    private final int MY_KEYCODE_HIDE = -16;
+    private final int MY_KEYCODE_SYSKEY = -17;
 
     private Context mContext = null;
     private ContentView mTargetView = null;
@@ -47,6 +48,10 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
 
     private void onKeyABC(int primaryCode, int[] keyCodes) {
         switch(primaryCode) {
+            case MY_KEYCODE_HIDE:
+            {
+                hideTEKeyboard();
+            }
             case MY_KEYCODE_DOWN:
             {
                 keyDownUp(KeyEvent.KEYCODE_DPAD_DOWN);
