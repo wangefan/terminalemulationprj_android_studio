@@ -23,6 +23,11 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_LEFT = -9;
     private final int MY_KEYCODE_RIGHT = -10;
     private final int MY_KEYCODE_TAB = -11;
+    private final int MY_KEYCODE_ABC = -12;
+    private final int MY_KEYCODE_SYMBOL = -13;
+    private final int MY_KEYCODE_FUNC = -14;
+    private final int MY_KEYCODE_SERVER = -15;
+    private final int MY_KEYCODE_SYSKEY = -16;
 
     private Context mContext = null;
     private ContentView mTargetView = null;
@@ -37,6 +42,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mABCKeyboard = new Keyboard(context, R.xml.keyboard_abc);
         mKeyboardView.setKeyboard(mABCKeyboard);
         mKeyboardView.setOnKeyboardActionListener(this);
+        mKeyboardView.setPreviewEnabled(false);
     }
 
     private void onKeyABC(int primaryCode, int[] keyCodes) {
