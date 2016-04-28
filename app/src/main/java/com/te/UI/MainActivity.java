@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity
 		mMainRelLayout.addView(Cursor);
 		mMainRelLayout.setVisibility(View.INVISIBLE);
 
+		UIUtility.init(this);
+
 	   /* mReaderManager = ReaderManager.InitInstance(this);
 		filter = new IntentFilter();
 		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_SOFTTRIGGER_DATA);

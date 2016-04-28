@@ -21,6 +21,7 @@
     <string name="STR_DllName">Reader Service</string>   
     <string name="STR_OK">OK</string>   
     <string name="strConnection">Connect</string>
+    <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>

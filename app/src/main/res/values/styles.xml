@@ -31,4 +31,11 @@
         <item name="android:shouldDisableView">false</item>
         <item name="android:selectable">false</item>
     </style>
+    <style name="MyProgressDlg" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:textColorPrimary">@color/material_grey_100</item>
+        <item name="android:textColor">@color/material_grey_100</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
