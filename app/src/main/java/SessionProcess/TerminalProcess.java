@@ -183,12 +183,10 @@ public class TerminalProcess {
          mTerminal.SetViewContainer(TerminalView);
          try {
         	 Boolean SSh = CipherConnectSettingInfo. getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    		  
     		 if (SSh)
     			 mTelConn = new TelnetSshConnMgr(Ip,Integer.valueOf(Port));
-    		  else
-    			 mTelConn = new TelnetConnMgr(Ip,Integer.valueOf(Port)); 
-    		  
+			 else
+    			 mTelConn = new TelnetConnMgr(Ip,Integer.valueOf(Port));
          }
          catch (Exception e0) {
              return false;

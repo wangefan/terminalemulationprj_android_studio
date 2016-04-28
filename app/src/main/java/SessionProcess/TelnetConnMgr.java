@@ -43,30 +43,26 @@ public class TelnetConnMgr  implements Runnable {
         mSocket = null;
     }
     
-    public boolean TelnetsStart()
-    {
+    public boolean TelnetsStart() {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        try
-        {
+        try {
         	mSocket = new Socket();
         	if(mSocket == null)
         		throw new Exception();
         	mSocket.connect(new InetSocketAddress(mStrHost, nPort), 5000);
             mInStream = mSocket.getInputStream();
-            mOutStream= mSocket.getOutputStream();
+            mOutStream = mSocket.getOutputStream();
             new Thread(this).start();
             mIsConnected = true;
             if(mOnConnListener != null)
             	mOnConnListener.OnConnected();
             return true;
-
         }
-        catch (Exception e0)
-        {
+        catch (Exception e0) {
         	return false;
         }
     }
