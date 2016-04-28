@@ -277,12 +277,6 @@ public class MainActivity extends AppCompatActivity
 	    
 	    
 	}
-	@Override
-	public void onResume(){
-	    super.onResume();
-	    // put your code here...
-	     ShowKeyboard();
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -569,33 +563,21 @@ public class MainActivity extends AppCompatActivity
           imm.showSoftInputFromInputMethod(CurrentFocus.getWindowToken(), 0);
     }
     
-    private void SessionConnect()
-    {
-	    TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
-	    RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-       
-        
-	    ShowKeyboard();
+    private void SessionConnect() {
+	    TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 	    SessionDisConnect(); 
 	    termProc.SetVewContainer(mContentView);
 	    termProc.setListener(mOnTerminalProcessListener);
-        //llScroll.addView(mMainRelLayout);
-	        if (!termProc.ProcessConnect())
-	        {
-	        	SessionDisConnect();	
-	        }
-	        else
-	        {
-	        	
-	        	mMainRelLayout.setVisibility(View.VISIBLE);
-	        	mMainRelLayout.invalidate();
-	        	ConnectBut.setVisibility(View.INVISIBLE);
- 
-	        }
-	        
-	        	
-
-	    }
+		if (!termProc.ProcessConnect()) {
+			SessionDisConnect();
+		}
+	    else {
+	        mMainRelLayout.setVisibility(View.VISIBLE);
+	        mMainRelLayout.invalidate();
+			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
+	        ConnectBut.setVisibility(View.INVISIBLE);
+		}
+	}
 	 
     public void TelnetHandleDisConnected()
 	{
@@ -613,7 +595,7 @@ public class MainActivity extends AppCompatActivity
     {
 	    RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
 	    
-	    TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+	    TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         termProc.ProcessDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
         ConnectBut.setVisibility(View.VISIBLE);
