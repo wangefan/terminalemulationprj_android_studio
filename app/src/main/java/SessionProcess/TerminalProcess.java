@@ -35,7 +35,7 @@ public class TerminalProcess {
     
     private OnTerminalProcessListener mListener = null;
     
-    ContentView TerminalView=null;
+    ContentView TerminalView = null;
     
     MacroRecorder  MacroRec=new MacroRecorder();
     
@@ -159,13 +159,11 @@ public class TerminalProcess {
     	}
     }
 
-    public boolean  ProcessConnect()
-    {
-    	 boolean IsOK;
+    public boolean  ProcessConnect() {
     	 Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
-    	 String Ip=CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	 String Port=CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	 int nIsTN =  CipherConnectSettingInfo.getHostTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	 String Ip = CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	 String Port = CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	 int nIsTN = CipherConnectSettingInfo.getHostTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	 
     	 if(nIsTN == 0) {
     	     String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
@@ -173,19 +171,18 @@ public class TerminalProcess {
     	            serverTypeName.equals(context.getResources().getString(R.string.VT102Val))||
     	            serverTypeName.equals(context.getResources().getString(R.string.VT220Val))||
     	            serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
-    	     mTerminal=new CVT100();
+    	     mTerminal = new CVT100();
     	 }
      	 else {
      	    String serverTypeName = CipherConnectSettingInfo.getTNHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
      	    if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
-                mTerminal=new IBMHost5250();
+                mTerminal = new IBMHost5250();
      	 }
     	 
          TerminalView.setOnViewEventListener(mViewEventHandler);
          mTerminal.SetViewContainer(TerminalView);
-         try
-         {          	
-        	 Boolean SSh=CipherConnectSettingInfo. getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
+         try {
+        	 Boolean SSh = CipherConnectSettingInfo. getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
     		  
     		 if (SSh)
     			 mTelConn = new TelnetSshConnMgr(Ip,Integer.valueOf(Port));
@@ -193,10 +190,8 @@ public class TerminalProcess {
     			 mTelConn = new TelnetConnMgr(Ip,Integer.valueOf(Port)); 
     		  
          }
-         catch (Exception e0)
-         {
+         catch (Exception e0) {
              return false;
-        
          }
         
          mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
@@ -205,9 +200,7 @@ public class TerminalProcess {
 				mTelConn.Send(arrayOfByte);
 			}
 		});
-		
-		mTelConn.setOnConnListener(new TelnetConnMgr.OnConnListener() 
-		{
+		mTelConn.setOnConnListener(new TelnetConnMgr.OnConnListener() {
 			@Override
 			public void OnConnected() {
 				mBConnected = true;
@@ -226,20 +219,14 @@ public class TerminalProcess {
 				mTerminal.OnBufferReceived(arrayOfByte,0,len);
 			}
 		});
-         
-         IsOK = mTelConn.TelnetsStart();
-         if (IsOK)
-         {
+
+		boolean IsOK = mTelConn.TelnetsStart();
+        if (IsOK) {
         	 if (mListener != null)
         		 mListener.onConnected();
-         }
-         else
+         } else
         	 Toast.makeText(context, "Cannot establish connection! Please check network.", Toast.LENGTH_SHORT).show();
-         
          return IsOK;
-        //handler = new Handler();
-        //handler.post(Session);
-        //Session.run();
     }
     public void  ProcessReleaseView()
     {
