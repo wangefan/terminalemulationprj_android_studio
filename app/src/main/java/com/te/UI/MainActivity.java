@@ -36,7 +36,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-public class MainActivity extends AppCompatActivity implements LeftMenuListener {
+public class MainActivity extends AppCompatActivity
+		                  implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewLsitener
+
+{
 	enum FABStatus {
 		Connect,
 		Keyboard,
@@ -189,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 		mContentView = new ContentView(this,Cursor);
 
 		mKeyboardViewUtility = new TEKeyboardViewUtility(this, (KeyboardView) findViewById(R.id.software_keyboard_view), mContentView);
+		mKeyboardViewUtility.setListener(this);
 
 		mMainRelLayout.addView(mContentView);
 		mMainRelLayout.addView(Cursor);
@@ -446,6 +450,22 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
         HideKeyboard();
         finish();
     }
+
+	//Listener TEKeyboardView Begin
+	@Override
+	public void onShowKeyboard() {
+		if(isCurSessionConnected())
+			updateFABStatus(FABStatus.Gone);
+	}
+
+	@Override
+	public void onHideKeyboard() {
+		if(isCurSessionConnected())
+			updateFABStatus(FABStatus.Keyboard);
+		else
+			updateFABStatus(FABStatus.Connect);
+	}
+	//Listener TEKeyboardView End
 	
 	Runnable DisConnRun = new Runnable()
     {
@@ -496,6 +516,13 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 		nextSession.setListener(mOnTerminalProcessListener);
 		nextSession.ResetSessionView();
 		CipherConnectSettingInfo.SetSessionIndex(idxSession);
+		mKeyboardViewUtility.hideTEKeyboard();
+		if(isCurSessionConnected()) {
+			updateFABStatus(FABStatus.Keyboard);
+		} else {
+			updateFABStatus(FABStatus.Connect);
+		}
+
 		String strMsg = String.format(getResources().getString(R.string.MSG_ChangeSession), mFragmentLeftdrawer.getItemTitle(idxSession));
 		Toast.makeText(this, strMsg, Toast.LENGTH_SHORT).show();
     }

@@ -18,6 +18,10 @@ import Terminals.ContentView;
  * Created by yifan.wang on 2016/4/28.
  */
 public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListener {
+    public interface TEKeyboardViewLsitener {
+        public void onShowKeyboard();
+        public void onHideKeyboard();
+    }
     private final int MY_KEYCODE_DOWN = -7;
     private final int MY_KEYCODE_UP = -8;
     private final int MY_KEYCODE_LEFT = -9;
@@ -35,6 +39,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private KeyboardView mKeyboardView = null;
     private Keyboard mABCKeyboard = null;
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
+    private TEKeyboardViewLsitener mLisitener  = null;
 
     public TEKeyboardViewUtility(Context context, KeyboardView view, ContentView contentView) {
         mContext = context;
@@ -52,6 +57,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             {
                 hideTEKeyboard();
             }
+            break;
             case MY_KEYCODE_DOWN:
             {
                 keyDownUp(KeyEvent.KEYCODE_DPAD_DOWN);
@@ -127,9 +133,15 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     }
 
     //Functions
+    public void setListener(TEKeyboardViewLsitener listener) {
+        mLisitener = listener;
+    }
+
     public void hideTEKeyboard() {
         mKeyboardView.setVisibility(View.GONE);
         mKeyboardView.setEnabled(false);
+        if(mLisitener != null)
+            mLisitener.onHideKeyboard();
     }
 
     public void showTEKeyboard() {
@@ -137,6 +149,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mKeyboardView.setEnabled(true);
         if(mTargetView !=null)
             ((InputMethodManager) mContext.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mTargetView.getWindowToken(), 0);
+        if(mLisitener != null)
+            mLisitener.onShowKeyboard();
     }
 
     public boolean isTEKeyboardVisible() {
