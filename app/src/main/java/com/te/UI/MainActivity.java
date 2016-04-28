@@ -45,19 +45,15 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 	private Toolbar mToolbar;
 	private LeftMenuFrg mFragmentLeftdrawer;
 	private FloatingActionButton mFAB = null;
-	private KeyboardView mKeyboardView = null;
-	private Keyboard mABCKeyboard = null;
-	ContentView mContentView;
-	RelativeLayout mMainRelLayout;
-	CursorView  Cursor;
-	MenuItem mMenuItemConn;
+	private TEKeyboardViewUtility mKeyboardViewUtility = null;
+	private ContentView mContentView;
+	private RelativeLayout mMainRelLayout;
+	private CursorView  Cursor;
+	private MenuItem mMenuItemConn;
 	//MacroRecorder  MacroRec=new MacroRecorder();
-
-
 	// ReaderManager is using to communicate with Barcode Reader Service
 	//private com.cipherlab.barcode.ReaderManager mReaderManager;
 	List<TerminalProcess> mCollSessions =new ArrayList<TerminalProcess>();
-
 
 	private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener()
 	{
@@ -114,8 +110,8 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 			mFAB.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mKeyboardView.setVisibility(View.VISIBLE);
-					mKeyboardView.setEnabled(true);
+					if(false == mKeyboardViewUtility.isTEKeyboardVisible())
+						mKeyboardViewUtility.showTEKeyboard();
 					updateFABStatus(FABStatus.Gone);
 				}
 			});
@@ -188,12 +184,10 @@ public class MainActivity extends AppCompatActivity implements LeftMenuListener 
 		mFAB = (FloatingActionButton) findViewById(R.id.fab);
 		updateFABStatus(FABStatus.Connect);
 
-		mKeyboardView = (KeyboardView) findViewById(R.id.software_keyboard_view);
-		mABCKeyboard = new Keyboard(this, R.xml.keymain);
-		mKeyboardView.setKeyboard(mABCKeyboard);
-
-		Cursor=new CursorView(this);
+		Cursor = new CursorView(this);
 		mContentView = new ContentView(this,Cursor);
+
+		mKeyboardViewUtility = new TEKeyboardViewUtility(this, (KeyboardView) findViewById(R.id.software_keyboard_view), mContentView);
 
 		mMainRelLayout.addView(mContentView);
 		mMainRelLayout.addView(Cursor);

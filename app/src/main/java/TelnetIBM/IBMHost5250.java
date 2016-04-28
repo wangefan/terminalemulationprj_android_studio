@@ -2561,11 +2561,19 @@ public class IBMHost5250 extends IBMHostBase{
     	
     	switch(keyCode)
     	{
-    	case KeyEvent.KEYCODE_TAB:
-    		TabToNextField();
-    		Func=true;
-    	    break;
-    	case KEY_SPACE:
+        case KeyEvent.KEYCODE_DPAD_LEFT:
+            CaretLeft();
+            Func=true;
+            break;
+        case KeyEvent.KEYCODE_DPAD_RIGHT:
+            CaretRight();
+            Func=true;
+            break;
+        case KeyEvent.KEYCODE_TAB:
+            TabToNextField();
+            Func=true;
+            break;
+    	case KeyEvent.KEYCODE_SPACE:
     		PutAsciiKey(0x20);
     		Func=true;
     		 
@@ -2580,7 +2588,7 @@ public class IBMHost5250 extends IBMHostBase{
     		Func=true;
    	     break;
     	case KeyEvent.KEYCODE_DEL:
-            CaretDelete();
+            CaretBack();
             Func=true;
             break;
     	case KeyEvent.KEYCODE_F1:
