@@ -55,7 +55,8 @@
 		                    android:id="@+id/bottomView"
 		                    android:layout_width="fill_parent"
 		                    android:layout_height="64dp"
-		                    android:layout_alignParentBottom="true">
+		                    android:layout_alignParentBottom="true"
+						    android:visibility="gone">
 	
 		                    <ImageButton
 		                        android:id="@+id/KeyButton"
