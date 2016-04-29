@@ -38,6 +38,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private ContentView mTargetView = null;
     private KeyboardView mKeyboardView = null;
     private Keyboard mABCKeyboard = null;
+    private Keyboard mSymbolKeyboard = null;
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
     private TEKeyboardViewLsitener mLisitener  = null;
 
@@ -46,13 +47,71 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mKeyboardView = view;
         mTargetView = contentView;
         mABCKeyboard = new Keyboard(context, R.xml.keyboard_abc);
+        mSymbolKeyboard = new Keyboard(context, R.xml.keyboard_symbol);
         mKeyboardView.setKeyboard(mABCKeyboard);
         mKeyboardView.setOnKeyboardActionListener(this);
         mKeyboardView.setPreviewEnabled(false);
     }
 
-    private void onKeyABC(int primaryCode, int[] keyCodes) {
+    private void keyDownUp(int keyEventCode) {
+        sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
+        sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+    }
+
+    private void sendKeyEvent(KeyEvent event) {
+        mTargetView.dispatchKeyEvent(event);
+        //m_Instrumentation.sendKeySync(event);
+    }
+
+    //Functions
+    public void setListener(TEKeyboardViewLsitener listener) {
+        mLisitener = listener;
+    }
+
+    public void hideTEKeyboard() {
+        mKeyboardView.setVisibility(View.GONE);
+        mKeyboardView.setEnabled(false);
+        if(mLisitener != null)
+            mLisitener.onHideKeyboard();
+    }
+
+    public void showTEKeyboard() {
+        mKeyboardView.setVisibility(View.VISIBLE);
+        mKeyboardView.setEnabled(true);
+        if(mTargetView !=null)
+            ((InputMethodManager) mContext.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mTargetView.getWindowToken(), 0);
+        if(mLisitener != null)
+            mLisitener.onShowKeyboard();
+    }
+
+    public boolean isTEKeyboardVisible() {
+        return mKeyboardView.getVisibility() == View.VISIBLE;
+    }
+
+    //KeyboardView.OnKeyboardActionListener Begin
+    @Override
+    public void onPress(int primaryCode) {
+
+    }
+
+    @Override
+    public void onRelease(int primaryCode) {
+
+    }
+
+    @Override
+    public void onKey(int primaryCode, int[] keyCodes) {
         switch(primaryCode) {
+            case MY_KEYCODE_ABC:
+            {
+                mKeyboardView.setKeyboard(mABCKeyboard);
+            }
+            break;
+            case MY_KEYCODE_SYMBOL:
+            {
+                mKeyboardView.setKeyboard(mSymbolKeyboard);
+            }
+            break;
             case MY_KEYCODE_HIDE:
             {
                 hideTEKeyboard();
@@ -120,60 +179,6 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             }
             break;
         }
-    }
-
-    private void keyDownUp(int keyEventCode) {
-        sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
-        sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
-    }
-
-    private void sendKeyEvent(KeyEvent event) {
-        mTargetView.dispatchKeyEvent(event);
-        //m_Instrumentation.sendKeySync(event);
-    }
-
-    //Functions
-    public void setListener(TEKeyboardViewLsitener listener) {
-        mLisitener = listener;
-    }
-
-    public void hideTEKeyboard() {
-        mKeyboardView.setVisibility(View.GONE);
-        mKeyboardView.setEnabled(false);
-        if(mLisitener != null)
-            mLisitener.onHideKeyboard();
-    }
-
-    public void showTEKeyboard() {
-        mKeyboardView.setVisibility(View.VISIBLE);
-        mKeyboardView.setEnabled(true);
-        if(mTargetView !=null)
-            ((InputMethodManager) mContext.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mTargetView.getWindowToken(), 0);
-        if(mLisitener != null)
-            mLisitener.onShowKeyboard();
-    }
-
-    public boolean isTEKeyboardVisible() {
-        return mKeyboardView.getVisibility() == View.VISIBLE;
-    }
-
-    //KeyboardView.OnKeyboardActionListener Begin
-    @Override
-    public void onPress(int primaryCode) {
-
-    }
-
-    @Override
-    public void onRelease(int primaryCode) {
-
-    }
-
-    @Override
-    public void onKey(int primaryCode, int[] keyCodes) {
-        if(mKeyboardView.getKeyboard() == mABCKeyboard) {
-            onKeyABC(primaryCode, keyCodes);
-        }
-        //Todo: Handle Symbol, Func, and Server
     }
 
     @Override
