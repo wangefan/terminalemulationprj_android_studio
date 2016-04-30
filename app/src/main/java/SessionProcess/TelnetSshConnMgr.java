@@ -2,17 +2,16 @@ package SessionProcess;
 
 import Terminals.CipherConnectSettingInfo;
 import Terminals.Sshconnectionpack;
+import Terminals.TerminalBase;
+
 import com.chilkatsoft.CkByteData;
 
 public class TelnetSshConnMgr extends TelnetConnMgr {
        
 	 Sshconnectionpack SshConn=new Sshconnectionpack();
 	 
-	 
-	 public TelnetSshConnMgr(String address, int port)
-	 {
-		    super(address,port);
-	    
+	 public TelnetSshConnMgr(String address, int port, TerminalBase terminal) {
+		 super(address,port, terminal);
 	 }
 	public boolean TelnetsStart()
 	{
@@ -21,7 +20,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 		SshConn.SshSetReadTimeoutMs(5000);
 	 
 		
-		boolean IsConn=SshConn.SshConnectToHost(mStrHost, nPort);
+		boolean IsConn=SshConn.SshConnectToHost(mStrHost, mPort);
 		
 		if (!IsConn)
 			return false;
@@ -35,8 +34,8 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 		SshConn.SshSendReqPty();
 		SshConn.SshSendReqShell();
 		
-        if(mOnConnListener != null)
-        	mOnConnListener.OnConnected();
+        if(mTerminal != null)
+			mTerminal.OnConnected();
 	     mIsConnected = true;
 	    return true;
 	}
@@ -47,8 +46,8 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 		 
 		mIsConnected = false;
        
-        if(mOnConnListener != null)
-        	mOnConnListener.OnDisconnected();
+        if(mTerminal != null)
+			mTerminal.OnDisconnected();
 	}
     
 	public void TelnetTerminated()
@@ -60,18 +59,17 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
             	SshConn.SshDisConnect();
         		 
          		mIsConnected = false;
-                if(mOnConnListener != null)
-                	mOnConnListener.OnDisconnected();
+                if(mTerminal != null)
+					mTerminal.OnDisconnected();
              }
          };
          
-         mHandlerException.post(rExceptionThread);
+         mUIHandler.post(rExceptionThread);
 	}
 	 
 
 	public void run()
 	{
-		
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -90,12 +88,8 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
                	break;
             }
             
-            try
-            {
-                int i = mBytesData.length;
-                
-                
-        		SshConn.SshSetIdleTimeoutMs(10);
+            try {
+				SshConn.SshSetIdleTimeoutMs(10);
         	 
                 //j =SshConn.SshChannelReadAndPoll();
                 
@@ -107,10 +101,14 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
         		}
               
                 SshConn.SshGetReceivedData(Recv);
-                
-                mBytesData=Recv.toByteArray();
-                if(mOnConnListener != null)
-                	mOnConnListener.OnBufferReceived(mBytesData,mBytesData.length);
+
+				final byte[] bytesData = Recv.toByteArray();
+				mUIHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						mTerminal.handleBufferReceived(bytesData, 0, bytesData.length);
+					}
+				});
             }
             catch (Exception e0)
             {

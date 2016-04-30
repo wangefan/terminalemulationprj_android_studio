@@ -52,4 +52,7 @@
     <string name="MSG_clear_setting">Can`t load your setting.</string>
     <string name="str_positive">Reset setting to default</string>
     <string name="str_negative">Exit</string>
+    <string name="MSG_Connecting">Connecting to host...</string>
+    <string name="MSG_Disonnected">Disconnected</string>
+    <string name="MSG_Disonnected_error">Cannot establish connection! Please check network.</string>
 </resources>

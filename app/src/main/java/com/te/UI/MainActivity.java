@@ -1,18 +1,15 @@
 package com.te.UI;
 
-import java.util.ArrayList;
-import java.util.List;
-import SessionProcess.TerminalProcess;
-import Terminals.CursorView;
-import Terminals.stdActivityRef;
-import Terminals.ContentView;
-import Terminals.CipherReaderControl;
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.inputmethodservice.Keyboard;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,21 +17,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.cipherlab.barcode.*;
+
+import com.cipherlab.barcode.GeneralString;
 import com.example.terminalemulation.R;
 import com.te.UI.LeftMenuFrg.LeftMenuListener;
-import android.content.BroadcastReceiver;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import SessionProcess.TerminalProcess;
 import Terminals.CipherConnectSettingInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import Terminals.CipherReaderControl;
+import Terminals.ContentView;
+import Terminals.CursorView;
+import Terminals.stdActivityRef;
 
 public class MainActivity extends AppCompatActivity
 		                  implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewLsitener
@@ -61,34 +61,25 @@ public class MainActivity extends AppCompatActivity
 	private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener()
 	{
 		@Override
-		public void onConnected()
-		{
-			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-			//RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);
-
-			mMainRelLayout.setVisibility(View.VISIBLE);
-			ConnectBut.setVisibility(View.INVISIBLE);
-			//TextVer.setVisibility(View.INVISIBLE);
-
+		public void onConnected() {
+			showConnectionView(true);
 			UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
 			UpdateRecordButton();
 			updateConnMenuItem();
 			updateFABStatus(FABStatus.Keyboard);
+			UIUtility.showProgressDlg(false, 0);
 			mKeyboardViewUtility.showTEKeyboard();
 		}
 
 		@Override
 		public void onDisConnected()
 		{
-			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-			//RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);
-
-			mMainRelLayout.setVisibility(View.INVISIBLE);
-			ConnectBut.setVisibility(View.VISIBLE);
-			//TextVer.setVisibility(View.VISIBLE);
+			showConnectionView(false);
 			UpdateRecordButtonVisible(false);
 			updateConnMenuItem();
 			updateFABStatus(FABStatus.Connect);
+			UIUtility.showProgressDlg(false, 0);
+			Toast.makeText(MainActivity.this, getString(R.string.MSG_Disonnected), Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
@@ -513,6 +504,7 @@ public class MainActivity extends AppCompatActivity
 		nextSession.ResetSessionView();
 		CipherConnectSettingInfo.SetSessionIndex(idxSession);
 		mKeyboardViewUtility.hideTEKeyboard();
+		showConnectionView(isCurSessionConnected());
 		if(isCurSessionConnected()) {
 			updateFABStatus(FABStatus.Keyboard);
 		} else {
@@ -522,7 +514,20 @@ public class MainActivity extends AppCompatActivity
 		String strMsg = String.format(getResources().getString(R.string.MSG_ChangeSession), mFragmentLeftdrawer.getItemTitle(idxSession));
 		Toast.makeText(this, strMsg, Toast.LENGTH_SHORT).show();
     }
-    private void SessionAutoConnect()
+
+	private void showConnectionView(boolean bShow) {
+		if(bShow) {
+			mMainRelLayout.setVisibility(View.VISIBLE);
+			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
+			ConnectBut.setVisibility(View.INVISIBLE);
+		} else {
+			mMainRelLayout.setVisibility(View.INVISIBLE);
+			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
+			ConnectBut.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void SessionAutoConnect()
     {
         TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
@@ -570,15 +575,8 @@ public class MainActivity extends AppCompatActivity
 	    SessionDisConnect(); 
 	    termProc.SetVewContainer(mContentView);
 	    termProc.setListener(mOnTerminalProcessListener);
-		if (!termProc.ProcessConnect()) {
-			SessionDisConnect();
-		}
-	    else {
-	        mMainRelLayout.setVisibility(View.VISIBLE);
-	        mMainRelLayout.invalidate();
-			RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-	        ConnectBut.setVisibility(View.INVISIBLE);
-		}
+		UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
+		termProc.ProcessConnect();
 	}
 	 
     public void TelnetHandleDisConnected()

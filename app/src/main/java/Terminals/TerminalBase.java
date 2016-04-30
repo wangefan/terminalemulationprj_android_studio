@@ -3,28 +3,36 @@ package Terminals;
 import android.content.Context;
 import android.util.Log;
 import android.view.KeyEvent;
-import Terminals.TerminalLogWriter;
+
+import com.cipherlab.barcode.BuildConfig;
+
 import java.io.UnsupportedEncodingException;
-import java.lang.String;
-import java.lang.Object;
-import Terminals.ContentView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.cipherlab.barcode.BuildConfig;
+import SessionProcess.TelnetConnMgr;
+import SessionProcess.TelnetSshConnMgr;
+
 /**
  * Created by Franco.Liu on 2014/1/9.
  */
 public abstract class TerminalBase extends TerminalBaseEnum {
-
+    public interface OnTerminalListener {
+        void OnConnected();
+        void OnDisconnected();
+    }
+    private TelnetConnMgr mTelConn;
 	public TerminalLogWriter LogFile;
     private TelnetParser mTelnetParser = null;
     protected OnTerminalListener mTerminalListener;
     public char[][] CharGrid = null;
     public char[][] AttribGrid = null;
     public int _cols;
-    public int _rows;   
+    public int _rows;
+    protected String mIp = "";
+    protected String mPort = "";
+    protected boolean mSsh = false;
     public ContentView _ViewContainer;
     
     protected void outputHexForDBG(char[] charArray)
@@ -40,15 +48,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     	}
     }
     
-    /* Terminal Listener
-     * 
-     */
-    public interface OnTerminalListener {
-    	void OnBufferSend(byte[] arrayOfByte, int len);
-    }
-    
-    public TerminalBase()
-    {
+    public TerminalBase() {
     	this.mTelnetParser = new TelnetParser();
         mTerminalListener = null;
     }
@@ -62,6 +62,18 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     
     public void setOnTerminalListener(OnTerminalListener onTerminalListener) {
     	mTerminalListener = onTerminalListener;
+    }
+
+    public void setIP(String ip) {
+        mIp = ip;
+    }
+
+    public void setPort(String port) {
+        mPort = port;
+    }
+
+    public void setSsh(Boolean ssh) {
+        mSsh = ssh;
     }
     
     public Context GetContext()
@@ -83,8 +95,23 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     	
     	return true;
     }
-    public void OnConnected()
-    {
+    public boolean TelnetsStart() {
+        if (mSsh)
+            mTelConn = new TelnetSshConnMgr(mIp,Integer.valueOf(mPort), this);
+        else
+            mTelConn = new TelnetConnMgr(mIp,Integer.valueOf(mPort), this);
+        return mTelConn.TelnetsStart();
+    }
+
+    public void TelnetDisconnect() {
+        mTelConn.TelnetDisconnect();
+    }
+
+    public boolean isConnected() {
+        return mTelConn.isConnected();
+    }
+
+    public void OnConnected() {
     	Calendar c = Calendar.getInstance();
     	SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
     	String formattedDate = df.format(c.getTime());
@@ -100,7 +127,15 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     	{
     		DispatchMessageRaw(this,SendData,SendData.length);
     	}
-    	 
+        if(mTerminalListener != null) {
+            mTerminalListener.OnConnected();
+        }
+    }
+
+    public void OnDisconnected() {
+        if(mTerminalListener != null) {
+            mTerminalListener.OnDisconnected();
+        }
     }
     
     abstract public Point getCursorGridPos();
@@ -475,7 +510,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         //endregion
     }
     
-    public void OnBufferReceived(byte[] data ,int offset, int lenth)
+    public void handleBufferReceived(byte[] data ,int offset, int lenth)
     {
         char[] charArr = new char[lenth];
 
@@ -629,8 +664,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     {
     	if (IsWriteToLogFile())
     	     LogFile.Write(this.GetLogTitle(),Data, lenth,false);
-    	if(mTerminalListener != null)
-    		mTerminalListener.OnBufferSend(Data,lenth);
+        mTelConn.Send(Data);
     }
     
     public void DispatchMessage(Object sender, String strText)
@@ -643,9 +677,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
         if (IsWriteToLogFile())
             LogFile.Write(this.GetLogTitle(),bytes, strText.length(),false);
-        
-        if(this.mTerminalListener != null)
-        	mTerminalListener.OnBufferSend(bytes, bytes.length);
+        mTelConn.Send(bytes);
     }
     //endregion
 }

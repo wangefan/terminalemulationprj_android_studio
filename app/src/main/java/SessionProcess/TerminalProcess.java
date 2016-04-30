@@ -1,22 +1,26 @@
 package SessionProcess;
 
 
-import java.util.ArrayList;
-import com.example.terminalemulation.R;
 import android.content.Context;
 import android.view.KeyEvent;
-import android.widget.Toast;
+
+import com.example.terminalemulation.R;
+
+import java.util.ArrayList;
+
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
-import Terminals.*;
+import Terminals.CipherConnectSettingInfo;
+import Terminals.ContentView;
+import Terminals.MacroRecorder;
+import Terminals.Macroitem;
+import Terminals.TerminalBase;
+import Terminals.stdActivityRef;
 /**
  * Created by Franco.Liu on 2014/2/26.
  */
 public class TerminalProcess {
-
-    private TelnetConnMgr mTelConn;
     private TerminalBase mTerminal;
-    private boolean mBConnected = false;
     private ContentView.OnViewEventListener mViewEventHandler = new ContentView.OnViewEventListener() {
     	@Override
     	public void ActionKeyDown(int keyCode,KeyEvent event) {
@@ -63,27 +67,15 @@ public class TerminalProcess {
     }
     //IsConnect
     
-    public void ResetSessionView()
-    {
-    	if (mTerminal == null || mTelConn == null) {
-    		 if (mListener != null)
-    			 mListener.onDisConnected();
+    public void ResetSessionView() {
+    	if (mTerminal == null) {
     		 return;
-        }
-    	
-    	if  (!mTelConn.IsConnect()) {
-       		 if (mListener != null)
-				 mListener.onDisConnected();
-       		 return;
         }
     	
     	mTerminal.SetViewContainer(TerminalView);
     	TerminalView.setOnViewEventListener(mViewEventHandler);
     	mTerminal.ReflashBuffer();
     	mTerminal.ViewPostInvalidate();
-    	 
-    	if (mListener != null)
-    		mListener.onConnected();
     }
     
     public boolean  ProcessTryAutoConnect()
@@ -160,71 +152,46 @@ public class TerminalProcess {
     }
 
     public boolean  ProcessConnect() {
-    	 Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
-    	 String Ip = CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	 String Port = CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	 int nIsTN = CipherConnectSettingInfo.getHostTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
+		Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
+    	String Ip = CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	String Port = CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
+		Boolean SSh = CipherConnectSettingInfo. getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	int nIsTN = CipherConnectSettingInfo.getHostTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	 
-    	 if(nIsTN == 0) {
-    	     String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	     assert(serverTypeName.equals(context.getResources().getString(R.string.VT100Val))||
+    	if(nIsTN == 0) {
+			String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	    assert(serverTypeName.equals(context.getResources().getString(R.string.VT100Val))||
     	            serverTypeName.equals(context.getResources().getString(R.string.VT102Val))||
     	            serverTypeName.equals(context.getResources().getString(R.string.VT220Val))||
     	            serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
-    	     mTerminal = new CVT100();
-    	 }
-     	 else {
-     	    String serverTypeName = CipherConnectSettingInfo.getTNHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	    mTerminal = new CVT100();
+    	}
+     	else {
+			String serverTypeName = CipherConnectSettingInfo.getTNHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
      	    if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
-                mTerminal = new IBMHost5250();
-     	 }
-    	 
-         TerminalView.setOnViewEventListener(mViewEventHandler);
-         mTerminal.SetViewContainer(TerminalView);
-         try {
-        	 Boolean SSh = CipherConnectSettingInfo. getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    		 if (SSh)
-    			 mTelConn = new TelnetSshConnMgr(Ip,Integer.valueOf(Port));
-			 else
-    			 mTelConn = new TelnetConnMgr(Ip,Integer.valueOf(Port));
-         }
-         catch (Exception e0) {
-             return false;
-         }
-        
-         mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
-			@Override
-			public void OnBufferSend(byte[] arrayOfByte, int len) {
-				mTelConn.Send(arrayOfByte);
-			}
-		});
-		mTelConn.setOnConnListener(new TelnetConnMgr.OnConnListener() {
+				mTerminal = new IBMHost5250();
+     	}
+
+		mTerminal.setIP(Ip);
+		mTerminal.setPort(Port);
+		mTerminal.setSsh(SSh);
+        TerminalView.setOnViewEventListener(mViewEventHandler);
+        mTerminal.SetViewContainer(TerminalView);
+		mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
 			@Override
 			public void OnConnected() {
-				mBConnected = true;
-				mTerminal.OnConnected();
+				if (mListener != null)
+					mListener.onConnected();
 			}
-			
+
 			@Override
 			public void OnDisconnected() {
-				mBConnected = false;
-	             if (mListener != null)
-	            	 mListener.onDisConnected();
-			}
-			
-			@Override
-			public void OnBufferReceived(byte[] arrayOfByte, int len) {
-				mTerminal.OnBufferReceived(arrayOfByte,0,len);
+				if (mListener != null)
+					mListener.onDisConnected();
 			}
 		});
 
-		boolean IsOK = mTelConn.TelnetsStart();
-        if (IsOK) {
-        	 if (mListener != null)
-        		 mListener.onConnected();
-         } else
-        	 Toast.makeText(context, "Cannot establish connection! Please check network.", Toast.LENGTH_SHORT).show();
-         return IsOK;
+		return mTerminal.TelnetsStart();
     }
     public void  ProcessReleaseView()
     {
@@ -234,16 +201,14 @@ public class TerminalProcess {
              mTerminal.SetViewContainer(null);
         
     }
-    public void  ProcessDisConnect()
-    {
-        if (mTelConn!=null)
-        	mTelConn.TelnetDisconnect();
-         
-        if (mListener != null)
-        	mListener.onDisConnected();
+    public void  ProcessDisConnect() {
+        if (mTerminal!=null)
+			mTerminal.TelnetDisconnect();
     }
 
     public boolean isConnected() {
-    	return mBConnected;
+    	if(mTerminal != null)
+			return mTerminal.isConnected();
+		return  false;
     }
 }
