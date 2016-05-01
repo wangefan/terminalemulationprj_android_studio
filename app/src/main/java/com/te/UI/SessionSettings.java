@@ -30,44 +30,26 @@ public class SessionSettings extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.sessinsettingtoolbar);
         setSupportActionBar(toolbar);
-        RelativeLayout layBack = (RelativeLayout) toolbar.findViewById(R.id.setting_back);
-        RelativeLayout layCancel = (RelativeLayout) toolbar.findViewById(R.id.setting_cancel);
         RelativeLayout layOK = (RelativeLayout) toolbar.findViewById(R.id.setting_ok);
-        TextView tvTitle = (TextView) toolbar.findViewById(R.id.setting_title);
 
         //To determine action bar.
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         String act = intent.getStringExtra(ACT_SETTING);
-
         if(act.compareToIgnoreCase(ACT_SETTING_EDIT) == 0) {
             int nEditSessionIdx = intent.getIntExtra(ACT_SETTING_EDIT_GET_SESSION_IDX, 0);
             String strTitle = String.format(getResources().getString(R.string.setting_title), nEditSessionIdx);
-            tvTitle.setText(strTitle);
+            getSupportActionBar().setTitle(strTitle);
             gEditSessionSetting = CipherConnectSettingInfo.getSessionSetting(nEditSessionIdx);
-            layBack.setVisibility(View.VISIBLE);
-            layCancel.setVisibility(View.GONE);
             layOK.setVisibility(View.GONE);
-            layBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
         } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
             String strTitle = getResources().getString(R.string.new_session);
-            tvTitle.setText(strTitle);
+            getSupportActionBar().setTitle(strTitle);
             gEditSessionSetting = CipherConnectSettingInfo.createNewDefaultSessionSetting();
-            layBack.setVisibility(View.GONE);
-            layCancel.setVisibility(View.VISIBLE);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
             layOK.setVisibility(View.VISIBLE);
-            layCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
             layOK.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
