@@ -40,7 +40,7 @@ public class SessionSettings extends AppCompatActivity {
         String act = intent.getStringExtra(ACT_SETTING);
         if(act.compareToIgnoreCase(ACT_SETTING_EDIT) == 0) {
             int nEditSessionIdx = intent.getIntExtra(ACT_SETTING_EDIT_GET_SESSION_IDX, 0);
-            String strTitle = String.format(getResources().getString(R.string.setting_title), nEditSessionIdx);
+            String strTitle = String.format(getResources().getString(R.string.setting_title), nEditSessionIdx + 1);
             getSupportActionBar().setTitle(strTitle);
             gEditSessionSetting = CipherConnectSettingInfo.getSessionSetting(nEditSessionIdx);
             layOK.setVisibility(View.GONE);

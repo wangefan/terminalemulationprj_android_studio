@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity
 		mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(mToolbar);
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		mFragmentLeftdrawer = (LeftMenuFrg)
 		getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
 		mFragmentLeftdrawer.setUp(mToolbar);
@@ -277,6 +276,7 @@ public class MainActivity extends AppCompatActivity
 
 		switch(requestCode){
 			case SessionSettings.REQ_EDIT:
+				mFragmentLeftdrawer.syncSessionsViewFromSettings();
 				break;
 			case SessionSettings.REQ_ADD:
 			{

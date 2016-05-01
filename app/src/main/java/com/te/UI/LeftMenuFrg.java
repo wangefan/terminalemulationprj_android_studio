@@ -89,7 +89,7 @@ public class LeftMenuFrg extends Fragment {
         for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
             String strTitle =
                     String.format(getResources().getString(R.string.Format_Session),
-                            idxSession,
+                            Integer.toString(idxSession + 1),
                             CipherConnectSettingInfo.getHostAddrByIndex(idxSession));
             mSessionsView.addSession(strTitle);
         }

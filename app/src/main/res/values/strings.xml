@@ -12,7 +12,7 @@
     <string name="MSG_CharacterOneLimit">The maximum character limit reached! Only one char allowed.</string>
     <string name="MSG_ChangeSession">Change sesssion to %s</string>
     <string name="MSG_DeleteSession_Warn">Must has one session.</string>
-    <string name="Format_Session">S%1$s:%2$s</string>
+    <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="dot">.</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
