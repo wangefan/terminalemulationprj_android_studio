@@ -46,7 +46,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/session_setting"
@@ -54,7 +55,6 @@
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:clickable="true"
                 android:src="@drawable/ic_settings_black_24dp" />
         </RelativeLayout>
     </LinearLayout>
