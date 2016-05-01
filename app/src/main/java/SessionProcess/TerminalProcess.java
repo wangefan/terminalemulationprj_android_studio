@@ -39,7 +39,7 @@ public class TerminalProcess {
     
     private OnTerminalProcessListener mListener = null;
     
-    ContentView TerminalView = null;
+    ContentView mTerminalView = null;
     
     MacroRecorder  MacroRec=new MacroRecorder();
     
@@ -58,7 +58,7 @@ public class TerminalProcess {
     
     public void SetVewContainer(ContentView view)
     {
-    	TerminalView=view;
+    	mTerminalView =view;
     } 
     
     public void setListener(OnTerminalProcessListener listener)
@@ -72,8 +72,8 @@ public class TerminalProcess {
     		 return;
         }
     	
-    	mTerminal.SetViewContainer(TerminalView);
-    	TerminalView.setOnViewEventListener(mViewEventHandler);
+    	mTerminal.SetViewContainer(mTerminalView);
+    	mTerminalView.setOnViewEventListener(mViewEventHandler);
     	mTerminal.ReflashBuffer();
     	mTerminal.ViewPostInvalidate();
     }
@@ -175,8 +175,8 @@ public class TerminalProcess {
 		mTerminal.setIP(Ip);
 		mTerminal.setPort(Port);
 		mTerminal.setSsh(SSh);
-        TerminalView.setOnViewEventListener(mViewEventHandler);
-        mTerminal.SetViewContainer(TerminalView);
+        mTerminalView.setOnViewEventListener(mViewEventHandler);
+        mTerminal.SetViewContainer(mTerminalView);
 		mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
 			@Override
 			public void OnConnected() {
@@ -195,7 +195,7 @@ public class TerminalProcess {
     }
     public void  ProcessReleaseView()
     {
-    	 TerminalView=null;
+    	 mTerminalView =null;
     	 mListener = null;
     	 if (mTerminal!=null)
              mTerminal.SetViewContainer(null);
