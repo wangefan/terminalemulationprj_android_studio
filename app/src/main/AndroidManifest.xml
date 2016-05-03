@@ -50,10 +50,10 @@
             android:parentActivityName="com.te.UI.MainActivity"/>
                 
         <activity
-            android:name="com.te.UI.SettingsActivity"
-            android:label="@string/title_activity_settings" 
+            android:name="com.te.UI.SessionSecondSettings"
+            android:label="@string/title_activity_second_settings"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.te.UI.MainActivity"/>
+            android:parentActivityName="com.te.UI.SessionSettings"/>
         
         <activity android:name="com.te.UI.barcodetest" >
         </activity>

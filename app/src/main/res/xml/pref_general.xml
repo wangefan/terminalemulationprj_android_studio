@@ -13,9 +13,14 @@
         <EditTextPreference
             android:title="@string/pref_header_port"
             android:key="@string/host_port_key"/>
-        <PreferenceScreen
+        <Preference
             android:title="@string/more">
-        </PreferenceScreen>
+            <intent
+                android:targetPackage="com.example.terminalemulation"
+                android:targetClass="com.te.UI.SessionSecondSettings"
+                android:action="com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE">
+            </intent>
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/emulation_setting" >

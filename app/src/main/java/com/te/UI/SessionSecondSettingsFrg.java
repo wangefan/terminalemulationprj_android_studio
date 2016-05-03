@@ -2,41 +2,45 @@ package com.te.UI;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.util.Log;
+
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
+
 import Terminals.TESettings;
 
-public class SessionSettingsFrg extends PreferenceFragment implements
+public class SessionSecondSettingsFrg extends PreferenceFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
-    //constanct
-    final String IP_SEP = "\\.";
-    //Data members
+
+    public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
+
+        //Data members
     private String mTN5250HostTypeName = "";
     private String mTN3270HostTypeName = "";
     private String mVT100HostTypeName = "";
     private String mVT102HostTypeName = "";
     private String mVT220HostTypeName = "";
     private String mVTAnsiHostTypeName = "";
+    private String mActon = "";
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
     private EditTextPreference mPrefPort = null;
-    private CheckBoxPreference mCkNetworkAlive = null;
-    private CheckBoxPreference mCkDetectOut = null;
-    private CheckBoxPreference mCkGenLog = null;
     private TESettings.SessionSetting mSetting = null;
 
-    public SessionSettingsFrg() {
+    public SessionSecondSettingsFrg() {
     }
 
     public void setSessionSeting(TESettings.SessionSetting setting) {
         mSetting = setting;
+    }
+
+    public void setAction(String action) {
+        mActon = action;
     }
 
     private void initSummary(Preference p) {
@@ -72,9 +76,12 @@ public class SessionSettingsFrg extends PreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
-        
-        addPreferencesFromResource(R.xml.pref_general);
-        
+
+        addPreferencesFromResource(R.xml.pref_general_tn);
+        if(mActon.compareTo(ACTION_HOST_PROFILE) == 0) {
+            ((SessionSecondSettings)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
+        }
+
         mTN5250HostTypeName = getResources().getString(R.string.IBM5250Val);
         mTN3270HostTypeName = getResources().getString(R.string.IBM3270Val);
         mVT100HostTypeName = getResources().getString(R.string.VT100Val);
@@ -86,10 +93,6 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         mLstServerType = (ListPreference) findPreference(getResources().getString(R.string.host_type_key));
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
         mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
-        mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
-        mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
-        mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
-        initSummary(getPreferenceScreen());
     }
 
     @Override
@@ -102,9 +105,6 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         }
         mLstServerIp.setIp(mSetting.mHostIP);
         mPrefPort.setText(mSetting.getHostPort());
-        mCkNetworkAlive.setChecked(mSetting.mNetKeepAlive);
-        mCkDetectOut.setChecked(mSetting.mIsDetectOutRange);
-        mCkGenLog.setChecked(mSetting.mIsSaveLog);
         initSummary(getPreferenceScreen());
         // Set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
@@ -117,18 +117,6 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         // Unregister the listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        if(BuildConfig.DEBUG) Log.d("TE", "onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        if(BuildConfig.DEBUG) Log.d("TE", "onDestroyView");
-        super.onDestroyView();
     }
 
     @Override
@@ -155,12 +143,6 @@ public class SessionSettingsFrg extends PreferenceFragment implements
             mSetting.mHostIP = mLstServerIp.getIp();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
             mSetting.setHostPort(mPrefPort.getText());
-        } else if(key.compareTo(getResources().getString(R.string.keep_alive_key)) == 0) {
-            mSetting.mNetKeepAlive = mCkNetworkAlive.isChecked();
-        } else if(key.compareTo(getResources().getString(R.string.out_range_key)) == 0) {
-            mSetting.mIsDetectOutRange = mCkDetectOut.isChecked();
-        } else if(key.compareTo(getResources().getString(R.string.log_key)) == 0) {
-            mSetting.mIsSaveLog = mCkGenLog.isChecked();
         }
     }
 }
