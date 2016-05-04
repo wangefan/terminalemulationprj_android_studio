@@ -77,19 +77,8 @@ public class TerminalProcess {
     	mTerminal.ReflashBuffer();
     	mTerminal.ViewPostInvalidate();
     }
-    
-    public boolean  ProcessTryAutoConnect()
-    {    	 
-    	 Boolean Autoflag=CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	 
-    	 
-    	 if (Autoflag)
-    	    return ProcessConnect();
-    	 
-    	 return false;
-    }
-    
-    public void PlayMacro()
+
+	public void PlayMacro()
     {
     	ArrayList<?> Macroitem=MacroRec.GetItemsList();
     	

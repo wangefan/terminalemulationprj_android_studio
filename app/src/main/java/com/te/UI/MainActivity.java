@@ -190,6 +190,10 @@ public class MainActivity extends AppCompatActivity
 
 		UIUtility.init(this);
 
+		Boolean bAutoConn = CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex());
+		if (bAutoConn)
+			SessionConnect();
+
 	   /* mReaderManager = ReaderManager.InitInstance(this);
 		filter = new IntentFilter();
 		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_SOFTTRIGGER_DATA);
@@ -463,18 +467,7 @@ public class MainActivity extends AppCompatActivity
             //localHandler.post(local1);
         }
     };
-   
-    
-	Runnable AutoConnRun = new Runnable()
-    {
-        public void run()
-        {
-        	SessionAutoConnect();
 
-            //localHandler.post(local1);
-        }
-    };
-    
     private boolean isCurSessionConnected() {
     	TerminalProcess termProc = (TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
 		return(termProc != null && termProc.isConnected());
@@ -527,25 +520,7 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 
-	private void SessionAutoConnect()
-    {
-        TerminalProcess termProc=(TerminalProcess)mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
-        RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-	
-        if (!termProc.ProcessTryAutoConnect())
-        {
-        	SessionDisConnect();	
-        }
-        else
-        {
-        	 mMainRelLayout.setVisibility(View.VISIBLE);
-        	 termProc.SetVewContainer(mContentView);
-        	 termProc.setListener(mOnTerminalProcessListener);
-        	 ConnectBut.setVisibility(View.INVISIBLE);
-        	 
-        }
-    }
-   private void ShowReaderConfig()
+	private void ShowReaderConfig()
    {
 	   Intent intent = getPackageManager().getLaunchIntentForPackage("com.iiordanov.freebVNC");
 	   startActivity(intent);
