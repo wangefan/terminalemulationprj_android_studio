@@ -69,13 +69,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         mSsh = ssh;
     }
 
-    public Context GetContext() {
-
-        Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
-
-        return context;
-    }
-
     public Boolean IsWriteToLogFile() {
         Boolean IsLog = CipherConnectSettingInfo.getHostIsWriteLogkByIndex(CipherConnectSettingInfo.GetSessionIndex());
 
