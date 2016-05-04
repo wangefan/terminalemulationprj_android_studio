@@ -190,8 +190,10 @@ public class SessionsView extends ListView {
 		mItemListener = itemListener;
 	}
 
-	public boolean isShowDelete(int pos) {
-		return mSessionItems.get(pos).mIsShowDelete;
+	public void setSessionTitle(int nSession, String title) {
+		SessionItem sItem = mSessionItems.get(nSession);
+		if(sItem != null)
+			sItem.mTitle = title;
 	}
 
 	public void addSession(String strSessionTitle) {

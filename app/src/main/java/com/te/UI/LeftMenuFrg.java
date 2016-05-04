@@ -84,6 +84,16 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setSelected(CipherConnectSettingInfo.GetSessionIndex());
     }
 
+    public void updateCurSessionTitle() {
+        int nCurSession = CipherConnectSettingInfo.GetSessionIndex();
+        String strTitle =
+                String.format(getResources().getString(R.string.Format_Session),
+                        Integer.toString(nCurSession + 1),
+                        CipherConnectSettingInfo.getHostAddrByIndex(nCurSession));
+        mSessionsView.setSessionTitle(nCurSession, strTitle);
+        ((SessionsView.SessionItemsAdapter)mSessionsView.getAdapter()).notifyDataSetChanged();
+    }
+
     void syncSessionsViewFromSettings() {
         mSessionsView.removeAllSessions();
         for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {

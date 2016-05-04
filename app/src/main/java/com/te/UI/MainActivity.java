@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity
 
 		switch(requestCode){
 			case SessionSettings.REQ_EDIT:
-				mFragmentLeftdrawer.syncSessionsViewFromSettings();
+				mFragmentLeftdrawer.updateCurSessionTitle();
 				break;
 			case SessionSettings.REQ_ADD:
 			{
