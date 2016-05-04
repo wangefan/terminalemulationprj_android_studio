@@ -56,12 +56,7 @@ public class SessionSettingsFrg extends PreferenceFragment implements
             p.setSummary(listPref.getEntry());
         } else if (p instanceof EditTextPreference) {
             EditTextPreference editTextPref = (EditTextPreference) p;
-            if (p.getTitle().toString().toLowerCase().contains("password"))
-            {
-                p.setSummary("******");
-            } else {
-                p.setSummary(editTextPref.getText());
-            }
+            p.setSummary(editTextPref.getText());
         } else if (p instanceof MyIPPreference) {
             MyIPPreference ipPref = (MyIPPreference) p;
             ipPref.setSummary(ipPref.getIp());

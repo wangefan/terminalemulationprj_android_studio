@@ -29,4 +29,17 @@
         android:key="@string/host_auto_sign_pwd_key"
         android:title="@string/host_auto_sign_pwd"
         android:dependency="@string/host_auto_sign_key"/>
+    <EditTextPreference
+        android:key="@string/host_auto_sign_name_prom_key"
+        android:title="@string/host_auto_sign_name_prom"/>
+    <EditTextPreference
+        android:key="@string/host_auto_sign_pwd_prom_key"
+        android:title="@string/host_auto_sign_pwd_prom"/>
+    <ListPreference
+        android:key="@string/host_auto_sign_term_prom_key"
+        android:title="@string/host_auto_sign_term_prom"
+        android:entries="@array/term_array"
+        android:entryValues="@array/term_val_array"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"/>
 </PreferenceScreen>

@@ -230,12 +230,12 @@ public class CipherConnectSettingInfo {
    
     public static int getHostTermLoginByIndex(int index) {
     	SessionSetting Setting = mTESettings.getSessionSetting(index);
-    	return Setting.TermLogin;
+    	return Setting.mTermLogin;
          
     }
     public static void SetHostTermLoginByIndex(int index, int nTerm) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Setting.TermLogin = nTerm;
+    	Setting.mTermLogin = nTerm;
     }
     
    /* public static String getHostNameByIndex(int index) {
@@ -350,12 +350,12 @@ public class CipherConnectSettingInfo {
     
     public static Boolean getHostIsAutoconnectByIndex(int index) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-   	    return Setting.bAutoConnect;
+   	    return Setting.mBAutoConnect;
     }
     
     public static void SetHostIsAutoconnectByIndex(int index,Boolean IsAutoconnect) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Setting.bAutoConnect=IsAutoconnect;
+    	Setting.mBAutoConnect=IsAutoconnect;
     }
     
     
@@ -371,22 +371,22 @@ public class CipherConnectSettingInfo {
     
     public static String getHostLoginPromtByIndex(int index) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-   	    return Setting.NamePrompt;
+   	    return Setting.mNamePrompt;
     }
 
     public static void SetHostLoginPromtByIndex(int index,String LoginPromt) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Setting.NamePrompt = LoginPromt;
+    	Setting.mNamePrompt = LoginPromt;
     }
     
     public static String getHostPassWordPromtByIndex(int index) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-   	    return Setting.PassPrompt;
+   	    return Setting.mPassPrompt;
     }
 
     public static void SetHostPassWordPromtByIndex(int index,String PassWordPromt) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Setting.PassPrompt = PassWordPromt;
+    	Setting.mPassPrompt = PassWordPromt;
     }
     
     
@@ -394,23 +394,23 @@ public class CipherConnectSettingInfo {
     
     public static String getHostUserNameByIndex(int index) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-   	    return Setting.LoginName;
+   	    return Setting.mLoginName;
     }
 
     public static void SetHostUserNameByIndex(int index,String Name) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Setting.LoginName = Name;
+    	Setting.mLoginName = Name;
     }
     
     public static String getHostPassWordByIndex(int index) {
     	//
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-   	    return Setting.LoginPassword;
+   	    return Setting.mLoginPassword;
     }
 
     public static void SetHostPassWordByIndex(int index,String PassWord) {
     	SessionSetting Setting=mTESettings.getSessionSetting(index);
-    	Setting.LoginPassword = PassWord;
+    	Setting.mLoginPassword = PassWord;
     }
     
     

@@ -22,13 +22,23 @@
         <item>@string/VT220Val</item>
         <item>@string/ANSIVal</item>
     </string-array>
-
+    <string-array name="term_array">
+        <item>Tab</item>
+        <item>Enter</item>
+    </string-array>
+    <string-array name="term_val_array">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
     <string name="pref_header_ip">IP</string>
     <string name="pref_header_port">Port</string>
     <string name="more">More...</string>
     <string name="auto_connect">Auto Connect</string>
     <string name="auto_sign">Auto Sign on</string>
     <string name="host_auto_sign_name">Login Name</string>
+    <string name="host_auto_sign_name_prom">Login Prompt</string>
+    <string name="host_auto_sign_pwd_prom">Password Prompt</string>
+    <string name="host_auto_sign_term_prom">Term Login</string>
     <string name="host_auto_sign_pwd">Login Password</string>
     <string name="emulation_setting">Emulation Settings</string>
     <string name="server_setting">Server Settings</string>

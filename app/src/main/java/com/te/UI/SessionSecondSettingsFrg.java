@@ -2,6 +2,7 @@ package com.te.UI;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -30,6 +31,13 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
     private EditTextPreference mPrefPort = null;
+    private CheckBoxPreference mChkAutoConn = null;
+    private CheckBoxPreference mChkAutoSign = null;
+    private EditTextPreference mPrefLoginName = null;
+    private EditTextPreference mPrefLoginPwd = null;
+    private EditTextPreference mPrefLoginNameProm = null;
+    private EditTextPreference mPrefLoginPwdProm = null;
+    private ListPreference mPrefLoginTerm = null;
     private TESettings.SessionSetting mSetting = null;
 
     public SessionSecondSettingsFrg() {
@@ -60,8 +68,7 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
             p.setSummary(listPref.getEntry());
         } else if (p instanceof EditTextPreference) {
             EditTextPreference editTextPref = (EditTextPreference) p;
-            if (p.getTitle().toString().toLowerCase().contains("password"))
-            {
+            if (p.getKey().compareTo((getResources().getString(R.string.host_auto_sign_pwd_key))) == 0) {
                 p.setSummary("******");
             } else {
                 p.setSummary(editTextPref.getText());
@@ -70,6 +77,20 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
             MyIPPreference ipPref = (MyIPPreference) p;
             ipPref.setSummary(ipPref.getIp());
         }
+    }
+
+    private void updatePreferenceForVT() {
+        boolean bEnable = false;
+        if(mChkAutoConn.isChecked() == false) {
+            bEnable = false;
+        } else if(mChkAutoSign.isChecked() == false ) {
+            bEnable = false;
+        } else {
+            bEnable = mSetting.mIsTN != 1;
+        }
+        mPrefLoginNameProm.setEnabled(bEnable);
+        mPrefLoginPwdProm.setEnabled(bEnable);
+        mPrefLoginTerm.setEnabled(bEnable);
     }
 
     @Override
@@ -89,15 +110,23 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
         mVT220HostTypeName = getResources().getString(R.string.VT220Val);
         mVTAnsiHostTypeName = getResources().getString(R.string.ANSIVal);
 
-        //Server type UI
+        //UI
         mLstServerType = (ListPreference) findPreference(getResources().getString(R.string.host_type_key));
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
         mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
+        mChkAutoConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.host_auto_conn_key));
+        mChkAutoSign = (CheckBoxPreference) findPreference(getResources().getString(R.string.host_auto_sign_key));
+        mPrefLoginName = (EditTextPreference) findPreference(getResources().getString(R.string.host_auto_sign_name_key));
+        mPrefLoginPwd = (EditTextPreference) findPreference(getResources().getString(R.string.host_auto_sign_pwd_key));
+        mPrefLoginNameProm = (EditTextPreference) findPreference(getResources().getString(R.string.host_auto_sign_name_prom_key));
+        mPrefLoginPwdProm = (EditTextPreference) findPreference(getResources().getString(R.string.host_auto_sign_pwd_prom_key));
+        mPrefLoginTerm = (ListPreference) findPreference(getResources().getString(R.string.host_auto_sign_term_prom_key));
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        //Sync settings to UI
         if(mSetting.mIsTN == 0) {
             mLstServerType.setValue(mSetting.mTermName);
         } else {
@@ -105,6 +134,15 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
         }
         mLstServerIp.setIp(mSetting.mHostIP);
         mPrefPort.setText(mSetting.getHostPort());
+        mChkAutoConn.setChecked(mSetting.mBAutoConnect);
+        mChkAutoSign.setChecked(mSetting.mBAutoSignOn);
+        mPrefLoginName.setText(mSetting.mLoginName);
+        mPrefLoginPwd.setText(mSetting.mLoginPassword);
+        mPrefLoginNameProm.setText(mSetting.mNamePrompt);
+        mPrefLoginPwdProm.setText(mSetting.mPassPrompt);
+        mPrefLoginTerm.setValue(Integer.toString(mSetting.mTermLogin));
+        updatePreferenceForVT();
+
         initSummary(getPreferenceScreen());
         // Set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
@@ -139,10 +177,27 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
             } else {
                 mSetting.mTermNameTN = selHostTypeName;
             }
+            updatePreferenceForVT();
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
             mSetting.mHostIP = mLstServerIp.getIp();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
             mSetting.setHostPort(mPrefPort.getText());
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_conn_key)) == 0) {
+            mSetting.mBAutoConnect = mChkAutoConn.isChecked();
+            updatePreferenceForVT();
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_sign_key)) == 0) {
+            mSetting.mBAutoSignOn = mChkAutoSign.isChecked();
+            updatePreferenceForVT();
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_sign_name_key)) == 0) {
+            mSetting.mLoginName = mPrefLoginName.getText();
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_sign_pwd_key)) == 0) {
+            mSetting.mLoginPassword = mPrefLoginPwd.getText();
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_sign_name_prom_key)) == 0) {
+            mSetting.mNamePrompt = mPrefLoginNameProm.getText();
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_sign_pwd_prom_key)) == 0) {
+            mSetting.mPassPrompt = mPrefLoginPwdProm.getText();
+        } else if(key.compareTo(getResources().getString(R.string.host_auto_sign_term_prom_key)) == 0) {
+            mSetting.mTermLogin = Integer.valueOf(mPrefLoginTerm.getValue());
         }
     }
 }

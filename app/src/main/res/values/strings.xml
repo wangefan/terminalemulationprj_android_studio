@@ -50,6 +50,9 @@
     <string name="host_auto_sign_key">host_auto_sign_key</string>
     <string name="host_auto_sign_name_key">host_auto_sign_name_key</string>
     <string name="host_auto_sign_pwd_key">host_auto_sign_pwd_key</string>
+    <string name="host_auto_sign_name_prom_key">host_auto_sign_name_prom_key</string>
+    <string name="host_auto_sign_pwd_prom_key">host_auto_sign_pwd_prom_key</string>
+    <string name="host_auto_sign_term_prom_key">host_auto_sign_term_prom_key</string>
     <string name="keep_alive_key">keep_alive_key</string>
     <string name="out_range_key">out_range_key</string>
     <string name="log_key">log_key</string>
