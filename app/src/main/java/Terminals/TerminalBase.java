@@ -385,18 +385,14 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                 // Get the next state and associated action based
                 // on the current state and char event
                 mTerParserCharEvents.GetStateEventAction(mLastState, mCurChar, curState, curAction);
-
                 // execute any actions arising from leaving the current state
                 if (curState.get() != ucStates.None && curState.get() != mLastState) {
                     // check for state exit actions
-
                     StateChangeEvents.GetStateChangeAction(mLastState, Transitions.Exit, stateExitAction);
-
                     // Process the exit action
                     if (stateExitAction.get() != TntActions.None) {
                         DoAction(stateExitAction.get());
                     }
-
                 }
 
                 // process the action specified
@@ -417,8 +413,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                         DoAction(stateEntryAction.get());
                     }
                 }
-
-
             }
         }
 

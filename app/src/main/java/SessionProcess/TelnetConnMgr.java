@@ -1,13 +1,12 @@
 package SessionProcess;
 
-import java.io.*;
-import java.net.Socket;
-
 import android.os.Handler;
-import android.os.StrictMode;
 
-import 	java.net.InetSocketAddress;
-import java.lang.Thread;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 import Terminals.TerminalBase;
 
@@ -16,7 +15,7 @@ import Terminals.TerminalBase;
  */
 
 
-public class TelnetConnMgr  implements Runnable {
+public class TelnetConnMgr implements Runnable {
     protected String mStrHost = "192.168.1.100";
     protected int mPort = 23;
     protected boolean mIsConnected = false;
@@ -34,16 +33,15 @@ public class TelnetConnMgr  implements Runnable {
         mUIHandler = new Handler();
     }
 
-    public boolean isConnected()
-    {
-    	return mIsConnected;
+    public boolean isConnected() {
+        return mIsConnected;
     }
 
     public boolean TelnetsStart() {
         new Thread(this).start();
         return true;
     }
-    
+
     public void TelnetDisconnect() {
         if (mSocket != null)
             try {
@@ -52,10 +50,10 @@ public class TelnetConnMgr  implements Runnable {
                 e.printStackTrace();
             }
     }
-    
+
     public void run() {
-    	try {
-            if(mSocket == null)
+        try {
+            if (mSocket == null)
                 throw new Exception();
             mSocket.connect(new InetSocketAddress(mStrHost, mPort), 5000);
             mInStream = mSocket.getInputStream();
@@ -68,24 +66,23 @@ public class TelnetConnMgr  implements Runnable {
                 }
             });
 
-			Thread.sleep(100);
-	    	while (true) {
+            Thread.sleep(100);
+            while (true) {
                 final int readBufferSize = 1024;
                 final byte[] bytesData = new byte[readBufferSize];
-	        	final int nRead = mInStream.read(bytesData, 0, bytesData.length);
-	            if (nRead == -1)
-	            	throw new Exception("Error while reading socket.");
+                final int nRead = mInStream.read(bytesData, 0, bytesData.length);
+                if (nRead == -1)
+                    throw new Exception("Error while reading socket.");
                 mUIHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         mTerminal.handleBufferReceived(bytesData, 0, nRead);
                     }
                 });
-	        }
-    	} catch (InterruptedException e) {
+            }
+        } catch (InterruptedException e) {
             mUIHandler.post(new Runnable() {
-                public void run()
-                {
+                public void run() {
                     mTerminal.OnDisconnected();
                 }
             });
@@ -93,15 +90,13 @@ public class TelnetConnMgr  implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
             mUIHandler.post(new Runnable() {
-                public void run()
-                {
+                public void run() {
                     mTerminal.OnDisconnected();
                 }
             });
         } catch (Exception e) {
             mUIHandler.post(new Runnable() {
-                public void run()
-                {
+                public void run() {
                     mTerminal.OnDisconnected();
                 }
             });
@@ -112,16 +107,12 @@ public class TelnetConnMgr  implements Runnable {
         }
     }
 
-    public void Send(byte[] message)
-    {
-        try
-        {
-        	if (!mIsConnected || mOutStream == null)
+    public void Send(byte[] message) {
+        try {
+            if (!mIsConnected || mOutStream == null)
                 throw new Exception();
             mOutStream.write(message);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
