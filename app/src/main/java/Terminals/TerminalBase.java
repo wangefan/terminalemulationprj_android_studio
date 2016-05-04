@@ -28,6 +28,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     protected String mIp = "";
     protected String mPort = "";
     protected boolean mSsh = false;
+    private boolean mBAutoLoginProcessed = false;
     private TelnetConnMgr mTelConn;
     private TelnetParser mTelnetParser = null;
     public TerminalBase() {
@@ -197,6 +198,12 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
         mTelnetParser.ParseData(charArr);
         ParseEnd();
+        if(CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true &&
+                CipherConnectSettingInfo.getHostIsAutoSignByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true &&
+                mBAutoLoginProcessed == false) {
+            if(autoLogin())
+                mBAutoLoginProcessed = true;
+        }
 
         if (_ViewContainer != null)
             _ViewContainer.postInvalidate();
@@ -213,6 +220,8 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     public abstract void processChar(char ch);
+
+    protected abstract boolean autoLogin();
 
     private void terminalInterpret(Object Sender, ParserEventArgs parserArgs) {
         switch (parserArgs.Action) {

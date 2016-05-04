@@ -111,6 +111,11 @@ public class CVT100 extends CVT100Enum {
     }
 
     @Override
+    protected boolean autoLogin() {
+        return true;
+    }
+
+    @Override
     public Point getCursorGridPos() {
     	return Caret.Pos;
     }

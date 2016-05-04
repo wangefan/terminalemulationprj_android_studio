@@ -249,6 +249,25 @@ public class IBMHost5250 extends IBMHostBase{
 	    }
 	 }
 
+    @Override
+    protected boolean autoLogin() {
+        if (FieldList.size() <= 1)
+            return false;
+        String loginName = CipherConnectSettingInfo.getHostUserNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String pwd = CipherConnectSettingInfo.getHostPassWordByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        //get first field and set login name.
+        IBM_FIELD nameField = FieldList.get(0);
+        IBM_FIELD pwdField = FieldList.get(1);
+        if(nameField == null || pwdField == null)
+            return false;
+        FillField(nameField, loginName);
+        nameField.Modified = true;
+        FillField(pwdField, pwd);
+        pwdField.Modified = true;
+        ProcessIbmEnter();
+        return true;
+    }
+
     public final boolean GetStateEventAction(IBmCommands CurCommand,IBmStates preState, char curChar, AtomicReference<IBmStates> state, AtomicReference<IBmActions> action)
     {
         if (CurCommand == IBmCommands.Restore_Screen && (preState == IBmStates.CommandEndEx || preState == IBmStates.CommandEnd))
@@ -886,14 +905,8 @@ public class IBMHost5250 extends IBMHostBase{
 
     }
     
-    public void ParseEnd()
-    {
+    public void ParseEnd() {
     	tryInsertCaret();
-    	
-    	if (IsNeedAutoLogon())
-    	    CheckAutoLogin();
-    	
-    	//_ViewContainer.DisPlayCousor(Caret.Pos.X,Caret.Pos.Y);
     }
    
     public void tryInsertCaret()
@@ -2900,10 +2913,8 @@ public class IBMHost5250 extends IBMHostBase{
     	
     	
     }
-    private void ProcessIbmEnter()
-    {
+    private void ProcessIbmEnter() {
         String Data = PackInboundData(IBmAID.ENTER);
-
         byte[] OutData = ConverPackToRawData(Data);
         DispatchMessageRaw(this, OutData, OutData.length);
     }
@@ -3088,55 +3099,4 @@ public class IBMHost5250 extends IBMHostBase{
 
         }
         */
-        private Boolean IsNeedAutoLogon()
-        {
-        	Boolean IsAutoConnect=CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        	Boolean IsAutosign=CipherConnectSettingInfo.getHostIsAutoSignByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        	
-        	 if (!(IsAutosign))
-                 return false;
-        	
-        	
-            if(LogInSend)
-                return false;
-
-            return true;
-        }
-        Boolean LogInSend=false;
-        private void CheckAutoLogin()
-        {
-        	String LoginName=CipherConnectSettingInfo.getHostUserNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        	String Pwd=CipherConnectSettingInfo.getHostPassWordByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        	
-            IBM_FIELD Field;
-
-
-            if (FieldList.size() <= 0)
-                return;
-                   
-            Field = (IBM_FIELD)FieldList.get(0);
-            FillField(Field,LoginName);
-            Field.Modified = true;
-           
-
-            if (FieldList.size() <= 1)
-                return;
-            
-            Field = (IBM_FIELD)FieldList.get(1);
-            FillField(Field, Pwd);
-            Field.Modified = true;
-            
-
-
-            ProcessIbmEnter();
-            LogInSend = true;
-
-
-        } 
-     
-    
-    // }}#
-
-
-
 }
