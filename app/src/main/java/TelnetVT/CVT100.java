@@ -112,6 +112,37 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     protected boolean autoLogin() {
+        String loginNameProm = CipherConnectSettingInfo.getHostLoginPromtByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String pwdProm = CipherConnectSettingInfo.getHostPassWordPromtByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        boolean bHasNameProm = false, bHasPwdProm = false;
+        //Parse content to see if loginNameProm and pwdProm exist or not
+        for (int idxRow = 0; idxRow < CharGrid.length; idxRow++) {
+            String strRow = String.valueOf(CharGrid[idxRow]);
+            if(strRow.toLowerCase().contains(loginNameProm.toLowerCase()))
+                bHasNameProm = true;
+            if(strRow.toLowerCase().contains(pwdProm.toLowerCase()))
+                bHasPwdProm = true;
+        }
+        if (bHasNameProm == false && bHasPwdProm == false)
+            return false;
+
+        int nTerm = CipherConnectSettingInfo.getHostTermLoginByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String sendString = "";
+        if (bHasNameProm) {
+            String loginName = CipherConnectSettingInfo.getHostUserNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            if (nTerm == CipherConnectSettingInfo.TERM_TAB) {
+                sendString = loginName + "\t";
+            } else {
+                sendString = loginName + "\r\n";
+            }
+        }
+        if (bHasPwdProm) {
+            String loginPwd = CipherConnectSettingInfo.getHostPassWordByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            sendString = sendString + loginPwd + "\r\n";
+        }
+
+        if(sendString.length() > 0)
+            DispatchMessage(this, sendString);
         return true;
     }
 
@@ -123,51 +154,9 @@ public class CVT100 extends CVT100Enum {
     //region  TelnetInterpreter
     public void ParseEnd()
     {
-    	byte data[]=null;
-    	
-    	int nTerm = CipherConnectSettingInfo.getHostTermLoginByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	
-    	if (nTerm == 1) //Enter
-    		data=new byte[]{0x0d,0}; 
-    	else
-    		data=new byte[]{0x09,0}; //Tab
-    	
-    	
-    	// Boolean ChkisUserprompt=false;Boolean ChkisUserpromptSend=false;
-       // Boolean ChkisPwdpromptSend=false;
-    	    //Boolean ChkisPwdprompt=false;
-    	
-    	if (ChkisUserprompt && (!ChkisUserpromptSend))
-    	{
-    		String Username=CipherConnectSettingInfo.getHostUserNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    		SendServerString(Username);
-    		ChkisUserpromptSend=true;
-    		
-    	    if (ChkisPwdprompt && (!ChkisPwdpromptSend))
-    	    	DispatchMessageRaw(this,data,1);
-    	}
-    	
-    	if (ChkisPwdprompt && (!ChkisPwdpromptSend))
-    	{
-    		String Password=CipherConnectSettingInfo.getHostPassWordByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    		SendServerString(Password);
-    		ChkisPwdpromptSend=true;
-    		data[0]=0x0d;
-    		DispatchMessageRaw(this,data,1);
-    	}
 
     }
-    public void SendUserName()
-    {
-    	
-    	
-    }
-    
-    public void SendServerString(String Str)
-    {
-    	DispatchMessage(this,Str);
-    	
-    }
+
     public  void ReflashBuffer()
     {
         ViewClear();
@@ -1026,13 +1015,6 @@ public class CVT100 extends CVT100Enum {
                 this.AttribGrid[Y][X].IsDECSG = true;
             }
         }
-       
-    	Boolean IsSignOn=CipherConnectSettingInfo.getHostIsAutoSignByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        if (IsSignOn)
-        {
-        	CheckSignString(CurChar);
-        	
-        }
         
         this.CharGrid[Y][X] = CurChar;
         if (CurChar != 0x20 && CurChar!=0)
@@ -1044,55 +1026,6 @@ public class CVT100 extends CVT100Enum {
     }
     //endregion
     //region  Tab
-    
-    int UserNameIdx=0;
-    int PwdIdx=0;
-    
-    Boolean ChkisUserprompt=false;
-    Boolean ChkisPwdprompt=false;
-    Boolean ChkisUserpromptSend=false;
-    Boolean ChkisPwdpromptSend=false;
-    private void CheckSignString(char NewChar)
-    {
-    	int Lenth=0;
-    	      
-    	String  Loginstr=CipherConnectSettingInfo.getHostLoginPromtByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	String  PwdStr=CipherConnectSettingInfo.getHostPassWordPromtByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	
-    	Lenth=Loginstr.length();
-    	if (Lenth>0 && (!ChkisUserprompt))
-    	{
-    		if (Loginstr.charAt(UserNameIdx)== NewChar)
-    		{
-    			UserNameIdx++;
-    			if (UserNameIdx==Lenth)
-    			{
-    				ChkisUserprompt=true;
-    			}
-    		}
-    		else
-    			UserNameIdx=0;
-    	}
-    	
-    	Lenth=PwdStr.length();
-    	if (Lenth>0 && (!ChkisPwdprompt))
-    	{
-    		if (PwdStr.charAt(PwdIdx)== NewChar)
-    		{
-    			PwdIdx++;
-    			if (PwdIdx==Lenth)
-    			{
-    				ChkisPwdprompt=true;
-    			}
-    		}
-    		else
-    			PwdIdx=0;
-    	}
-    	 
-    	
-    	
-    }
-    
     
     private void Tab()
     {

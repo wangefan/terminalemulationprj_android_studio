@@ -24,6 +24,8 @@ public class CipherConnectSettingInfo {
     final public static int MAX_SESSION_COUNT = 5;
     public static final boolean _DEBUG = false;
     public static final String _NAME = "TerminalEmulation";
+    public static final int TERM_TAB = 0;
+    public static final int TERM_ENTER = 1;
     //public static final String TAG = "CipherConnectSettingInfo";
     final private static String mSettingFilename = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
