@@ -198,21 +198,15 @@ public class CipherConnectSettingInfo {
         editor.commit();
     }
 
-    public static int getHostTypeByIndex(int index) {
+    public static boolean getIsHostTNByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.mIsTN;
+        return Setting.mIsTN == 1;
 
-    }
-
-    public static void SetHostTypeByIndex(int index, int nIsTN) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mIsTN = nIsTN;
     }
 
     public static String getTNHostTypeNameByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mTermNameTN;
-
     }
 
     public static void SetTNHostTypeNameByIndex(int index, String HostType) {

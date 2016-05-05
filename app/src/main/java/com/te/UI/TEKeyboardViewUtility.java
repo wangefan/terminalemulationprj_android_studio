@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.terminalemulation.R;
 
+import Terminals.CipherConnectSettingInfo;
 import Terminals.ContentView;
 
 /**
@@ -39,6 +40,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private KeyboardView mKeyboardView = null;
     private Keyboard mABCKeyboard = null;
     private Keyboard mSymbolKeyboard = null;
+    private Keyboard mVTFunKeyboard = null;
+    private Keyboard mTNFunKeyboard = null;
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
     private TEKeyboardViewLsitener mLisitener  = null;
 
@@ -48,6 +51,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mTargetView = contentView;
         mABCKeyboard = new Keyboard(context, R.xml.keyboard_abc);
         mSymbolKeyboard = new Keyboard(context, R.xml.keyboard_symbol);
+        mTNFunKeyboard = new Keyboard(context, R.xml.keyboard_tn_funl);
+        mVTFunKeyboard = new Keyboard(context, R.xml.keyboard_vt_funl);
         mKeyboardView.setKeyboard(mABCKeyboard);
         mKeyboardView.setOnKeyboardActionListener(this);
         mKeyboardView.setPreviewEnabled(false);
@@ -109,6 +114,16 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             case MY_KEYCODE_SYMBOL:
             {
                 mKeyboardView.setKeyboard(mSymbolKeyboard);
+            }
+            break;
+            case MY_KEYCODE_FUNC:
+            {
+                if(CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+                    mKeyboardView.setKeyboard(mTNFunKeyboard);
+                }
+                else {
+                    mKeyboardView.setKeyboard(mVTFunKeyboard);
+                }
             }
             break;
             case MY_KEYCODE_HIDE:

@@ -3,7 +3,7 @@
     android:horizontalGap="0px"
     android:verticalGap="0px"  
     android:keyHeight="7%p">
-    <Row android:keyWidth="20%p">
+    <Row android:keyWidth="17%p">
         <Key android:codes="-12" android:keyLabel="abc" android:keyEdgeFlags="left"/>
         <Key android:codes="-13" android:keyLabel="!@#"/>
         <Key android:codes="-14" android:keyLabel="Func"/>

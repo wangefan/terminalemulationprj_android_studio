@@ -145,9 +145,9 @@ public class TerminalProcess {
     	String Ip = CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	String Port = CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
 		Boolean SSh = CipherConnectSettingInfo. getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
-    	int nIsTN = CipherConnectSettingInfo.getHostTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
+    	boolean isTN = CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	 
-    	if(nIsTN == 0) {
+    	if(isTN == false) {
 			String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
     	    assert(serverTypeName.equals(context.getResources().getString(R.string.VT100Val))||
     	            serverTypeName.equals(context.getResources().getString(R.string.VT102Val))||
