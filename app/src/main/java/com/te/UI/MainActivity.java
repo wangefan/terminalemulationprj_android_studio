@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
 			updateConnMenuItem();
 			updateFABStatus(FABStatus.Connect);
 			UIUtility.showProgressDlg(false, 0);
+			mKeyboardViewUtility.hideTEKeyboard();
 			Toast.makeText(MainActivity.this, getString(R.string.MSG_Disonnected), Toast.LENGTH_SHORT).show();
 		}
 
