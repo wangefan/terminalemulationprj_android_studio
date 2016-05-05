@@ -131,6 +131,12 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 hideTEKeyboard();
             }
             break;
+            case MY_KEYCODE_SYSKEY:
+            {
+                hideTEKeyboard();
+                ((InputMethodManager) mContext.getSystemService(Activity.INPUT_METHOD_SERVICE)).showSoftInput(mTargetView, 0);
+            }
+            break;
             case MY_KEYCODE_DOWN:
             {
                 keyDownUp(KeyEvent.KEYCODE_DPAD_DOWN);
@@ -160,6 +166,22 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             case Keyboard.KEYCODE_DELETE:
             {
                 keyDownUp(KeyEvent.KEYCODE_DEL);
+            }
+            break;
+            case KeyEvent.KEYCODE_F1:
+            case KeyEvent.KEYCODE_F2:
+            case KeyEvent.KEYCODE_F3:
+            case KeyEvent.KEYCODE_F4:
+            case KeyEvent.KEYCODE_F5:
+            case KeyEvent.KEYCODE_F6:
+            case KeyEvent.KEYCODE_F7:
+            case KeyEvent.KEYCODE_F8:
+            case KeyEvent.KEYCODE_F9:
+            case KeyEvent.KEYCODE_F10:
+            case KeyEvent.KEYCODE_F11:
+            case KeyEvent.KEYCODE_F12:
+            {
+                keyDownUp(primaryCode);
             }
             break;
             case MY_KEYCODE_TAB:

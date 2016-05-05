@@ -12,12 +12,12 @@
         <Key android:codes="-17" android:keyIcon="@drawable/sym_sys_keyboard_up" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:keyLabel="F1" android:keyEdgeFlags="left"/>
-        <Key android:keyLabel="F2"/>
-        <Key android:keyLabel="F3"/>
-        <Key android:keyLabel="F4"/>
-        <Key android:keyLabel="F5"/>
-        <Key android:keyLabel="F6" android:keyEdgeFlags="right"/>
+        <Key android:keyLabel="F1" android:codes="131" android:keyEdgeFlags="left"/>
+        <Key android:keyLabel="F2" android:codes="132"/>
+        <Key android:keyLabel="F3" android:codes="133"/>
+        <Key android:keyLabel="F4" android:codes="134"/>
+        <Key android:keyLabel="F5" android:codes="135"/>
+        <Key android:keyLabel="F6" android:codes="136" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:keyLabel="F7" android:keyEdgeFlags="left"/>
