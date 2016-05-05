@@ -60,7 +60,6 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
 
     private void sendKeyEvent(KeyEvent event) {
         mTargetView.dispatchKeyEvent(event);
-        //m_Instrumentation.sendKeySync(event);
     }
 
     //Functions
