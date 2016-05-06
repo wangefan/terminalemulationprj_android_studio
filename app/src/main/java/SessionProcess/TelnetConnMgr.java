@@ -73,12 +73,7 @@ public class TelnetConnMgr implements Runnable {
                 final int nRead = mInStream.read(bytesData, 0, bytesData.length);
                 if (nRead == -1)
                     throw new Exception("Error while reading socket.");
-                mUIHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mTerminal.handleBufferReceived(bytesData, 0, nRead);
-                    }
-                });
+                mTerminal.handleBufferReceived(bytesData, 0, nRead);
             }
         } catch (InterruptedException e) {
             mUIHandler.post(new Runnable() {
