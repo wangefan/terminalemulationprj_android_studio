@@ -764,8 +764,10 @@ public class IBMHost5250 extends IBMHostBase{
             case Repeat_to_Address:
                 SetPadding(3);
                 break;
-            case Erase_to_Address:
             case Insert_Cursor:
+                SetPadding(2);
+                break;
+            case Erase_to_Address:
             case Move_Cursor:
 
             case Write_Extended_Attribute:
