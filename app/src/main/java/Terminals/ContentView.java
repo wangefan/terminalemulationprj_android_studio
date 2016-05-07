@@ -35,7 +35,7 @@ public class ContentView extends View {
     TextPaint mFgpaint;
     int mBmpWidth;
     int mBmpHeight;
-    private OnViewEventListener mOnViewEventListener;
+    private OnContentViewListener mOnContentViewListener;
     private Bitmap mImage;
     private int mBackgroundColor;
     private int mForegroundColor;
@@ -70,8 +70,8 @@ public class ContentView extends View {
         mBmpHeight = 0;
     }
 
-    public void setOnViewEventListener(OnViewEventListener listener) {
-        mOnViewEventListener = listener;
+    public void setOnViewEventListener(OnContentViewListener listener) {
+        mOnContentViewListener = listener;
     }
 
     public void setTermina(TerminalBase terminal) {
@@ -248,8 +248,8 @@ public class ContentView extends View {
 
 
         // return super.onKeyDown(keyCode,event);
-        if (mOnViewEventListener != null)
-            mOnViewEventListener.ActionKeyDown(keyCode, event);
+        if (mOnContentViewListener != null)
+            mOnContentViewListener.onKeyDown(keyCode, event);
 
         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_TAB) {
 
@@ -286,8 +286,8 @@ public class ContentView extends View {
         BufferPos = CalculateCaretPos(x, y);
 
 
-        if (mOnViewEventListener != null)
-            mOnViewEventListener.ActionScreenTouch(BufferPos.X, BufferPos.Y);
+        if (mOnContentViewListener != null)
+            mOnContentViewListener.onScreenTouch(BufferPos.X, BufferPos.Y);
 
         // DrawSpaceFront(BufferPos.X,BufferPos.Y,1);
 
@@ -327,10 +327,9 @@ public class ContentView extends View {
         }
     }
 
-    public interface OnViewEventListener {
-        void ActionKeyDown(int keyCode, KeyEvent event);
-
-        void ActionScreenTouch(int x, int y);
+    public interface OnContentViewListener {
+        void onKeyDown(int keyCode, KeyEvent event);
+        void onScreenTouch(int x, int y);
     }
    
     /*public void surfaceCreated(SurfaceHolder holder) {

@@ -25,9 +25,9 @@ public class TerminalProcess {
     MacroRecorder MacroRec = new MacroRecorder();
     private TerminalBase mTerminal;
     private OnTerminalProcessListener mListener = null;
-    private ContentView.OnViewEventListener mViewEventHandler = new ContentView.OnViewEventListener() {
+    private ContentView.OnContentViewListener mViewEventHandler = new ContentView.OnContentViewListener() {
         @Override
-        public void ActionKeyDown(int keyCode, KeyEvent event) {
+        public void onKeyDown(int keyCode, KeyEvent event) {
             MacroRec.AddMacroKeyboard(keyCode, event);
             mTerminal.OnKeyDownFire(keyCode, event);
             if (mListener != null)
@@ -35,7 +35,7 @@ public class TerminalProcess {
         }
 
         @Override
-        public void ActionScreenTouch(int x, int y) {
+        public void onScreenTouch(int x, int y) {
             mTerminal.OnScreenBufferPos(x, y);
         }
     };
