@@ -88,7 +88,6 @@ public class CVT100 extends CVT100Enum {
         this.CharAttribs.GR = this.G2;
 
         this.SetSize(25, 80);
-        //this._ViewContainer = new TextViewContainer(this._cols, this._rows);
         this.Caret = new uc_Caret();
         this.Modes = new uc_Mode();
         this.LineBufferList.clear();
