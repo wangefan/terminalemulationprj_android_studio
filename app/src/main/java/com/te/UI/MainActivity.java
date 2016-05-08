@@ -34,6 +34,7 @@ import Terminals.CipherConnectSettingInfo;
 import Terminals.CipherReaderControl;
 import Terminals.ContentView;
 import Terminals.CursorView;
+import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
 
 public class MainActivity extends AppCompatActivity
@@ -124,6 +125,21 @@ public class MainActivity extends AppCompatActivity
             UIUtility.showProgressDlg(false, 0);
             mKeyboardViewUtility.hideTEKeyboard();
             Toast.makeText(MainActivity.this, getString(R.string.MSG_Disonnected), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNotify(String action, Object... params) {
+            if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHARLIVE) == 0) {
+                mContentView.DrawCharLive((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
+            } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
+                mContentView.postInvalidate();
+            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_CLEAR_VIEW) == 0) {
+                mContentView.ClearView();
+            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_SPACE) == 0) {
+                mContentView.DrawSpace((Integer) params[0], (Integer) params[1], (Integer) params[2]);
+            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_FIELD_CHAR) == 0) {
+                mContentView.DrawFieldChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
+            }
         }
 
         @Override

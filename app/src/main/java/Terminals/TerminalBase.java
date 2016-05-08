@@ -1,6 +1,5 @@
 package Terminals;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -18,12 +17,16 @@ import SessionProcess.TelnetSshConnMgr;
  * Created by Franco.Liu on 2014/1/9.
  */
 public abstract class TerminalBase extends TerminalBaseEnum {
+    public final static String NOTF_ACT_DRAWCHARLIVE = "NOTF_ACT_DRAWCHARLIVE";
+    public final static String NOTF_ACT_INVALIDATE ="NOTF_ACT_INVALIDATE";
+    public final static String NOTF_ACT_CLEAR_VIEW ="NOTF_ACT_CLEAR_VIEW";
+    public final static String NOTF_ACT_DRAW_SPACE ="NOTF_ACT_DRAW_SPACE";
+    public final static String NOTF_ACT_DRAW_FIELD_CHAR = "NOTF_ACT_DRAW_FIELD_CHAR";
     public TerminalLogWriter LogFile;
     public char[][] CharGrid = null;
     public char[][] AttribGrid = null;
     public int _cols;
     public int _rows;
-    public ContentView _ViewContainer;
     protected OnTerminalListener mTerminalListener;
     protected String mIp = "";
     protected String mPort = "";
@@ -44,14 +47,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             }
             Log.d("TE:", strHex);
         }
-    }
-
-    public void SetViewContainer(ContentView View) {
-        if (View == null)
-            return;
-        _ViewContainer = View;
-        _ViewContainer.setTermina(this);
-        _ViewContainer.updateViewGrid(this._cols, this._rows);
     }
 
     public void setOnTerminalListener(OnTerminalListener onTerminalListener) {
@@ -114,13 +109,13 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             DispatchMessageRaw(this, SendData, SendData.length);
         }
         if (mTerminalListener != null) {
-            mTerminalListener.OnConnected();
+            mTerminalListener.onConnected();
         }
     }
 
     public void OnDisconnected() {
         if (mTerminalListener != null) {
-            mTerminalListener.OnDisconnected();
+            mTerminalListener.onDisconnected();
         }
     }
 
@@ -141,9 +136,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     }
 
-    public void ReflashBuffer() {
-
-    }
+    abstract public void ReflashBuffer();
 
     public char GetCharFromCurrentIndex(int index) {
         return mTelnetParser.GetCharFromCurrent(index);
@@ -153,31 +146,29 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         return mTelnetParser.TryGetMultiChar();
     }
 
-    public void DrawCharLive(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
-        if (_ViewContainer != null)
-            _ViewContainer.DrawCharLive(c, x, y, IsBold, IsUnderLine);
+    public void DrawCharLive(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
+        if (mTerminalListener != null)
+            mTerminalListener.onNotify(NOTF_ACT_DRAWCHARLIVE, c, x, y, IsBold, IsUnderLine);
     }
 
     public void ViewPostInvalidate() {
-        if (_ViewContainer != null)
-            _ViewContainer.postInvalidate();
+        if (mTerminalListener != null)
+            mTerminalListener.onNotify(NOTF_ACT_INVALIDATE);
     }
 
     public void ViewClear() {
-        if (_ViewContainer != null)
-            _ViewContainer.ClearView();
-
+        if (mTerminalListener != null)
+            mTerminalListener.onNotify(NOTF_ACT_CLEAR_VIEW);
     }
 
-    public void ViewDrawSpace(int x, int y, int space) {
-        if (_ViewContainer != null)
-            _ViewContainer.DrawSpace(x, y, space);
-
+    public void ViewDrawSpace(Integer x, Integer y, Integer space) {
+        if (mTerminalListener != null)
+            mTerminalListener.onNotify(NOTF_ACT_DRAW_SPACE, x, y, space);
     }
 
-    public void DrawFieldChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
-        if (_ViewContainer != null)
-            _ViewContainer.DrawFieldChar(c, x, y, IsBold, IsUnderLine);
+    public void DrawFieldChar(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
+        if (mTerminalListener != null)
+            mTerminalListener.onNotify(NOTF_ACT_DRAW_FIELD_CHAR, c, x, y, IsBold, IsUnderLine);
     }
 
     public String GetLogTitle() {
@@ -205,8 +196,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                 mBAutoLoginProcessed = true;
         }
 
-        if (_ViewContainer != null)
-            _ViewContainer.postInvalidate();
+        ViewPostInvalidate();
     }
     //region  TelnetInt Parser Entry
 
@@ -350,9 +340,9 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     public interface OnTerminalListener {
-        void OnConnected();
-
-        void OnDisconnected();
+        void onConnected();
+        void onDisconnected();
+        void onNotify(String action, Object ... params);
     }
 
     protected class TelnetParser {

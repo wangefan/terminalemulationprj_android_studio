@@ -79,8 +79,8 @@ public class ContentView extends View {
     }
 
     public final void updateViewGrid(int nNumCols, int nNumRows) {
-        mBmpWidth = nNumCols * (int) mFontRect.width();
-        mBmpHeight = nNumRows * (int) mFontRect.height();
+        mBmpWidth = nNumCols * mFontRect.width();
+        mBmpHeight = nNumRows * mFontRect.height();
 
         setLayoutParams(new RelativeLayout.LayoutParams(mBmpWidth, mBmpHeight));
 
@@ -124,11 +124,11 @@ public class ContentView extends View {
         return Bounds;
     }
 
-    public void DrawCharLive(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
+    public void DrawCharLive(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
         if (mCanvas == null)
             return;
 
-        Rect rect = new Rect((int) mFontRect.width() * x, (int) mFontRect.height() * y, (int) (mFontRect.width() * x) + mFontRect.width(), (int) (mFontRect.height() * y) + mFontRect.height());
+        Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width(), mFontRect.height() * y + mFontRect.height());
         mCanvas.drawRect(rect, mBgpaint);
         if (c == 0)
             c = ' ';

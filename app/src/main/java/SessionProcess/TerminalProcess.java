@@ -57,7 +57,8 @@ public class TerminalProcess {
         if (mTerminal == null) {
             return;
         }
-        mTerminal.SetViewContainer(mTerminalView);
+        mTerminalView.setTermina(mTerminal);
+        mTerminalView.updateViewGrid(mTerminal._cols, mTerminal._rows);
         mTerminalView.setOnViewListener(mViewEventHandler);
         mTerminal.ReflashBuffer();
         mTerminal.ViewPostInvalidate();
@@ -142,18 +143,25 @@ public class TerminalProcess {
         mTerminal.setPort(Port);
         mTerminal.setSsh(SSh);
         mTerminalView.setOnViewListener(mViewEventHandler);
-        mTerminal.SetViewContainer(mTerminalView);
+        mTerminalView.setTermina(mTerminal);
+        mTerminalView.updateViewGrid(mTerminal._cols, mTerminal._rows);
         mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
             @Override
-            public void OnConnected() {
+            public void onConnected() {
                 if (mListener != null)
                     mListener.onConnected();
             }
 
             @Override
-            public void OnDisconnected() {
+            public void onDisconnected() {
                 if (mListener != null)
                     mListener.onDisConnected();
+            }
+
+            @Override
+            public void onNotify(String action, Object... params) {
+                if (mListener != null)
+                    mListener.onNotify(action, params);
             }
         });
 
@@ -163,9 +171,6 @@ public class TerminalProcess {
     public void ProcessReleaseView() {
         mTerminalView = null;
         mListener = null;
-        if (mTerminal != null)
-            mTerminal.SetViewContainer(null);
-
     }
 
     public void ProcessDisConnect() {
@@ -183,6 +188,8 @@ public class TerminalProcess {
         void onConnected();
 
         void onDisConnected();
+
+        void onNotify(String action, Object... params);
 
         void onDataInputEvent();
     }
