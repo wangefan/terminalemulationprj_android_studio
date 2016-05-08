@@ -70,7 +70,7 @@ public class ContentView extends View {
         mBmpHeight = 0;
     }
 
-    public void setOnViewEventListener(OnContentViewListener listener) {
+    public void setOnViewListener(OnContentViewListener listener) {
         mOnContentViewListener = listener;
     }
 

@@ -57,9 +57,8 @@ public class TerminalProcess {
         if (mTerminal == null) {
             return;
         }
-
         mTerminal.SetViewContainer(mTerminalView);
-        mTerminalView.setOnViewEventListener(mViewEventHandler);
+        mTerminalView.setOnViewListener(mViewEventHandler);
         mTerminal.ReflashBuffer();
         mTerminal.ViewPostInvalidate();
     }
@@ -142,7 +141,7 @@ public class TerminalProcess {
         mTerminal.setIP(Ip);
         mTerminal.setPort(Port);
         mTerminal.setSsh(SSh);
-        mTerminalView.setOnViewEventListener(mViewEventHandler);
+        mTerminalView.setOnViewListener(mViewEventHandler);
         mTerminal.SetViewContainer(mTerminalView);
         mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
             @Override
