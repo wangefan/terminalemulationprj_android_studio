@@ -7,7 +7,8 @@ import android.view.MenuItem;
 import com.example.terminalemulation.R;
 
 public class SessionSecondSettings extends AppCompatActivity {
- 
+    public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +23,14 @@ public class SessionSecondSettings extends AppCompatActivity {
 
          // Display the fragment as the main content.
         String action = getIntent().getAction();
-        SessionSecondSettingsFrg settingsFrg = new SessionSecondSettingsFrg();
-        settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
-        settingsFrg.setAction(action);
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, settingsFrg)
-                .commit();
+        if(action.compareTo(ACTION_HOST_PROFILE) == 0) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
+            SessionSecondSettingsFrg settingsFrg = new SessionSecondSettingsFrg();
+            settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, settingsFrg)
+                    .commit();
+        }
     }
 
     @Override

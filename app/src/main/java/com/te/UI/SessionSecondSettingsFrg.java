@@ -18,16 +18,13 @@ import Terminals.TESettings;
 public class SessionSecondSettingsFrg extends PreferenceFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
-
-        //Data members
+    //Data members
     private String mTN5250HostTypeName = "";
     private String mTN3270HostTypeName = "";
     private String mVT100HostTypeName = "";
     private String mVT102HostTypeName = "";
     private String mVT220HostTypeName = "";
     private String mVTAnsiHostTypeName = "";
-    private String mActon = "";
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
     private EditTextPreference mPrefPort = null;
@@ -45,10 +42,6 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
 
     public void setSessionSeting(TESettings.SessionSetting setting) {
         mSetting = setting;
-    }
-
-    public void setAction(String action) {
-        mActon = action;
     }
 
     private void initSummary(Preference p) {
@@ -97,11 +90,7 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
-
         addPreferencesFromResource(R.xml.pref_host_profile_more);
-        if(mActon.compareTo(ACTION_HOST_PROFILE) == 0) {
-            ((SessionSecondSettings)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
-        }
 
         mTN5250HostTypeName = getResources().getString(R.string.IBM5250Val);
         mTN3270HostTypeName = getResources().getString(R.string.IBM3270Val);
