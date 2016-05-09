@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="@string/tn_data_upper_case_key"
+        android:title="@string/tn_data_upper_case"
+        android:defaultValue="false" />
+    <ListPreference
+        android:key="@string/tn_codepage_key"
+        android:title="@string/tn_codepage"
+        android:entries="@array/codepage_array"
+        android:entryValues="@array/codepage_array_vals"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"/>
+    <CheckBoxPreference
+        android:key="@string/tn_auto_reset_key"
+        android:title="@string/tn_auto_reset"
+        android:defaultValue="false" />
+
+    <ListPreference
+        android:key="@string/tn_field_length_if_exceed_key"
+        android:title="@string/tn_field_length_if_exceed"
+        android:entries="@array/field_length_array"
+        android:entryValues="@array/field_length_array_vals"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+</PreferenceScreen>

@@ -26,6 +26,11 @@
         android:title="@string/emulation_setting" >
         <PreferenceScreen
             android:title="@string/server_setting">
+            <intent
+                android:targetPackage="com.example.terminalemulation"
+                android:targetClass="com.te.UI.SessionSecondSettings"
+                android:action="com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING">
+            </intent>
         </PreferenceScreen>
         <PreferenceScreen
             android:title="@string/screen">

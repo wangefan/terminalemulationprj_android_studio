@@ -89,6 +89,18 @@ public class TESettings {
         @SerializedName("isSaveLog")
         public boolean mIsSaveLog = false;
 
+        @SerializedName("bUpperCase")
+        public boolean mBUpperCase = false;
+
+        @SerializedName("bIBMAutoReset")
+        public boolean mBIBMAutoReset = false;
+
+        @SerializedName("cCheckFieldLength")
+        public int mCheckFieldLength = 0;//0: reject (default), 1: Truncate, 2: splite to next field
+
+        @SerializedName("TELanguage")
+        public int mTELanguage = 0;//0: single byte char, 1:TC, 2:SC, 3:Kor, 4:Jap, 5:Gre, 6:Fre
+
         public int nCharSet = 0;	//0:Ansi, 1:UTF8
         public int CursorType = 0; //0:Default, 1:Underline, 2:Block
         public int LineBuffer = 0;

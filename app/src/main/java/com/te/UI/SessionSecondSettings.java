@@ -6,8 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.example.terminalemulation.R;
 
+import Terminals.CipherConnectSettingInfo;
+
 public class SessionSecondSettings extends AppCompatActivity {
     public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
+    public static final String ACTION_SERVER_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,22 @@ public class SessionSecondSettings extends AppCompatActivity {
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
+        } else if(action.compareTo(ACTION_SERVER_SETTING) == 0) {
+            if(CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
+                SessionTNSettingsFrg settingsFrg = new SessionTNSettingsFrg();
+                settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, settingsFrg)
+                        .commit();
+            } /*else {//VT settings
+                getSupportActionBar().setTitle(getResources().getString(R.string.vt_setting));
+                SessionVTSettingsFrg settingsFrg = new SessionVTSettingsFrg();
+                settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, settingsFrg)
+                        .commit();
+            }*/
         }
     }
 
