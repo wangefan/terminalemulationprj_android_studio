@@ -172,39 +172,24 @@ public class ContentView extends View {
     }
 
     public void DrawFieldChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
-        Rect rect = new Rect((int) mFontRect.width() * x, (int) mFontRect.height() * y, (int) (mFontRect.width() * x) + mFontRect.width(), (int) (mFontRect.height() * y) + mFontRect.height());
-
-        //Rectangle rect = new Rectangle((int)FontSize.Width * x, (int)FontSize.Height * y, (int)FontSize.Width + 4, (int)FontSize.Height);
-
         if (mCanvas == null)
             return;
-
-        mCanvas.drawRect(rect, mBgpaint);
-
+        Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width(), mFontRect.height() * y + mFontRect.height());
         if (c == 0) {
             c = ' ';
         }
-
-        Typeface font;
-
-        font = Typeface.create("sans-serif", Typeface.NORMAL);
-
+        Typeface font = Typeface.create("sans-serif", Typeface.NORMAL);
         if (IsBold) {
             font = Typeface.create("sans-serif", Typeface.BOLD);
         }
 
         if (IsUnderLine) {
             mCanvas.drawLine(rect.left, rect.bottom - 1, rect.right, rect.bottom - 1, mFgpaint);//(drawpen, rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
-
         }
 
         mFgpaint.setTypeface(font);
-
         mCanvas.drawText(String.valueOf(c), rect.left, rect.bottom - (mFontRect.height() / 3), mFgpaint);
-
         mFgpaint.setTypeface(mFontface);
-
-
     }
 
     protected void onDraw(Canvas canvas) {
