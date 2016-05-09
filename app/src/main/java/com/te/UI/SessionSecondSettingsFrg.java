@@ -98,7 +98,7 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
         if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.pref_general_tn);
+        addPreferencesFromResource(R.xml.pref_host_profile_more);
         if(mActon.compareTo(ACTION_HOST_PROFILE) == 0) {
             ((SessionSecondSettings)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
         }
