@@ -31,7 +31,7 @@ public class TerminalProcess {
     //call from ContentView Begin
     public void handleKeyDown(int keyCode, KeyEvent event) {
         MacroRec.AddMacroKeyboard(keyCode, event);
-        mTerminal.OnKeyDownFire(keyCode, event);
+        mTerminal.handleKeyDown(keyCode, event);
         if (mListener != null)
             mListener.onDataInputEvent();
     }
@@ -54,7 +54,7 @@ public class TerminalProcess {
             if (item.GetInputType() == 1) {
                 PlayMacroBarcode(item.GetBarcodeData());
             } else
-                mTerminal.OnKeyDownFire(item.GetKeyCode(), item.GetEvent());
+                mTerminal.handleKeyDown(item.GetKeyCode(), item.GetEvent());
 
         }
 

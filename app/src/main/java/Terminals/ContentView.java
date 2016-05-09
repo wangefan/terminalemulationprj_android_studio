@@ -246,15 +246,9 @@ public class ContentView extends View {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-
-        // return super.onKeyDown(keyCode,event);
         if (mTerminalProc != null)
             mTerminalProc.handleKeyDown(keyCode, event);
-
         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_TAB) {
-
-
             return true;
         }
         return super.onKeyDown(keyCode, event);

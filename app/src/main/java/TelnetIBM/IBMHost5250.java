@@ -1989,7 +1989,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     @Override
-    public void OnKeyDownFire(int keyCode, KeyEvent event) {
+    public void handleKeyDown(int keyCode, KeyEvent event) {
         boolean Func = false;
         char pressedKey = (char) event.getUnicodeChar();
 

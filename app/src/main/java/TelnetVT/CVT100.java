@@ -1174,7 +1174,7 @@ public class CVT100 extends CVT100Enum {
     }
 
     @Override
-    public void OnKeyDownFire(int keyCode, KeyEvent event) {
+    public void handleKeyDown(int keyCode, KeyEvent event) {
         Boolean IsLineBuffer = CipherConnectSettingInfo.getHostIsLineBufferByIndex(CipherConnectSettingInfo.GetSessionIndex());
 
         if (IsLineBuffer) {

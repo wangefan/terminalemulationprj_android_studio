@@ -124,7 +124,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     abstract public String GetTerminalTypeName();
 
-    abstract public void OnKeyDownFire(int keyCode, KeyEvent event);
+    abstract public void handleKeyDown(int keyCode, KeyEvent event);
 
     abstract public void OnBarcodeFire(String Code);
 
