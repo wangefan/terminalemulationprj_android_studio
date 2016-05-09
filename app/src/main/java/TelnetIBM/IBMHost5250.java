@@ -1908,6 +1908,7 @@ public class IBMHost5250 extends IBMHostBase {
 
     }
 
+    @Override
     public void OnScreenBufferPos(int x, int y) {
         Ibm_Caret cCaret = new Ibm_Caret();
 
@@ -1974,6 +1975,7 @@ public class IBMHost5250 extends IBMHostBase {
         return 0;
     }
 
+    @Override
     public void OnBarcodeFire(String Code) {
         if (FieldList.size() < 1)
             return;
@@ -1986,6 +1988,7 @@ public class IBMHost5250 extends IBMHostBase {
         ViewPostInvalidate();
     }
 
+    @Override
     public void OnKeyDownFire(int keyCode, KeyEvent event) {
         boolean Func = false;
         char pressedKey = (char) event.getUnicodeChar();

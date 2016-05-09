@@ -1162,11 +1162,18 @@ public class CVT100 extends CVT100Enum {
         }
     }
 
+    @Override
     public void OnBarcodeFire(String Code) {
         DispatchMessage(this, Code);
         ViewPostInvalidate();
     }
 
+    @Override
+    public void OnScreenBufferPos(int x, int y) {
+
+    }
+
+    @Override
     public void OnKeyDownFire(int keyCode, KeyEvent event) {
         Boolean IsLineBuffer = CipherConnectSettingInfo.getHostIsLineBufferByIndex(CipherConnectSettingInfo.GetSessionIndex());
 
