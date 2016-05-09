@@ -20,6 +20,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public final static String NOTF_ACT_DRAWCHARLIVE = "NOTF_ACT_DRAWCHARLIVE";
     public final static String NOTF_ACT_INVALIDATE ="NOTF_ACT_INVALIDATE";
     public final static String NOTF_ACT_CLEAR_VIEW ="NOTF_ACT_CLEAR_VIEW";
+    public final static String NOTF_ACT_UPDATE_GRID ="NOTF_ACT_UPDATE_GRID";
     public final static String NOTF_ACT_DRAW_SPACE ="NOTF_ACT_DRAW_SPACE";
     public final static String NOTF_ACT_DRAW_FIELD_CHAR = "NOTF_ACT_DRAW_FIELD_CHAR";
     public TerminalLogWriter LogFile;

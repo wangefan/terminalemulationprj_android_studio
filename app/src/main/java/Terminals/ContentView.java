@@ -36,7 +36,6 @@ public class ContentView extends View {
     TextPaint mFgpaint;
     int mBmpWidth;
     int mBmpHeight;
-    private OnContentViewListener mOnContentViewListener;
     private Bitmap mImage;
     private int mBackgroundColor;
     private int mForegroundColor;
@@ -64,20 +63,22 @@ public class ContentView extends View {
         mFgpaint = GetPaint(mForegroundColor);
     }
 
-    public void setOnViewListener(OnContentViewListener listener) {
-        mOnContentViewListener = listener;
-    }
-
     public void setTerminalProc(TerminalProcess terminalProc) {
         mTerminalProc = terminalProc;
     }
 
-    public final void updateViewGrid(int nNumCols, int nNumRows) {
-        mBmpWidth = nNumCols * mFontRect.width();
-        mBmpHeight = nNumRows * mFontRect.height();
+    public final void updateViewGrid() {
+        int nNewBmpWidth = mTerminalProc.getCols() * mFontRect.width();
+        int nNewBmpHeight = mTerminalProc.getRows() * mFontRect.height();
+        if(nNewBmpWidth == mBmpWidth && nNewBmpHeight == mBmpHeight) {
+            ClearView();
+            return;
+        }
+
+        mBmpWidth = nNewBmpWidth;
+        mBmpHeight = nNewBmpHeight;
 
         setLayoutParams(new RelativeLayout.LayoutParams(mBmpWidth, mBmpHeight));
-
         Bitmap bitmap = Bitmap.createBitmap(mBmpWidth, mBmpHeight, Bitmap.Config.RGB_565);
         mImage = bitmap;
         mCanvas = new Canvas(mImage);
@@ -85,7 +86,7 @@ public class ContentView extends View {
     }
 
     public void refresh() {
-        updateViewGrid(mTerminalProc.getCols(), mTerminalProc.getRows());
+        updateViewGrid();
         if(mTerminalProc != null)
             mTerminalProc.drawAll();
     }
@@ -248,8 +249,8 @@ public class ContentView extends View {
 
 
         // return super.onKeyDown(keyCode,event);
-        if (mOnContentViewListener != null)
-            mOnContentViewListener.onKeyDown(keyCode, event);
+        if (mTerminalProc != null)
+            mTerminalProc.handleKeyDown(keyCode, event);
 
         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_TAB) {
 
@@ -285,9 +286,8 @@ public class ContentView extends View {
 
         BufferPos = CalculateCaretPos(x, y);
 
-
-        if (mOnContentViewListener != null)
-            mOnContentViewListener.onScreenTouch(BufferPos.X, BufferPos.Y);
+        if (mTerminalProc != null)
+            mTerminalProc.handleScreenTouch(BufferPos.X, BufferPos.Y);
 
         // DrawSpaceFront(BufferPos.X,BufferPos.Y,1);
 

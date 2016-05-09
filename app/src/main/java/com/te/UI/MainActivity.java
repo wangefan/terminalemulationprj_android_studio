@@ -133,6 +133,8 @@ public class MainActivity extends AppCompatActivity
                 mContentView.DrawCharLive((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
             } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
                 mContentView.postInvalidate();
+            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_UPDATE_GRID) == 0) {
+                mContentView.updateViewGrid();
             } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_CLEAR_VIEW) == 0) {
                 mContentView.ClearView();
             } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_SPACE) == 0) {
@@ -234,6 +236,11 @@ public class MainActivity extends AppCompatActivity
 
         Cursor = new CursorView(this);
         mContentView = new ContentView(this, Cursor);
+
+        //Bind TerminalProcess and ContentView
+        TerminalProcess actSession = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        actSession.setListener(mOnTerminalProcessListener);
+        mContentView.setTerminalProc(actSession);
 
         mKeyboardViewUtility = new TEKeyboardViewUtility(this, (KeyboardView) findViewById(R.id.software_keyboard_view), mContentView);
         mKeyboardViewUtility.setListener(this);
@@ -534,12 +541,11 @@ public class MainActivity extends AppCompatActivity
         //bind between TerminalProcess and ContentView
         nextSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(nextSession);
-        mContentView.setOnViewListener(nextSession);
-        mContentView.refresh();
         CipherConnectSettingInfo.SetSessionIndex(idxSession);
         mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
         if (isCurSessionConnected()) {
+            mContentView.refresh();
             updateFABStatus(FABStatus.Keyboard);
         } else {
             updateFABStatus(FABStatus.Connect);

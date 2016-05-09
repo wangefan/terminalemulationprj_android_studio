@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 import Terminals.CipherConnectSettingInfo;
-import Terminals.ContentView;
 import Terminals.MacroRecorder;
 import Terminals.Macroitem;
 import Terminals.TerminalBase;
@@ -21,7 +20,7 @@ import Terminals.stdActivityRef;
 /**
  * Created by Franco.Liu on 2014/2/26.
  */
-public class TerminalProcess implements ContentView.OnContentViewListener {
+public class TerminalProcess {
     MacroRecorder MacroRec = new MacroRecorder();
     private TerminalBase mTerminal;
     private OnTerminalProcessListener mListener = null;
@@ -29,20 +28,18 @@ public class TerminalProcess implements ContentView.OnContentViewListener {
     public TerminalProcess() {
     }
 
-    //ContentView.OnContentViewListener Begin
-    @Override
-    public void onKeyDown(int keyCode, KeyEvent event) {
+    //call from ContentView Begin
+    public void handleKeyDown(int keyCode, KeyEvent event) {
         MacroRec.AddMacroKeyboard(keyCode, event);
         mTerminal.OnKeyDownFire(keyCode, event);
         if (mListener != null)
             mListener.onDataInputEvent();
     }
 
-    @Override
-    public void onScreenTouch(int x, int y) {
+    public void handleScreenTouch(int x, int y) {
         mTerminal.OnScreenBufferPos(x, y);
     }
-    //ContentView.OnContentViewListener End
+    //call from ContentView End
 
     public void setListener(OnTerminalProcessListener listener) {
         mListener = listener;
@@ -103,12 +100,13 @@ public class TerminalProcess implements ContentView.OnContentViewListener {
     }
 
     public boolean ProcessConnect() {
-        Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
+
         String Ip = CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
         String Port = CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
         Boolean SSh = CipherConnectSettingInfo.getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
         boolean isTN = CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex());
 
+        Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
         if (isTN == false) {
             String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
             assert (serverTypeName.equals(context.getResources().getString(R.string.VT100Val)) ||
@@ -120,6 +118,10 @@ public class TerminalProcess implements ContentView.OnContentViewListener {
             String serverTypeName = CipherConnectSettingInfo.getTNHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
             if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
                 mTerminal = new IBMHost5250();
+        }
+
+        if(mListener != null) {
+            mListener.onNotify(TerminalBase.NOTF_ACT_UPDATE_GRID);
         }
 
         mTerminal.setIP(Ip);
