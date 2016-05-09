@@ -15,55 +15,38 @@ import Terminals.ContentView;
 import Terminals.MacroRecorder;
 import Terminals.Macroitem;
 import Terminals.TerminalBase;
+import Terminals.TerminalBaseEnum;
 import Terminals.stdActivityRef;
 
 /**
  * Created by Franco.Liu on 2014/2/26.
  */
-public class TerminalProcess {
-    ContentView mTerminalView = null;
+public class TerminalProcess implements ContentView.OnContentViewListener {
     MacroRecorder MacroRec = new MacroRecorder();
     private TerminalBase mTerminal;
     private OnTerminalProcessListener mListener = null;
-    private ContentView.OnContentViewListener mViewEventHandler = new ContentView.OnContentViewListener() {
-        @Override
-        public void onKeyDown(int keyCode, KeyEvent event) {
-            MacroRec.AddMacroKeyboard(keyCode, event);
-            mTerminal.OnKeyDownFire(keyCode, event);
-            if (mListener != null)
-                mListener.onDataInputEvent();
-        }
-
-        @Override
-        public void onScreenTouch(int x, int y) {
-            mTerminal.OnScreenBufferPos(x, y);
-        }
-    };
 
     public TerminalProcess() {
-
-
     }
 
-    public void SetVewContainer(ContentView view) {
-        mTerminalView = view;
+    //ContentView.OnContentViewListener Begin
+    @Override
+    public void onKeyDown(int keyCode, KeyEvent event) {
+        MacroRec.AddMacroKeyboard(keyCode, event);
+        mTerminal.OnKeyDownFire(keyCode, event);
+        if (mListener != null)
+            mListener.onDataInputEvent();
     }
+
+    @Override
+    public void onScreenTouch(int x, int y) {
+        mTerminal.OnScreenBufferPos(x, y);
+    }
+    //ContentView.OnContentViewListener End
 
     public void setListener(OnTerminalProcessListener listener) {
         mListener = listener;
     }
-
-    public void ResetSessionView() {
-        if (mTerminal == null) {
-            return;
-        }
-        mTerminalView.setTermina(mTerminal);
-        mTerminalView.updateViewGrid(mTerminal._cols, mTerminal._rows);
-        mTerminalView.setOnViewListener(mViewEventHandler);
-        mTerminal.ReflashBuffer();
-        mTerminal.ViewPostInvalidate();
-    }
-    //IsConnect
 
     public void PlayMacro() {
         ArrayList<?> Macroitem = MacroRec.GetItemsList();
@@ -142,9 +125,6 @@ public class TerminalProcess {
         mTerminal.setIP(Ip);
         mTerminal.setPort(Port);
         mTerminal.setSsh(SSh);
-        mTerminalView.setOnViewListener(mViewEventHandler);
-        mTerminalView.setTermina(mTerminal);
-        mTerminalView.updateViewGrid(mTerminal._cols, mTerminal._rows);
         mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
             @Override
             public void onConnected() {
@@ -168,11 +148,6 @@ public class TerminalProcess {
         return mTerminal.TelnetsStart();
     }
 
-    public void ProcessReleaseView() {
-        mTerminalView = null;
-        mListener = null;
-    }
-
     public void ProcessDisConnect() {
         if (mTerminal != null)
             mTerminal.TelnetDisconnect();
@@ -182,6 +157,29 @@ public class TerminalProcess {
         if (mTerminal != null)
             return mTerminal.isConnected();
         return false;
+    }
+
+    public int getCols() {
+        if(mTerminal != null)
+            return mTerminal._cols;
+        return 0;
+    }
+
+    public int getRows() {
+        if(mTerminal != null)
+            return mTerminal._rows;
+        return 0;
+    }
+
+    public TerminalBaseEnum.Point getCursorGridPos() {
+        if(mTerminal != null)
+            return mTerminal.getCursorGridPos();
+        return new TerminalBaseEnum.Point(0,0);
+    }
+
+    public void drawAll() {
+        if(mTerminal != null)
+            mTerminal.drawAll();
     }
 
     public interface OnTerminalProcessListener {

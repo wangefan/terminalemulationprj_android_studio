@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
+import SessionProcess.TerminalProcess;
 import Terminals.TerminalBaseEnum.Point;
 
 
@@ -39,7 +40,7 @@ public class ContentView extends View {
     private Bitmap mImage;
     private int mBackgroundColor;
     private int mForegroundColor;
-    private TerminalBase mTerminal; //subject
+    private TerminalProcess mTerminalProc; //subject
 
     public ContentView(Context context, CursorView Cursor) {
         super(context);
@@ -63,19 +64,12 @@ public class ContentView extends View {
         mFgpaint = GetPaint(mForegroundColor);
     }
 
-    public void ResetView() {
-        mImage = null;
-        //mDisplayCorsor=null;
-        mBmpWidth = 0;
-        mBmpHeight = 0;
-    }
-
     public void setOnViewListener(OnContentViewListener listener) {
         mOnContentViewListener = listener;
     }
 
-    public void setTermina(TerminalBase terminal) {
-        mTerminal = terminal;
+    public void setTerminalProc(TerminalProcess terminalProc) {
+        mTerminalProc = terminalProc;
     }
 
     public final void updateViewGrid(int nNumCols, int nNumRows) {
@@ -88,6 +82,12 @@ public class ContentView extends View {
         mImage = bitmap;
         mCanvas = new Canvas(mImage);
         ClearView();
+    }
+
+    public void refresh() {
+        updateViewGrid(mTerminalProc.getCols(), mTerminalProc.getRows());
+        if(mTerminalProc != null)
+            mTerminalProc.drawAll();
     }
 
     public void ClearView() {
@@ -213,11 +213,11 @@ public class ContentView extends View {
 
         canvas.drawBitmap(mImage, 0, 0, mBgpaint);
 
-        if (mTerminal == null)
+        if (mTerminalProc == null)
             return;
-        Point cursonGridPos = mTerminal.getCursorGridPos();
-        int nPosX = cursonGridPos.X * mFontRect.width();
-        int nPosY = cursonGridPos.Y * mFontRect.height();
+        Point cursorPos = mTerminalProc.getCursorGridPos();
+        int nPosX = cursorPos.X * mFontRect.width();
+        int nPosY = cursorPos.Y * mFontRect.height();
         mCorsor.setX(nPosX);
         mCorsor.setY(nPosY);
 

@@ -529,11 +529,13 @@ public class MainActivity extends AppCompatActivity
         TerminalProcess curSeesion = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         TerminalProcess nextSession = mCollSessions.get(idxSession);
 
-        curSeesion.ProcessReleaseView();
-        mContentView.ResetView();
-        nextSession.SetVewContainer(mContentView);
+        //un-bind between TerminalProcess and MainActivity (Actually is ContentView)
+        curSeesion.setListener(null);
+        //bind between TerminalProcess and ContentView
         nextSession.setListener(mOnTerminalProcessListener);
-        nextSession.ResetSessionView();
+        mContentView.setTerminalProc(nextSession);
+        mContentView.setOnViewListener(nextSession);
+        mContentView.refresh();
         CipherConnectSettingInfo.SetSessionIndex(idxSession);
         mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
@@ -583,11 +585,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void SessionConnect() {
-        TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
-        SessionDisConnect();
-        termProc.SetVewContainer(mContentView);
-        termProc.setListener(mOnTerminalProcessListener);
         UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
+        TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         termProc.ProcessConnect();
     }
 

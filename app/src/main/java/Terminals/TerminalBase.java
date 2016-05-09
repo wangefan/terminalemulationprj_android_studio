@@ -136,7 +136,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     }
 
-    abstract public void ReflashBuffer();
+    abstract public void drawAll();
 
     public char GetCharFromCurrentIndex(int index) {
         return mTelnetParser.GetCharFromCurrent(index);

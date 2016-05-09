@@ -129,46 +129,17 @@ public class IBMHost5250 extends IBMHostBase{
         return "IBM-5292-2";
     }
       
-    public  void ReflashBuffer()
-    {
-        
-        ViewClear();
-
-        int i=0;
-        
-        for (i = this.TopMargin; i < this.BottomMargin; i++)
-        {
-            //this.CharGrid[i] = this.CharGrid[i + 1];
-            //this.AttribGrid[i] = this.AttribGrid[i + 1];
-
-				for(int xcol=0;xcol<this._cols;++xcol)
-				{
-					//if (this.AttribGrid[i][xcol]==null)
-						DrawCharLive(this.CharGrid[i][xcol], xcol, i, false, false);
-					//else
-				        //DrawCharLive(this.CharGrid[i][xcol], xcol, i, this.AttribGrid[i][xcol].IsBold, this.AttribGrid[i][xcol].IsUnderscored);
-				}
-
+    public  void drawAll() {
+        for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
+            for(int idxCol = 0; idxCol < this._cols; ++idxCol ) {
+                //if (this.AttribGrid[i][i]==null)
+                    DrawCharLive(this.CharGrid[idxRow][idxCol], idxCol , idxRow, false, false);
+                //else
+                    //DrawCharLive(this.CharGrid[i][i], i, i, this.AttribGrid[i][i].IsBold, this.AttribGrid[i][i].IsUnderscored);
+            }
         }
 
-
-       /* for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                char character = CharGrid[y][x];
-                if (character == (char)0)
-                {
-                    character = ' ';
-                }
-                CharAttribStruct Attrib = AttribGrid[y][x];
-
-               
-
-            }
-        }*/
     }
-    // }}#
    
     @Override
 	public void processChar(char ch)
