@@ -236,21 +236,11 @@ public class CipherConnectSettingInfo {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         Setting.mTermLogin = nTerm;
     }
-    
-   /* public static String getHostNameByIndex(int index) {
-        initSharedPreferences(c);
-        String Default="Server"+ Integer.toString(index);
-        String Name="CipherHost"+ Integer.toString(index);
-        return _sp.getString(Name,Default);
-    }  */
-    
-    /*public static void SetHostNameByIndex(int index,String HostName) {
-        initSharedPreferences(c);
-        String Name="CipherHost"+ Integer.toString(index);
-        Editor editor = _sp.edit();
-        editor.putString(Name, HostName);
-        editor.commit();
-    }*/
+
+    public static boolean getUpperCaseByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mBUpperCase;
+    }
 
     public static String getHostAddrByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);

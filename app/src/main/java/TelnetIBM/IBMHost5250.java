@@ -1874,8 +1874,9 @@ public class IBMHost5250 extends IBMHostBase {
 
                 }
 
-                if (Character.isLetter(KeyCode) && CurField.Monocase) {
-                    Code = ConvertAsciiToEBCD(Character.toUpperCase((char) KeyCode));
+                if (Character.isLetter(KeyCode)) {
+                    if(CurField.Monocase || CipherConnectSettingInfo.getUpperCaseByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true)
+                        Code = ConvertAsciiToEBCD(Character.toUpperCase((char) KeyCode));
                 }
 
                 if (bInsert)
