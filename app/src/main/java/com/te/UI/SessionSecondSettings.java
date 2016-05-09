@@ -25,7 +25,7 @@ public class SessionSecondSettings extends AppCompatActivity {
         String action = getIntent().getAction();
         if(action.compareTo(ACTION_HOST_PROFILE) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
-            SessionSecondSettingsFrg settingsFrg = new SessionSecondSettingsFrg();
+            SessionHostProfileFrg settingsFrg = new SessionHostProfileFrg();
             settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)

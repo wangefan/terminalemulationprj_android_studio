@@ -15,7 +15,7 @@ import com.example.terminalemulation.R;
 
 import Terminals.TESettings;
 
-public class SessionSecondSettingsFrg extends PreferenceFragment implements
+public class SessionHostProfileFrg extends PreferenceFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     //Data members
@@ -37,7 +37,7 @@ public class SessionSecondSettingsFrg extends PreferenceFragment implements
     private ListPreference mPrefLoginTerm = null;
     private TESettings.SessionSetting mSetting = null;
 
-    public SessionSecondSettingsFrg() {
+    public SessionHostProfileFrg() {
     }
 
     public void setSessionSeting(TESettings.SessionSetting setting) {
