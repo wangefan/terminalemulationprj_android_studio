@@ -175,6 +175,7 @@ public class ContentView extends View {
         if (mCanvas == null)
             return;
         Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width(), mFontRect.height() * y + mFontRect.height());
+        mCanvas.drawRect(rect, mBgpaint);
         if (c == 0) {
             c = ' ';
         }
