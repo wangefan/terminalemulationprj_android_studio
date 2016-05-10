@@ -43,7 +43,7 @@
         </PreferenceScreen>
         <PreferenceScreen
             android:title="@string/ssh">
-            <SwitchPreference
+            <com.te.UI.TESwitchPreference
                 android:title="@string/ssh"
                 android:summaryOff="@string/ssh_off"
                 android:summaryOn="@string/ssh_on"/>
