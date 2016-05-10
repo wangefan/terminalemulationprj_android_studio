@@ -450,11 +450,11 @@ public class IBMHost5250 extends IBMHostBase {
                 ParserCommandData();
                 break;
             case Write_to_Display:
-
                 ParserFieldData();
                 SetRecordToField(0);
                 break;
             case Write_Error_Code:
+                bKeybaordLock = true;
                 ParserFieldDataPos(new Point(1, 24));
                 SetRecordToField(0);
                 break;
@@ -681,11 +681,10 @@ public class IBMHost5250 extends IBMHostBase {
         switch (Command) {
 
             case Clear_Format_Table:
-
+                bKeybaordLock = true;
                 break;
-
             case Clear_Unit:
-
+                bKeybaordLock = true;
                 ViewClear();
                 this.FieldList.clear();
                 break;
@@ -708,6 +707,7 @@ public class IBMHost5250 extends IBMHostBase {
 
             case Write_to_Display:
                 InsertCaret = null;
+                ChangeNextStatus(IBmStates.CommandCcode);
                 break;
             default:
                 break;
@@ -719,8 +719,6 @@ public class IBMHost5250 extends IBMHostBase {
             case Read_MDT_Fields:
             case Read_Screen:
             case Save:
-            case Clear_Format_Table:
-            case Clear_Unit:
             case Restore_Screen:
             case Roll:
             case Write_Error_Code:
@@ -1996,9 +1994,11 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
+        if(bKeybaordLock == true)
+            return;
+
         boolean Func = false;
         char pressedKey = (char) event.getUnicodeChar();
-
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
@@ -2210,8 +2210,7 @@ public class IBMHost5250 extends IBMHostBase {
                 Func = true;
                 break;
             case IBMKEY_RESET:
-                if (bLock)
-                    bLock = false;
+                bKeybaordLock = false;
                 Func = true;
                 break;
             case IBMKEY_HOME:

@@ -4,10 +4,10 @@ import Terminals.*;
  * Created by Franco.Liu on 2015/1/21.
  */
 public abstract class IBMHostBase extends TerminalBase {
-       
-	  
-	 public boolean bInsert; 
-	 public boolean bLock;
+
+
+	 public boolean bInsert;
+
 	 public class Ibm_Caret
 	    {
 	        public Point Pos;
