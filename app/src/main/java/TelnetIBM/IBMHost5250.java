@@ -256,6 +256,10 @@ public class IBMHost5250 extends IBMHostBase {
         return true;
     }
 
+    private boolean isScreenAttributeVisible(byte attr) {
+        return (attr & mAttrMaskNotShow) != mAttrMaskNotShow;
+    }
+
     public String GetLogTitle() {
         return "TN";
     }
@@ -289,13 +293,14 @@ public class IBMHost5250 extends IBMHostBase {
     public void drawAll() {
         for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
-                //if (this.AttribGrid[i][i]==null)
-                DrawCharLive(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
-                //else
-                //DrawCharLive(this.CharGrid[i][i], i, i, this.AttribGrid[i][i].IsBold, this.AttribGrid[i][i].IsUnderscored);
+                boolean isNeedLine = FieldList.isNeedLine(idxCol, idxRow);
+                if(isNeedLine) {
+                    DrawFieldChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, isNeedLine);
+                } else {
+                    DrawCharLive(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
+                }
             }
         }
-
     }
 
     @Override
@@ -472,7 +477,7 @@ public class IBMHost5250 extends IBMHostBase {
                 this.CurAttrib = c;
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
-                if ((CurAttrib & mAttrMaskNotShow) != mAttrMaskNotShow)
+                if (isScreenAttributeVisible((byte) CurAttrib))
                     PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, (IsRecordToField() > 0));
             }
 
@@ -1281,8 +1286,8 @@ public class IBMHost5250 extends IBMHostBase {
             if (IsCharAttributes((char) CurField.Data[i])) {
                 this.CurAttrib = CurField.Data[i];
             } else {
-                char Chater = (char) szEBCDIC[(int) CurField.Data[i]];
-                if ((CurField.Attrib & mAttrMaskNotShow) != mAttrMaskNotShow)
+                char Chater = szEBCDIC[(int) CurField.Data[i]];
+                if (isScreenAttributeVisible((byte) CurField.Attrib))
                     PrintChar(Chater, X, Y, true);
             }
 
@@ -2650,14 +2655,23 @@ public class IBMHost5250 extends IBMHostBase {
         public Ibm_Caret CaretAddr;
         public char[] Data;
         public char Attrib;
-
         public IBM_FIELD() {
         }
-
-
     }
 
     private class FieldArray extends java.util.ArrayList<IBM_FIELD> {
+        boolean isNeedLine(int X, int Y) {
+            for (int idxFiled = 0; idxFiled < this.size(); idxFiled++) {
+                IBM_FIELD field = get(idxFiled);
+                if(isScreenAttributeVisible((byte) field.Attrib) &&
+                        Y == field.CaretAddr.Pos.Y &&
+                        X >= field.CaretAddr.Pos.X && X < field.CaretAddr.Pos.X + field.Lenth) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public String BuildReadDataByIndex(int index, boolean SBA, boolean Replace) {
             IBM_FIELD Field;
             int X, Y;
