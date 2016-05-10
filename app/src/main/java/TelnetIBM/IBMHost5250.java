@@ -1994,8 +1994,12 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        if(bKeybaordLock == true)
-            return;
+        if(bKeybaordLock == true) {
+            if(CipherConnectSettingInfo.getIsIBMAutoUnlock(CipherConnectSettingInfo.GetSessionIndex()) == false) {
+                return;
+            }
+            bKeybaordLock = false;
+        }
 
         boolean Func = false;
         char pressedKey = (char) event.getUnicodeChar();

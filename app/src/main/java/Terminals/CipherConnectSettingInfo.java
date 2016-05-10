@@ -535,4 +535,8 @@ public class CipherConnectSettingInfo {
     }
 
 
+    public static boolean getIsIBMAutoUnlock(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mBIBMAutoReset;
+    }
 }
