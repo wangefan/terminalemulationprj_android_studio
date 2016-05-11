@@ -42,6 +42,7 @@
     <string name="host_auto_sign_pwd">Login Password</string>
     <string name="emulation_setting">Emulation Settings</string>
     <string name="server_setting">Server Settings</string>
+    <string name="error_message">Error Message</string>
     <string name="screen">Screen</string>
     <string name="alarm">Alarm</string>
     <string name="key_mapping">Key Mapping</string>

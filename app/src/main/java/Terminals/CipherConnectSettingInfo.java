@@ -520,4 +520,15 @@ public class CipherConnectSettingInfo {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBIBMAutoReset;
     }
+
+    public static int getErrorRow(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNErrorRowIndexg;
+    }
+
+
+    public static boolean getPopupErrorDialog(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.misPopUpErrorDialog;
+    }
 }

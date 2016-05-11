@@ -105,7 +105,7 @@ public class TESettings {
         public int mNErrorRowIndexg = 0;
 
         @SerializedName("isPupUpErrorDialog")
-        public boolean misPupUpErrorDialog = false;
+        public boolean misPopUpErrorDialog = false;
 
         @SerializedName("LocalNameType")
         public int mLocalNameType = 0;

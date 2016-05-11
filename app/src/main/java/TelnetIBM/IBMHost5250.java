@@ -457,7 +457,16 @@ public class IBMHost5250 extends IBMHostBase {
                 break;
             case Write_Error_Code:
                 bKeybaordLock = true;
-                ParserFieldDataPos(new Point(1, 24));
+                int nErrorRow = CipherConnectSettingInfo.getErrorRow(CipherConnectSettingInfo.GetSessionIndex());
+                boolean bPopupDialog = CipherConnectSettingInfo.getPopupErrorDialog(CipherConnectSettingInfo.GetSessionIndex());
+                if(bPopupDialog) {
+                    StringBuilder sb = new StringBuilder();
+                    PrintErrorMessage(new Point(1, nErrorRow), sb);
+                    UIUtility.messageBoxFromWorkerThread(sb.toString());
+                } else {
+                    PrintErrorMessage(new Point(1, nErrorRow), null);
+                }
+
                 SetRecordToField(0);
                 break;
             case Restore_Screen:
@@ -565,9 +574,8 @@ public class IBMHost5250 extends IBMHostBase {
 
     }
 
-    private void ParserFieldDataPos(Point Pos) {
+    private void PrintErrorMessage(Point Pos, StringBuilder sbRet) {
         Point posTemp = new Point(Pos.X, Pos.Y);
-
         for (Object ch : DataList) {
             char c = ((Character) ch).charValue();
             if (IsCharAttributes(c)) {
@@ -575,6 +583,9 @@ public class IBMHost5250 extends IBMHostBase {
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
                 PrintChar(Chater, posTemp.X, posTemp.Y, (IsRecordToField() > 0));
+                if(sbRet != null) {
+                    sbRet.append(Chater);
+                }
             }
             movePosToNext(posTemp);
         }

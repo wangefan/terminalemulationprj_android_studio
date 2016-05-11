@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
+import android.os.Handler;
 import android.view.WindowManager;
 
 import com.example.terminalemulation.R;
@@ -16,10 +17,12 @@ public class UIUtility {
 	static private Context mContext;
 	static private Point mPrgDlgSize = new Point();
 	static private boolean mBShow = false;
+	static private Handler mUIHandler = null;
 	
 	//member functions
 	static public void init(Context context) {
 		mContext = context;
+		mUIHandler = new Handler();
 	}
 	static public void showProgressDlg(boolean bShow, int messageID)
     {
@@ -58,5 +61,21 @@ public class UIUtility {
 		builder.setMessage(nStringID).setPositiveButton(R.string.STR_OK, null);
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+
+	public static void messageBox(String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setMessage(message).setPositiveButton(R.string.STR_OK, null);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	public static void messageBoxFromWorkerThread(final String message) {
+		mUIHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				messageBox(message);
+			}
+		});
 	}
 }

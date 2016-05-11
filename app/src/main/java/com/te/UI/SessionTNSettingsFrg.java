@@ -23,6 +23,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
     private ListPreference mCodePage = null;
     private CheckBoxPreference mChkAutoReset = null;
     private ListPreference mChkFLIfExceed = null;
+    private CheckBoxPreference mChkPopupWindow = null;
     private TESettings.SessionSetting mSetting = null;
 
     public SessionTNSettingsFrg() {
@@ -71,6 +72,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mCodePage = (ListPreference) findPreference(getResources().getString(R.string.tn_codepage_key));
         mChkAutoReset = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_auto_reset_key));
         mChkFLIfExceed = (ListPreference) findPreference(getResources().getString(R.string.tn_field_length_if_exceed_key));
+        mChkPopupWindow = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_popup_window_key));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mCodePage.setValue(String.valueOf(mSetting.mTELanguage));
         mChkAutoReset.setChecked(mSetting.mBIBMAutoReset);
         mChkFLIfExceed.setValue(String.valueOf(mSetting.mCheckFieldLength));
-
+        mChkPopupWindow.setChecked(mSetting.misPopUpErrorDialog);
         initSummary(getPreferenceScreen());
         // Set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
@@ -107,6 +109,8 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
             mSetting.mBIBMAutoReset = mChkAutoReset.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.tn_field_length_if_exceed_key)) == 0) {
             mSetting.mCheckFieldLength = Integer.valueOf(mChkFLIfExceed.getValue());
+        } else if(key.compareTo(getResources().getString(R.string.tn_popup_window_key)) == 0) {
+            mSetting.misPopUpErrorDialog = mChkPopupWindow.isChecked();
         }
     }
 }
