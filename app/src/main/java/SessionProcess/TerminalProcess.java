@@ -83,7 +83,7 @@ public class TerminalProcess {
     public void ProcessReadBarcode(String Data) {
         if (mTerminal != null) {
             MacroRec.AddMacroBarcode(Data);
-            mTerminal.OnBarcodeFire(Data);
+            mTerminal.handleBarcodeFire(Data);
 
             if (mListener != null)
                 mListener.onDataInputEvent();
@@ -95,7 +95,7 @@ public class TerminalProcess {
 
     public void PlayMacroBarcode(String Data) {
         if (mTerminal != null) {
-            mTerminal.OnBarcodeFire(Data);
+            mTerminal.handleBarcodeFire(Data);
         }
     }
 

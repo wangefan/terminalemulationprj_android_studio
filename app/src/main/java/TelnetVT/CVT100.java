@@ -1163,7 +1163,7 @@ public class CVT100 extends CVT100Enum {
     }
 
     @Override
-    public void OnBarcodeFire(String Code) {
+    public void handleBarcodeFire(String Code) {
         DispatchMessage(this, Code);
         ViewPostInvalidate();
     }

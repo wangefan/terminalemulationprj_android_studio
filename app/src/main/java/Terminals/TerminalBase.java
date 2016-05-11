@@ -126,7 +126,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     abstract public void handleKeyDown(int keyCode, KeyEvent event);
 
-    abstract public void OnBarcodeFire(String Code);
+    abstract public void handleBarcodeFire(String Code);
 
     abstract public void OnScreenBufferPos(int x, int y);
 

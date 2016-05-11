@@ -1980,7 +1980,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     @Override
-    public void OnBarcodeFire(String Code) {
+    public void handleBarcodeFire(String Code) {
         if (FieldList.size() < 1)
             return;
 
