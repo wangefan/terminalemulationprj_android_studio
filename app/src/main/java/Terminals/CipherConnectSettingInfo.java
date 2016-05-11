@@ -326,38 +326,10 @@ public class CipherConnectSettingInfo {
         Setting.bCursorTracking = IsCursorTrack;
     }
 
-    //general_language
-    public static String getHostLanguageByIndex(int index) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.Language;
-    }
-
-    public static void SetHostLanguageByIndex(int index, String Language) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.Language = Language;
-    }
-
-
-    public static String getHostFieldexceedByIndex(int index) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.Fieldexceed;
-    }
-
-    public static void SetHostFieldexceedByIndex(int index, String Fieldexceed) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.Fieldexceed = Fieldexceed;
-    }
-
     public static Boolean getHostIsAutoconnectByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBAutoConnect;
     }
-
-    public static void SetHostIsAutoconnectByIndex(int index, Boolean IsAutoconnect) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mBAutoConnect = IsAutoconnect;
-    }
-
 
     public static Boolean getHostIsAutoSignByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
