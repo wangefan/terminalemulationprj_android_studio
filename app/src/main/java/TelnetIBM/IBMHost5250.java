@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.cipherlab.barcode.BuildConfig;
+import com.example.terminalemulation.R;
+import com.te.UI.UIUtility;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
@@ -1679,11 +1681,7 @@ public class IBMHost5250 extends IBMHostBase {
     private void CaretBegin() {
         if (FieldList.size() <= 0)
             return;
-
-
         this.SetIndexCaret(0);
-
-
         //UpDateActiveField();
         CaretUpdate();
     }
@@ -1822,14 +1820,24 @@ public class IBMHost5250 extends IBMHostBase {
         return cRet;
     }
 
-    private void PutAsciiKey(int KeyCode) {
+    private void putString(String string) {
+        //Todo: handle enter and tab
+        for (int idxStr = 0; idxStr < string.length(); idxStr++) {
+            if(PutAsciiKey(string.charAt(idxStr)) == false) {
+                PlayWarningSounds();
+                break;
+            }
+        }
+    }
+
+    private boolean PutAsciiKey(int KeyCode) {
         char Code = ConvertAsciiToEBCD(KeyCode);
 
         if (FieldList.size() < 1)
-            return;
+            return false;
 
         while (true) {
-            IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
+            IBM_FIELD CurField = FieldList.get(GetIndexTab());
 
             if (CurField.Lenth > this.GetIndexCaret()) {
                 if (!CurField.Modified)
@@ -1837,7 +1845,7 @@ public class IBMHost5250 extends IBMHostBase {
 
                 if (CurField.Bypass) {
                     PlayWarningSounds();
-                    return;
+                    return false;
                 }
                 /*  000 Alphabetic shift.
     			001 Alphabetic only. (1)
@@ -1855,14 +1863,14 @@ public class IBMHost5250 extends IBMHostBase {
                     case 1:
                         if (!Character.isLetter(KeyCode) && KeyCode != ',' && KeyCode != '.' && KeyCode != '-' && KeyCode != ' ') {
                             PlayWarningSounds();
-                            return;
+                            return false;
                         }
                     case 2:
                         break;
                     case 3:
                         if (!Character.isDigit(KeyCode) && KeyCode != '+' && KeyCode != ',' && KeyCode != '.' && KeyCode != ' ') {
                             PlayWarningSounds();
-                            return;
+                            return false;
                         }
                     case 4:
                         break;
@@ -1870,7 +1878,7 @@ public class IBMHost5250 extends IBMHostBase {
                     case 7:
                         if (!Character.isDigit(KeyCode)) {
                             PlayWarningSounds();
-                            return;
+                            return false;
                         }
                     case 6:
                         break;
@@ -1888,17 +1896,17 @@ public class IBMHost5250 extends IBMHostBase {
                 CurField.Data[this.GetIndexCaret()] = Code;
 
                 FieldList.set(GetIndexTab(), CurField);
-                //FieldList[GetIndexTab()] = CurField;
                 this.PlusIndexCaret();
                 break;
             } else {
+                //todo: maybe handle auto enter
                 NextIndexTab();
                 this.SetIndexCaret(0);
             }
         }
         UpDateActiveField();
         CaretUpdate();
-
+        return true;
     }
 
     public void InsertChar(IBM_FIELD Field) {
@@ -1909,7 +1917,6 @@ public class IBMHost5250 extends IBMHostBase {
             Field.Data[Index] = Field.Data[Index - 1];
             Index--;
         }
-
     }
 
     @Override
@@ -1929,7 +1936,6 @@ public class IBMHost5250 extends IBMHostBase {
                     CaretUpdate();
                     ViewPostInvalidate();
                     return;
-
                 }
 
                 if (cCaret.Pos.X >= this.RightMargin) {
@@ -1937,57 +1943,37 @@ public class IBMHost5250 extends IBMHostBase {
                     cCaret.Pos.Y++;
                 } else {
                     cCaret.Pos.X++;
-
                 }
             }
-
         }
-
-
-    }
-
-    public int GetBarcodeAspectLenth(String Code) {
-        int InLength = Code.length();
-        int Inputlenth = 0;
-        if (FieldList.size() < 1)
-            return 0;
-
-        IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
-
-        Inputlenth = CurField.Lenth - this.GetIndexCaret();
-        String exceed = CipherConnectSettingInfo.getHostFieldexceedByIndex(1);
-
-        if (exceed.equals("Reject")) {
-            if (Code.length() > Inputlenth)
-                return 0;
-
-            return Inputlenth;
-        }
-
-        if (exceed.equals("Truncate")) {
-            if (Inputlenth > Code.length())
-                Inputlenth = Code.length();
-
-            return Inputlenth;
-        }
-
-        if (exceed.equals("Split to Next Field")) {
-            return InLength;
-        }
-
-
-        return 0;
     }
 
     @Override
-    public void handleBarcodeFire(String Code) {
-        if (FieldList.size() < 1)
+    public void handleBarcodeFire(String barcodeOriginal) {
+        IBM_FIELD cField = GetCurrentField();
+        if (cField == null)
             return;
 
-        int InputLen = GetBarcodeAspectLenth(Code);
-
-        for (int i = 0; i < InputLen; i++)
-            PutAsciiKey(Code.charAt(i));
+        if(cField.Lenth >= barcodeOriginal.length()) {
+            CaretBegin();
+            putString(barcodeOriginal);
+        } else { // check field length
+            int nFDLEN = CipherConnectSettingInfo.getCheckFieldLength(CipherConnectSettingInfo.GetSessionIndex());
+            switch (nFDLEN) {
+                case CipherConnectSettingInfo.FDLEN_REJECT:
+                    PlayWarningSounds();
+                    UIUtility.messageBox(R.string.MSG_FDChek_reject);
+                    break;
+                case CipherConnectSettingInfo.FDLEN_TRUN:
+                    CaretBegin();
+                    putString(barcodeOriginal.substring(0, cField.Lenth));
+                    break;
+                case CipherConnectSettingInfo.FDLEN_SPLT:
+                    CaretBegin();
+                    putString(barcodeOriginal);
+                    break;
+            }
+        }
 
         ViewPostInvalidate();
     }

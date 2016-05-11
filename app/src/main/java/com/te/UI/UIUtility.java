@@ -1,11 +1,15 @@
 package com.te.UI;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.view.WindowManager;
 
 import com.example.terminalemulation.R;
+
+import Terminals.CipherConnectSettingInfo;
 
 public class UIUtility {
 	static private ProgressDialog mPDialog = null;
@@ -48,4 +52,11 @@ public class UIUtility {
     		mBShow = false;
     	}
     }
+
+	public static void messageBox(int nStringID) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setMessage(nStringID).setPositiveButton(R.string.STR_OK, null);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
 }

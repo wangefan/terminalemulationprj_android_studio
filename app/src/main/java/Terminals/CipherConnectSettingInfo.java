@@ -26,7 +26,12 @@ public class CipherConnectSettingInfo {
     public static final String _NAME = "TerminalEmulation";
     public static final int TERM_TAB = 0;
     public static final int TERM_ENTER = 1;
-    //public static final String TAG = "CipherConnectSettingInfo";
+
+    //0: reject (default), 1: Truncate, 2: splite to next field
+    public static final int FDLEN_REJECT = 0;
+    public static final int FDLEN_TRUN = 1;
+    public static final int FDLEN_SPLT = 2;
+
     final private static String mSettingFilename = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
     public static int LastHostNumber = 0;
@@ -534,6 +539,10 @@ public class CipherConnectSettingInfo {
         Setting.g_ReaderParam.scannerDisableESC = sData;
     }
 
+    public static int getCheckFieldLength(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mCheckFieldLength;
+    }
 
     public static boolean getIsIBMAutoUnlock(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
