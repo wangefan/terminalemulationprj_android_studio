@@ -75,6 +75,8 @@
     <string name="tn_field_length_if_exceed">Field Length if Exceed</string>
     <string name="tn_popup_window_key">tn_popup_window_key</string>
     <string name="tn_popup_window">Pop-up Window</string>
+    <string name="tn_popup_row_key">tn_popup_row_key</string>
+    <string name="tn_popup_row">Display Error in Row</string>
     <string-array name="codepage_array">
         <item>Single Byte Character</item>
         <item>Japanese</item>

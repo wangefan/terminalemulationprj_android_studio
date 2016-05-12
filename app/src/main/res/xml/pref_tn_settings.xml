@@ -24,6 +24,9 @@
         android:positiveButtonText="@null" />
     <PreferenceCategory
         android:title="@string/error_message">
+        <EditTextPreference
+            android:title="@string/tn_popup_row"
+            android:key="@string/tn_popup_row_key"/>
         <CheckBoxPreference
             android:key="@string/tn_popup_window_key"
             android:title="@string/tn_popup_window"
