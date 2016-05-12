@@ -456,7 +456,7 @@ public class IBMHost5250 extends IBMHostBase {
                 SetRecordToField(0);
                 break;
             case Write_Error_Code:
-                bKeybaordLock = true;
+                setKeyLock(true);
                 int nErrorRow = CipherConnectSettingInfo.getErrorRow(CipherConnectSettingInfo.GetSessionIndex());
                 boolean bPopupDialog = CipherConnectSettingInfo.getPopupErrorDialog(CipherConnectSettingInfo.GetSessionIndex());
                 if(bPopupDialog) {
@@ -635,7 +635,7 @@ public class IBMHost5250 extends IBMHostBase {
 
 
         if ((c & CC_UnlockKeyboard) > 0)
-            this.bKeybaordLock = false;
+            setKeyLock(false);
 
         if ((c & CC_SoundAlarm) > 0)
             PlayWarningSounds();
@@ -694,10 +694,10 @@ public class IBMHost5250 extends IBMHostBase {
         switch (Command) {
 
             case Clear_Format_Table:
-                bKeybaordLock = true;
+                setKeyLock(true);
                 break;
             case Clear_Unit:
-                bKeybaordLock = true;
+                setKeyLock(true);
                 ViewClear();
                 this.FieldList.clear();
                 break;
@@ -1920,6 +1920,16 @@ public class IBMHost5250 extends IBMHostBase {
         return true;
     }
 
+    private void setKeyLock(boolean bLock) {
+        bKeybaordLock = bLock;
+    }
+
+    private boolean isKeyLocked() {
+       if(CipherConnectSettingInfo.getIsIBMAutoUnlock(CipherConnectSettingInfo.GetSessionIndex()) == true)
+           bKeybaordLock = false;
+        return bKeybaordLock;
+    }
+
     public void InsertChar(IBM_FIELD Field) {
         int Caret = GetIndexCaret();
         int Index = Field.Lenth - 1;
@@ -1961,6 +1971,8 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void handleBarcodeFire(String barcodeOriginal) {
+        if(isKeyLocked())
+            return;
         IBM_FIELD cField = GetCurrentField();
         if (cField == null)
             return;
@@ -1991,12 +2003,8 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        if(bKeybaordLock == true) {
-            if(CipherConnectSettingInfo.getIsIBMAutoUnlock(CipherConnectSettingInfo.GetSessionIndex()) == false) {
-                return;
-            }
-            bKeybaordLock = false;
-        }
+        if(isKeyLocked())
+            return;
 
         boolean Func = false;
         char pressedKey = (char) event.getUnicodeChar();
@@ -2211,7 +2219,7 @@ public class IBMHost5250 extends IBMHostBase {
                 Func = true;
                 break;
             case IBMKEY_RESET:
-                bKeybaordLock = false;
+                setKeyLock(false);
                 Func = true;
                 break;
             case IBMKEY_HOME:
