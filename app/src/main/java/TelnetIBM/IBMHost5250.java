@@ -1832,10 +1832,24 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private void putString(String string) {
-        //Todo: handle enter and tab
         for (int idxStr = 0; idxStr < string.length(); idxStr++) {
-            if(PutAsciiKey(string.charAt(idxStr)) == false) {
-                PlayWarningSounds();
+            byte by = (byte) string.charAt(idxStr);
+            if(by >= 0x20) { // printable char
+                if(PutAsciiKey(string.charAt(idxStr)) == false) {
+                    PlayWarningSounds();
+                    break;
+                }
+            } else {
+                switch ((char)by)
+                {
+                    case '\t': // TAB
+                        TabToNextField();
+                        break;
+                    case '\r':
+                    case '\n':
+                        ProcessIbmEnter();
+                        break;
+                }
                 break;
             }
         }
