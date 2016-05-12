@@ -207,6 +207,12 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     protected abstract boolean autoLogin();
 
+    private final byte IS = 0x00;
+    private final byte USERVAR = 0x03;
+    private final byte VALUE = 0x01;
+    private final byte VAR = 0x00;
+    private final String IBMRSEED = "IBMRSEED";
+    private final String DEVNAME = "DEVNAME";
     private void terminalInterpret(Object Sender, ParserEventArgs parserArgs) {
         switch (parserArgs.Action) {
             case SendUp:
@@ -280,9 +286,28 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                     //NvtSendSubNeg(CurCmd, "IBM-5292-2");
                     NvtSendSubNeg(CurCmd, GetTerminalTypeName());
                     break;
+                /* NEW-ENVIRON, 39 (0X27), include
+                 * "IBMRSEED" + (value) + VAR(0x00)
+                 * "DEVNAME" + (value)
+                 * todo:"CODEPAGE"
+                 * todo:"CHARSET"
+                 */
                 case 39:
-
-                    //NvtSendSubNeg(CurCmd, BuildUserVar("IBMRSEED", "") );
+                    StringBuilder sb = new StringBuilder();
+                    sb.append((char)USERVAR);
+                    sb.append(IBMRSEED);
+                    sb.append((char)VAR);
+                    sb.append((char)USERVAR);
+                    sb.append(DEVNAME);
+                    sb.append((char)VALUE);
+                    int nDevNameType = CipherConnectSettingInfo.getDevNameType(CipherConnectSettingInfo.GetSessionIndex());
+                    if(nDevNameType == CipherConnectSettingInfo.DEVNAME_DEFAULT) {
+                        //do nothing
+                    } else if (nDevNameType == CipherConnectSettingInfo.DEVNAME_CUST) {
+                        String custDevName = CipherConnectSettingInfo.getCustDevName(CipherConnectSettingInfo.GetSessionIndex());
+                        sb.append(custDevName);
+                    }
+                    NvtSendSubNeg(CurCmd, sb.toString());
                     break;
                 default:
                     NvtSendSubNeg(CurCmd, "");
@@ -313,6 +338,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     private void NvtSendSubNeg(char CurChar, String CurString) {
+        //IAC(0xFF) + SB(0xFA) + (current command) + IS(0x00) + (..) + IAC(0xFF) + SE(0xF0)
         DispatchMessage(this, "\u00FF\u00FA" + Character.valueOf(CurChar) + "\u0000" + CurString + "\u00FF\u00F0");
     }
 

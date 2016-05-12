@@ -32,6 +32,10 @@ public class CipherConnectSettingInfo {
     public static final int FDLEN_TRUN = 1;
     public static final int FDLEN_SPLT = 2;
 
+    //1: User Cust Local name, 0:Use default (means not set)
+    public static final int DEVNAME_DEFAULT = 0;
+    public static final int DEVNAME_CUST = 1;
+
     final private static String mSettingFilename = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
     public static int LastHostNumber = 0;
@@ -526,9 +530,18 @@ public class CipherConnectSettingInfo {
         return Setting.mNErrorRowIndexg;
     }
 
-
     public static boolean getPopupErrorDialog(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.misPopUpErrorDialog;
+    }
+
+    public static int getDevNameType(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mLocalNameType;
+    }
+
+    public static String getCustDevName(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mLocalName;
     }
 }

@@ -108,7 +108,7 @@ public class TESettings {
         public boolean misPopUpErrorDialog = false;
 
         @SerializedName("LocalNameType")
-        public int mLocalNameType = 0;
+        public int mLocalNameType = 0;  //1: User Cust Local name, 0:Use default (means not set)
 
         @SerializedName("LocalName")
         public String mLocalName = "";
