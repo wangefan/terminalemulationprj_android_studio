@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             // Software trigger must receive this intent message
-
+            String action = intent.getAction();
             String data;
-            if (intent.getAction().equals(GeneralString.Intent_SOFTTRIGGER_DATA)) {
+            if (action.compareTo(GeneralString.Intent_SOFTTRIGGER_DATA) == 0) {
 
                 // extra string from intent
                 data = intent.getStringExtra(GeneralString.BcReaderData);
 
                 // show decoded data
                 //e1.setText(data);
-            } else if (intent.getAction().equals(GeneralString.Intent_PASS_TO_APP)) {
+            } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
                 // If user disable KeyboardEmulation, barcode reader service will broadcast Intent_PASS_TO_APP
                 TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
                 // extra string from intent
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
                 // show decoded data
                 //e1.setText(data);
 
-            } else if (intent.getAction().equals(GeneralString.Intent_READERSERVICE_CONNECTED)) {
+            } else if (action.equals(GeneralString.Intent_READERSERVICE_CONNECTED)) {
                 // Make sure this app bind to barcode reader sevice , then user can use APIs to get/set settings from barcode reader service
 
                 //BcReaderType myReaderType =  mReaderManager.GetReaderType();
