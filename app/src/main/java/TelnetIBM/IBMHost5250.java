@@ -1840,8 +1840,7 @@ public class IBMHost5250 extends IBMHostBase {
                     break;
                 }
             } else {
-                switch ((char)by)
-                {
+                switch ((char)by) {
                     case '\t': // TAB
                         TabToNextField();
                         break;
