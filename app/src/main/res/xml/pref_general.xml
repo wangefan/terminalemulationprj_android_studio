@@ -41,13 +41,12 @@
         <PreferenceScreen
             android:title="@string/key_mapping">
         </PreferenceScreen>
-        <PreferenceScreen
-            android:title="@string/ssh">
-            <com.te.UI.TESwitchPreference
+        <com.te.UI.TESwitchPreference
+                android:key="@string/ssh_key"
                 android:title="@string/ssh"
                 android:summaryOff="@string/ssh_off"
-                android:summaryOn="@string/ssh_on"/>
-        </PreferenceScreen>
+                android:summaryOn="@string/ssh_on"
+                android:widgetLayout="@layout/te_switch"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/network" >

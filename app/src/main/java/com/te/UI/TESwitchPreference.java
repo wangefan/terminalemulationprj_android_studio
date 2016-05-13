@@ -1,10 +1,8 @@
 package com.te.UI;
 
 import android.content.Context;
-import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -15,6 +13,7 @@ import com.example.terminalemulation.R;
  * Created by wange on 10/5/2016.
  */
 public class TESwitchPreference extends SwitchPreference {
+
     public TESwitchPreference(Context context) {
         super(context);
     }
@@ -28,8 +27,21 @@ public class TESwitchPreference extends SwitchPreference {
     }
 
     @Override
+    protected void onBindView(View view) {
+        super.onBindView(view);
+        Switch teSwitch = (Switch) view.findViewById(R.id.te_switch);
+        teSwitch.setOnCheckedChangeListener(null);
+        teSwitch.setChecked(isChecked());
+        teSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setChecked(isChecked);
+            }
+        });
+    }
+
+    @Override
     protected void onClick() {
-        Log.d("","");
-        super.onClick();
+        //super.onClick();
     }
 }

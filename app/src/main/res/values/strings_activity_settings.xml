@@ -47,6 +47,7 @@
     <string name="alarm">Alarm</string>
     <string name="key_mapping">Key Mapping</string>
     <string name="ssh">SSH</string>
+    <string name="ssh_key">ssh_key</string>
     <string name="ssh_on">Use SSH</string>
     <string name="ssh_off">Not use</string>
     <string name="network">Network</string>
