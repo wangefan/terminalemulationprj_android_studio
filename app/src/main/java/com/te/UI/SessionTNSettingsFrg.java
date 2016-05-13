@@ -23,6 +23,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
     private ListPreference mCodePage = null;
     private CheckBoxPreference mChkAutoReset = null;
     private ListPreference mChkFLIfExceed = null;
+    private TESwitchPreference mSwchDevName = null;
     private EditTextPreference mEdtPopErrorRow = null;
     private CheckBoxPreference mChkPopupWindow = null;
     private TESettings.SessionSetting mSetting = null;
@@ -73,6 +74,21 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mCodePage = (ListPreference) findPreference(getResources().getString(R.string.tn_codepage_key));
         mChkAutoReset = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_auto_reset_key));
         mChkFLIfExceed = (ListPreference) findPreference(getResources().getString(R.string.tn_field_length_if_exceed_key));
+        mSwchDevName = (TESwitchPreference) findPreference(getResources().getString(R.string.tn_devname_key));
+        mSwchDevName.setListener(new TESwitchPreference.OnListener() {
+            @Override
+            public void onClick() {
+                UIUtility.messageBox("test", getActivity());
+                /*String strEditTextResult = UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, getActivity());
+                if(strEditTextResult != null) {
+                    mSetting.setUseDefaultDevName(false);
+                    mSetting.mDevName = strEditTextResult;
+                    mSwchDevName.setSummaryOn(mSetting.mDevName);
+                    mSwchDevName.setChecked(true);
+                }
+                */
+            }
+        });
         mEdtPopErrorRow = (EditTextPreference) findPreference(getResources().getString(R.string.tn_popup_row_key));
         mChkPopupWindow = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_popup_window_key));
     }
@@ -85,6 +101,8 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mCodePage.setValue(String.valueOf(mSetting.mTELanguage));
         mChkAutoReset.setChecked(mSetting.mBIBMAutoReset);
         mChkFLIfExceed.setValue(String.valueOf(mSetting.mCheckFieldLength));
+        mSwchDevName.setChecked(mSetting.isUseDefaultDevName());
+        mSwchDevName.setSummaryOn(mSetting.mDevName);
         mEdtPopErrorRow.setText(String.valueOf(mSetting.mNErrorRowIndexg));
         mChkPopupWindow.setChecked(mSetting.misPopUpErrorDialog);
         initSummary(getPreferenceScreen());
@@ -112,6 +130,9 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
             mSetting.mBIBMAutoReset = mChkAutoReset.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.tn_field_length_if_exceed_key)) == 0) {
             mSetting.mCheckFieldLength = Integer.valueOf(mChkFLIfExceed.getValue());
+        } else if(key.compareTo(getResources().getString(R.string.tn_devname_key)) == 0) {
+            mSetting.setUseDefaultDevName(mSwchDevName.isChecked() == false);
+            mSetting.mDevName = String.valueOf(mSwchDevName.getSummaryOn());
         } else if(key.compareTo(getResources().getString(R.string.tn_popup_row_key)) == 0) {
             mSetting.mNErrorRowIndexg = Integer.valueOf(mEdtPopErrorRow.getText());
         } else if(key.compareTo(getResources().getString(R.string.tn_popup_window_key)) == 0) {

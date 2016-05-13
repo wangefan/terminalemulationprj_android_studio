@@ -40,6 +40,18 @@ public class TESettings {
             mTelnetPort.set(1, nPortHi);
         }
 
+        public boolean isUseDefaultDevName() {
+            return mDevNameType == 0;
+        }
+
+        public void setUseDefaultDevName(boolean isDefault) {
+            if(isDefault) {
+                mDevNameType = 0;
+            } else {
+                mDevNameType = 1;
+            }
+        }
+
     	//Sync
         @SerializedName("TermNameTN")
         public String mTermNameTN="";
@@ -108,10 +120,10 @@ public class TESettings {
         public boolean misPopUpErrorDialog = false;
 
         @SerializedName("LocalNameType")
-        public int mLocalNameType = 0;  //1: User Cust Local name, 0:Use default (means not set)
+        public int mDevNameType = 0;  //1: User Cust Local name, 0:Use default (means not set)
 
         @SerializedName("LocalName")
-        public String mLocalName = "";
+        public String mDevName = "";
 
         public int nCharSet = 0;	//0:Ansi, 1:UTF8
         public int CursorType = 0; //0:Default, 1:Underline, 2:Block
@@ -128,7 +140,6 @@ public class TESettings {
 
         //Not sync
         public byte[] SendtoHost=null;
-
 
         public class ReaderParam {
             public boolean isEnableScannerByESCCmd = false;

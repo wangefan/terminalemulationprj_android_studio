@@ -537,11 +537,11 @@ public class CipherConnectSettingInfo {
 
     public static int getDevNameType(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.mLocalNameType;
+        return Setting.mDevNameType;
     }
 
     public static String getCustDevName(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.mLocalName;
+        return Setting.mDevName;
     }
 }

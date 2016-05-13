@@ -13,6 +13,7 @@
     <string name="MSG_ChangeSession">Change sesssion to %s</string>
     <string name="MSG_DeleteSession_Warn">Must has one session.</string>
     <string name="MSG_FDChek_reject">Barcode data exceeds! The length is not allowed.</string>
+    <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="dot">.</string>
     <string name="about">About</string>
@@ -20,7 +21,8 @@
     <string name="remove_session">Remove Session</string>
     <string name="STR_CopyRight">Copyright © CipherLab Co. Ltd.</string>
     <string name="STR_DllName">Reader Service</string>   
-    <string name="STR_OK">OK</string>   
+    <string name="STR_OK">OK</string>
+    <string name="STR_Cancel">Cancel</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>
@@ -77,6 +79,9 @@
     <string name="tn_popup_window">Pop-up Window</string>
     <string name="tn_popup_row_key">tn_popup_row_key</string>
     <string name="tn_popup_row">Display Error in Row</string>
+    <string name="tn_devname_key">devname_key</string>
+    <string name="tn_devname">Custom Device Name</string>
+    <string name="tn_devname_off"></string>
     <string-array name="codepage_array">
         <item>Single Byte Character</item>
         <item>Japanese</item>

@@ -14,6 +14,12 @@ import com.example.terminalemulation.R;
  */
 public class TESwitchPreference extends SwitchPreference {
 
+    public interface OnListener {
+        void onClick();
+    }
+
+    private OnListener mListener = null;
+
     public TESwitchPreference(Context context) {
         super(context);
     }
@@ -24,6 +30,10 @@ public class TESwitchPreference extends SwitchPreference {
 
     public TESwitchPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public void setListener(OnListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -42,6 +52,8 @@ public class TESwitchPreference extends SwitchPreference {
 
     @Override
     protected void onClick() {
-        //super.onClick();
+        if(mListener != null) {
+            mListener.onClick();
+        }
     }
 }
