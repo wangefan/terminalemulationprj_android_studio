@@ -1,45 +1,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference
-        android:key="@string/host_type_key"
-        android:title="@string/host_type"
-        android:entries="@array/sertype_array"
-        android:entryValues="@array/sertype_array"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
-    <com.te.UI.MyIPPreference
-        android:title="@string/pref_header_ip"
-        android:key="@string/host_ip_key"/>
-    <EditTextPreference
-        android:title="@string/pref_header_port"
-        android:key="@string/host_port_key"/>
     <CheckBoxPreference
-        android:key="@string/host_auto_conn_key"
-        android:title="@string/auto_connect"
+        android:key="@string/data_upper_case_key"
+        android:title="@string/data_upper_case"
         android:defaultValue="false" />
     <CheckBoxPreference
-        android:key="@string/host_auto_sign_key"
-        android:title="@string/auto_sign"
-        android:defaultValue="false"
-        android:dependency="@string/host_auto_conn_key"/>
-    <EditTextPreference
-        android:key="@string/host_auto_sign_name_key"
-        android:title="@string/host_auto_sign_name"
-        android:dependency="@string/host_auto_sign_key"/>
-    <EditTextPreference
-        android:key="@string/host_auto_sign_pwd_key"
-        android:title="@string/host_auto_sign_pwd"
-        android:dependency="@string/host_auto_sign_key"/>
-    <EditTextPreference
-        android:key="@string/host_auto_sign_name_prom_key"
-        android:title="@string/host_auto_sign_name_prom"/>
-    <EditTextPreference
-        android:key="@string/host_auto_sign_pwd_prom_key"
-        android:title="@string/host_auto_sign_pwd_prom"/>
-    <ListPreference
-        android:key="@string/host_auto_sign_term_prom_key"
-        android:title="@string/host_auto_sign_term_prom"
-        android:entries="@array/term_array"
-        android:entryValues="@array/term_val_array"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"/>
+        android:key="@string/vt_linebuffer_key"
+        android:title="@string/vt_linebuffer"
+        android:defaultValue="false"/>
+    <CheckBoxPreference
+        android:key="@string/vt_echo_key"
+        android:title="@string/vt_echo"
+        android:defaultValue="false"/>
 </PreferenceScreen>

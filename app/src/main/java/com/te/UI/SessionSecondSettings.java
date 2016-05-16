@@ -41,14 +41,14 @@ public class SessionSecondSettings extends AppCompatActivity {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, settingsFrg)
                         .commit();
-            } /*else {//VT settings
+            } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_setting));
                 SessionVTSettingsFrg settingsFrg = new SessionVTSettingsFrg();
                 settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, settingsFrg)
                         .commit();
-            }*/
+            }
         }
     }
 

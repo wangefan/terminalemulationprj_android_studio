@@ -285,24 +285,13 @@ public class CipherConnectSettingInfo {
 
     public static Boolean getHostIsLineBufferByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return (Setting.LineBuffer == 1);
-    }
-
-    public static void setHostIsLineBufferByIndex(int index, Boolean IsLinebuffer) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.LineBuffer = IsLinebuffer ? 1 : 0;
+        return (Setting.mLineBuffer == 1);
     }
 
     public static boolean getHostIsLocalEchoByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.bEcho;
+        return Setting.mBEcho;
     }
-
-    public static void SetHostIsLocalEchoByIndex(int index, boolean IsLocalEcho) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.bEcho = IsLocalEcho;
-    }
-
 
     public static boolean getHostIsWriteLogkByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);

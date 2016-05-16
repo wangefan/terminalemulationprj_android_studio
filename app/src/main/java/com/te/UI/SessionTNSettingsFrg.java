@@ -70,7 +70,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         addPreferencesFromResource(R.xml.pref_tn_settings);
 
         //UI
-        mChkUpperCase = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_data_upper_case_key));
+        mChkUpperCase = (CheckBoxPreference) findPreference(getResources().getString(R.string.data_upper_case_key));
         mCodePage = (ListPreference) findPreference(getResources().getString(R.string.tn_codepage_key));
         mChkAutoReset = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_auto_reset_key));
         mChkFLIfExceed = (ListPreference) findPreference(getResources().getString(R.string.tn_field_length_if_exceed_key));
@@ -122,7 +122,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         updatePrefSummary(findPreference(key));
-        if(key.compareTo(getResources().getString(R.string.tn_data_upper_case_key)) == 0) {
+        if(key.compareTo(getResources().getString(R.string.data_upper_case_key)) == 0) {
             mSetting.mBUpperCase = mChkUpperCase.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.tn_codepage_key)) == 0) {
             mSetting.mTELanguage = Integer.valueOf(mCodePage.getValue());

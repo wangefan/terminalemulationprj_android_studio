@@ -125,9 +125,14 @@ public class TESettings {
         @SerializedName("LocalName")
         public String mDevName = "";
 
+        @SerializedName("bEcho")
+        public boolean mBEcho = false;
+
+        @SerializedName("LineBuffer")
+        public int mLineBuffer = 0; //0:un-use, 1:use
+
         public int nCharSet = 0;	//0:Ansi, 1:UTF8
         public int CursorType = 0; //0:Default, 1:Underline, 2:Block
-        public int LineBuffer = 0;
         public boolean bCursorTracking = false;
         public boolean isShowMacro = false;
         public boolean SSH = false;
@@ -136,7 +141,6 @@ public class TESettings {
         public ReaderParam g_ReaderParam = new ReaderParam();
 
         //Sync but Not used
-        public boolean bEcho = false;
 
         //Not sync
         public byte[] SendtoHost=null;

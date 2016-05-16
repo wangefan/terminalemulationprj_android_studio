@@ -67,8 +67,8 @@
     <string name="MSG_Disonnected_error">Cannot establish connection! Please check network.</string>
     <string name="tn_setting">TN Settings</string>
     <string name="vt_setting">VT Settings</string>
-    <string name="tn_data_upper_case_key">tn_data_upper_case_key</string>
-    <string name="tn_data_upper_case">Data Uppercase</string>
+    <string name="data_upper_case_key">tn_data_upper_case_key</string>
+    <string name="data_upper_case">Data Uppercase</string>
     <string name="tn_codepage_key">tn_codepage_key</string>
     <string name="tn_codepage">Code Page</string>
     <string name="tn_auto_reset_key">auto_reset_key</string>
@@ -82,6 +82,10 @@
     <string name="tn_devname_key">devname_key</string>
     <string name="tn_devname">Custom Device Name</string>
     <string name="tn_devname_off"></string>
+    <string name="vt_linebuffer_key">vt_linebuffer_key</string>
+    <string name="vt_linebuffer">Line Buffer</string>
+    <string name="vt_echo_key">vt_echo_key</string>
+    <string name="vt_echo">Local Echo</string>
     <string-array name="codepage_array">
         <item>Single Byte Character</item>
         <item>Japanese</item>
