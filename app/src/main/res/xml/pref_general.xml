@@ -1,5 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/host_profile">
+    <PreferenceCategory
+        android:title="@string/host_profile">
         <ListPreference
             android:key="@string/host_type_key"
             android:title="@string/host_type"
@@ -24,14 +25,15 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/emulation_setting" >
-        <PreferenceScreen
+        <Preference
+            android:key="@string/server_setting_key"
             android:title="@string/server_setting">
             <intent
                 android:targetPackage="com.example.terminalemulation"
                 android:targetClass="com.te.UI.SessionSecondSettings"
                 android:action="com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING">
             </intent>
-        </PreferenceScreen>
+        </Preference>
         <PreferenceScreen
             android:title="@string/screen">
         </PreferenceScreen>

@@ -27,6 +27,7 @@ public class SessionSettingsFrg extends PreferenceFragment implements
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
     private EditTextPreference mPrefPort = null;
+    private Preference mServerSetting = null;
     private CheckBoxPreference mCkNetworkAlive = null;
     private CheckBoxPreference mCkDetectOut = null;
     private CheckBoxPreference mCkGenLog = null;
@@ -81,6 +82,7 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         mLstServerType = (ListPreference) findPreference(getResources().getString(R.string.host_type_key));
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
         mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
+        mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
         mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
@@ -92,8 +94,10 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         super.onResume();
         if(mSetting.mIsTN == 0) {
             mLstServerType.setValue(mSetting.mTermName);
+            mServerSetting.setTitle(R.string.vt_setting);
         } else {
             mLstServerType.setValue(mSetting.mTermNameTN);
+            mServerSetting.setTitle(R.string.tn_setting);
         }
         mLstServerIp.setIp(mSetting.mHostIP);
         mPrefPort.setText(mSetting.getHostPort());
@@ -134,11 +138,13 @@ public class SessionSettingsFrg extends PreferenceFragment implements
             if(selHostTypeName.compareToIgnoreCase(mTN5250HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mTN3270HostTypeName) == 0) {
                 mSetting.mIsTN = 1;
+                mServerSetting.setTitle(R.string.tn_setting);
             } else if(selHostTypeName.compareToIgnoreCase(mVT100HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mVT102HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mVT220HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mVTAnsiHostTypeName) == 0){
                 mSetting.mIsTN = 0;
+                mServerSetting.setTitle(R.string.vt_setting);
             }
 
             if(mSetting.mIsTN == 0) {
