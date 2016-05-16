@@ -78,15 +78,20 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mSwchDevName.setListener(new TESwitchPreference.OnListener() {
             @Override
             public void onClick() {
-                UIUtility.messageBox("test", getActivity());
-                /*String strEditTextResult = UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, getActivity());
-                if(strEditTextResult != null) {
-                    mSetting.setUseDefaultDevName(false);
-                    mSetting.mDevName = strEditTextResult;
-                    mSwchDevName.setSummaryOn(mSetting.mDevName);
-                    mSwchDevName.setChecked(true);
-                }
-                */
+                UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, getActivity(), new UIUtility.OnEditMessageBoxListener() {
+                    @Override
+                    public void onResult(String result) {
+                        mSetting.setUseDefaultDevName(false);
+                        mSetting.mDevName = result;
+                        mSwchDevName.setSummaryOn(mSetting.mDevName);
+                        mSwchDevName.setChecked(true);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
             }
         });
         mEdtPopErrorRow = (EditTextPreference) findPreference(getResources().getString(R.string.tn_popup_row_key));
@@ -101,7 +106,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mCodePage.setValue(String.valueOf(mSetting.mTELanguage));
         mChkAutoReset.setChecked(mSetting.mBIBMAutoReset);
         mChkFLIfExceed.setValue(String.valueOf(mSetting.mCheckFieldLength));
-        mSwchDevName.setChecked(mSetting.isUseDefaultDevName());
+        mSwchDevName.setChecked(!mSetting.isUseDefaultDevName());
         mSwchDevName.setSummaryOn(mSetting.mDevName);
         mEdtPopErrorRow.setText(String.valueOf(mSetting.mNErrorRowIndexg));
         mChkPopupWindow.setChecked(mSetting.misPopUpErrorDialog);

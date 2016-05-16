@@ -16,20 +16,20 @@ import com.example.terminalemulation.R;
 import Terminals.CipherConnectSettingInfo;
 
 public class UIUtility {
+	public interface OnEditMessageBoxListener {
+		void onResult(String result);
+		void onCancel();
+	}
 	static private ProgressDialog mPDialog = null;
 	static private Context mContext;
 	static private Point mPrgDlgSize = new Point();
 	static private boolean mBShow = false;
 	static private Handler mUIHandler = null;
-	static private View mEditMessageboxView = null;
-	static private String mEditMessageboxResult = null;
 	
 	//member functions
 	static public void init(Context context) {
 		mContext = context;
 		mUIHandler = new Handler();
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-		mEditMessageboxView = inflater.inflate(R.layout.edit_messagebox, null);
 	}
 	static public void showProgressDlg(boolean bShow, int messageID)
     {
@@ -93,25 +93,27 @@ public class UIUtility {
 		});
 	}
 
-	//return null means user cancel.
-	public static String editMessageBox(int nTitleStringID, Context context) {
-		mEditMessageboxResult = null;
+	public static void editMessageBox(int nTitleStringID, Context context, final OnEditMessageBoxListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(context);
+		final View editMessageboxView = inflater.inflate(R.layout.edit_messagebox, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(nTitleStringID);
-		builder.setView(mEditMessageboxView);
+		builder.setView(editMessageboxView);
 		builder.setPositiveButton(R.string.STR_OK, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				EditText editText = (EditText) (mEditMessageboxView.findViewById(R.id.ed_result));
-				mEditMessageboxResult = editText.getText().toString();
+				EditText editText = (EditText) (editMessageboxView.findViewById(R.id.ed_result));
+				if(listener != null)
+					listener.onResult(editText.getText().toString());
 			}
 		});
 		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				if(listener != null)
+					listener.onCancel();
 			}
 		});
 		builder.create().show();
-		return mEditMessageboxResult;
 	}
 }
