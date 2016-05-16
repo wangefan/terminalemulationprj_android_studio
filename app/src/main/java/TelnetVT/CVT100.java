@@ -1164,6 +1164,8 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void handleBarcodeFire(String Code) {
+        if(CipherConnectSettingInfo.getUpperCaseByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true)
+            Code = Code.toUpperCase();
         DispatchMessage(this, Code);
         ViewPostInvalidate();
     }
@@ -1477,11 +1479,13 @@ public class CVT100 extends CVT100Enum {
     }
 
     private void PutAsciiKey(int KeyCode) {
-        byte[] OutData = {0};
+        if (Character.isLetter((char)KeyCode) && CipherConnectSettingInfo.getUpperCaseByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+            KeyCode = Character.toUpperCase((char) KeyCode);
+        }
 
+        byte[] OutData = {0};
         OutData[0] = (byte) KeyCode;
         DispatchMessageRaw(this, OutData, OutData.length);
-
     }
 
     private void ReverseIndex(int Param) {
