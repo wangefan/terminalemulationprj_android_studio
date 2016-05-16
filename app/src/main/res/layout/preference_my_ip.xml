@@ -18,9 +18,8 @@
             android:gravity="bottom"
             android:inputType="number"
             android:maxLength="3"
-            android:singleLine="true" >
-
-            <requestFocus />
+            android:singleLine="true"
+            android:selectAllOnFocus="true">
         </EditText>
 
         <TextView
@@ -46,7 +45,8 @@
             android:gravity="bottom"
             android:inputType="number"
             android:maxLength="3"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:selectAllOnFocus="true"/>
 
         <TextView
             android:id="@+id/dot_2"
@@ -71,7 +71,8 @@
             android:inputType="number"
             android:labelFor="@id/ip_3"
             android:maxLength="3"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:selectAllOnFocus="true"/>
 
         <TextView
             android:id="@+id/dot_3"
@@ -96,6 +97,7 @@
             android:gravity="bottom"
             android:inputType="number"
             android:maxLength="3"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:selectAllOnFocus="true"/>
     </RelativeLayout>
 </RelativeLayout>
