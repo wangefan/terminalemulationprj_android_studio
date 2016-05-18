@@ -40,14 +40,16 @@ public class TESwitchPreference extends SwitchPreference {
     protected void onBindView(View view) {
         super.onBindView(view);
         Switch teSwitch = (Switch) view.findViewById(R.id.te_switch);
-        teSwitch.setOnCheckedChangeListener(null);
-        teSwitch.setChecked(isChecked());
-        teSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setChecked(isChecked);
-            }
-        });
+        if(teSwitch != null) {
+            teSwitch.setOnCheckedChangeListener(null);
+            teSwitch.setChecked(isChecked());
+            teSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    setChecked(isChecked);
+                }
+            });
+        }
     }
 
     @Override
