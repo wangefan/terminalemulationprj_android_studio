@@ -96,11 +96,15 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         mChkUpperCase.setChecked(mSetting.mBUpperCase);
         mChkLineBuffer.setChecked(mSetting.mLineBuffer == 1);
         mChkEcho.setChecked(mSetting.mBEcho);
-
+        syncSettingToSendingStringPref();
         initSummary(getPreferenceScreen());
         // Set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    private void syncSettingToSendingStringPref() {
+        mPrefSendString.setSummary(CipherlabSymbol.TransformMulit(mSetting.mSendtoHost));
     }
 
     @Override
@@ -120,8 +124,6 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
             mSetting.mLineBuffer = mChkLineBuffer.isChecked() ? 1 : 0;
         } else if(key.compareTo(getResources().getString(R.string.vt_echo_key)) == 0) {
             mSetting.mBEcho = mChkEcho.isChecked();
-        } else if(key.compareTo(getResources().getString(R.string.vt_send_string_key)) == 0) {
-            //Todo:
         }
     }
 
@@ -130,8 +132,8 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         switch (resultCode) {
             case Activity.RESULT_OK:
                 Bundle bundle = data.getExtras();
-                int len = bundle.getInt("length");
                 mSetting.mSendtoHost = bundle.getString("data");
+                syncSettingToSendingStringPref();
                 break;
             default:
                 break;
