@@ -131,7 +131,12 @@ public class TESettings {
         @SerializedName("LineBuffer")
         public int mLineBuffer = 0; //0:un-use, 1:use
 
-        public int nCharSet = 0;	//0:Ansi, 1:UTF8
+        @SerializedName("nCharSet")
+        public int mNCharSet = 0;	//0:Ansi, 1:UTF8
+
+        @SerializedName("sendStringOnConnect")
+        public String mSendtoHost = null;
+
         public int CursorType = 0; //0:Default, 1:Underline, 2:Block
         public boolean bCursorTracking = false;
         public boolean isShowMacro = false;
@@ -143,8 +148,6 @@ public class TESettings {
         //Sync but Not used
 
         //Not sync
-        public byte[] SendtoHost=null;
-
         public class ReaderParam {
             public boolean isEnableScannerByESCCmd = false;
             public String scannerEnableESC = null;

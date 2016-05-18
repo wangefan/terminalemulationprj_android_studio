@@ -1,5 +1,7 @@
 package com.te.UI;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -22,6 +24,7 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
     private CheckBoxPreference mChkUpperCase = null;
     private CheckBoxPreference mChkLineBuffer = null;
     private CheckBoxPreference mChkEcho = null;
+    private Preference mPrefSendString = null;
     private TESettings.SessionSetting mSetting = null;
 
     public SessionVTSettingsFrg() {
@@ -69,6 +72,21 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         mChkUpperCase = (CheckBoxPreference) findPreference(getResources().getString(R.string.data_upper_case_key));
         mChkLineBuffer = (CheckBoxPreference) findPreference(getResources().getString(R.string.vt_linebuffer_key));
         mChkEcho = (CheckBoxPreference) findPreference(getResources().getString(R.string.vt_echo_key));
+        mPrefSendString = findPreference(getResources().getString(R.string.vt_send_string_key));
+        mPrefSendString.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent screen = new Intent(getActivity(), SymbolActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("data", mSetting.mSendtoHost);
+                bundle.putString("Encode", "windows-1252");
+                bundle.putInt("limit", 10);
+                bundle.putInt("Select", 2);
+                screen.putExtras(bundle);
+                startActivityForResult(screen, 0);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -102,6 +120,23 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
             mSetting.mLineBuffer = mChkLineBuffer.isChecked() ? 1 : 0;
         } else if(key.compareTo(getResources().getString(R.string.vt_echo_key)) == 0) {
             mSetting.mBEcho = mChkEcho.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.vt_send_string_key)) == 0) {
+            //Todo:
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                Bundle bundle = data.getExtras();
+                int len = bundle.getInt("length");
+                mSetting.mSendtoHost = bundle.getString("data");
+                break;
+            default:
+                break;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

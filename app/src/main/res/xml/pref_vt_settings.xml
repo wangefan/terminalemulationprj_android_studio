@@ -11,4 +11,8 @@
         android:key="@string/vt_echo_key"
         android:title="@string/vt_echo"
         android:defaultValue="false"/>
+    <Preference
+        android:key="@string/vt_send_string_key"
+        android:title="@string/vt_send_string">
+    </Preference>
 </PreferenceScreen>

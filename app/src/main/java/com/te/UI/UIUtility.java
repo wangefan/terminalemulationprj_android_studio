@@ -13,6 +13,8 @@ import android.widget.EditText;
 
 import com.example.terminalemulation.R;
 
+import java.io.UnsupportedEncodingException;
+
 import Terminals.CipherConnectSettingInfo;
 
 public class UIUtility {
@@ -31,6 +33,22 @@ public class UIUtility {
 		mContext = context;
 		mUIHandler = new Handler();
 	}
+
+	public static String hexToString(String txtInHex, String encode) {
+		byte[] txtInByte = new byte[txtInHex.length() / 2];
+		int j = 0;
+		for (int i = 0; i < txtInHex.length(); i += 2) {
+			txtInByte[j++] = (byte) Integer.parseInt(
+					txtInHex.substring(i, i + 2), 16);
+		}
+		try {
+			return new String(txtInByte, encode);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new String(txtInByte);
+		}
+	}
+
 	static public void showProgressDlg(boolean bShow, int messageID)
     {
     	if(bShow && mBShow == false)

@@ -264,12 +264,7 @@ public class CipherConnectSettingInfo {
     //SendtoHost
     public static byte[] GetHostSendToHostByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.SendtoHost;
-    }
-
-    public static void SetHostSendToHostByIndex(int index, byte[] Data) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.SendtoHost = Data;
+        return Setting.mSendtoHost.getBytes();
     }
 
     public static String getHostPortByIndex(int index) {
@@ -280,7 +275,7 @@ public class CipherConnectSettingInfo {
     //0:ANSI , 1:utf-8
     public static int getHostCharSetByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.nCharSet;
+        return Setting.mNCharSet;
     }
 
     public static Boolean getHostIsLineBufferByIndex(int index) {

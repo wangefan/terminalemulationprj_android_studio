@@ -10,4 +10,6 @@
     <color name="white_15_percent">#26ffffff</color>
     <color name="main_color_grey_300">@color/material_grey_300</color>
     <color name="transparent">#00000000</color>
+    <drawable name="white">#FFFFFFFF</drawable>
+    <drawable name="blue">#FF2DA3CA</drawable>
 </resources>
