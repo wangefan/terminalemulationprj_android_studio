@@ -76,6 +76,8 @@ public class TelnetConnMgr implements Runnable {
                 mTerminal.handleBufferReceived(bytesData, 0, nRead);
             }
         } catch (InterruptedException e) {
+            mIsConnected = false;
+            mSocket = null;
             mUIHandler.post(new Runnable() {
                 public void run() {
                     mTerminal.OnDisconnected();
@@ -83,22 +85,23 @@ public class TelnetConnMgr implements Runnable {
             });
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-            mUIHandler.post(new Runnable() {
-                public void run() {
-                    mTerminal.OnDisconnected();
-                }
-            });
-        } catch (Exception e) {
-            mUIHandler.post(new Runnable() {
-                public void run() {
-                    mTerminal.OnDisconnected();
-                }
-            });
-            e.printStackTrace();
-        } finally {
             mIsConnected = false;
             mSocket = null;
+            mUIHandler.post(new Runnable() {
+                public void run() {
+                    mTerminal.OnDisconnected();
+                }
+            });
+            e.printStackTrace();
+        } catch (Exception e) {
+            mIsConnected = false;
+            mSocket = null;
+            mUIHandler.post(new Runnable() {
+                public void run() {
+                    mTerminal.OnDisconnected();
+                }
+            });
+            e.printStackTrace();
         }
     }
 
