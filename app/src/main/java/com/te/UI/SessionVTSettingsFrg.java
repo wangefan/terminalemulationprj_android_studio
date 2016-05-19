@@ -62,6 +62,10 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         }
     }
 
+    private void syncSettingToSendingStringPref() {
+        mPrefSendString.setSummary(CipherlabSymbol.TransformMulit(mSetting.mSendtoHost));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
@@ -101,10 +105,6 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         // Set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
-    }
-
-    private void syncSettingToSendingStringPref() {
-        mPrefSendString.setSummary(CipherlabSymbol.TransformMulit(mSetting.mSendtoHost));
     }
 
     @Override
