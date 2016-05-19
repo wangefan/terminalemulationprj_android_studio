@@ -443,33 +443,26 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         }
 
         public Character TryGetMultiChar() {
-            byte CurChar = (byte) (CurDataArray[this.CurIndex] & 0xff);
-            String str = null;
-
             int nCharSet = CipherConnectSettingInfo.getHostCharSetByIndex(CipherConnectSettingInfo.GetSessionIndex());
-
             if (nCharSet == 0)
                 return null;
-            int len = 0;
 
+            byte CurChar = (byte) (CurDataArray[this.CurIndex] & 0xff);
+            int len = 0;
             for (int i = 0; i < 6; i++) {
                 if (GetBit(CurChar, i) == false)
                     break;
-
-
                 len++;
-
             }
-
+            String strResult = null;
             if (len > 0) {
-                byte UtfBtye[] = new byte[len];
-
+                byte utfBytes[] = new byte[len];
                 for (int i = 0; i < len; i++) {
-                    UtfBtye[i] = (byte) (CurDataArray[this.CurIndex + i] & 0xff);
+                    utfBytes[i] = (byte) (CurDataArray[this.CurIndex + i] & 0xff);
                 }
 
                 try {
-                    str = new String(UtfBtye, "UTF-8");
+                    strResult = new String(utfBytes, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     // TODO Auto-generated catch block
                     return null;
@@ -479,7 +472,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                 return null;
 
             CurIndex += (len - 1);
-            return Character.valueOf(str.charAt(0));
+            return Character.valueOf(strResult.charAt(0));
         }
 
         public Boolean GetBit(byte Data, int position) {

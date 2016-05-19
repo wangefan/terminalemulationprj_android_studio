@@ -98,8 +98,8 @@ public class CVT100 extends CVT100Enum {
         this.SetSize(25, 80);
         this.Caret = new uc_Caret();
         this.Modes = new uc_Mode();
+        this.TabStops = new uc_TabStops();
         this.LineBufferList.clear();
-
     }
 
     public String GetLogTitle() {
