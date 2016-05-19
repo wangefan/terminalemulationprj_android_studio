@@ -88,6 +88,8 @@
     <string name="vt_echo">Local Echo</string>
     <string name="vt_send_string_key">vt_send_string_key</string>
     <string name="vt_send_string">Send String</string>
+    <string name="vt_char_set_key">vt_char_set_key</string>
+    <string name="vt_char_set">Remote Character Set</string>
     <string-array name="codepage_array">
         <item>Single Byte Character</item>
         <item>Japanese</item>
@@ -109,6 +111,14 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+    <string-array name="char_set_array">
+        <item>Ansi</item>
+        <item>Utf8</item>
+    </string-array>
+    <string-array name="char_set_array_vals">
+        <item>0</item>
+        <item>1</item>
     </string-array>
     <string name="STR_KeyboardInput">Keyboard input</string>
     <string name="STR_KeyboardInput2">Keyboard input (Hexadecimal)</string>

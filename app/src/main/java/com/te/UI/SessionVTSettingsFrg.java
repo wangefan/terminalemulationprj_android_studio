@@ -25,6 +25,7 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
     private CheckBoxPreference mChkLineBuffer = null;
     private CheckBoxPreference mChkEcho = null;
     private Preference mPrefSendString = null;
+    private ListPreference mlstPrefCharSet = null;
     private TESettings.SessionSetting mSetting = null;
 
     public SessionVTSettingsFrg() {
@@ -49,16 +50,6 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         if (p instanceof ListPreference) {
             ListPreference listPref = (ListPreference) p;
             p.setSummary(listPref.getEntry());
-        } else if (p instanceof EditTextPreference) {
-            EditTextPreference editTextPref = (EditTextPreference) p;
-            if (p.getKey().compareTo((getResources().getString(R.string.host_auto_sign_pwd_key))) == 0) {
-                p.setSummary("******");
-            } else {
-                p.setSummary(editTextPref.getText());
-            }
-        } else if (p instanceof MyIPPreference) {
-            MyIPPreference ipPref = (MyIPPreference) p;
-            ipPref.setSummary(ipPref.getIp());
         }
     }
 
@@ -91,6 +82,7 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
                 return true;
             }
         });
+        mlstPrefCharSet = (ListPreference) findPreference(getResources().getString(R.string.vt_char_set_key));
     }
 
     @Override
@@ -100,6 +92,8 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
         mChkUpperCase.setChecked(mSetting.mBUpperCase);
         mChkLineBuffer.setChecked(mSetting.mLineBuffer == 1);
         mChkEcho.setChecked(mSetting.mBEcho);
+        mlstPrefCharSet.setValue(String.valueOf(mSetting.mNCharSet));
+
         syncSettingToSendingStringPref();
         initSummary(getPreferenceScreen());
         // Set up a listener whenever a key changes
@@ -124,6 +118,8 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
             mSetting.mLineBuffer = mChkLineBuffer.isChecked() ? 1 : 0;
         } else if(key.compareTo(getResources().getString(R.string.vt_echo_key)) == 0) {
             mSetting.mBEcho = mChkEcho.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.vt_char_set_key)) == 0) {
+            mSetting.mNCharSet = Integer.valueOf(mlstPrefCharSet.getValue());
         }
     }
 

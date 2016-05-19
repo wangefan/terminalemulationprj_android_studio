@@ -15,4 +15,11 @@
         android:key="@string/vt_send_string_key"
         android:title="@string/vt_send_string">
     </Preference>
+    <ListPreference
+        android:key="@string/vt_char_set_key"
+        android:title="@string/vt_char_set"
+        android:entries="@array/char_set_array"
+        android:entryValues="@array/char_set_array_vals"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
 </PreferenceScreen>
