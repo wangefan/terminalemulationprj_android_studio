@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity
     private LeftMenuFrg mFragmentLeftdrawer;
     private FloatingActionButton mFAB = null;
     private TEKeyboardViewUtility mKeyboardViewUtility = null;
+    private View mDecorView = null;
     private ContentView mContentView;
     private RelativeLayout mMainRelLayout;
     private CursorView Cursor;
@@ -233,6 +234,8 @@ public class MainActivity extends AppCompatActivity
 
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
         updateFABStatus(FABStatus.Connect);
+
+        mDecorView = getWindow().getDecorView();
 
         Cursor = new CursorView(this);
         mContentView = new ContentView(this, Cursor);
@@ -451,6 +454,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.sessionSettings:
                 SessionSetting(CipherConnectSettingInfo.GetSessionIndex());
                 break;
+            case R.id.full_screen:
+                if(isFullScreen()) {
+                    doFullScreen(false);
+                } else {
+                    doFullScreen(true);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -570,6 +580,27 @@ public class MainActivity extends AppCompatActivity
     private void ShowReaderConfig() {
         Intent intent = getPackageManager().getLaunchIntentForPackage("com.iiordanov.freebVNC");
         startActivity(intent);
+    }
+
+    private boolean isFullScreen() {
+        return (mDecorView.getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 1;
+    }
+
+    private void doFullScreen(boolean bFull) {
+        if(bFull) {
+            mDecorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                  | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                  | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                  |  View.SYSTEM_UI_FLAG_FULLSCREEN
+                  | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                  | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        } else {
+            mDecorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                  | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                  | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 
     private void HideKeyboard() {
