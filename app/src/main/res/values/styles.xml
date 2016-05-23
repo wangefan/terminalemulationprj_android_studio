@@ -2,6 +2,7 @@
 <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:preferenceCategoryStyle">@style/PreferenceCategoryStyle</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
     
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">

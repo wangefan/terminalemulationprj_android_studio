@@ -40,7 +40,7 @@
 				    	</ScrollView>
 				 </HorizontalScrollView>
 			    
-			     <RelativeLayout android:id="@+id/ConnbuttonView" 
+			     <RelativeLayout android:id="@+id/logo_view"
 			                              android:layout_width="fill_parent" 
 							        android:layout_height="fill_parent">
 

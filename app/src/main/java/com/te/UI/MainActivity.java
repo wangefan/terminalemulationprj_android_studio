@@ -13,9 +13,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -89,19 +92,15 @@ public class MainActivity extends AppCompatActivity
 
         }
     };
-    Runnable DisConnRun = new Runnable() {
-        public void run() {
-            //TelnetHandleDisConnected();
 
-            //localHandler.post(local1);
-        }
-    };
     private Toolbar mToolbar;
     private LeftMenuFrg mFragmentLeftdrawer;
     private FloatingActionButton mFAB = null;
     private TEKeyboardViewUtility mKeyboardViewUtility = null;
     private View mDecorView = null;
+    private boolean mBFullScreen = false;
     private ContentView mContentView;
+    private RelativeLayout mLogoView = null;
     private RelativeLayout mMainRelLayout;
     private CursorView Cursor;
     private MenuItem mMenuItemConn;
@@ -239,6 +238,31 @@ public class MainActivity extends AppCompatActivity
 
         Cursor = new CursorView(this);
         mContentView = new ContentView(this, Cursor);
+        final GestureDetector dbClickDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    procFullScreen();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mContentView.setClickable(true);
+        mContentView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return dbClickDetector.onTouchEvent(event);
+            }
+        });
+        mLogoView = (RelativeLayout) findViewById(R.id.logo_view);
+        mLogoView.setClickable(true);
+        mLogoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return dbClickDetector.onTouchEvent(event);
+            }
+        });
 
         //Bind TerminalProcess and ContentView
         TerminalProcess actSession = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
@@ -455,11 +479,7 @@ public class MainActivity extends AppCompatActivity
                 SessionSetting(CipherConnectSettingInfo.GetSessionIndex());
                 break;
             case R.id.full_screen:
-                if(isFullScreen()) {
-                    doFullScreen(false);
-                } else {
-                    doFullScreen(true);
-                }
+                procFullScreen();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -568,12 +588,10 @@ public class MainActivity extends AppCompatActivity
     private void showConnectionView(boolean bShow) {
         if (bShow) {
             mMainRelLayout.setVisibility(View.VISIBLE);
-            RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-            ConnectBut.setVisibility(View.INVISIBLE);
+            mLogoView.setVisibility(View.INVISIBLE);
         } else {
             mMainRelLayout.setVisibility(View.INVISIBLE);
-            RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-            ConnectBut.setVisibility(View.VISIBLE);
+            mLogoView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -582,12 +600,11 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private boolean isFullScreen() {
-        return (mDecorView.getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 1;
-    }
-
-    private void doFullScreen(boolean bFull) {
-        if(bFull) {
+    private void procFullScreen() {
+        if(mBFullScreen == false) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getSupportActionBar().hide();
+            mDecorView.setFitsSystemWindows(false);
             mDecorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -595,11 +612,15 @@ public class MainActivity extends AppCompatActivity
                   |  View.SYSTEM_UI_FLAG_FULLSCREEN
                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                   | View.SYSTEM_UI_FLAG_IMMERSIVE);
+            mBFullScreen = true;
         } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getSupportActionBar().show();
             mDecorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                   | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            mBFullScreen = false;
         }
     }
 
@@ -612,40 +633,17 @@ public class MainActivity extends AppCompatActivity
             imm.hideSoftInputFromWindow(CurrentFocus.getWindowToken(), 0);
     }
 
-    private void ShowKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        View CurrentFocus = this.getCurrentFocus();
-        //imm.restartInput(CurrentFocus);
-        if (CurrentFocus != null)
-            imm.showSoftInputFromInputMethod(CurrentFocus.getWindowToken(), 0);
-    }
-
     private void SessionConnect() {
         UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
         TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         termProc.ProcessConnect();
     }
 
-    public void TelnetHandleDisConnected() {
-        RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-        //RelativeLayout TextVer = (RelativeLayout) findViewById(R.id.TextVersionView);
-
-        mMainRelLayout.setVisibility(View.INVISIBLE);
-        ConnectBut.setVisibility(View.VISIBLE);
-        //TextVer.setVisibility(View.VISIBLE);
-        UpdateRecordButtonVisible(false);
-
-    }
-
     private void SessionDisConnect() {
-        RelativeLayout ConnectBut = (RelativeLayout) findViewById(R.id.ConnbuttonView);
-
         TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
         termProc.ProcessDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
-        ConnectBut.setVisibility(View.VISIBLE);
-
+        mLogoView.setVisibility(View.VISIBLE);
     }
 
     private void SessionSetting(int nSessionIdx) {
