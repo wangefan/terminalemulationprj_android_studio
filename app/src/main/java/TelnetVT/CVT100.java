@@ -29,8 +29,6 @@ import Terminals.stdActivityRef;
 public class CVT100 extends CVT100Enum {
 
     //region Field
-
-    static final int KEY_SPACE = -10;
     static final int KEY_F13 = -100;
     static final int KEY_F14 = -101;
     static final int KEY_F15 = -102;
@@ -45,7 +43,6 @@ public class CVT100 extends CVT100Enum {
     static final int KEY_F24 = -111;
     static final int VKEY_DEL = -112;
     static final int VKEY_BS = -113;
-    static final int VKEY_TAB = 61;
     static final int VKEY_LF = -115;
     static final int VKEY_FIND = -116;
     static final int VKEY_SELECT = -117;
@@ -1184,8 +1181,7 @@ public class CVT100 extends CVT100Enum {
             Key.Set(event, keyCode);
             LineBufferList.add(Key);
 
-            if (Key.GetEventKeycode() == VKEY_TAB || Key.GetEventKeycode() == KeyEvent.KEYCODE_ENTER)
-            //if ( Key.GetEventKeycode()==KeyEvent.KEYCODE_ENTER)
+            if (Key.GetEventKeycode() == KeyEvent.KEYCODE_TAB || Key.GetEventKeycode() == KeyEvent.KEYCODE_ENTER)
             {
                 for (int i = 0; i < LineBufferList.size(); i++) {
                     KeyEventVal KeyVal = (KeyEventVal) LineBufferList.get(i);
@@ -1210,9 +1206,7 @@ public class CVT100 extends CVT100Enum {
         char pressedKey = (char) event.getUnicodeChar();
 
         switch (keyCode) {
-            case VKEY_TAB:
-
-            case KEY_SPACE:
+            case KeyEvent.KEYCODE_TAB:
 
             case KeyEvent.KEYCODE_ENTER:
 
@@ -1290,13 +1284,33 @@ public class CVT100 extends CVT100Enum {
         int SendLenth = 0;
 
         switch (keyCode) {
-            case VKEY_TAB:
-                SendData[SendLenth++] = 0x09;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                SendData[SendLenth++] = 27;
+                SendData[SendLenth++] = 'O';
+                SendData[SendLenth++] = 'D';
                 Func = true;
                 break;
-            case KEY_SPACE:
-                pressedKey = 0x20;
-
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                SendData[SendLenth++] = 27;
+                SendData[SendLenth++] = 'O';
+                SendData[SendLenth++] = 'C';
+                Func = true;
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                SendData[SendLenth++] = 27;
+                SendData[SendLenth++] = 'O';
+                SendData[SendLenth++] = 'A';
+                Func = true;
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                SendData[SendLenth++] = 27;
+                SendData[SendLenth++] = 'O';
+                SendData[SendLenth++] = 'B';
+                Func = true;
+                break;
+            case KeyEvent.KEYCODE_TAB:
+                SendData[SendLenth++] = 0x09;
+                Func = true;
                 break;
             case KeyEvent.KEYCODE_ENTER:
                 SendData[SendLenth++] = 0x0d;
