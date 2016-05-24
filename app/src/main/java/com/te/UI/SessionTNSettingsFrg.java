@@ -1,13 +1,10 @@
 package com.te.UI;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
 import android.util.Log;
 
 import com.cipherlab.barcode.BuildConfig;
@@ -15,8 +12,7 @@ import com.example.terminalemulation.R;
 
 import Terminals.TESettings;
 
-public class SessionTNSettingsFrg extends PreferenceFragment implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
 
     //Data members
     private CheckBoxPreference mChkUpperCase = null;
@@ -31,35 +27,16 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
     public SessionTNSettingsFrg() {
     }
 
-    public void setSessionSeting(TESettings.SessionSetting setting) {
-        mSetting = setting;
-    }
-
-    private void initSummary(Preference p) {
-        if (p instanceof PreferenceGroup) {
-            PreferenceGroup pGrp = (PreferenceGroup) p;
-            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
-                initSummary(pGrp.getPreference(i));
-            }
-        } else {
-            updatePrefSummary(p);
-        }
-    }
-
-    private void updatePrefSummary(Preference p) {
-        if (p instanceof ListPreference) {
-            ListPreference listPref = (ListPreference) p;
-            p.setSummary(listPref.getEntry());
-        } else if (p instanceof EditTextPreference) {
+    @Override
+    protected void updatePrefSummary(Preference p) {
+        super.updatePrefSummary(p);
+        if (p instanceof EditTextPreference) {
             EditTextPreference editTextPref = (EditTextPreference) p;
             if (p.getKey().compareTo((getResources().getString(R.string.host_auto_sign_pwd_key))) == 0) {
                 p.setSummary("******");
             } else {
                 p.setSummary(editTextPref.getText());
             }
-        } else if (p instanceof MyIPPreference) {
-            MyIPPreference ipPref = (MyIPPreference) p;
-            ipPref.setSummary(ipPref.getIp());
         }
     }
 
@@ -99,9 +76,7 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        //Sync settings to UI
+    public void syncPrefUIFromTESettings() {
         mChkUpperCase.setChecked(mSetting.mBUpperCase);
         mCodePage.setValue(String.valueOf(mSetting.mTELanguage));
         mChkAutoReset.setChecked(mSetting.mBIBMAutoReset);
@@ -110,23 +85,10 @@ public class SessionTNSettingsFrg extends PreferenceFragment implements
         mSwchDevName.setSummaryOn(mSetting.mDevName);
         mEdtPopErrorRow.setText(String.valueOf(mSetting.mNErrorRowIndexg));
         mChkPopupWindow.setChecked(mSetting.misPopUpErrorDialog);
-        initSummary(getPreferenceScreen());
-        // Set up a listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        // Unregister the listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        updatePrefSummary(findPreference(key));
+    public void commitPrefUIToTESettings(String key) {
         if(key.compareTo(getResources().getString(R.string.data_upper_case_key)) == 0) {
             mSetting.mBUpperCase = mChkUpperCase.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.tn_codepage_key)) == 0) {

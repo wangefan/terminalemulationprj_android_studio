@@ -37,14 +37,14 @@ public class SessionSecondSettings extends AppCompatActivity {
             if(CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
                 SessionTNSettingsFrg settingsFrg = new SessionTNSettingsFrg();
-                settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+                settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, settingsFrg)
                         .commit();
             } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_setting));
                 SessionVTSettingsFrg settingsFrg = new SessionVTSettingsFrg();
-                settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+                settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, settingsFrg)
                         .commit();

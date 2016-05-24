@@ -60,7 +60,7 @@ public class SessionSettings extends AppCompatActivity {
         }
          // Display the fragment as the main content.
         SessionSettingsFrg settingsFrg = new SessionSettingsFrg();
-        settingsFrg.setSessionSeting(gEditSessionSetting);
+        settingsFrg.setSessionSetting(gEditSessionSetting);
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, settingsFrg)
                 .commit();

@@ -2,14 +2,10 @@ package com.te.UI;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
 import android.util.Log;
 
 import com.cipherlab.barcode.BuildConfig;
@@ -17,8 +13,7 @@ import com.example.terminalemulation.R;
 
 import Terminals.TESettings;
 
-public class SessionVTSettingsFrg extends PreferenceFragment implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
 
     //Data members
     private CheckBoxPreference mChkUpperCase = null;
@@ -26,35 +21,35 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
     private CheckBoxPreference mChkEcho = null;
     private Preference mPrefSendString = null;
     private ListPreference mlstPrefCharSet = null;
-    private TESettings.SessionSetting mSetting = null;
 
     public SessionVTSettingsFrg() {
     }
 
-    public void setSessionSeting(TESettings.SessionSetting setting) {
-        mSetting = setting;
-    }
-
-    private void initSummary(Preference p) {
-        if (p instanceof PreferenceGroup) {
-            PreferenceGroup pGrp = (PreferenceGroup) p;
-            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
-                initSummary(pGrp.getPreference(i));
-            }
-        } else {
-            updatePrefSummary(p);
-        }
-    }
-
-    private void updatePrefSummary(Preference p) {
-        if (p instanceof ListPreference) {
-            ListPreference listPref = (ListPreference) p;
-            p.setSummary(listPref.getEntry());
-        }
-    }
-
     private void syncSettingToSendingStringPref() {
         mPrefSendString.setSummary(CipherlabSymbol.TransformMulit(mSetting.mSendtoHost));
+    }
+
+    @Override
+    protected void syncPrefUIFromTESettings() {
+        mChkUpperCase.setChecked(mSetting.mBUpperCase);
+        mChkLineBuffer.setChecked(mSetting.mLineBuffer == 1);
+        mChkEcho.setChecked(mSetting.mBEcho);
+        mlstPrefCharSet.setValue(String.valueOf(mSetting.mNCharSet));
+
+        syncSettingToSendingStringPref();
+    }
+
+    @Override
+    protected void commitPrefUIToTESettings(String key) {
+        if(key.compareTo(getResources().getString(R.string.data_upper_case_key)) == 0) {
+            mSetting.mBUpperCase = mChkUpperCase.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.vt_linebuffer_key)) == 0) {
+            mSetting.mLineBuffer = mChkLineBuffer.isChecked() ? 1 : 0;
+        } else if(key.compareTo(getResources().getString(R.string.vt_echo_key)) == 0) {
+            mSetting.mBEcho = mChkEcho.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.vt_char_set_key)) == 0) {
+            mSetting.mNCharSet = Integer.valueOf(mlstPrefCharSet.getValue());
+        }
     }
 
     @Override
@@ -86,44 +81,6 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        //Sync settings to UI
-        mChkUpperCase.setChecked(mSetting.mBUpperCase);
-        mChkLineBuffer.setChecked(mSetting.mLineBuffer == 1);
-        mChkEcho.setChecked(mSetting.mBEcho);
-        mlstPrefCharSet.setValue(String.valueOf(mSetting.mNCharSet));
-
-        syncSettingToSendingStringPref();
-        initSummary(getPreferenceScreen());
-        // Set up a listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // Unregister the listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        updatePrefSummary(findPreference(key));
-        if(key.compareTo(getResources().getString(R.string.data_upper_case_key)) == 0) {
-            mSetting.mBUpperCase = mChkUpperCase.isChecked();
-        } else if(key.compareTo(getResources().getString(R.string.vt_linebuffer_key)) == 0) {
-            mSetting.mLineBuffer = mChkLineBuffer.isChecked() ? 1 : 0;
-        } else if(key.compareTo(getResources().getString(R.string.vt_echo_key)) == 0) {
-            mSetting.mBEcho = mChkEcho.isChecked();
-        } else if(key.compareTo(getResources().getString(R.string.vt_char_set_key)) == 0) {
-            mSetting.mNCharSet = Integer.valueOf(mlstPrefCharSet.getValue());
-        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Activity.RESULT_OK:
@@ -134,7 +91,6 @@ public class SessionVTSettingsFrg extends PreferenceFragment implements
             default:
                 break;
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
