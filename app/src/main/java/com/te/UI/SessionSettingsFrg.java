@@ -86,7 +86,6 @@ public class SessionSettingsFrg extends PreferenceFragment implements
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
         mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
-        initSummary(getPreferenceScreen());
     }
 
     @Override
