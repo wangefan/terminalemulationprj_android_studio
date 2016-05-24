@@ -11,8 +11,6 @@ import android.util.Log;
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
-import Terminals.TESettings;
-
 public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
 
     //Data members
