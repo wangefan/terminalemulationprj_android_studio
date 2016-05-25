@@ -165,7 +165,7 @@ public class TESettings {
         public int mNCharSet = 0;	//0:Ansi, 1:UTF8
 
         @SerializedName("sendStringOnConnect")
-        public String mSendtoHost = null;
+        public String mSendtoHost = "";
 
         @SerializedName("isShowSession")
         public boolean mIsShowSessionNumber = false;

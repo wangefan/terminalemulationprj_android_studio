@@ -106,7 +106,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
         byte[] SendData = CipherConnectSettingInfo.GetHostSendToHostByIndex(CipherConnectSettingInfo.GetSessionIndex());
 
-        if (SendData != null) {
+        if (SendData != null && SendData.length > 0) {
             DispatchMessageRaw(this, SendData, SendData.length);
         }
         if (mTerminalListener != null) {
