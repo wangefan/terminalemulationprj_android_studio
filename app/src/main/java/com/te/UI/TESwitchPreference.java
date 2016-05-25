@@ -14,11 +14,11 @@ import com.example.terminalemulation.R;
  */
 public class TESwitchPreference extends SwitchPreference {
 
-    public interface OnListener {
+    public interface OnClickListener {
         void onClick();
     }
 
-    private OnListener mListener = null;
+    private OnClickListener mListener = null;
 
     public TESwitchPreference(Context context) {
         super(context);
@@ -32,7 +32,7 @@ public class TESwitchPreference extends SwitchPreference {
         super(context, attrs, defStyle);
     }
 
-    public void setListener(OnListener listener) {
+    public void setOnClickListener(OnClickListener listener) {
         mListener = listener;
     }
 

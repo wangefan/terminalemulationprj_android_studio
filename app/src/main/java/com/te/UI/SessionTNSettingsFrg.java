@@ -10,8 +10,6 @@ import android.util.Log;
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
-import Terminals.TESettings;
-
 public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
 
     //Data members
@@ -51,7 +49,7 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
         mChkAutoReset = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_auto_reset_key));
         mChkFLIfExceed = (ListPreference) findPreference(getResources().getString(R.string.tn_field_length_if_exceed_key));
         mSwchDevName = (TESwitchPreference) findPreference(getResources().getString(R.string.tn_devname_key));
-        mSwchDevName.setListener(new TESwitchPreference.OnListener() {
+        mSwchDevName.setOnClickListener(new TESwitchPreference.OnClickListener() {
             @Override
             public void onClick() {
                 UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, getActivity(), new UIUtility.OnEditMessageBoxListener() {
