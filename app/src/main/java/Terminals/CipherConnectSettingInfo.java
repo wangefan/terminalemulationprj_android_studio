@@ -295,23 +295,12 @@ public class CipherConnectSettingInfo {
 
     public static Boolean getHostIsShowMacroByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.isShowMacro;
+        return Setting.mIsActMacro;
     }
-
-    public static void SetHostIsShowMacroByIndex(int index, boolean IsShowMacro) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.isShowMacro = IsShowMacro;
-    }
-
 
     public static boolean getHostIsCursorTrackByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.bCursorTracking;
-    }
-
-    public static void SetHostIsCursorTrackByIndex(int index, boolean IsCursorTrack) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.bCursorTracking = IsCursorTrack;
+        return Setting.mIsCursorTracking;
     }
 
     public static Boolean getHostIsAutoconnectByIndex(int index) {
@@ -407,13 +396,7 @@ public class CipherConnectSettingInfo {
     public static int getHostCousorTypeByIndex(int index) {
         //
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.CursorType;
-    }
-
-    //0:Default, 1:Underline, 2:Block
-    public static void SetHostCousorTypeByIndex(int index, int nCousorType) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.CursorType = nCousorType;
+        return Setting.mNCursorType;
     }
     
     /*

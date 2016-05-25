@@ -11,6 +11,8 @@ import Terminals.CipherConnectSettingInfo;
 public class SessionSecondSettings extends AppCompatActivity {
     public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
     public static final String ACTION_SERVER_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING";
+    public static final String ACTION_SCREEN_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,13 @@ public class SessionSecondSettings extends AppCompatActivity {
                         .replace(R.id.content_frame, settingsFrg)
                         .commit();
             }
+        } else if(action.compareTo(ACTION_SCREEN_SETTING) == 0) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.screen_setting));
+            SessionScreenSettingsFrg settingsFrg = new SessionScreenSettingsFrg();
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, settingsFrg)
+                    .commit();
         }
     }
 

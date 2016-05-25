@@ -91,6 +91,9 @@
     <string name="vt_send_string">Send String</string>
     <string name="vt_char_set_key">vt_char_set_key</string>
     <string name="vt_char_set">Remote Character Set</string>
+    <string name="auto_track_visible">Visible</string>
+    <string name="auto_track_center">Center</string>
+    <string name="auto_track_locked">Locked Location</string>
     <string-array name="codepage_array">
         <item>Single Byte Character</item>
         <item>Japanese</item>
@@ -121,9 +124,93 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="cursor_type_array">
+        <item>Default</item>
+        <item>Underline</item>
+        <item>Block</item>
+    </string-array>
+    <string-array name="cursor_type_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="auto_track_array">
+        <item>@string/auto_track_visible</item>
+        <item>@string/auto_track_center</item>
+        <item>@string/auto_track_locked</item>
+    </string-array>
+    <string-array name="auto_track_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="font_array">
+        <item>Courier New</item>
+        <item>Lucida Console</item>
+        <item>Excalibur Monospace</item>
+        <item>NTOEM</item>
+        <item>NTANSI</item>
+    </string-array>
+    <string-array name="font_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="font_size_array">
+        <item>5 x 10</item>
+        <item>6 x 12</item>
+        <item>8 x 10</item>
+        <item>8 x 14</item>
+        <item>8 x 16</item>
+        <item>10 x 20</item>
+    </string-array>
+    <string-array name="font_size_array_vals">
+        <item>5 x 10</item>
+        <item>6 x 12</item>
+        <item>8 x 10</item>
+        <item>8 x 14</item>
+        <item>8 x 16</item>
+        <item>10 x 20</item>
+    </string-array>
     <string name="STR_KeyboardInput">Keyboard input</string>
     <string name="STR_KeyboardInput2">Keyboard input (Hexadecimal)</string>
     <string name="STR_SymbolInput">Symbol table input</string>
     <string name="MSG_InvalidHexString">The binary cannot have an odd number of digits</string>
     <string name="sending_string_title">String:</string>
+    <string name="screen_setting">Screen</string>
+    <string name="screen_session_number_key">screen_session_number_key</string>
+    <string name="screen_session_number">Show Session Number</string>
+    <string name="screen_session_status_key">screen_session_status_key</string>
+    <string name="screen_session_status">Show Connecting Host IP</string>
+    <string name="screen_wifi_alert_key">screen_wifi_alert_key</string>
+    <string name="screen_wifi_alert">Show Wi-Fi Alert</string>
+    <string name="screen_battery_alert_key">screen_battery_alert_key</string>
+    <string name="screen_battery_alert">Show Battery Alert</string>
+    <string name="screen_act_macro_key">screen_act_macro_key</string>
+    <string name="screen_act_macro">Activate Macro</string>
+    <string name="screen_cursor_type_key">screen_cursor_type_key</string>
+    <string name="screen_cursor_type">Cursor Type</string>
+    <string name="screen_auto_scroll_key">screen_auto_scroll_key</string>
+    <string name="screen_alert_off">No Alert</string>
+    <string name="screen_auto_scroll">Auto Scrolling</string>
+    <string name="screen_auto_scroll_off">Not Track</string>
+    <string name="screen_scroll_lock_key"></string>
+    <string name="screen_scroll_lock">Locked Location</string>
+    <string name="screen_font_key">screen_font_key</string>
+    <string name="screen_font">Fonts</string>
+    <string name="screen_font_size_key">screen_font_size_key</string>
+    <string name="screen_font_size">Fonts Size</string>
+    <string name="screen_font_color_key">screen_font_color_key</string>
+    <string name="screen_font_color">Fonts Color</string>
+    <string name="screen_bg_color_key">screen_bg_color_key</string>
+    <string name="screen_bg_color">Background Color</string>
+    <string name="screen_auto_full_on_conn_key">screen_auto_full_on_conn_key</string>
+    <string name="screen_auto_full_on_conn">Auto Full Screen On Connection</string>
+    <string name="screen_show_taskbar_key">screen_show_taskbar_key</string>
+    <string name="screen_show_taskbar">Show Taskbar On Full Screen</string>
+    <string name="full_screen">Full Screen</string>
+    <string name="LockedLocFormat">Row: %1$d, Col:%2$d</string>
+    <string name="FontSizeFormat">%1$d x Col:%2$d</string>
 </resources>

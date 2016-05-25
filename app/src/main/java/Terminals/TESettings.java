@@ -25,6 +25,11 @@ public class TESettings {
     }
 
     public static class SessionSetting {
+        public enum AutoTrackType {
+            AutoTrackType_Visible,
+            AutoTrackType_Center,
+            AutoTrackType_Lock
+        }
         public String getHostPort() {
             Integer nPortLow = mTelnetPort.get(0);
             Integer nPortHi = mTelnetPort.get(1);
@@ -49,6 +54,31 @@ public class TESettings {
                 mDevNameType = 0;
             } else {
                 mDevNameType = 1;
+            }
+        }
+
+        public AutoTrackType getAutoTrackType() {
+            if(mIsCursorTrackingVisibleMode) {
+                return AutoTrackType.AutoTrackType_Visible;
+            } else if(mIsCursorTrackingCenterMode) {
+                return AutoTrackType.AutoTrackType_Center;
+            } else { //(mIsCursorTrackingLockMode)
+                return AutoTrackType.AutoTrackType_Lock;
+            }
+        }
+
+        public void setAutoTrackType(AutoTrackType trackingType) {
+            mIsCursorTrackingVisibleMode = mIsCursorTrackingCenterMode = mIsCursorTrackingLockMode = false;
+            switch (trackingType) {
+                case AutoTrackType_Visible:
+                    mIsCursorTrackingVisibleMode = true;
+                    break;
+                case AutoTrackType_Center:
+                    mIsCursorTrackingCenterMode = true;
+                    break;
+                case AutoTrackType_Lock:
+                    mIsCursorTrackingLockMode = true;
+                    break;
             }
         }
 
@@ -137,15 +167,61 @@ public class TESettings {
         @SerializedName("sendStringOnConnect")
         public String mSendtoHost = null;
 
-        public int CursorType = 0; //0:Default, 1:Underline, 2:Block
-        public boolean bCursorTracking = false;
-        public boolean isShowMacro = false;
+        @SerializedName("isShowSession")
+        public boolean mIsShowSessionNumber = false;
+
+        @SerializedName("isShowSessionStatus")
+        public boolean mIsShowSessionStatus = false;
+
+        @SerializedName("isShowWifiAlert")
+        public boolean mIsShowWifiAlert = false;
+
+        @SerializedName("isShowBatteryAlert")
+        public boolean mIsShowBatteryAlert = false;
+
+        @SerializedName("isShowMacro")
+        public boolean mIsActMacro = false;
+
+        @SerializedName("CursorType")
+        public int mNCursorType = 0; //0:Default, 1:Underline, 2:Block
+
+        @SerializedName("bCursorTracking")
+        public boolean mIsCursorTracking = false;
+
+        @SerializedName("bCursorVisible")
+        public boolean mIsCursorTrackingVisibleMode = false;
+
+        @SerializedName("bCursorCenter")
+        public boolean mIsCursorTrackingCenterMode = false;
+
+        @SerializedName("bCursorLocked")
+        public boolean mIsCursorTrackingLockMode = false;
+
+        @SerializedName("nCursorLockCol")
+        public int mNCursorLockCol = 0;
+
+        @SerializedName("nCursorLockRow")
+        public int mNCursorLockRow = 0;
+
+        @SerializedName("nFontType")
+        public int mNFontType = 0;
+
+        @SerializedName("nFontHeight")
+        public int mNFontHeight = 0;
+
+        @SerializedName("nFontWidth")
+        public int mNFontWidth = 0;
+
+        @SerializedName("isAutoFullScreen")
+        public boolean mIsAutoFullscreenOnConn = false;
+
+        @SerializedName("isShowTaskBarOnFullScreen")
+        public boolean mIsShowTaskbarOnConn = false;
+
         public boolean SSH = false;
         public String SSHName = "";
         public String SSHPassword="";
         public ReaderParam g_ReaderParam = new ReaderParam();
-
-        //Sync but Not used
 
         //Not sync
         public class ReaderParam {
