@@ -24,7 +24,7 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
     }
 
     private void syncSettingToSendingStringPref() {
-        mPrefSendString.setSummary(CipherlabSymbol.TransformMulit(mSetting.mSendtoHost));
+        mPrefSendString.setSummary(CipherlabSymbol.TransformMulit(mSetting.mVTSendtoHost));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
             public boolean onPreferenceClick(Preference preference) {
                 Intent screen = new Intent(getActivity(), SymbolActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("data", mSetting.mSendtoHost);
+                bundle.putString("data", mSetting.mVTSendtoHost);
                 bundle.putString("Encode", "windows-1252");
                 bundle.putInt("limit", 10);
                 bundle.putInt("Select", 2);
@@ -83,7 +83,7 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
         switch (resultCode) {
             case Activity.RESULT_OK:
                 Bundle bundle = data.getExtras();
-                mSetting.mSendtoHost = bundle.getString("data");
+                mSetting.mVTSendtoHost = bundle.getString("data");
                 syncSettingToSendingStringPref();
                 break;
             default:

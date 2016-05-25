@@ -262,9 +262,9 @@ public class CipherConnectSettingInfo {
     }
 
     //SendtoHost
-    public static byte[] GetHostSendToHostByIndex(int index) {
+    public static byte[] getVTHostSendToHostByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.mSendtoHost.getBytes();
+        return Setting.mVTSendtoHost.getBytes();
     }
 
     public static String getHostPortByIndex(int index) {

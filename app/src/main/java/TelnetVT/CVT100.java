@@ -8,10 +8,13 @@ import android.view.KeyEvent;
 
 import com.example.terminalemulation.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import Terminals.CipherConnectSettingInfo;
 import Terminals.CipherReaderControl;
+import Terminals.TerminalLogWriter;
 import Terminals.stdActivityRef;
 
 //import TelnetIBM.IBMHost5250.IBmAID;
@@ -1170,6 +1173,27 @@ public class CVT100 extends CVT100Enum {
     @Override
     public void OnScreenBufferPos(int x, int y) {
 
+    }
+
+    @Override
+    public void OnConnected() {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c.getTime());
+
+
+        Boolean IsLog = CipherConnectSettingInfo.getHostIsWriteLogkByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        if (IsLog)
+            LogFile = new TerminalLogWriter(formattedDate + ".txt");
+
+        byte[] SendData = CipherConnectSettingInfo.getVTHostSendToHostByIndex(CipherConnectSettingInfo.GetSessionIndex());
+
+        if (SendData != null && SendData.length > 0) {
+            DispatchMessageRaw(this, SendData, SendData.length);
+        }
+        if (mTerminalListener != null) {
+            mTerminalListener.onConnected();
+        }
     }
 
     @Override

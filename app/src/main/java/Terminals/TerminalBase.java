@@ -104,11 +104,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         if (IsLog)
             LogFile = new TerminalLogWriter(formattedDate + ".txt");
 
-        byte[] SendData = CipherConnectSettingInfo.GetHostSendToHostByIndex(CipherConnectSettingInfo.GetSessionIndex());
-
-        if (SendData != null && SendData.length > 0) {
-            DispatchMessageRaw(this, SendData, SendData.length);
-        }
         if (mTerminalListener != null) {
             mTerminalListener.onConnected();
         }
