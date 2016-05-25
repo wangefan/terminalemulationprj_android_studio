@@ -136,7 +136,30 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mChkAcitvateMacro = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_act_macro_key));
         mlstCursorType = (ListPreference) findPreference(getResources().getString(R.string.screen_cursor_type_key));
         mSwchAutoTracking = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_auto_scroll_key));
-        mPrefLockedLoc = findPreference(getResources().getString(R.string.screen_scroll_lock_key));
+        mSwchAutoTracking.setOnClickListener(new TESwitchPreference.OnClickListener() {
+            @Override
+            public void onClick() {
+                int nSelItem = 0;
+                String[] items = getResources().getStringArray(R.array.auto_track_array);
+                for (int idxAutoTk = 0; idxAutoTk < items.length; idxAutoTk++) {
+                    if(items[idxAutoTk].compareTo(getAutoTrackString(mSetting.getAutoTrackType())) == 0) {
+                        nSelItem = idxAutoTk;
+                    }
+                }
+                UIUtility.listMessageBox(R.string.screen_auto_track,
+                        R.array.auto_track_array,
+                        nSelItem,
+                        getActivity(),
+                        new UIUtility.OnListMessageBoxListener() {
+                    @Override
+                    public void onSelResult(String result) {
+                        mSetting.setAutoTrackType(getAutoTrackTypeFromString(result));
+                        mSwchAutoTracking.setSummaryOn(getAutoTrackString(mSetting.getAutoTrackType()));
+                        mSwchAutoTracking.setChecked(true);
+                    }
+                });
+            }});
+        mPrefLockedLoc = findPreference(getResources().getString(R.string.screen_track_lock_key));
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
         //Todo: mPrefFontColor

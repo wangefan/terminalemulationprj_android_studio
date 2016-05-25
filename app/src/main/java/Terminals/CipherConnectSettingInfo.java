@@ -303,6 +303,11 @@ public class CipherConnectSettingInfo {
         return Setting.mIsCursorTracking;
     }
 
+    public static SessionSetting.AutoTrackType getHostAutoTrackTypeByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.getAutoTrackType();
+    }
+
     public static Boolean getHostIsAutoconnectByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBAutoConnect;

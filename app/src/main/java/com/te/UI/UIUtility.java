@@ -22,6 +22,9 @@ public class UIUtility {
 		void onResult(String result);
 		void onCancel();
 	}
+	public interface OnListMessageBoxListener {
+		void onSelResult(String result);
+	}
 	static private ProgressDialog mPDialog = null;
 	static private Context mContext;
 	static private Point mPrgDlgSize = new Point();
@@ -130,6 +133,23 @@ public class UIUtility {
 			public void onClick(DialogInterface dialog, int which) {
 				if(listener != null)
 					listener.onCancel();
+			}
+		});
+		builder.create().show();
+	}
+
+	public static void listMessageBox(int nTitleStringID, final int nStingArrayID, int nCheckedItem, final Context context, final OnListMessageBoxListener listener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(nTitleStringID);
+		builder.setSingleChoiceItems(nStingArrayID, nCheckedItem, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String [] items = context.getResources().getStringArray(nStingArrayID);
+				if(items != null) {
+					String result = items[which];
+					listener.onSelResult(result);
+					dialog.dismiss();
+				}
 			}
 		});
 		builder.create().show();

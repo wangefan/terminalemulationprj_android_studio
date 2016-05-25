@@ -139,11 +139,6 @@
         <item>@string/auto_track_center</item>
         <item>@string/auto_track_locked</item>
     </string-array>
-    <string-array name="auto_track_array_vals">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     <string-array name="font_array">
         <item>Courier New</item>
         <item>Lucida Console</item>
@@ -194,10 +189,10 @@
     <string name="screen_cursor_type">Cursor Type</string>
     <string name="screen_auto_scroll_key">screen_auto_scroll_key</string>
     <string name="screen_alert_off">No Alert</string>
-    <string name="screen_auto_scroll">Auto Scrolling</string>
-    <string name="screen_auto_scroll_off">Not Track</string>
-    <string name="screen_scroll_lock_key"></string>
-    <string name="screen_scroll_lock">Locked Location</string>
+    <string name="screen_auto_track">Auto Tracking</string>
+    <string name="screen_auto_track_off">Not Track</string>
+    <string name="screen_track_lock_key"></string>
+    <string name="screen_track_lock">Locked Location</string>
     <string name="screen_font_key">screen_font_key</string>
     <string name="screen_font">Fonts</string>
     <string name="screen_font_size_key">screen_font_size_key</string>
@@ -212,5 +207,5 @@
     <string name="screen_show_taskbar">Show Taskbar On Full Screen</string>
     <string name="full_screen">Full Screen</string>
     <string name="LockedLocFormat">Row: %1$d, Col:%2$d</string>
-    <string name="FontSizeFormat">%1$d x Col:%2$d</string>
+    <string name="FontSizeFormat">%1$d x %2$d</string>
 </resources>

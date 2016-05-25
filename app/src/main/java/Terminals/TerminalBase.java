@@ -99,7 +99,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c.getTime());
 
-
         Boolean IsLog = CipherConnectSettingInfo.getHostIsWriteLogkByIndex(CipherConnectSettingInfo.GetSessionIndex());
         if (IsLog)
             LogFile = new TerminalLogWriter(formattedDate + ".txt");

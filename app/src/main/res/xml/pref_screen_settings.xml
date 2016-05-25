@@ -30,12 +30,12 @@
         android:positiveButtonText="@null" />
     <com.te.UI.TESwitchPreference
         android:key="@string/screen_auto_scroll_key"
-        android:title="@string/screen_auto_scroll"
-        android:summaryOff="@string/screen_auto_scroll_off"
+        android:title="@string/screen_auto_track"
+        android:summaryOff="@string/screen_auto_track_off"
         android:widgetLayout="@layout/te_switch"/>
     <Preference
-        android:key="@string/screen_scroll_lock_key"
-        android:title="@string/screen_scroll_lock">
+        android:key="@string/screen_track_lock_key"
+        android:title="@string/screen_track_lock">
     </Preference>
     <ListPreference
         android:key="@string/screen_font_key"

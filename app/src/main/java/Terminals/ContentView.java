@@ -27,6 +27,8 @@ import Terminals.TerminalBaseEnum.Point;
 
 
 public class ContentView extends View {
+    private HorizontalScrollView mHScrollView = null;
+    private ScrollView mVScrollView = null;
     public CursorView mCorsor;
     public Rect mFontRect;
     Canvas mCanvas;
@@ -45,6 +47,8 @@ public class ContentView extends View {
         super(context);
 
         mFontRect = FontMeasure(mFontface, mFontsize);
+        mHScrollView = (HorizontalScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainHScroll);
+        mVScrollView = (ScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainVScroll);
         mCorsor = Cursor;
         mCorsor.SetSize(mFontRect.height(), mFontRect.width());
 
@@ -193,6 +197,22 @@ public class ContentView extends View {
         mFgpaint.setTypeface(mFontface);
     }
 
+    private int getXPosByRate(float fRate, int nCursorBmpPosX) {
+        int nMoveToX ;
+        int nTrackMaxX = mBmpWidth - (int) ((float)mHScrollView.getWidth() * fRate);
+        nMoveToX = Math.max((nCursorBmpPosX - (int) ((float)mHScrollView.getWidth() * fRate)), 0);
+        nMoveToX = Math.min(nMoveToX, nTrackMaxX);
+        return nMoveToX;
+    }
+
+    private int getYPosByRate(float fRate, int nCursorBmpPosY) {
+        int nMoveToY = 0;
+        int nTrackMaxY = mBmpHeight - (int) ((float)mHScrollView.getHeight() * fRate);
+        nMoveToY = Math.max((nCursorBmpPosY - (int) ((float)mHScrollView.getHeight() * fRate)), 0);
+        nMoveToY = Math.min(nMoveToY, nTrackMaxY);
+        return nMoveToY;
+    }
+
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mImage == null)
@@ -203,27 +223,32 @@ public class ContentView extends View {
         if (mTerminalProc == null)
             return;
         Point cursorPos = mTerminalProc.getCursorGridPos();
-        int nPosX = cursorPos.X * mFontRect.width();
-        int nPosY = cursorPos.Y * mFontRect.height();
-        mCorsor.setX(nPosX);
-        mCorsor.setY(nPosY);
+        int nBmpPosX = cursorPos.X * mFontRect.width();
+        int nBmpPosY = cursorPos.Y * mFontRect.height();
+        mCorsor.setX(nBmpPosX);
+        mCorsor.setY(nBmpPosY);
 
         Boolean IsTracking = CipherConnectSettingInfo.getHostIsCursorTrackByIndex(CipherConnectSettingInfo.GetSessionIndex());
 
         if (IsTracking) {
-            HorizontalScrollView hsView = (HorizontalScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainHScroll);
-            ScrollView vsView = (ScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainVScroll);
-            int nLaoutHeight = vsView.getHeight();
-            //Center
-            int nCenteTrackMaxX = mBmpWidth - hsView.getWidth() / 2;
-            int nCenteTrackMaxY = mBmpHeight - hsView.getHeight() / 2;
-            int nMoveToX = Math.max((nPosX - hsView.getWidth() / 2), 0);
-            nMoveToX = Math.min(nMoveToX, nCenteTrackMaxX);
-            int nMoveToY = Math.max((nPosY - hsView.getHeight() / 2), 0);
-            nMoveToY = Math.min(nMoveToY, nCenteTrackMaxY);
+            int nMoveToX = 0, nMoveToY = 0;
+            switch (CipherConnectSettingInfo.getHostAutoTrackTypeByIndex(CipherConnectSettingInfo.GetSessionIndex())) {
+                case AutoTrackType_Visible:
+                    nMoveToX = getXPosByRate(0.75f, nBmpPosX);
+                    nMoveToY = getYPosByRate(0.75f, nBmpPosY);
+                    break;
+                case AutoTrackType_Center:
+                    nMoveToX = getXPosByRate(0.5f, nBmpPosX);
+                    nMoveToY = getYPosByRate(0.5f, nBmpPosY);
+                    break;
+                case AutoTrackType_Lock:
+                    break;
+                default:
+                    break;
+            }
 
-            hsView.scrollTo(nMoveToX, 0);
-            vsView.scrollTo(0, nMoveToY);
+            mHScrollView.scrollTo(nMoveToX, 0);
+            mVScrollView.scrollTo(0, nMoveToY);
             if (BuildConfig.DEBUG) {
                 Log.d("TE:", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
             }
