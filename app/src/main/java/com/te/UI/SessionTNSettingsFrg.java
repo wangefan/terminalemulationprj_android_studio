@@ -22,7 +22,6 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
     private TESwitchPreference mSwchDevName = null;
     private EditTextPreference mEdtPopErrorRow = null;
     private CheckBoxPreference mChkPopupWindow = null;
-    private TESettings.SessionSetting mSetting = null;
 
     public SessionTNSettingsFrg() {
     }
