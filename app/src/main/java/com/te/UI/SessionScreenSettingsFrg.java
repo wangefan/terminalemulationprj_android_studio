@@ -1,10 +1,16 @@
 package com.te.UI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
@@ -54,8 +60,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         }
     }
 
-    private String getLockedLocString(int nCursorLockCol, int nCursorLockRow) {
-        return String.format(getString(R.string.LockedLocFormat), nCursorLockCol, nCursorLockRow);
+    private String getLockedLocString(int nCursorLockRow, int nCursorLockCol) {
+        return String.format(getString(R.string.LockedLocFormat), nCursorLockRow, nCursorLockCol);
     }
 
     public String getFontSizeValFromSetting(int nFontWidth, int nFontHeight) {
@@ -83,7 +89,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mSwchAutoTracking.setChecked(mSetting.mIsCursorTracking);
         mSwchAutoTracking.setSummaryOn(getAutoTrackString(mSetting.getAutoTrackType()));
         updateLockPrefUIDependOnAutoTrackUI(mSetting.getAutoTrackType());
-        mPrefLockedLoc.setSummary(getLockedLocString(mSetting.mNCursorLockCol, mSetting.mNCursorLockRow));
+        mPrefLockedLoc.setSummary(getLockedLocString(mSetting.mNCursorLockRow, mSetting.mNCursorLockCol));
         mlstFont.setValue(String.valueOf(mSetting.mNFontType));
         mlstFontSize.setValue(getFontSizeValFromSetting(mSetting.mNFontWidth, mSetting.mNFontHeight));
         //Todo: mPrefFontColor
@@ -177,6 +183,39 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             }
         });
         mPrefLockedLoc = findPreference(getResources().getString(R.string.screen_track_lock_key));
+        mPrefLockedLoc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                //Pop-up Row-Column dialog.
+                LayoutInflater inflater = LayoutInflater.from(getActivity());
+                final View rolColView = inflater.inflate(R.layout.row_col_dialog, null);
+                final NumberPicker npRow = (NumberPicker) rolColView.findViewById(R.id.row_picker);
+                final NumberPicker npCol = (NumberPicker) rolColView.findViewById(R.id.col_picker);
+                npRow.setMinValue(0); npRow.setMaxValue(23);
+                npCol.setMinValue(0); npCol.setMaxValue(80);
+                npRow.setValue(mSetting.mNCursorLockRow);
+                npCol.setValue(mSetting.mNCursorLockCol);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.row_col_dialog);
+                builder.setView(rolColView);
+                builder.setPositiveButton(R.string.STR_OK, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSetting.mNCursorLockRow = npRow.getValue();
+                        mSetting.mNCursorLockCol = npCol.getValue();
+                        mPrefLockedLoc.setSummary(getLockedLocString(mSetting.mNCursorLockRow, mSetting.mNCursorLockCol));
+                    }
+                });
+                builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+                return false;
+            }
+        });
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
         //Todo: mPrefFontColor

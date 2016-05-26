@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/row_title"
+        android:id="@+id/row_title"
+        android:layout_centerVertical="true"/>
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_picker"
+        android:layout_toRightOf="@+id/row_title"
+        android:layout_toEndOf="@+id/row_title"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/col_title"
+        android:id="@+id/col_title"
+        android:layout_toRightOf="@+id/row_picker"
+        android:layout_toEndOf="@+id/row_picker"
+        android:layout_centerVertical="true" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/col_picker"
+        android:layout_toRightOf="@+id/col_title"
+        android:layout_toEndOf="@+id/col_title"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
