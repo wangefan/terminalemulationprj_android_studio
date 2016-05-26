@@ -205,6 +205,8 @@
     <string name="screen_show_taskbar">Show Taskbar On Full Screen</string>
     <string name="full_screen">Full Screen</string>
     <string name="LockedLocFormat">Row: %1$d, Col:%2$d</string>
+    <string name="font_color_title">Fonts Color</string>
+    <string name="bg_color_title">Background Color</string>
     <string name="FontSizeFormat">%1$d x %2$d</string>
     <string name="row_col_dialog">Location</string>
     <string name="row_title">Row:</string>

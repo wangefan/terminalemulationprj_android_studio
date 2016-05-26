@@ -24,11 +24,11 @@ public class Session3rdSettings extends SessionSettingsBase {
         String action = getIntent().getAction();
         if(action.compareTo(ACTION_COLOR) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.screen_color));
-            /*SessionColorFrg settingsFrg = new SessionColorFrg();
-            settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+            SessionColorSettingsFrg settingsFrg = new SessionColorSettingsFrg();
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
-                    .commit();*/
+                    .commit();
         }
     }
 }
