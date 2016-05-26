@@ -2,26 +2,21 @@ package com.te.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.example.terminalemulation.R;
 
 import Terminals.CipherConnectSettingInfo;
-import Terminals.TESettings;
 
-public class SessionSettings extends AppCompatActivity {
+public class SessionSettings extends SessionSettingsBase {
     public static final int REQ_EDIT = 1;
     public static final int REQ_ADD = 2;
     public static final String ACT_SETTING = "ACT_SETTING";
     public static final String ACT_SETTING_EDIT = "ACT_SETTING_EDIT";
     public static final String ACT_SETTING_EDIT_GET_SESSION_IDX = "ACT_SETTING_EDIT_GET_SESSION_IDX";
     public static final String ACT_SETTING_ADD = "ACT_SETTING_ADD";
-
-    public static TESettings.SessionSetting gEditSessionSetting = null;
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,23 +59,5 @@ public class SessionSettings extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, settingsFrg)
                 .commit();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        CipherConnectSettingInfo.SessionSettingSave();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                setResult(RESULT_OK);
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

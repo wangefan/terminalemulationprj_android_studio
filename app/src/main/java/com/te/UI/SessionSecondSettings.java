@@ -1,18 +1,16 @@
 package com.te.UI;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+
 import com.example.terminalemulation.R;
 
 import Terminals.CipherConnectSettingInfo;
 
-public class SessionSecondSettings extends AppCompatActivity {
+public class SessionSecondSettings extends SessionSettingsBase {
     public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
     public static final String ACTION_SERVER_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING";
     public static final String ACTION_SCREEN_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +56,6 @@ public class SessionSecondSettings extends AppCompatActivity {
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }
