@@ -308,6 +308,16 @@ public class CipherConnectSettingInfo {
         return Setting.getAutoTrackType();
     }
 
+    public static int getHostLockerRowIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNCursorLockRow;
+    }
+
+    public static int getHostLockerColIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNCursorLockCol;
+    }
+
     public static Boolean getHostIsAutoconnectByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBAutoConnect;

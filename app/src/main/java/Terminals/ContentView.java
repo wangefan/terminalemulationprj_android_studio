@@ -242,6 +242,10 @@ public class ContentView extends View {
                     nMoveToY = getYPosByRate(0.5f, nBmpPosY);
                     break;
                 case AutoTrackType_Lock:
+                    int nFixRow = CipherConnectSettingInfo.getHostLockerRowIndex(CipherConnectSettingInfo.GetSessionIndex());
+                    int nFixCol = CipherConnectSettingInfo.getHostLockerColIndex(CipherConnectSettingInfo.GetSessionIndex());
+                    nMoveToX = Math.min(nFixCol * mFontRect.width(), mBmpWidth);
+                    nMoveToY = Math.min(nFixRow * mFontRect.height(), mBmpHeight);
                     break;
                 default:
                     break;
