@@ -9,13 +9,20 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
    
-    <string name="IBM5250Val">IBM5250</string>
-    <string name="IBM3270Val">IBM3270</string>
+    <string name="IBM5250Val">ibm5250</string>
+    <string name="IBM3270Val">ibm3270</string>
 	<string name="VT100Val">vt100</string>
 	<string name="VT102Val">vt102</string>
 	<string name="VT220Val">vt220</string>
 	<string name="ANSIVal">ansi</string>
     <string-array name="sertype_array">
+        <item>IBM 5250</item>
+        <item>VT 100</item>
+        <item>VT 102</item>
+        <item>VT 220</item>
+        <item>ANSI</item>
+    </string-array>
+    <string-array name="sertype_array_vals">
         <item>@string/IBM5250Val</item>
         <item>@string/VT100Val</item>
         <item>@string/VT102Val</item>
