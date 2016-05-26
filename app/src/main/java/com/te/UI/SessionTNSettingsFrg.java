@@ -49,7 +49,7 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
         mChkAutoReset = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_auto_reset_key));
         mChkFLIfExceed = (ListPreference) findPreference(getResources().getString(R.string.tn_field_length_if_exceed_key));
         mSwchDevName = (TESwitchPreference) findPreference(getResources().getString(R.string.tn_devname_key));
-        mSwchDevName.setOnClickListener(new TESwitchPreference.OnClickListener() {
+        mSwchDevName.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override
             public void onClick() {
                 UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, getActivity(), new UIUtility.OnEditMessageBoxListener() {
@@ -66,6 +66,11 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
 
                     }
                 });
+            }
+
+            @Override
+            public void onChecked(boolean isChecked) {
+
             }
         });
         mEdtPopErrorRow = (EditTextPreference) findPreference(getResources().getString(R.string.tn_popup_row_key));

@@ -62,6 +62,14 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         return String.format(getString(R.string.FontSizeFormat), nFontWidth, nFontHeight);
     }
 
+    private void updateLockPrefUIDependOnAutoTrackUI(TESettings.SessionSetting.AutoTrackType trackType) {
+        if(mSwchAutoTracking.isChecked() == false || trackType != TESettings.SessionSetting.AutoTrackType.AutoTrackType_Lock) {
+            mPrefLockedLoc.setEnabled(false);
+        } else {
+            mPrefLockedLoc.setEnabled(true);
+        }
+    }
+
     @Override
     protected void syncPrefUIFromTESettings() {
         mChkShowSessionNumber.setChecked(mSetting.mIsShowSessionNumber);
@@ -74,6 +82,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mlstCursorType.setValue(String.valueOf(mSetting.mNCursorType));
         mSwchAutoTracking.setChecked(mSetting.mIsCursorTracking);
         mSwchAutoTracking.setSummaryOn(getAutoTrackString(mSetting.getAutoTrackType()));
+        updateLockPrefUIDependOnAutoTrackUI(mSetting.getAutoTrackType());
         mPrefLockedLoc.setSummary(getLockedLocString(mSetting.mNCursorLockCol, mSetting.mNCursorLockRow));
         mlstFont.setValue(String.valueOf(mSetting.mNFontType));
         mlstFontSize.setValue(getFontSizeValFromSetting(mSetting.mNFontWidth, mSetting.mNFontHeight));
@@ -136,7 +145,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mChkAcitvateMacro = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_act_macro_key));
         mlstCursorType = (ListPreference) findPreference(getResources().getString(R.string.screen_cursor_type_key));
         mSwchAutoTracking = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_auto_scroll_key));
-        mSwchAutoTracking.setOnClickListener(new TESwitchPreference.OnClickListener() {
+        mSwchAutoTracking.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override
             public void onClick() {
                 int nSelItem = 0;
@@ -150,15 +159,23 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                         R.array.auto_track_array,
                         nSelItem,
                         getActivity(),
-                        new UIUtility.OnListMessageBoxListener() {
+                         new UIUtility.OnListMessageBoxListener() {
                     @Override
                     public void onSelResult(String result) {
-                        mSetting.setAutoTrackType(getAutoTrackTypeFromString(result));
+                        TESettings.SessionSetting.AutoTrackType trackType = getAutoTrackTypeFromString(result);
+                        mSetting.setAutoTrackType(trackType);
                         mSwchAutoTracking.setSummaryOn(getAutoTrackString(mSetting.getAutoTrackType()));
                         mSwchAutoTracking.setChecked(true);
+                        updateLockPrefUIDependOnAutoTrackUI(trackType);
                     }
                 });
-            }});
+            }
+
+            @Override
+            public void onChecked(boolean isChecked) {
+                updateLockPrefUIDependOnAutoTrackUI(mSetting.getAutoTrackType());
+            }
+        });
         mPrefLockedLoc = findPreference(getResources().getString(R.string.screen_track_lock_key));
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));

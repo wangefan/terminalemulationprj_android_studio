@@ -14,11 +14,12 @@ import com.example.terminalemulation.R;
  */
 public class TESwitchPreference extends SwitchPreference {
 
-    public interface OnClickListener {
+    public interface OnTESwitchListener {
         void onClick();
+        void onChecked(boolean isChecked);
     }
 
-    private OnClickListener mListener = null;
+    private OnTESwitchListener mListener = null;
 
     public TESwitchPreference(Context context) {
         super(context);
@@ -32,7 +33,7 @@ public class TESwitchPreference extends SwitchPreference {
         super(context, attrs, defStyle);
     }
 
-    public void setOnClickListener(OnClickListener listener) {
+    public void setOnTESwitchListener(OnTESwitchListener listener) {
         mListener = listener;
     }
 
@@ -47,6 +48,9 @@ public class TESwitchPreference extends SwitchPreference {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     setChecked(isChecked);
+                    if(mListener != null) {
+                        mListener.onChecked(isChecked);
+                    }
                 }
             });
         }
