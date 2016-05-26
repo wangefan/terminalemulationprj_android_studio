@@ -197,10 +197,8 @@
     <string name="screen_font">Fonts</string>
     <string name="screen_font_size_key">screen_font_size_key</string>
     <string name="screen_font_size">Fonts Size</string>
-    <string name="screen_font_color_key">screen_font_color_key</string>
-    <string name="screen_font_color">Fonts Color</string>
-    <string name="screen_bg_color_key">screen_bg_color_key</string>
-    <string name="screen_bg_color">Background Color</string>
+    <string name="screen_color_key">screen_color_key</string>
+    <string name="screen_color">Color Settings</string>
     <string name="screen_auto_full_on_conn_key">screen_auto_full_on_conn_key</string>
     <string name="screen_auto_full_on_conn">Auto Full Screen On Connection</string>
     <string name="screen_show_taskbar_key">screen_show_taskbar_key</string>

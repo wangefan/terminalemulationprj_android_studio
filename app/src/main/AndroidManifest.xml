@@ -54,6 +54,11 @@
             android:label="@string/title_activity_second_settings"
             android:screenOrientation="portrait"
             android:parentActivityName="com.te.UI.SessionSettings"/>
+
+        <activity
+            android:name="com.te.UI.Session3rdSettings"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.te.UI.SessionSecondSettings"/>
         
         <activity android:name="com.te.UI.barcodetest" >
         </activity>

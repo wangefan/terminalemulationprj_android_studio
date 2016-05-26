@@ -126,10 +126,6 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                 mSetting.mNFontWidth = Integer.valueOf(fontDims[0]);
                 mSetting.mNFontHeight = Integer.valueOf(fontDims[1]);
             }
-        } else if(key.compareTo(getResources().getString(R.string.screen_font_color_key)) == 0) {
-            //Todo:
-        } else if(key.compareTo(getResources().getString(R.string.screen_bg_color_key)) == 0) {
-            //Todo:
         } else if(key.compareTo(getResources().getString(R.string.screen_auto_full_on_conn_key)) == 0) {
             mSetting.mIsAutoFullscreenOnConn = mChkAutoFullScreenOnConn.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_show_taskbar_key)) == 0) {
