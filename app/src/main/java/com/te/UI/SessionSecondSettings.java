@@ -29,7 +29,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
         if(action.compareTo(ACTION_HOST_PROFILE) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
             SessionHostProfileFrg settingsFrg = new SessionHostProfileFrg();
-            settingsFrg.setSessionSeting(SessionSettings.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();

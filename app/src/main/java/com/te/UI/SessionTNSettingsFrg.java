@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
-import android.preference.Preference;
 import android.util.Log;
 
 import com.cipherlab.barcode.BuildConfig;
@@ -22,19 +21,6 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
     private CheckBoxPreference mChkPopupWindow = null;
 
     public SessionTNSettingsFrg() {
-    }
-
-    @Override
-    protected void updatePrefSummary(Preference p) {
-        super.updatePrefSummary(p);
-        if (p instanceof EditTextPreference) {
-            EditTextPreference editTextPref = (EditTextPreference) p;
-            if (p.getKey().compareTo((getResources().getString(R.string.host_auto_sign_pwd_key))) == 0) {
-                p.setSummary("******");
-            } else {
-                p.setSummary(editTextPref.getText());
-            }
-        }
     }
 
     @Override

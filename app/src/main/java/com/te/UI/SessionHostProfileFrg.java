@@ -1,22 +1,16 @@
 package com.te.UI;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
 import android.util.Log;
 
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
-import Terminals.TESettings;
-
-public class SessionHostProfileFrg extends PreferenceFragment implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+public class SessionHostProfileFrg extends SessionSettingsFrgBase {
 
     //Data members
     private String mTN5250HostTypeName = "";
@@ -35,40 +29,20 @@ public class SessionHostProfileFrg extends PreferenceFragment implements
     private EditTextPreference mPrefLoginNameProm = null;
     private EditTextPreference mPrefLoginPwdProm = null;
     private ListPreference mPrefLoginTerm = null;
-    private TESettings.SessionSetting mSetting = null;
 
     public SessionHostProfileFrg() {
     }
 
-    public void setSessionSeting(TESettings.SessionSetting setting) {
-        mSetting = setting;
-    }
-
-    private void initSummary(Preference p) {
-        if (p instanceof PreferenceGroup) {
-            PreferenceGroup pGrp = (PreferenceGroup) p;
-            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
-                initSummary(pGrp.getPreference(i));
-            }
-        } else {
-            updatePrefSummary(p);
-        }
-    }
-
-    private void updatePrefSummary(Preference p) {
-        if (p instanceof ListPreference) {
-            ListPreference listPref = (ListPreference) p;
-            p.setSummary(listPref.getEntry());
-        } else if (p instanceof EditTextPreference) {
+    @Override
+    protected void updatePrefSummary(Preference p) {
+        super.updatePrefSummary(p);
+        if (p instanceof EditTextPreference) {
             EditTextPreference editTextPref = (EditTextPreference) p;
             if (p.getKey().compareTo((getResources().getString(R.string.host_auto_sign_pwd_key))) == 0) {
                 p.setSummary("******");
             } else {
                 p.setSummary(editTextPref.getText());
             }
-        } else if (p instanceof MyIPPreference) {
-            MyIPPreference ipPref = (MyIPPreference) p;
-            ipPref.setSummary(ipPref.getIp());
         }
     }
 
@@ -113,8 +87,7 @@ public class SessionHostProfileFrg extends PreferenceFragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void syncPrefUIFromTESettings() {
         //Sync settings to UI
         if(mSetting.mIsTN == 0) {
             mLstServerType.setValue(mSetting.mTermName);
@@ -131,24 +104,10 @@ public class SessionHostProfileFrg extends PreferenceFragment implements
         mPrefLoginPwdProm.setText(mSetting.mPassPrompt);
         mPrefLoginTerm.setValue(Integer.toString(mSetting.mTermLogin));
         updatePreferenceForVT();
-
-        initSummary(getPreferenceScreen());
-        // Set up a listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        // Unregister the listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        updatePrefSummary(findPreference(key));
+    protected void commitPrefUIToTESettings(String key) {
         if(key.compareTo(getResources().getString(R.string.host_type_key)) == 0) {
             String selHostTypeName = mLstServerType.getValue();
             if(selHostTypeName.compareToIgnoreCase(mTN5250HostTypeName) == 0 ||
