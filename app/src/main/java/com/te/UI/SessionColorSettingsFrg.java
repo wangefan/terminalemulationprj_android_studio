@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.terminalemulation.R;
 
@@ -17,9 +18,14 @@ public class SessionColorSettingsFrg extends Fragment {
     //Data members
     protected TESettings.SessionSetting mSetting = null;
     private int [] mColorChoices = null;
-    private int mSelectedColor = 0;
+    TextView mFontView = null;
+    RelativeLayout mBgView = null;
+    private int mSelectedFontsColor = 0;
+    private int mSelectedBgColor = 0;
+
 
     public SessionColorSettingsFrg() {
+
     }
 
     public void setSessionSetting(TESettings.SessionSetting setting) {
@@ -36,22 +42,47 @@ public class SessionColorSettingsFrg extends Fragment {
                 mColorChoices[i] = Color.parseColor(color_array[i]);
             }
         }
+        mSelectedFontsColor = mSetting.getFontColor();
+        mSelectedBgColor = mSetting.getBGColor();
         // Inflating view layout
         View colorSettingView = inflater.inflate(R.layout.color_setting_fragment, container, false);
+        mFontView = (TextView) colorSettingView.findViewById(R.id.color_preview_fonts);
+        mBgView = (RelativeLayout) colorSettingView.findViewById(R.id.color_preview_bg);
+        mFontView.setTextColor(mSelectedFontsColor);
+        mBgView.setBackgroundColor(mSelectedBgColor);
         RelativeLayout layFont = (RelativeLayout) colorSettingView.findViewById(R.id.color_font);
         layFont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ColorPickerDialogDash colordashfragment = ColorPickerDialogDash
-                        .newInstance(R.string.color_picker_fonts_title, mColorChoices, mSelectedColor, 5);
+                        .newInstance(R.string.color_picker_fonts_title, mColorChoices, mSelectedFontsColor, 5);
                 // Implement listener to get selected color value
                 colordashfragment.setOnColorSelectedListener(new ColorPickerDialogDash.OnColorSelectedListener() {
                     @Override
                     public void onColorSelected(int color) {
-                        mSelectedColor = color;
+                        mSelectedFontsColor = color;
+                        mFontView.setTextColor(mSelectedFontsColor);
                     }
                 });
-                colordashfragment.show(getFragmentManager(), "dash");
+                colordashfragment.show(getFragmentManager(), "ColorPickerDialogDash");
+            }
+        });
+
+        RelativeLayout layBG = (RelativeLayout) colorSettingView.findViewById(R.id.color_bg);
+        layBG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorPickerDialogDash colordashfragment = ColorPickerDialogDash
+                        .newInstance(R.string.color_picker_bg_title, mColorChoices, mSelectedBgColor, 5);
+                // Implement listener to get selected color value
+                colordashfragment.setOnColorSelectedListener(new ColorPickerDialogDash.OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int color) {
+                        mSelectedBgColor = color;
+                        mBgView.setBackgroundColor(mSelectedBgColor);
+                    }
+                });
+                colordashfragment.show(getFragmentManager(), "ColorPickerDialogDash");
             }
         });
 

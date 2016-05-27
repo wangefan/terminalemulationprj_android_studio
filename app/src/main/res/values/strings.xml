@@ -170,20 +170,19 @@
         <item>10 x 20</item>
     </string-array>
     <string-array name="default_color_choice_values" translatable="false">
-        <item>#33b5e5</item>
-        <item>#aa66cc</item>
-        <item>#99cc00</item>
-        <item>#ffbb33</item>
-        <item>#ff4444</item>
-        <item>#0099cc</item>
-        <item>#9933cc</item>
-        <item>#669900</item>
-        <item>#ff8800</item>
-        <item>#cc0000</item>
-        <item>#ffffff</item>
-        <item>#eeeeee</item>
+        <item>#000000</item>
+        <item>#333333</item>
+        <item>#666666</item>
+        <item>#999999</item>
         <item>#cccccc</item>
-        <item>#888888</item>
+        <item>#ffffff</item>
+        <item>#9933cc</item>
+        <item>#ff0000</item>
+        <item>#00ff00</item>
+        <item>#0000ff</item>
+        <item>#ffff00</item>
+        <item>#ff00ff</item>
+        <item>#00ffff</item>
     </string-array>
     <string name="STR_KeyboardInput">Keyboard input</string>
     <string name="STR_KeyboardInput2">Keyboard input (Hexadecimal)</string>
@@ -228,4 +227,5 @@
     <string name="row_title">Row:</string>
     <string name="col_title">Col:</string>
     <string name="color_picker_fonts_title">Pick Fonts color</string>
+    <string name="color_picker_bg_title">Pick Background color</string>
 </resources>

@@ -1,8 +1,10 @@
 package Terminals;
 
-import java.util.ArrayList;
+import android.graphics.Color;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class TESettings {
     
@@ -80,6 +82,26 @@ public class TESettings {
                     mIsCursorTrackingLockMode = true;
                     break;
             }
+        }
+
+        public int getFontColor() {
+            return Color.rgb(mFontsColor.get(0), mFontsColor.get(1), mFontsColor.get(2));
+        }
+
+        public void setFontColor(int nColor) {
+            mFontsColor.set(0, Color.red(nColor));
+            mFontsColor.set(1, Color.green(nColor));
+            mFontsColor.set(2, Color.blue(nColor));
+        }
+
+        public int getBGColor() {
+            return Color.rgb(mBGColor.get(0), mBGColor.get(1), mBGColor.get(2));
+        }
+
+        public void setBGColor(int nColor) {
+            mBGColor.set(0, Color.red(nColor));
+            mBGColor.set(1, Color.green(nColor));
+            mBGColor.set(2, Color.blue(nColor));
         }
 
     	//Sync
@@ -202,6 +224,12 @@ public class TESettings {
 
         @SerializedName("nCursorLockRow")
         public int mNCursorLockRow = 0;
+
+        @SerializedName("fontColor")
+        public ArrayList<Integer> mFontsColor = new ArrayList<Integer>();
+
+        @SerializedName("fontBgColor")
+        public ArrayList<Integer> mBGColor = new ArrayList<Integer>();
 
         @SerializedName("nFontType")
         public int mNFontType = 0;
