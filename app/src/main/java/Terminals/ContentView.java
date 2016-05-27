@@ -31,7 +31,7 @@ public class ContentView extends View {
     public CursorView mCorsor;
     public Rect mFontRect;
     Canvas mCanvas;
-    Typeface mFontface = Typeface.create("courier new", Typeface.NORMAL);
+    Typeface mFontface = null;
     float mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
     Paint mBgpaint;
     TextPaint mFgpaint;
@@ -44,7 +44,7 @@ public class ContentView extends View {
 
     public ContentView(Context context, CursorView Cursor) {
         super(context);
-
+        mFontface = Typeface.createFromAsset(context.getAssets(), "fonts/courier-new.ttf");
         mFontRect = FontMeasure(mFontface, mFontsize);
         mHScrollView = (HorizontalScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainHScroll);
         mVScrollView = (ScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainVScroll);
