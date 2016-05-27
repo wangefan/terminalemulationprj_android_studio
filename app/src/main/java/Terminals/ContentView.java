@@ -3,7 +3,6 @@ package Terminals;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
@@ -58,13 +57,17 @@ public class ContentView extends View {
         if (isInEditMode())
             return;
 
+        setColor();
+    }
 
-        mBackgroundColor = Color.WHITE;
-        mForegroundColor = Color.BLACK;
-        mCorsor.setColor(mForegroundColor);
-
+    private void setColor() {
+        int nFontsColor = CipherConnectSettingInfo.getHostFontsColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        int nBgColor = CipherConnectSettingInfo.getHostBgColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        mBackgroundColor = nBgColor;
+        mForegroundColor = nFontsColor;
         mBgpaint = GetPaint(mBackgroundColor);
         mFgpaint = GetPaint(mForegroundColor);
+        mCorsor.setColor(mForegroundColor);
     }
 
     public void setTerminalProc(TerminalProcess terminalProc) {
@@ -78,18 +81,19 @@ public class ContentView extends View {
             ClearView();
             return;
         }
-
         mBmpWidth = nNewBmpWidth;
         mBmpHeight = nNewBmpHeight;
-
-        setLayoutParams(new RelativeLayout.LayoutParams(mBmpWidth, mBmpHeight));
-        Bitmap bitmap = Bitmap.createBitmap(mBmpWidth, mBmpHeight, Bitmap.Config.RGB_565);
-        mImage = bitmap;
-        mCanvas = new Canvas(mImage);
-        ClearView();
+        if(mBmpWidth > 0 && mBmpHeight > 0) {
+            setLayoutParams(new RelativeLayout.LayoutParams(mBmpWidth, mBmpHeight));
+            Bitmap bitmap = Bitmap.createBitmap(mBmpWidth, mBmpHeight, Bitmap.Config.RGB_565);
+            mImage = bitmap;
+            mCanvas = new Canvas(mImage);
+            ClearView();
+        }
     }
 
     public void refresh() {
+        setColor();
         updateViewGrid();
         if(mTerminalProc != null)
             mTerminalProc.drawAll();

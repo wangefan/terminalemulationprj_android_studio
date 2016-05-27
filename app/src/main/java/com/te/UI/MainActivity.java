@@ -367,6 +367,7 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode) {
             case SessionSettings.REQ_EDIT:
                 mFragmentLeftdrawer.updateCurSessionTitle();
+                mContentView.refresh();
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
@@ -574,8 +575,8 @@ public class MainActivity extends AppCompatActivity
         CipherConnectSettingInfo.SetSessionIndex(idxSession);
         mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
+        mContentView.refresh();
         if (isCurSessionConnected()) {
-            mContentView.refresh();
             updateFABStatus(FABStatus.Keyboard);
         } else {
             updateFABStatus(FABStatus.Connect);

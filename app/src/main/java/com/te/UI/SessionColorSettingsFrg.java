@@ -62,6 +62,7 @@ public class SessionColorSettingsFrg extends Fragment {
                     public void onColorSelected(int color) {
                         mSelectedFontsColor = color;
                         mFontView.setTextColor(mSelectedFontsColor);
+                        mSetting.setFontColor(mSelectedFontsColor);
                     }
                 });
                 colordashfragment.show(getFragmentManager(), "ColorPickerDialogDash");
@@ -80,6 +81,7 @@ public class SessionColorSettingsFrg extends Fragment {
                     public void onColorSelected(int color) {
                         mSelectedBgColor = color;
                         mBgView.setBackgroundColor(mSelectedBgColor);
+                        mSetting.setBGColor(mSelectedBgColor);
                     }
                 });
                 colordashfragment.show(getFragmentManager(), "ColorPickerDialogDash");

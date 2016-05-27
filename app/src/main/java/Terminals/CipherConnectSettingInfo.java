@@ -293,6 +293,16 @@ public class CipherConnectSettingInfo {
         return Setting.mIsSaveLog;
     }
 
+    public static int getHostFontsColorByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.getFontColor();
+    }
+
+    public static int getHostBgColorByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.getBGColor();
+    }
+
     public static Boolean getHostIsShowMacroByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mIsActMacro;
