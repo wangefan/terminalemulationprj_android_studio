@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onNotify(String action, Object... params) {
             if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHARLIVE) == 0) {
-                mContentView.DrawCharLive((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
+                mContentView.DrawCharLive((Character) params[0], (Integer) params[1], (Integer) params[2]);
             } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
                 mContentView.postInvalidate();
             } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_UPDATE_GRID) == 0) {

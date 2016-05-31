@@ -28,11 +28,12 @@ import Terminals.TerminalBaseEnum.Point;
 public class ContentView extends View {
     private HorizontalScrollView mHScrollView = null;
     private ScrollView mVScrollView = null;
-    public CursorView mCorsor;
-    public Rect mFontRect;
+    private CursorView mCorsor;
+    private Rect mFontRect = null;
+    private int mTextBaselineDis = 0;//distance from baseline to bottom
     Canvas mCanvas;
     Typeface mFontface = null;
-    float mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+    float mFontsize = 0;
     Paint mBgpaint;
     TextPaint mFgpaint;
     int mBmpWidth;
@@ -45,29 +46,42 @@ public class ContentView extends View {
     public ContentView(Context context, CursorView Cursor) {
         super(context);
         mFontface = Typeface.createFromAsset(context.getAssets(), "fonts/courier-new.ttf");
-        mFontRect = FontMeasure(mFontface, mFontsize);
         mHScrollView = (HorizontalScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainHScroll);
         mVScrollView = (ScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainVScroll);
         mCorsor = Cursor;
-        mCorsor.SetSize(mFontRect.height(), mFontRect.width());
-
+        setPaintColor();
         this.setFocusableInTouchMode(true);
         this.setFocusable(true);
 
         if (isInEditMode())
             return;
 
-        setColor();
+
     }
 
-    private void setColor() {
+    private void setPaintColor() {
         int nFontsColor = CipherConnectSettingInfo.getHostFontsColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
         int nBgColor = CipherConnectSettingInfo.getHostBgColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
         mBackgroundColor = nBgColor;
         mForegroundColor = nFontsColor;
         mBgpaint = GetPaint(mBackgroundColor);
         mFgpaint = GetPaint(mForegroundColor);
+        getCharMonoBoundsAndBaseline(mFgpaint);
         mCorsor.setColor(mForegroundColor);
+        mCorsor.SetSize(mFontRect.height() - mTextBaselineDis, mFontRect.width());
+    }
+
+    private void getCharMonoBoundsAndBaseline(TextPaint paint) {
+        final String REFERENCE_CHARACTERS = "MW";
+        final int GAP_Y = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics());
+        Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+        double maxWidth = 0;
+        for (int idxChar = 0; idxChar < REFERENCE_CHARACTERS.length(); idxChar++) {
+            maxWidth = Math.max(paint.measureText(REFERENCE_CHARACTERS, idxChar, idxChar + 1), maxWidth);
+        }
+        int nHeight = fontMetrics.bottom - fontMetrics.top + GAP_Y;
+        mFontRect = new Rect(0, 0, (int)Math.ceil(maxWidth), nHeight);
+        mTextBaselineDis = fontMetrics.bottom;
     }
 
     public void setTerminalProc(TerminalProcess terminalProc) {
@@ -93,7 +107,7 @@ public class ContentView extends View {
     }
 
     public void refresh() {
-        setColor();
+        setPaintColor();
         updateViewGrid();
         if(mTerminalProc != null)
             mTerminalProc.drawAll();
@@ -105,35 +119,18 @@ public class ContentView extends View {
     }
 
     private TextPaint GetPaint(int Color) {
-        TextPaint p = new TextPaint();
+        TextPaint p = new TextPaint(Paint.ANTI_ALIAS_FLAG| Paint.LINEAR_TEXT_FLAG);
         p.setColor(Color);
+        p.setStyle(Paint.Style.FILL);
         p.setTypeface(mFontface);
+        mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
         p.setTextSize(mFontsize);
         p.setTextAlign(Align.LEFT);
 
         return p;
     }
 
-    public Rect FontMeasure(Typeface font, float size) {
-        TextPaint tp = null;
-        String text = "n";
-        Rect Bounds = null;
-
-        tp = new TextPaint();
-        tp.setTypeface(font);
-        tp.setTextSize(size);
-        tp.setTextAlign(Align.CENTER);
-
-        Bounds = new Rect();
-        tp.getTextBounds(text, 0, text.length(), Bounds);
-        Bounds.left = 0;
-        Bounds.right = (int) size;
-        Bounds.top = (int) 0;
-        Bounds.bottom = (int) size + 4;
-        return Bounds;
-    }
-
-    public void DrawCharLive(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
+    public void DrawCharLive(Character c, Integer x, Integer y) {
         if (mCanvas == null)
             return;
 
@@ -141,42 +138,7 @@ public class ContentView extends View {
         mCanvas.drawRect(rect, mBgpaint);
         if (c == 0)
             c = ' ';
-        mCanvas.drawText(String.valueOf(c), rect.left, rect.bottom - (mFontRect.height() / 3), mFgpaint);
-    }
-
-    public void DrawSpace(int x, int y, int space) {
-
-        //Rect rect = new Rect((int)mFontRect.width() * x, (int)mFontRect.height() * y, (int)(mFontRect.width() * space), (int)(mFontRect.height() * 1));
-        Rect rect = new Rect((int) mFontRect.width() * x, (int) mFontRect.height() * y, (int) (mFontRect.width() * x) + (mFontRect.width() * space), (int) (mFontRect.height() * y) + mFontRect.height());
-
-
-        if (mCanvas == null)
-            return;
-
-        mCanvas.drawRect(rect, mBgpaint);
-
-    }
-
-    public void DrawSpaceFront(int x, int y, int space) {
-
-        //Rect rect = new Rect((int)mFontRect.width() * x, (int)mFontRect.height() * y, (int)(mFontRect.width() * space), (int)(mFontRect.height() * 1));
-        Rect rect = new Rect((int) mFontRect.width() * x, (int) mFontRect.height() * y, (int) (mFontRect.width() * x) + (mFontRect.width() * space), (int) (mFontRect.height() * y) + mFontRect.height());
-
-
-        if (mCanvas == null)
-            return;
-
-        mCanvas.drawRect(rect, mFgpaint);
-
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        this.setMeasuredDimension(mBmpWidth, mBmpHeight);
-        // this.setLayoutParams(new RelativeLayout.LayoutParams(800*2,800*2));
-
+        mCanvas.drawText(String.valueOf(c), rect.left, rect.bottom - mTextBaselineDis, mFgpaint);
     }
 
     public void DrawFieldChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
@@ -187,18 +149,29 @@ public class ContentView extends View {
         if (c == 0) {
             c = ' ';
         }
-        Typeface font = Typeface.create("sans-serif", Typeface.NORMAL);
-        if (IsBold) {
-            font = Typeface.create("sans-serif", Typeface.BOLD);
-        }
-
         if (IsUnderLine) {
-            mCanvas.drawLine(rect.left, rect.bottom - 1, rect.right, rect.bottom - 1, mFgpaint);//(drawpen, rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
+            final int GAP_Y = 5;
+            int nUnderlineY = rect.bottom - mTextBaselineDis + GAP_Y;
+            mCanvas.drawLine(rect.left, nUnderlineY, rect.right, nUnderlineY, mFgpaint);//(drawpen, rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
         }
+        mCanvas.drawText(String.valueOf(c), rect.left, rect.bottom - mTextBaselineDis, mFgpaint);
+    }
 
-        mFgpaint.setTypeface(font);
-        mCanvas.drawText(String.valueOf(c), rect.left, rect.bottom - (mFontRect.height() / 3), mFgpaint);
-        mFgpaint.setTypeface(mFontface);
+    public void DrawSpace(int x, int y, int space) {
+        //Rect rect = new Rect((int)mFontRect.width() * x, (int)mFontRect.height() * y, (int)(mFontRect.width() * space), (int)(mFontRect.height() * 1));
+        Rect rect = new Rect((int) mFontRect.width() * x, (int) mFontRect.height() * y, (int) (mFontRect.width() * x) + (mFontRect.width() * space), (int) (mFontRect.height() * y) + mFontRect.height());
+        if (mCanvas == null)
+            return;
+        mCanvas.drawRect(rect, mBgpaint);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        this.setMeasuredDimension(mBmpWidth, mBmpHeight);
+        // this.setLayoutParams(new RelativeLayout.LayoutParams(800*2,800*2));
+
     }
 
     private int getXPosByRate(float fRate, int nCursorBmpPosX) {
