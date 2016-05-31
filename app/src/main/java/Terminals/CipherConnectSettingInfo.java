@@ -293,6 +293,11 @@ public class CipherConnectSettingInfo {
         return Setting.mIsSaveLog;
     }
 
+    public static int getHostFontWidthByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNFontWidth;
+    }
+
     public static int getHostFontsColorByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.getFontColor();

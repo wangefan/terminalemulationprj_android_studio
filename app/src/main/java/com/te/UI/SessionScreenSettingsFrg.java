@@ -9,7 +9,6 @@ import android.preference.Preference;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import com.cipherlab.barcode.BuildConfig;
@@ -121,10 +120,10 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             mSetting.mNFontType = Integer.valueOf(mlstFont.getValue());
         } else if(key.compareTo(getResources().getString(R.string.screen_font_size_key)) == 0) {
             final String split = "x";
-            String[] fontDims = mlstFontSize.getTitle().toString().split(split);
+            String[] fontDims = mlstFontSize.getValue().toString().split(split);
             if(fontDims != null) {
-                mSetting.mNFontWidth = Integer.valueOf(fontDims[0]);
-                mSetting.mNFontHeight = Integer.valueOf(fontDims[1]);
+                mSetting.mNFontWidth = Integer.valueOf(fontDims[0].trim());
+                mSetting.mNFontHeight = Integer.valueOf(fontDims[1].trim());
             }
         } else if(key.compareTo(getResources().getString(R.string.screen_auto_full_on_conn_key)) == 0) {
             mSetting.mIsAutoFullscreenOnConn = mChkAutoFullScreenOnConn.isChecked();

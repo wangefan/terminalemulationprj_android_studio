@@ -123,7 +123,9 @@ public class ContentView extends View {
         p.setColor(Color);
         p.setStyle(Paint.Style.FILL);
         p.setTypeface(mFontface);
-        mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        final int nScaleFromTECPPSetting = 2;
+        int nFontWidth = CipherConnectSettingInfo.getHostFontWidthByIndex(CipherConnectSettingInfo.GetSessionIndex()) * nScaleFromTECPPSetting;
+        mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, nFontWidth, getResources().getDisplayMetrics());
         p.setTextSize(mFontsize);
         p.setTextAlign(Align.LEFT);
 
