@@ -232,7 +232,7 @@ public class TESettings {
         public ArrayList<Integer> mBGColor = new ArrayList<Integer>();
 
         @SerializedName("nFontType")
-        public int mNFontType = 0;
+        public int mNFontType = 0;  //0:Courier New, 1:Lucida Console, 2:Excalibur Monospace, 3:NetTerm ANSI, 4:NetTerm OEM
 
         @SerializedName("nFontHeight")
         public int mNFontHeight = 0;

@@ -143,8 +143,8 @@
         <item>Courier New</item>
         <item>Lucida Console</item>
         <item>Excalibur Monospace</item>
-        <item>NTOEM</item>
         <item>NTANSI</item>
+        <item>NTOEM</item>
     </string-array>
     <string-array name="font_array_vals">
         <item>0</item>

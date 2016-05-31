@@ -45,7 +45,6 @@ public class ContentView extends View {
 
     public ContentView(Context context, CursorView Cursor) {
         super(context);
-        mFontface = Typeface.createFromAsset(context.getAssets(), "fonts/courier-new.ttf");
         mHScrollView = (HorizontalScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainHScroll);
         mVScrollView = (ScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainVScroll);
         mCorsor = Cursor;
@@ -64,7 +63,7 @@ public class ContentView extends View {
         int nBgColor = CipherConnectSettingInfo.getHostBgColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
         mBackgroundColor = nBgColor;
         mForegroundColor = nFontsColor;
-        mBgpaint = GetPaint(mBackgroundColor);
+        mBgpaint = GetBGPaint(mBackgroundColor);
         mFgpaint = GetPaint(mForegroundColor);
         getCharMonoBoundsAndBaseline(mFgpaint);
         mCorsor.setColor(mForegroundColor);
@@ -118,10 +117,37 @@ public class ContentView extends View {
             mCanvas.drawColor(mBackgroundColor);
     }
 
+    private Paint GetBGPaint(int Color) {
+        Paint p = new Paint();
+        p.setColor(Color);
+        p.setStyle(Paint.Style.FILL);
+        return p;
+    }
+
     private TextPaint GetPaint(int Color) {
         TextPaint p = new TextPaint(Paint.ANTI_ALIAS_FLAG| Paint.LINEAR_TEXT_FLAG);
         p.setColor(Color);
         p.setStyle(Paint.Style.FILL);
+        int nFontType = CipherConnectSettingInfo.getHostFontsTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        switch(nFontType) {
+            case CipherConnectSettingInfo.LU_CONSOLE:
+                mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/Lucida-Console.ttf");
+                break;
+            case CipherConnectSettingInfo.EXCA_MONO:
+                mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/ExcaliburMonospace.ttf");
+                break;
+            case CipherConnectSettingInfo.NET_ANSI:
+                mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/ntansi.ttf");
+                break;
+            case CipherConnectSettingInfo.NET_OEM:
+                mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/ntoem.ttf");
+                break;
+            case CipherConnectSettingInfo.COURIER_NEW:
+            default:
+                mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/courier-new.ttf");
+                break;
+        }
+
         p.setTypeface(mFontface);
         final int nScaleFromTECPPSetting = 2;
         int nFontWidth = CipherConnectSettingInfo.getHostFontWidthByIndex(CipherConnectSettingInfo.GetSessionIndex()) * nScaleFromTECPPSetting;

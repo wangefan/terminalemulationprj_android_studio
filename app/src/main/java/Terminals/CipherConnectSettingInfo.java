@@ -36,6 +36,13 @@ public class CipherConnectSettingInfo {
     public static final int DEVNAME_DEFAULT = 0;
     public static final int DEVNAME_CUST = 1;
 
+    //0:Courier New, 1:Lucida Console, 2:Excalibur Monospace, 3:NetTerm ANSI, 4:NetTerm OEM
+    public static final int COURIER_NEW = 0;
+    public static final int LU_CONSOLE = 1;
+    public static final int EXCA_MONO = 2;
+    public static final int NET_ANSI = 3;
+    public static final int NET_OEM = 4;
+
     final private static String mSettingFilename = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
     public static int LastHostNumber = 0;
@@ -301,6 +308,11 @@ public class CipherConnectSettingInfo {
     public static int getHostFontsColorByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.getFontColor();
+    }
+
+    public static int getHostFontsTypeByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNFontType;
     }
 
     public static int getHostBgColorByIndex(int index) {
