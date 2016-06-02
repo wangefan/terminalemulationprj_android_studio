@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout mLogoView = null;
     private RelativeLayout mMainRelLayout;
     private CursorView Cursor;
+    private ImageView mSessionJumpBtn = null;
     private MenuItem mMenuItemConn;
     private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() {
         @Override
@@ -276,6 +278,11 @@ public class MainActivity extends AppCompatActivity
         mMainRelLayout.addView(Cursor);
         mMainRelLayout.setVisibility(View.INVISIBLE);
 
+        mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
+        setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
+        SessionJumpListener sjListener = new SessionJumpListener();
+        mSessionJumpBtn.setOnTouchListener(sjListener);
+
         UIUtility.init(this);
 
         Boolean bAutoConn = CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex());
@@ -368,6 +375,7 @@ public class MainActivity extends AppCompatActivity
             case SessionSettings.REQ_EDIT:
                 mFragmentLeftdrawer.updateCurSessionTitle();
                 mContentView.refresh();
+                setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
@@ -377,6 +385,7 @@ public class MainActivity extends AppCompatActivity
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     SessionSettings.gEditSessionSetting = null;
+                    setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
                 }
             }
             break;
@@ -576,6 +585,7 @@ public class MainActivity extends AppCompatActivity
         mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
         mContentView.refresh();
+        setSessionJumpImage(idxSession);
         if (isCurSessionConnected()) {
             updateFABStatus(FABStatus.Keyboard);
         } else {
@@ -654,9 +664,90 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, SessionSettings.REQ_EDIT);
     }
 
+    public void setSessionJumpImage(int sessionIndex) {
+        if(CipherConnectSettingInfo.getHostIsShowSessionNumber(sessionIndex) == false) {
+            mSessionJumpBtn.setVisibility(View.INVISIBLE);
+        } else {
+            mSessionJumpBtn.setVisibility(View.VISIBLE);
+            switch (sessionIndex) {
+                case 0:
+                    mSessionJumpBtn.setImageResource(R.drawable.s1_64);
+                    break;
+                case 1:
+                    mSessionJumpBtn.setImageResource(R.drawable.s2_64);
+                    break;
+                case 2:
+                    mSessionJumpBtn.setImageResource(R.drawable.s3_64);
+                    break;
+                case 3:
+                    mSessionJumpBtn.setImageResource(R.drawable.s4_64);
+                    break;
+                case 4:
+                    mSessionJumpBtn.setImageResource(R.drawable.s5_64);
+                    break;
+            }
+        }
+    }
+
     enum FABStatus {
         Connect,
         Keyboard,
         Gone
+    }
+
+    private class SessionJumpListener implements View.OnTouchListener {
+        private float mPrevX = 0;
+        private float mPrevY = 0;
+        private View mView;
+        final GestureDetector mDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent event) {
+                mPrevX = event.getX();
+                mPrevY = event.getY();
+                return true;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                int nSession = CipherConnectSettingInfo.GetSessionIndex(), nOriSession = CipherConnectSettingInfo.GetSessionIndex();
+                do {
+                    ++nSession;
+                    if(nSession > CipherConnectSettingInfo.GetSessionCount()-1)
+                        nSession = 0;
+                    if(CipherConnectSettingInfo.getHostIsShowSessionNumber(nSession) == true)
+                        break;
+                } while (true);
+                if(nSession != nOriSession) {
+                    mFragmentLeftdrawer.clickSession(nSession);
+                    updateConnMenuItem();
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                float fDisX = 0, fDisY = 0;
+                if(e2 != null) {
+                    fDisX = mPrevX - e2.getX();
+                    fDisY = mPrevY - e2.getY();
+                }
+                RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) mView.getLayoutParams();
+                parms.leftMargin = (int) (parms.leftMargin - fDisX);
+                parms.topMargin = (int) (parms.topMargin - fDisY);
+                mView.setLayoutParams(parms);
+                return true;
+            }
+        });
+
+        public SessionJumpListener() {
+
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            mView = view;
+            return mDetector.onTouchEvent(event);
+        }
     }
 }

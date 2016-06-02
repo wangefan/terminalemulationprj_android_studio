@@ -355,9 +355,9 @@ public class CipherConnectSettingInfo {
         return Setting.mBAutoSignOn;
     }
 
-    public static void SetHostIsAutoSignByIndex(int index, Boolean IsAutoSign) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mBAutoSignOn = IsAutoSign;
+    public static boolean getHostIsShowSessionNumber(int index) {
+        SessionSetting setting = mTESettings.getSessionSetting(index);
+        return setting.mIsShowSessionNumber;
     }
 
     public static String getHostLoginPromtByIndex(int index) {
