@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity
     private LeftMenuFrg mFragmentLeftdrawer;
     private FloatingActionButton mFAB = null;
     private TEKeyboardViewUtility mKeyboardViewUtility = null;
+    private View mSessionStausView = null;
     private View mDecorView = null;
     private boolean mBFullScreen = false;
     private ContentView mContentView;
@@ -228,6 +229,8 @@ public class MainActivity extends AppCompatActivity
         mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mSessionStausView = findViewById(R.id.id_session_statuse);
+        setSessionStatusView();
         mFragmentLeftdrawer = (LeftMenuFrg)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
         mFragmentLeftdrawer.setUp(mToolbar);
@@ -298,6 +301,20 @@ public class MainActivity extends AppCompatActivity
         //mReaderManager.SetActive(false);
 
         this.registerForContextMenu(mMainRelLayout);
+    }
+
+    private void setSessionStatusView() {
+        if(CipherConnectSettingInfo.getHostIsShowSessionStatus(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+            String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
+            tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
+                    serverTypeName,
+                    String.valueOf(CipherConnectSettingInfo.GetSessionIndex()+1),
+                    CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex())));
+            mSessionStausView.setVisibility(View.VISIBLE);
+        } else {
+            mSessionStausView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -376,6 +393,7 @@ public class MainActivity extends AppCompatActivity
                 mFragmentLeftdrawer.updateCurSessionTitle();
                 mContentView.refresh();
                 setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
+                setSessionStatusView();
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
@@ -586,6 +604,7 @@ public class MainActivity extends AppCompatActivity
         showConnectionView(isCurSessionConnected());
         mContentView.refresh();
         setSessionJumpImage(idxSession);
+        setSessionStatusView();
         if (isCurSessionConnected()) {
             updateFABStatus(FABStatus.Keyboard);
         } else {

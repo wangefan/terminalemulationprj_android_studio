@@ -360,6 +360,11 @@ public class CipherConnectSettingInfo {
         return setting.mIsShowSessionNumber;
     }
 
+    public static boolean getHostIsShowSessionStatus(int index) {
+        SessionSetting setting = mTESettings.getSessionSetting(index);
+        return setting.mIsShowSessionStatus;
+    }
+
     public static String getHostLoginPromtByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mNamePrompt;

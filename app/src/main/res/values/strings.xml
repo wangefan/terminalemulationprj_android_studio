@@ -10,11 +10,12 @@
     <string name="title_activity_symbol">Sending String</string>
     <string name="MSG_CharacterTenLimit">The maximum character limit reached! Up to 10 chars allowed.</string>
     <string name="MSG_CharacterOneLimit">The maximum character limit reached! Only one char allowed.</string>
-    <string name="MSG_ChangeSession">Change sesssion to %s</string>
+    <string name="MSG_ChangeSession">Change session to %s</string>
     <string name="MSG_DeleteSession_Warn">Must has one session.</string>
     <string name="MSG_FDChek_reject">Barcode data exceeds! The length is not allowed.</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
+    <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
     <string name="dot">.</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>

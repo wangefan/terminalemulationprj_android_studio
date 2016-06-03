@@ -6,6 +6,21 @@
 
 	 <include layout="@layout/toolbar" />
 
+	 <RelativeLayout
+		 android:id="@+id/id_session_statuse"
+		 android:layout_width="match_parent"
+		 android:layout_height="30dp"
+		 android:background="@color/colorPrimary">
+		 <TextView
+			 android:id="@+id/id_session_statuse_title"
+			 android:textSize="18sp"
+		     android:textColor="@color/textColorPrimary"
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+			 android:layout_centerVertical="true"
+			 android:layout_marginLeft="@dimen/abc_action_bar_icon_vertical_padding_material" />
+	 </RelativeLayout>
+
 	<android.support.v4.widget.DrawerLayout
 	    android:id="@+id/mainActivityDrawer"
 	    android:layout_width="match_parent"
