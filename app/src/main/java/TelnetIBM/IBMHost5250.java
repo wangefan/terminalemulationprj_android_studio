@@ -375,8 +375,8 @@ public class IBMHost5250 extends IBMHostBase {
     protected boolean autoLogin() {
         if (FieldList.size() <= 1)
             return false;
-        String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.GetSessionIndex());
-        String pwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.GetSessionIndex());
+        String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.getSessionIndex());
+        String pwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.getSessionIndex());
         //get first field and set login name.
         IBM_FIELD nameField = FieldList.get(0);
         IBM_FIELD pwdField = FieldList.get(1);
@@ -457,8 +457,8 @@ public class IBMHost5250 extends IBMHostBase {
                 break;
             case Write_Error_Code:
                 setKeyLock(true);
-                int nErrorRow = TESettingsInfo.getErrorRow(TESettingsInfo.GetSessionIndex());
-                boolean bPopupDialog = TESettingsInfo.getPopupErrorDialog(TESettingsInfo.GetSessionIndex());
+                int nErrorRow = TESettingsInfo.getErrorRow(TESettingsInfo.getSessionIndex());
+                boolean bPopupDialog = TESettingsInfo.getPopupErrorDialog(TESettingsInfo.getSessionIndex());
                 if(bPopupDialog) {
                     StringBuilder sb = new StringBuilder();
                     PrintErrorMessage(new Point(1, nErrorRow), sb);
@@ -1910,7 +1910,7 @@ public class IBMHost5250 extends IBMHostBase {
                 }
 
                 if (Character.isLetter(KeyCode)) {
-                    if(CurField.Monocase || TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.GetSessionIndex()) == true)
+                    if(CurField.Monocase || TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true)
                         Code = ConvertAsciiToEBCD(Character.toUpperCase((char) KeyCode));
                 }
 
@@ -1938,7 +1938,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private boolean isKeyLocked() {
-       if(TESettingsInfo.getIsIBMAutoUnlock(TESettingsInfo.GetSessionIndex()) == true)
+       if(TESettingsInfo.getIsIBMAutoUnlock(TESettingsInfo.getSessionIndex()) == true)
            bKeybaordLock = false;
         return bKeybaordLock;
     }
@@ -1994,7 +1994,7 @@ public class IBMHost5250 extends IBMHostBase {
             CaretBegin();
             putString(barcodeOriginal);
         } else { // check field length
-            int nFDLEN = TESettingsInfo.getCheckFieldLength(TESettingsInfo.GetSessionIndex());
+            int nFDLEN = TESettingsInfo.getCheckFieldLength(TESettingsInfo.getSessionIndex());
             switch (nFDLEN) {
                 case TESettingsInfo.FDLEN_REJECT:
                     PlayWarningSounds();

@@ -117,8 +117,8 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     protected boolean autoLogin() {
-        String loginNameProm = TESettingsInfo.getHostLoginPromtByIndex(TESettingsInfo.GetSessionIndex());
-        String pwdProm = TESettingsInfo.getHostPassWordPromtByIndex(TESettingsInfo.GetSessionIndex());
+        String loginNameProm = TESettingsInfo.getHostLoginPromtByIndex(TESettingsInfo.getSessionIndex());
+        String pwdProm = TESettingsInfo.getHostPassWordPromtByIndex(TESettingsInfo.getSessionIndex());
         boolean bHasNameProm = false, bHasPwdProm = false;
         //Parse content to see if loginNameProm and pwdProm exist or not
         for (int idxRow = 0; idxRow < CharGrid.length; idxRow++) {
@@ -131,10 +131,10 @@ public class CVT100 extends CVT100Enum {
         if (bHasNameProm == false && bHasPwdProm == false)
             return false;
 
-        int nTerm = TESettingsInfo.getHostTermLoginByIndex(TESettingsInfo.GetSessionIndex());
+        int nTerm = TESettingsInfo.getHostTermLoginByIndex(TESettingsInfo.getSessionIndex());
         String sendString = "";
         if (bHasNameProm) {
-            String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.GetSessionIndex());
+            String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.getSessionIndex());
             if (nTerm == TESettingsInfo.TERM_TAB) {
                 sendString = loginName + "\t";
             } else {
@@ -142,7 +142,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
         if (bHasPwdProm) {
-            String loginPwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.GetSessionIndex());
+            String loginPwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.getSessionIndex());
             sendString = sendString + loginPwd + "\r\n";
         }
 
@@ -204,7 +204,7 @@ public class CVT100 extends CVT100Enum {
         String StrCmd = GetActionString(e);
 
 
-        String strGood = TESettingsInfo.getHostGoodfeedbackCmdByIndex(TESettingsInfo.GetSessionIndex());
+        String strGood = TESettingsInfo.getHostGoodfeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
         if (strGood != null && strGood.isEmpty() == false) {
             if (StrCmd.equals(strGood)) {
 
@@ -224,7 +224,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strErr = TESettingsInfo.getHostErrorfeedbackCmdByIndex(TESettingsInfo.GetSessionIndex());
+        String strErr = TESettingsInfo.getHostErrorfeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
         if (strErr != null && strErr.isEmpty() == false) {
             if (StrCmd.equals(strErr)) {
                 SoundPool soundPool;
@@ -242,7 +242,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strReader = TESettingsInfo.getHostEnableReaderCmdByIndex(TESettingsInfo.GetSessionIndex());
+        String strReader = TESettingsInfo.getHostEnableReaderCmdByIndex(TESettingsInfo.getSessionIndex());
         if (strReader != null && strReader.isEmpty() == false) {
             if (StrCmd.equals(strReader)) {
                 SoundPool soundPool;
@@ -262,7 +262,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strDisableReader = TESettingsInfo.getHostDisableReaderCmdByIndex(TESettingsInfo.GetSessionIndex());
+        String strDisableReader = TESettingsInfo.getHostDisableReaderCmdByIndex(TESettingsInfo.getSessionIndex());
         if (strDisableReader != null && strDisableReader.isEmpty() == false) {
             if (StrCmd.equals(strDisableReader)) {
                 SoundPool soundPool;
@@ -1164,7 +1164,7 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void handleBarcodeFire(String Code) {
-        if(TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.GetSessionIndex()) == true)
+        if(TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true)
             Code = Code.toUpperCase();
         DispatchMessage(this, Code);
         ViewPostInvalidate();
@@ -1182,11 +1182,11 @@ public class CVT100 extends CVT100Enum {
         String formattedDate = df.format(c.getTime());
 
 
-        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.GetSessionIndex());
+        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.getSessionIndex());
         if (IsLog)
             LogFile = new TerminalLogWriter(formattedDate + ".txt");
 
-        byte[] SendData = TESettingsInfo.getVTHostSendToHostByIndex(TESettingsInfo.GetSessionIndex());
+        byte[] SendData = TESettingsInfo.getVTHostSendToHostByIndex(TESettingsInfo.getSessionIndex());
 
         if (SendData != null && SendData.length > 0) {
             DispatchMessageRaw(this, SendData, SendData.length);
@@ -1198,7 +1198,7 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        Boolean IsLineBuffer = TESettingsInfo.getHostIsLineBufferByIndex(TESettingsInfo.GetSessionIndex());
+        Boolean IsLineBuffer = TESettingsInfo.getHostIsLineBufferByIndex(TESettingsInfo.getSessionIndex());
 
         if (IsLineBuffer) {
             KeyEventVal Key = new KeyEventVal();
@@ -1215,7 +1215,7 @@ public class CVT100 extends CVT100Enum {
                 LineBufferList.clear();
                 return;
             } else {
-                Boolean IsEcho = TESettingsInfo.getHostIsLocalEchoByIndex(TESettingsInfo.GetSessionIndex());
+                Boolean IsEcho = TESettingsInfo.getHostIsLocalEchoByIndex(TESettingsInfo.getSessionIndex());
                 if (IsEcho)
                     LineBufferInput(keyCode, event);
             }
@@ -1517,7 +1517,7 @@ public class CVT100 extends CVT100Enum {
     }
 
     private void PutAsciiKey(int KeyCode) {
-        if (Character.isLetter((char)KeyCode) && TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.GetSessionIndex()) == true) {
+        if (Character.isLetter((char)KeyCode) && TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true) {
             KeyCode = Character.toUpperCase((char) KeyCode);
         }
 

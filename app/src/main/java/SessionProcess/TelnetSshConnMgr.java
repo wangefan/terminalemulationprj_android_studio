@@ -25,8 +25,8 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 		if (!IsConn)
 			return false;
 		
-		String User= TESettingsInfo.getHostSshUserByIndex(TESettingsInfo.GetSessionIndex());
-		String Password= TESettingsInfo.getHostSshPasswordByIndex(TESettingsInfo.GetSessionIndex());
+		String User= TESettingsInfo.getHostSshUserByIndex(TESettingsInfo.getSessionIndex());
+		String Password= TESettingsInfo.getHostSshPasswordByIndex(TESettingsInfo.getSessionIndex());
 		IsConn=SshConn.SshAuthenticatePw(User,Password);
 		
 		

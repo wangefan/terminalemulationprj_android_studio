@@ -166,7 +166,7 @@ public class TESettingsInfo {
         mCurrentSessionIndex = Index;
     }
 
-    public static int GetSessionIndex() {
+    public static int getSessionIndex() {
         return mCurrentSessionIndex;
     }
 

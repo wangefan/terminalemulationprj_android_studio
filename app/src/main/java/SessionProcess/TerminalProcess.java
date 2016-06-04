@@ -101,21 +101,21 @@ public class TerminalProcess {
 
     public boolean ProcessConnect() {
 
-        String Ip = TESettingsInfo.getHostAddrByIndex(TESettingsInfo.GetSessionIndex());
-        String Port = TESettingsInfo.getHostPortByIndex(TESettingsInfo.GetSessionIndex());
-        Boolean SSh = TESettingsInfo.getHostIsSshEnableByIndex(TESettingsInfo.GetSessionIndex());
-        boolean isTN = TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.GetSessionIndex());
+        String Ip = TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex());
+        String Port = TESettingsInfo.getHostPortByIndex(TESettingsInfo.getSessionIndex());
+        Boolean SSh = TESettingsInfo.getHostIsSshEnableByIndex(TESettingsInfo.getSessionIndex());
+        boolean isTN = TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex());
 
         Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
         if (isTN == false) {
-            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.GetSessionIndex());
+            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             assert (serverTypeName.equals(context.getResources().getString(R.string.VT100Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.VT102Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.VT220Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
             mTerminal = new CVT100();
         } else {
-            String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.GetSessionIndex());
+            String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
                 mTerminal = new IBMHost5250();
         }

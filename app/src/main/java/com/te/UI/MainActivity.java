@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
                 //e1.setText(data);
             } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
                 // If user disable KeyboardEmulation, barcode reader service will broadcast Intent_PASS_TO_APP
-                TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
+                TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
                 // extra string from intent
                 data = intent.getStringExtra(GeneralString.BcReaderData);
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onConnected() {
             showConnectionView(true);
-            UpdateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.GetSessionIndex()));
+            UpdateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex()));
             UpdateRecordButton();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Keyboard);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void UpdateRecordButton() {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
         ImageButton ButStop = (ImageButton) findViewById(R.id.StopButton);
         ImageButton ButPlay = (ImageButton) findViewById(R.id.PlayButton);
         ImageButton ButRec = (ImageButton) findViewById(R.id.RecButton);
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Bind TerminalProcess and ContentView
-        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.getSessionIndex());
         actSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(actSession);
 
@@ -282,13 +282,13 @@ public class MainActivity extends AppCompatActivity
         mMainRelLayout.setVisibility(View.INVISIBLE);
 
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
-        setSessionJumpImage(TESettingsInfo.GetSessionIndex());
+        setSessionJumpImage(TESettingsInfo.getSessionIndex());
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
 
         UIUtility.init(this);
 
-        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.GetSessionIndex());
+        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
         if (bAutoConn)
             SessionConnect();
 
@@ -304,13 +304,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setSessionStatusView() {
-        if(TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.GetSessionIndex()) == true && mBFullScreen == false) {
-            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.GetSessionIndex());
+        if(TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
+            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
             tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
                     serverTypeName,
-                    String.valueOf(TESettingsInfo.GetSessionIndex()+1),
-                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.GetSessionIndex())));
+                    String.valueOf(TESettingsInfo.getSessionIndex()+1),
+                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex())));
             mSessionStausView.setVisibility(View.VISIBLE);
         } else {
             mSessionStausView.setVisibility(View.GONE);
@@ -392,7 +392,7 @@ public class MainActivity extends AppCompatActivity
             case SessionSettings.REQ_EDIT:
                 mFragmentLeftdrawer.updateCurSessionTitle();
                 mContentView.refresh();
-                setSessionJumpImage(TESettingsInfo.GetSessionIndex());
+                setSessionJumpImage(TESettingsInfo.getSessionIndex());
                 setSessionStatusView();
                 break;
             case SessionSettings.REQ_ADD: {
@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     SessionSettings.gEditSessionSetting = null;
-                    setSessionJumpImage(TESettingsInfo.GetSessionIndex());
+                    setSessionJumpImage(TESettingsInfo.getSessionIndex());
                 }
             }
             break;
@@ -459,14 +459,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickStop(View v) {
 
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.StopRecMacro();
         UpdateRecordButton();
 
     }
 
     public void onClickPlay(View v) {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.PlayMacro();
         UpdateRecordButton();
 
@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickRec(View v) {
 
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.RecMacro();
         UpdateRecordButton();
 
@@ -504,7 +504,7 @@ public class MainActivity extends AppCompatActivity
                     SessionDisConnect();
                 break;
             case R.id.sessionSettings:
-                SessionSetting(TESettingsInfo.GetSessionIndex());
+                SessionSetting(TESettingsInfo.getSessionIndex());
                 break;
             case R.id.full_screen:
                 procFullScreen();
@@ -575,7 +575,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean isCurSessionConnected() {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
         return (termProc != null && termProc.isConnected());
     }
 
@@ -589,9 +589,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void SessionChange(int idxSession) {
-        if (TESettingsInfo.GetSessionIndex() == idxSession)
+        if (TESettingsInfo.getSessionIndex() == idxSession)
             return;
-        TerminalProcess curSeesion = mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess curSeesion = mCollSessions.get(TESettingsInfo.getSessionIndex());
         TerminalProcess nextSession = mCollSessions.get(idxSession);
 
         //un-bind between TerminalProcess and MainActivity (Actually is ContentView)
@@ -666,12 +666,12 @@ public class MainActivity extends AppCompatActivity
 
     private void SessionConnect() {
         UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.ProcessConnect();
     }
 
     private void SessionDisConnect() {
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.GetSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.ProcessDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
         mLogoView.setVisibility(View.VISIBLE);
@@ -733,7 +733,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                int nSession = TESettingsInfo.GetSessionIndex(), nOriSession = TESettingsInfo.GetSessionIndex();
+                int nSession = TESettingsInfo.getSessionIndex(), nOriSession = TESettingsInfo.getSessionIndex();
                 do {
                     ++nSession;
                     if(nSession > TESettingsInfo.getSessionCount()-1)

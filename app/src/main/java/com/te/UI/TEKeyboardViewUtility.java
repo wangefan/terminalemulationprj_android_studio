@@ -118,7 +118,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             break;
             case MY_KEYCODE_FUNC:
             {
-                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.GetSessionIndex()) == true) {
+                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                     mKeyboardView.setKeyboard(mTNFunKeyboard);
                 }
                 else {

@@ -59,8 +59,8 @@ public class ContentView extends View {
     }
 
     private void setPaintColor() {
-        int nFontsColor = TESettingsInfo.getHostFontsColorByIndex(TESettingsInfo.GetSessionIndex());
-        int nBgColor = TESettingsInfo.getHostBgColorByIndex(TESettingsInfo.GetSessionIndex());
+        int nFontsColor = TESettingsInfo.getHostFontsColorByIndex(TESettingsInfo.getSessionIndex());
+        int nBgColor = TESettingsInfo.getHostBgColorByIndex(TESettingsInfo.getSessionIndex());
         mBackgroundColor = nBgColor;
         mForegroundColor = nFontsColor;
         mBgpaint = GetBGPaint(mBackgroundColor);
@@ -128,7 +128,7 @@ public class ContentView extends View {
         TextPaint p = new TextPaint(Paint.ANTI_ALIAS_FLAG| Paint.LINEAR_TEXT_FLAG);
         p.setColor(Color);
         p.setStyle(Paint.Style.FILL);
-        int nFontType = TESettingsInfo.getHostFontsTypeByIndex(TESettingsInfo.GetSessionIndex());
+        int nFontType = TESettingsInfo.getHostFontsTypeByIndex(TESettingsInfo.getSessionIndex());
         switch(nFontType) {
             case TESettingsInfo.LU_CONSOLE:
                 mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/Lucida-Console.ttf");
@@ -150,7 +150,7 @@ public class ContentView extends View {
 
         p.setTypeface(mFontface);
         final int nScaleFromTECPPSetting = 2;
-        int nFontWidth = TESettingsInfo.getHostFontWidthByIndex(TESettingsInfo.GetSessionIndex()) * nScaleFromTECPPSetting;
+        int nFontWidth = TESettingsInfo.getHostFontWidthByIndex(TESettingsInfo.getSessionIndex()) * nScaleFromTECPPSetting;
         mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, nFontWidth, getResources().getDisplayMetrics());
         p.setTextSize(mFontsize);
         p.setTextAlign(Align.LEFT);
@@ -233,11 +233,11 @@ public class ContentView extends View {
         mCorsor.setX(nBmpPosX);
         mCorsor.setY(nBmpPosY);
 
-        Boolean IsTracking = TESettingsInfo.getHostIsCursorTrackByIndex(TESettingsInfo.GetSessionIndex());
+        Boolean IsTracking = TESettingsInfo.getHostIsCursorTrackByIndex(TESettingsInfo.getSessionIndex());
 
         if (IsTracking) {
             int nMoveToX = 0, nMoveToY = 0;
-            switch (TESettingsInfo.getHostAutoTrackTypeByIndex(TESettingsInfo.GetSessionIndex())) {
+            switch (TESettingsInfo.getHostAutoTrackTypeByIndex(TESettingsInfo.getSessionIndex())) {
                 case AutoTrackType_Visible:
                     nMoveToX = getXPosByRate(0.75f, nBmpPosX);
                     nMoveToY = getYPosByRate(0.75f, nBmpPosY);
@@ -247,8 +247,8 @@ public class ContentView extends View {
                     nMoveToY = getYPosByRate(0.5f, nBmpPosY);
                     break;
                 case AutoTrackType_Lock:
-                    int nFixRow = TESettingsInfo.getHostLockerRowIndex(TESettingsInfo.GetSessionIndex());
-                    int nFixCol = TESettingsInfo.getHostLockerColIndex(TESettingsInfo.GetSessionIndex());
+                    int nFixRow = TESettingsInfo.getHostLockerRowIndex(TESettingsInfo.getSessionIndex());
+                    int nFixCol = TESettingsInfo.getHostLockerColIndex(TESettingsInfo.getSessionIndex());
                     nMoveToX = Math.min(nFixCol * mFontRect.width(), mBmpWidth);
                     nMoveToY = Math.min(nFixRow * mFontRect.height(), mBmpHeight);
                     break;

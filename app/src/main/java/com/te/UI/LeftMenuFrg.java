@@ -79,11 +79,11 @@ public class LeftMenuFrg extends Fragment {
  
         // preparing session items
         syncSessionsViewFromSettings();
-        mSessionsView.setSelected(TESettingsInfo.GetSessionIndex());
+        mSessionsView.setSelected(TESettingsInfo.getSessionIndex());
     }
 
     public void updateCurSessionTitle() {
-        int nCurSession = TESettingsInfo.GetSessionIndex();
+        int nCurSession = TESettingsInfo.getSessionIndex();
         String strTitle =
                 String.format(getResources().getString(R.string.Format_Session),
                         Integer.toString(nCurSession + 1),
@@ -141,9 +141,9 @@ public class LeftMenuFrg extends Fragment {
                     Toast.makeText(getContext(), R.string.MSG_DeleteSession_Warn, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(pos == TESettingsInfo.GetSessionIndex()) {
+                if(pos == TESettingsInfo.getSessionIndex()) {
                     if(pos == 0) { //choose next one
-                        int nNextPos = TESettingsInfo.GetSessionIndex() + 1;
+                        int nNextPos = TESettingsInfo.getSessionIndex() + 1;
                         clickSession(nNextPos); //select previous item
                         mSessionsView.removeSession(pos);
                         TESettingsInfo.removeSession(pos);
@@ -152,7 +152,7 @@ public class LeftMenuFrg extends Fragment {
                         mLeftMenuListener.onDrawerItemDelete(pos);
                     }
                     else { //choose previous
-                        int nPreviousPos = TESettingsInfo.GetSessionIndex() - 1;
+                        int nPreviousPos = TESettingsInfo.getSessionIndex() - 1;
                         clickSession(nPreviousPos); //select previous item
                         mSessionsView.removeSession(pos);
                         TESettingsInfo.removeSession(pos);
@@ -160,11 +160,11 @@ public class LeftMenuFrg extends Fragment {
                         mSessionsView.setSelected(nPreviousPos);
                         mLeftMenuListener.onDrawerItemDelete(pos);
                     }
-                } else {    //pos > TESettingsInfo.GetSessionIndex() || //pos < TESettingsInfo.GetSessionIndex()
+                } else {    //pos > TESettingsInfo.getSessionIndex() || //pos < TESettingsInfo.getSessionIndex()
                     mSessionsView.removeSession(pos);
                     TESettingsInfo.removeSession(pos);
                     mSessionsView.refresh();
-                    mSessionsView.setSelected(TESettingsInfo.GetSessionIndex());
+                    mSessionsView.setSelected(TESettingsInfo.getSessionIndex());
                     mLeftMenuListener.onDrawerItemDelete(pos);
                 }
             }

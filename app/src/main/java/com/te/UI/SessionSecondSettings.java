@@ -34,7 +34,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
         } else if(action.compareTo(ACTION_SERVER_SETTING) == 0) {
-            if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.GetSessionIndex()) == true) {
+            if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
                 SessionTNSettingsFrg settingsFrg = new SessionTNSettingsFrg();
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
