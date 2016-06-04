@@ -43,13 +43,22 @@ public class CipherConnectSettingInfo {
 
     final private static String mSettingFilename = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
+
     static TESettings mTESettings = null;
     private static Context mContext = null;
-    private static SharedPreferences _sp = null;
+    private static SharedPreferences mSp = null;
     private static int mCurrentSessionIndex;
+
+    //Persist values, not in jason
+    private static final String LEFT_MARGIN_KEY = "LEFT_MARGIN_KEY";
+    private static final String TOP_MARGIN_KEY = "TOP_MARGIN_KEY";
 
     public static boolean loadSessionSettings(Context context) {
         mContext = context;
+        if (mSp == null) {
+            mSp = context.getSharedPreferences(_NAME, Context.MODE_PRIVATE);
+        }
+
         try {
             File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
             if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
@@ -178,12 +187,6 @@ public class CipherConnectSettingInfo {
         mTESettings.SETTINGS.remove(pos);
         if (mCurrentSessionIndex >= pos)
             --mCurrentSessionIndex;
-    }
-
-    public static void initSharedPreferences(Context c) {
-        if (_sp == null) {
-            _sp = c.getSharedPreferences(_NAME, 0);
-        }
     }
 
     public static boolean getIsHostTNByIndex(int index) {
@@ -445,5 +448,20 @@ public class CipherConnectSettingInfo {
     public static String getCustDevName(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mDevName;
+    }
+
+    public static void setSessionNumberLoc(int leftMargin, int topMargin) {
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putInt(LEFT_MARGIN_KEY, leftMargin);
+        editor.putInt(TOP_MARGIN_KEY, topMargin);
+        editor.commit();
+    }
+
+    public static int getSessionNumberLocLeft() {
+        return mSp.getInt(LEFT_MARGIN_KEY, 0);
+    }
+
+    public static int getSessionNumberLocTop() {
+        return mSp.getInt(TOP_MARGIN_KEY, 0);
     }
 }

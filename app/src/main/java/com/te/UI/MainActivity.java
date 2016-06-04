@@ -706,6 +706,10 @@ public class MainActivity extends AppCompatActivity
                     mSessionJumpBtn.setImageResource(R.drawable.s5_64);
                     break;
             }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSessionJumpBtn.getLayoutParams();
+            params.leftMargin = CipherConnectSettingInfo.getSessionNumberLocLeft();
+            params.topMargin = CipherConnectSettingInfo.getSessionNumberLocTop();
+            mSessionJumpBtn.setLayoutParams(params);
         }
     }
 
@@ -767,6 +771,10 @@ public class MainActivity extends AppCompatActivity
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             mView = view;
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) mSessionJumpBtn.getLayoutParams();
+                CipherConnectSettingInfo.setSessionNumberLoc(parms.leftMargin, parms.topMargin);
+            }
             return mDetector.onTouchEvent(event);
         }
     }
