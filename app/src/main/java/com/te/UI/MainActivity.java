@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setSessionStatusView() {
-        if(CipherConnectSettingInfo.getHostIsShowSessionStatus(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+        if(CipherConnectSettingInfo.getHostIsShowSessionStatus(CipherConnectSettingInfo.GetSessionIndex()) == true && mBFullScreen == false) {
             String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
             TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
             tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
@@ -652,6 +652,7 @@ public class MainActivity extends AppCompatActivity
                   | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             mBFullScreen = false;
         }
+        setSessionStatusView();
     }
 
     private void HideKeyboard() {

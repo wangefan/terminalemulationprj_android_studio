@@ -233,13 +233,11 @@ public class CipherConnectSettingInfo {
 
     public static String getHostTypeNameByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
+        if(Setting.mIsTN == 1) {
+            return Setting.mTermNameTN;
+        }
         return Setting.mTermName;
 
-    }
-
-    public static void SetHostTypeNameByIndex(int index, String HostType) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mTermName = HostType;
     }
 
     public static int getHostTermLoginByIndex(int index) {

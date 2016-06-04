@@ -43,17 +43,12 @@ public class CursorView extends View {
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         int nType = CipherConnectSettingInfo.getHostCousorTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
-
-
-        if (nType == 2)//Full block
-        {
+        if (nType == 2) {//Full block
             canvas.drawRect(0, 0, CursorWhith, CursorHight, mPaint);
-        } else if (nType == 1)// Underline
-        {
+        } else if (nType == 1) {// Underline
             canvas.drawRect(0, CursorHight - 4, CursorWhith, CursorHight, mPaint);
-        } else {
+        } else {//default
             canvas.drawRect(0, 0, CursorWhith / 2, CursorHight, mPaint);
         }
 
