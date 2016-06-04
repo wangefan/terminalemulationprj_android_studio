@@ -2,10 +2,8 @@ package Terminals;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,12 +43,10 @@ public class CipherConnectSettingInfo {
 
     final private static String mSettingFilename = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
-    public static int LastHostNumber = 0;
     static TESettings mTESettings = null;
     private static Context mContext = null;
     private static SharedPreferences _sp = null;
     private static int mCurrentSessionIndex;
-    JsonArray GsonSetting = new JsonArray();
 
     static void deleteCurrentSetting() {
         File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
@@ -191,33 +187,12 @@ public class CipherConnectSettingInfo {
     public static void initSharedPreferences(Context c) {
         if (_sp == null) {
             _sp = c.getSharedPreferences(_NAME, 0);
-            LastHostNumber = getLastDeviceNumber(c);
         }
-    }
-
-    public static void PlusLastDeviceNumber(Context c) {
-        LastHostNumber = getLastDeviceNumber(c);
-        LastHostNumber++;
-        setLastDeviceNumber(c, LastHostNumber);
-        LastHostNumber = getLastDeviceNumber(c);
-    }
-
-    public static int getLastDeviceNumber(Context c) {
-        initSharedPreferences(c);
-        return _sp.getInt("LastDeviceNumber", 0);
-    }
-
-    public static void setLastDeviceNumber(Context c, int Number) {
-        initSharedPreferences(c);
-        Editor editor = _sp.edit();
-        editor.putInt("LastDeviceName", Number);
-        editor.commit();
     }
 
     public static boolean getIsHostTNByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mIsTN == 1;
-
     }
 
     public static String getTNHostTypeNameByIndex(int index) {
@@ -225,30 +200,17 @@ public class CipherConnectSettingInfo {
         return Setting.mTermNameTN;
     }
 
-    public static void SetTNHostTypeNameByIndex(int index, String HostType) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mTermNameTN = HostType;
-    }
-
-
     public static String getHostTypeNameByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         if(Setting.mIsTN == 1) {
             return Setting.mTermNameTN;
         }
         return Setting.mTermName;
-
     }
 
     public static int getHostTermLoginByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mTermLogin;
-
-    }
-
-    public static void SetHostTermLoginByIndex(int index, int nTerm) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mTermLogin = nTerm;
     }
 
     public static boolean getUpperCaseByIndex(int index) {
@@ -259,11 +221,6 @@ public class CipherConnectSettingInfo {
     public static String getHostAddrByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mHostIP;
-    }
-
-    public static void SetHostAddrByIndex(int index, String HostAddr) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mHostIP = HostAddr;
     }
 
     //SendtoHost
@@ -368,30 +325,14 @@ public class CipherConnectSettingInfo {
         return Setting.mNamePrompt;
     }
 
-    public static void SetHostLoginPromtByIndex(int index, String LoginPromt) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mNamePrompt = LoginPromt;
-    }
-
     public static String getHostPassWordPromtByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mPassPrompt;
     }
 
-    public static void SetHostPassWordPromtByIndex(int index, String PassWordPromt) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mPassPrompt = PassWordPromt;
-    }
-
-
     public static String getHostUserNameByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mLoginName;
-    }
-
-    public static void SetHostUserNameByIndex(int index, String Name) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mLoginName = Name;
     }
 
     public static String getHostPassWordByIndex(int index) {
@@ -405,15 +346,9 @@ public class CipherConnectSettingInfo {
         Setting.mLoginPassword = PassWord;
     }
 
-
     public static boolean getHostIsSshEnableByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.SSH;
-    }
-
-    public static void SetHostIsSshEnableByIndex(int index, boolean IsEnable) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.SSH = IsEnable;
     }
 
     public static String getHostSshUserByIndex(int index) {
@@ -422,20 +357,10 @@ public class CipherConnectSettingInfo {
         return Setting.SSHName;
     }
 
-    public static void SetHostSshUserByIndex(int index, String UserName) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.SSHName = UserName;
-    }
-
     public static String getHostSshPasswordByIndex(int index) {
         //
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.SSHPassword;
-    }
-
-    public static void SetHostSshPasswordByIndex(int index, String PassWord) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.SSHPassword = PassWord;
     }
 
     public static int getHostCousorTypeByIndex(int index) {
@@ -462,21 +387,10 @@ public class CipherConnectSettingInfo {
         return Setting.g_ReaderParam.goodFeedBackESC;
     }
 
-    public static void SetHostGoodfeedbackCmdByIndex(int index, String sData) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.g_ReaderParam.goodFeedBackESC = sData;
-    }
-
     public static String GetHostErrorfeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.errorFeedBackESC;
     }
-
-    public static void SetHostErrorfeedbackCmdByIndex(int index, String sData) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.g_ReaderParam.errorFeedBackESC = sData;
-    }
-
 	   
     /*Boolean IsGoodfeedback=false;
 	   Boolean IsErrorfeedback=false;
@@ -491,11 +405,6 @@ public class CipherConnectSettingInfo {
         return Setting.g_ReaderParam.isEnableScannerByESCCmd;
     }
 
-    public static void SetHostIsReaderControlByIndex(int index, Boolean IsEnable) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.g_ReaderParam.isEnableScannerByESCCmd = IsEnable;
-    }
-	    
 	    /*
 	     GetHostEnableReaderCmdByIndex
 	     SetHostEnableReaderCmdByIndex
@@ -512,19 +421,9 @@ public class CipherConnectSettingInfo {
         return Setting.g_ReaderParam.scannerEnableESC;
     }
 
-    public static void SetHostEnableReaderCmdByIndex(int index, String sData) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.g_ReaderParam.scannerEnableESC = sData;
-    }
-
     public static String GetHostDisableReaderCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.scannerDisableESC;
-    }
-
-    public static void SetHostDisableReaderCmdByIndex(int index, String sData) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.g_ReaderParam.scannerDisableESC = sData;
     }
 
     public static int getCheckFieldLength(int index) {
