@@ -59,8 +59,8 @@ public class ContentView extends View {
     }
 
     private void setPaintColor() {
-        int nFontsColor = CipherConnectSettingInfo.getHostFontsColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        int nBgColor = CipherConnectSettingInfo.getHostBgColorByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        int nFontsColor = TESettingsInfo.getHostFontsColorByIndex(TESettingsInfo.GetSessionIndex());
+        int nBgColor = TESettingsInfo.getHostBgColorByIndex(TESettingsInfo.GetSessionIndex());
         mBackgroundColor = nBgColor;
         mForegroundColor = nFontsColor;
         mBgpaint = GetBGPaint(mBackgroundColor);
@@ -128,21 +128,21 @@ public class ContentView extends View {
         TextPaint p = new TextPaint(Paint.ANTI_ALIAS_FLAG| Paint.LINEAR_TEXT_FLAG);
         p.setColor(Color);
         p.setStyle(Paint.Style.FILL);
-        int nFontType = CipherConnectSettingInfo.getHostFontsTypeByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        int nFontType = TESettingsInfo.getHostFontsTypeByIndex(TESettingsInfo.GetSessionIndex());
         switch(nFontType) {
-            case CipherConnectSettingInfo.LU_CONSOLE:
+            case TESettingsInfo.LU_CONSOLE:
                 mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/Lucida-Console.ttf");
                 break;
-            case CipherConnectSettingInfo.EXCA_MONO:
+            case TESettingsInfo.EXCA_MONO:
                 mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/ExcaliburMonospace.ttf");
                 break;
-            case CipherConnectSettingInfo.NET_ANSI:
+            case TESettingsInfo.NET_ANSI:
                 mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/ntansi.ttf");
                 break;
-            case CipherConnectSettingInfo.NET_OEM:
+            case TESettingsInfo.NET_OEM:
                 mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/ntoem.ttf");
                 break;
-            case CipherConnectSettingInfo.COURIER_NEW:
+            case TESettingsInfo.COURIER_NEW:
             default:
                 mFontface = Typeface.createFromAsset(getContext().getAssets(), "fonts/courier-new.ttf");
                 break;
@@ -150,7 +150,7 @@ public class ContentView extends View {
 
         p.setTypeface(mFontface);
         final int nScaleFromTECPPSetting = 2;
-        int nFontWidth = CipherConnectSettingInfo.getHostFontWidthByIndex(CipherConnectSettingInfo.GetSessionIndex()) * nScaleFromTECPPSetting;
+        int nFontWidth = TESettingsInfo.getHostFontWidthByIndex(TESettingsInfo.GetSessionIndex()) * nScaleFromTECPPSetting;
         mFontsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, nFontWidth, getResources().getDisplayMetrics());
         p.setTextSize(mFontsize);
         p.setTextAlign(Align.LEFT);
@@ -233,11 +233,11 @@ public class ContentView extends View {
         mCorsor.setX(nBmpPosX);
         mCorsor.setY(nBmpPosY);
 
-        Boolean IsTracking = CipherConnectSettingInfo.getHostIsCursorTrackByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        Boolean IsTracking = TESettingsInfo.getHostIsCursorTrackByIndex(TESettingsInfo.GetSessionIndex());
 
         if (IsTracking) {
             int nMoveToX = 0, nMoveToY = 0;
-            switch (CipherConnectSettingInfo.getHostAutoTrackTypeByIndex(CipherConnectSettingInfo.GetSessionIndex())) {
+            switch (TESettingsInfo.getHostAutoTrackTypeByIndex(TESettingsInfo.GetSessionIndex())) {
                 case AutoTrackType_Visible:
                     nMoveToX = getXPosByRate(0.75f, nBmpPosX);
                     nMoveToY = getYPosByRate(0.75f, nBmpPosY);
@@ -247,8 +247,8 @@ public class ContentView extends View {
                     nMoveToY = getYPosByRate(0.5f, nBmpPosY);
                     break;
                 case AutoTrackType_Lock:
-                    int nFixRow = CipherConnectSettingInfo.getHostLockerRowIndex(CipherConnectSettingInfo.GetSessionIndex());
-                    int nFixCol = CipherConnectSettingInfo.getHostLockerColIndex(CipherConnectSettingInfo.GetSessionIndex());
+                    int nFixRow = TESettingsInfo.getHostLockerRowIndex(TESettingsInfo.GetSessionIndex());
+                    int nFixCol = TESettingsInfo.getHostLockerColIndex(TESettingsInfo.GetSessionIndex());
                     nMoveToX = Math.min(nFixCol * mFontRect.width(), mBmpWidth);
                     nMoveToY = Math.min(nFixRow * mFontRect.height(), mBmpHeight);
                     break;

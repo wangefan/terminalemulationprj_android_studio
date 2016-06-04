@@ -1,6 +1,7 @@
 package com.te.UI;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -78,26 +79,26 @@ public class LeftMenuFrg extends Fragment {
  
         // preparing session items
         syncSessionsViewFromSettings();
-        mSessionsView.setSelected(CipherConnectSettingInfo.GetSessionIndex());
+        mSessionsView.setSelected(TESettingsInfo.GetSessionIndex());
     }
 
     public void updateCurSessionTitle() {
-        int nCurSession = CipherConnectSettingInfo.GetSessionIndex();
+        int nCurSession = TESettingsInfo.GetSessionIndex();
         String strTitle =
                 String.format(getResources().getString(R.string.Format_Session),
                         Integer.toString(nCurSession + 1),
-                        CipherConnectSettingInfo.getHostAddrByIndex(nCurSession));
+                        TESettingsInfo.getHostAddrByIndex(nCurSession));
         mSessionsView.setSessionTitle(nCurSession, strTitle);
         ((SessionsView.SessionItemsAdapter)mSessionsView.getAdapter()).notifyDataSetChanged();
     }
 
     void syncSessionsViewFromSettings() {
         mSessionsView.removeAllSessions();
-        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.getSessionCount(); ++idxSession) {
+        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
             String strTitle =
                     String.format(getResources().getString(R.string.Format_Session),
                             Integer.toString(idxSession + 1),
-                            CipherConnectSettingInfo.getHostAddrByIndex(idxSession));
+                            TESettingsInfo.getHostAddrByIndex(idxSession));
             mSessionsView.addSession(strTitle);
         }
         mSessionsView.addSession(getResources().getString(R.string.about));
@@ -136,34 +137,34 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setOnItemClickPartListener(new SessionsView.OnItemClickPartListener() {
             @Override
             public void onItemClickDelete(int pos) {
-                if(CipherConnectSettingInfo.getSessionCount() <= 1) {
+                if(TESettingsInfo.getSessionCount() <= 1) {
                     Toast.makeText(getContext(), R.string.MSG_DeleteSession_Warn, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(pos == CipherConnectSettingInfo.GetSessionIndex()) {
+                if(pos == TESettingsInfo.GetSessionIndex()) {
                     if(pos == 0) { //choose next one
-                        int nNextPos = CipherConnectSettingInfo.GetSessionIndex() + 1;
+                        int nNextPos = TESettingsInfo.GetSessionIndex() + 1;
                         clickSession(nNextPos); //select previous item
                         mSessionsView.removeSession(pos);
-                        CipherConnectSettingInfo.removeSession(pos);
+                        TESettingsInfo.removeSession(pos);
                         mSessionsView.refresh();
                         mSessionsView.setSelected(nNextPos - 1);
                         mLeftMenuListener.onDrawerItemDelete(pos);
                     }
                     else { //choose previous
-                        int nPreviousPos = CipherConnectSettingInfo.GetSessionIndex() - 1;
+                        int nPreviousPos = TESettingsInfo.GetSessionIndex() - 1;
                         clickSession(nPreviousPos); //select previous item
                         mSessionsView.removeSession(pos);
-                        CipherConnectSettingInfo.removeSession(pos);
+                        TESettingsInfo.removeSession(pos);
                         mSessionsView.refresh();
                         mSessionsView.setSelected(nPreviousPos);
                         mLeftMenuListener.onDrawerItemDelete(pos);
                     }
-                } else {    //pos > CipherConnectSettingInfo.GetSessionIndex() || //pos < CipherConnectSettingInfo.GetSessionIndex()
+                } else {    //pos > TESettingsInfo.GetSessionIndex() || //pos < TESettingsInfo.GetSessionIndex()
                     mSessionsView.removeSession(pos);
-                    CipherConnectSettingInfo.removeSession(pos);
+                    TESettingsInfo.removeSession(pos);
                     mSessionsView.refresh();
-                    mSessionsView.setSelected(CipherConnectSettingInfo.GetSessionIndex());
+                    mSessionsView.setSelected(TESettingsInfo.GetSessionIndex());
                     mLeftMenuListener.onDrawerItemDelete(pos);
                 }
             }

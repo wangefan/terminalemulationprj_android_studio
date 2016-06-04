@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.terminalemulation.R;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.ContentView;
 
 /**
@@ -118,7 +118,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             break;
             case MY_KEYCODE_FUNC:
             {
-                if(CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.GetSessionIndex()) == true) {
                     mKeyboardView.setKeyboard(mTNFunKeyboard);
                 }
                 else {

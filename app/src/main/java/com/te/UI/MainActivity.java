@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import SessionProcess.TerminalProcess;
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.CipherReaderControl;
 import Terminals.ContentView;
 import Terminals.CursorView;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
                 //e1.setText(data);
             } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
                 // If user disable KeyboardEmulation, barcode reader service will broadcast Intent_PASS_TO_APP
-                TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+                TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
                 // extra string from intent
                 data = intent.getStringExtra(GeneralString.BcReaderData);
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onConnected() {
             showConnectionView(true);
-            UpdateRecordButtonVisible(CipherConnectSettingInfo.getHostIsShowMacroByIndex(CipherConnectSettingInfo.GetSessionIndex()));
+            UpdateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.GetSessionIndex()));
             UpdateRecordButton();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Keyboard);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void UpdateRecordButton() {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
         ImageButton ButStop = (ImageButton) findViewById(R.id.StopButton);
         ImageButton ButPlay = (ImageButton) findViewById(R.id.PlayButton);
         ImageButton ButRec = (ImageButton) findViewById(R.id.RecButton);
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initInOnCreate() {
-        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.getSessionCount(); ++idxSession) {
+        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
             TerminalProcess Process = new TerminalProcess();
             mCollSessions.add(Process);
         }
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Bind TerminalProcess and ContentView
-        TerminalProcess actSession = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.GetSessionIndex());
         actSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(actSession);
 
@@ -282,13 +282,13 @@ public class MainActivity extends AppCompatActivity
         mMainRelLayout.setVisibility(View.INVISIBLE);
 
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
-        setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
+        setSessionJumpImage(TESettingsInfo.GetSessionIndex());
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
 
         UIUtility.init(this);
 
-        Boolean bAutoConn = CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.GetSessionIndex());
         if (bAutoConn)
             SessionConnect();
 
@@ -304,13 +304,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setSessionStatusView() {
-        if(CipherConnectSettingInfo.getHostIsShowSessionStatus(CipherConnectSettingInfo.GetSessionIndex()) == true && mBFullScreen == false) {
-            String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        if(TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.GetSessionIndex()) == true && mBFullScreen == false) {
+            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.GetSessionIndex());
             TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
             tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
                     serverTypeName,
-                    String.valueOf(CipherConnectSettingInfo.GetSessionIndex()+1),
-                    CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex())));
+                    String.valueOf(TESettingsInfo.GetSessionIndex()+1),
+                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.GetSessionIndex())));
             mSessionStausView.setVisibility(View.VISIBLE);
         } else {
             mSessionStausView.setVisibility(View.GONE);
@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity
         stdActivityRef.SetCurrActivity(this);
         CipherReaderControl.InitReader(this, myDataReceiver);
         // Initialize User Parm
-        if (true == CipherConnectSettingInfo.loadSessionSettings(getApplicationContext())) {
+        if (true == TESettingsInfo.loadSessionSettings(getApplicationContext())) {
             initInOnCreate();
         } else {
             //ask user to try to clear setting, or exit app
@@ -333,8 +333,8 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            CipherConnectSettingInfo.deleteJsonFile();
-                            if (!CipherConnectSettingInfo.loadSessionSettings(getApplicationContext())) {
+                            TESettingsInfo.deleteJsonFile();
+                            if (!TESettingsInfo.loadSessionSettings(getApplicationContext())) {
                                 //Todo:popup warninig window
                                 finish();
                             } else {
@@ -360,7 +360,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        CipherConnectSettingInfo.saveSessionSettings();
+        TESettingsInfo.saveSessionSettings();
         // ***************************************************//
         // Unregister Broadcast Receiver before app close
         // ***************************************************//
@@ -392,18 +392,18 @@ public class MainActivity extends AppCompatActivity
             case SessionSettings.REQ_EDIT:
                 mFragmentLeftdrawer.updateCurSessionTitle();
                 mContentView.refresh();
-                setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
+                setSessionJumpImage(TESettingsInfo.GetSessionIndex());
                 setSessionStatusView();
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
-                    CipherConnectSettingInfo.addSession(SessionSettings.gEditSessionSetting);
-                    int nAddedSessionIdx = CipherConnectSettingInfo.getSessionCount() - 1;
+                    TESettingsInfo.addSession(SessionSettings.gEditSessionSetting);
+                    int nAddedSessionIdx = TESettingsInfo.getSessionCount() - 1;
                     mCollSessions.add(new TerminalProcess());
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     SessionSettings.gEditSessionSetting = null;
-                    setSessionJumpImage(CipherConnectSettingInfo.GetSessionIndex());
+                    setSessionJumpImage(TESettingsInfo.GetSessionIndex());
                 }
             }
             break;
@@ -439,7 +439,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddSession() {
-        if (CipherConnectSettingInfo.getSessionCount() < CipherConnectSettingInfo.MAX_SESSION_COUNT) {
+        if (TESettingsInfo.getSessionCount() < TESettingsInfo.MAX_SESSION_COUNT) {
             Intent intent = new Intent(this, SessionSettings.class);
             intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_ADD);
             startActivityForResult(intent, SessionSettings.REQ_ADD);
@@ -459,14 +459,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickStop(View v) {
 
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
         termProc.StopRecMacro();
         UpdateRecordButton();
 
     }
 
     public void onClickPlay(View v) {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
         termProc.PlayMacro();
         UpdateRecordButton();
 
@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickRec(View v) {
 
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
         termProc.RecMacro();
         UpdateRecordButton();
 
@@ -504,7 +504,7 @@ public class MainActivity extends AppCompatActivity
                     SessionDisConnect();
                 break;
             case R.id.sessionSettings:
-                SessionSetting(CipherConnectSettingInfo.GetSessionIndex());
+                SessionSetting(TESettingsInfo.GetSessionIndex());
                 break;
             case R.id.full_screen:
                 procFullScreen();
@@ -575,7 +575,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean isCurSessionConnected() {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.GetSessionIndex());
         return (termProc != null && termProc.isConnected());
     }
 
@@ -589,9 +589,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void SessionChange(int idxSession) {
-        if (CipherConnectSettingInfo.GetSessionIndex() == idxSession)
+        if (TESettingsInfo.GetSessionIndex() == idxSession)
             return;
-        TerminalProcess curSeesion = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess curSeesion = mCollSessions.get(TESettingsInfo.GetSessionIndex());
         TerminalProcess nextSession = mCollSessions.get(idxSession);
 
         //un-bind between TerminalProcess and MainActivity (Actually is ContentView)
@@ -599,7 +599,7 @@ public class MainActivity extends AppCompatActivity
         //bind between TerminalProcess and ContentView
         nextSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(nextSession);
-        CipherConnectSettingInfo.setSessionIndex(idxSession);
+        TESettingsInfo.setSessionIndex(idxSession);
         mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
         mContentView.refresh();
@@ -666,12 +666,12 @@ public class MainActivity extends AppCompatActivity
 
     private void SessionConnect() {
         UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
-        TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.GetSessionIndex());
         termProc.ProcessConnect();
     }
 
     private void SessionDisConnect() {
-        TerminalProcess termProc = mCollSessions.get(CipherConnectSettingInfo.GetSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.GetSessionIndex());
         termProc.ProcessDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
         mLogoView.setVisibility(View.VISIBLE);
@@ -685,7 +685,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setSessionJumpImage(int sessionIndex) {
-        if(CipherConnectSettingInfo.getHostIsShowSessionNumber(sessionIndex) == false) {
+        if(TESettingsInfo.getHostIsShowSessionNumber(sessionIndex) == false) {
             mSessionJumpBtn.setVisibility(View.INVISIBLE);
         } else {
             mSessionJumpBtn.setVisibility(View.VISIBLE);
@@ -707,8 +707,8 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSessionJumpBtn.getLayoutParams();
-            params.leftMargin = CipherConnectSettingInfo.getSessionNumberLocLeft();
-            params.topMargin = CipherConnectSettingInfo.getSessionNumberLocTop();
+            params.leftMargin = TESettingsInfo.getSessionNumberLocLeft();
+            params.topMargin = TESettingsInfo.getSessionNumberLocTop();
             mSessionJumpBtn.setLayoutParams(params);
         }
     }
@@ -733,12 +733,12 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                int nSession = CipherConnectSettingInfo.GetSessionIndex(), nOriSession = CipherConnectSettingInfo.GetSessionIndex();
+                int nSession = TESettingsInfo.GetSessionIndex(), nOriSession = TESettingsInfo.GetSessionIndex();
                 do {
                     ++nSession;
-                    if(nSession > CipherConnectSettingInfo.getSessionCount()-1)
+                    if(nSession > TESettingsInfo.getSessionCount()-1)
                         nSession = 0;
-                    if(CipherConnectSettingInfo.getHostIsShowSessionNumber(nSession) == true)
+                    if(TESettingsInfo.getHostIsShowSessionNumber(nSession) == true)
                         break;
                 } while (true);
                 if(nSession != nOriSession) {
@@ -773,7 +773,7 @@ public class MainActivity extends AppCompatActivity
             mView = view;
             if(event.getAction() == MotionEvent.ACTION_UP) {
                 RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) mSessionJumpBtn.getLayoutParams();
-                CipherConnectSettingInfo.setSessionNumberLoc(parms.leftMargin, parms.topMargin);
+                TESettingsInfo.setSessionNumberLoc(parms.leftMargin, parms.topMargin);
             }
             return mDetector.onTouchEvent(event);
         }

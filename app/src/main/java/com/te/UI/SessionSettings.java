@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.example.terminalemulation.R;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 
 public class SessionSettings extends SessionSettingsBase {
     public static final int REQ_EDIT = 1;
@@ -37,12 +37,12 @@ public class SessionSettings extends SessionSettingsBase {
             int nEditSessionIdx = intent.getIntExtra(ACT_SETTING_EDIT_GET_SESSION_IDX, 0);
             String strTitle = String.format(getResources().getString(R.string.setting_title), nEditSessionIdx + 1);
             getSupportActionBar().setTitle(strTitle);
-            gEditSessionSetting = CipherConnectSettingInfo.getSessionSetting(nEditSessionIdx);
+            gEditSessionSetting = TESettingsInfo.getSessionSetting(nEditSessionIdx);
             layOK.setVisibility(View.GONE);
         } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
             String strTitle = getResources().getString(R.string.new_session);
             getSupportActionBar().setTitle(strTitle);
-            gEditSessionSetting = CipherConnectSettingInfo.createNewDefaultSessionSetting();
+            gEditSessionSetting = TESettingsInfo.createNewDefaultSessionSetting();
             toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
             layOK.setVisibility(View.VISIBLE);
             layOK.setOnClickListener(new View.OnClickListener() {

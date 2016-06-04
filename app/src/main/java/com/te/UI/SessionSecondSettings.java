@@ -5,7 +5,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.terminalemulation.R;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 
 public class SessionSecondSettings extends SessionSettingsBase {
     public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
@@ -34,7 +34,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
         } else if(action.compareTo(ACTION_SERVER_SETTING) == 0) {
-            if(CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+            if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.GetSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
                 SessionTNSettingsFrg settingsFrg = new SessionTNSettingsFrg();
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);

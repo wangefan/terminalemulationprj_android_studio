@@ -18,7 +18,7 @@ import Terminals.TESettings.SessionSetting;
 /**
  * Created by Franco.Liu on 2015/1/29.
  */
-public class CipherConnectSettingInfo {
+public class TESettingsInfo {
     final public static int MAX_SESSION_COUNT = 5;
     public static final boolean _DEBUG = false;
     public static final String _NAME = "TerminalEmulation";

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.MacroRecorder;
 import Terminals.Macroitem;
 import Terminals.TerminalBase;
@@ -101,21 +101,21 @@ public class TerminalProcess {
 
     public boolean ProcessConnect() {
 
-        String Ip = CipherConnectSettingInfo.getHostAddrByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        String Port = CipherConnectSettingInfo.getHostPortByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        Boolean SSh = CipherConnectSettingInfo.getHostIsSshEnableByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        boolean isTN = CipherConnectSettingInfo.getIsHostTNByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String Ip = TESettingsInfo.getHostAddrByIndex(TESettingsInfo.GetSessionIndex());
+        String Port = TESettingsInfo.getHostPortByIndex(TESettingsInfo.GetSessionIndex());
+        Boolean SSh = TESettingsInfo.getHostIsSshEnableByIndex(TESettingsInfo.GetSessionIndex());
+        boolean isTN = TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.GetSessionIndex());
 
         Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
         if (isTN == false) {
-            String serverTypeName = CipherConnectSettingInfo.getHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.GetSessionIndex());
             assert (serverTypeName.equals(context.getResources().getString(R.string.VT100Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.VT102Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.VT220Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
             mTerminal = new CVT100();
         } else {
-            String serverTypeName = CipherConnectSettingInfo.getTNHostTypeNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.GetSessionIndex());
             if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
                 mTerminal = new IBMHost5250();
         }

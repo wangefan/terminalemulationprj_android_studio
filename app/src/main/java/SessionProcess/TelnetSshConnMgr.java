@@ -1,6 +1,6 @@
 package SessionProcess;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.Sshconnectionpack;
 import Terminals.TerminalBase;
 
@@ -25,8 +25,8 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 		if (!IsConn)
 			return false;
 		
-		String User=CipherConnectSettingInfo.getHostSshUserByIndex(CipherConnectSettingInfo.GetSessionIndex());
-		String Password=CipherConnectSettingInfo.getHostSshPasswordByIndex(CipherConnectSettingInfo.GetSessionIndex());
+		String User= TESettingsInfo.getHostSshUserByIndex(TESettingsInfo.GetSessionIndex());
+		String Password= TESettingsInfo.getHostSshPasswordByIndex(TESettingsInfo.GetSessionIndex());
 		IsConn=SshConn.SshAuthenticatePw(User,Password);
 		
 		

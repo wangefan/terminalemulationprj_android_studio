@@ -67,7 +67,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     public Boolean IsWriteToLogFile() {
-        Boolean IsLog = CipherConnectSettingInfo.getHostIsWriteLogkByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.GetSessionIndex());
 
         if (!IsLog)
             return false;
@@ -99,7 +99,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c.getTime());
 
-        Boolean IsLog = CipherConnectSettingInfo.getHostIsWriteLogkByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.GetSessionIndex());
         if (IsLog)
             LogFile = new TerminalLogWriter(formattedDate + ".txt");
 
@@ -177,8 +177,8 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
         mTelnetParser.ParseData(charArr);
         ParseEnd();
-        if(CipherConnectSettingInfo.getHostIsAutoconnectByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true &&
-                CipherConnectSettingInfo.getHostIsAutoSignByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true &&
+        if(TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.GetSessionIndex()) == true &&
+                TESettingsInfo.getHostIsAutoSignByIndex(TESettingsInfo.GetSessionIndex()) == true &&
                 mBAutoLoginProcessed == false) {
             if(autoLogin())
                 mBAutoLoginProcessed = true;
@@ -294,11 +294,11 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                     sb.append((char)USERVAR);
                     sb.append(DEVNAME);
                     sb.append((char)VALUE);
-                    int nDevNameType = CipherConnectSettingInfo.getDevNameType(CipherConnectSettingInfo.GetSessionIndex());
-                    if(nDevNameType == CipherConnectSettingInfo.DEVNAME_DEFAULT) {
+                    int nDevNameType = TESettingsInfo.getDevNameType(TESettingsInfo.GetSessionIndex());
+                    if(nDevNameType == TESettingsInfo.DEVNAME_DEFAULT) {
                         //do nothing
-                    } else if (nDevNameType == CipherConnectSettingInfo.DEVNAME_CUST) {
-                        String custDevName = CipherConnectSettingInfo.getCustDevName(CipherConnectSettingInfo.GetSessionIndex());
+                    } else if (nDevNameType == TESettingsInfo.DEVNAME_CUST) {
+                        String custDevName = TESettingsInfo.getCustDevName(TESettingsInfo.GetSessionIndex());
                         sb.append(custDevName);
                     }
                     NvtSendSubNeg(CurCmd, sb.toString());
@@ -437,7 +437,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         }
 
         public Character TryGetMultiChar() {
-            int nCharSet = CipherConnectSettingInfo.getHostCharSetByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            int nCharSet = TESettingsInfo.getHostCharSetByIndex(TESettingsInfo.GetSessionIndex());
             if (nCharSet == 0)
                 return null;
 

@@ -33,7 +33,7 @@ import android.view.inputmethod.InputConnection;
 
 
 
-//import com.cipherlab.cipherconnectpro.CipherConnectSettingInfo;
+//import com.cipherlab.cipherconnectpro.TESettingsInfo;
 import com.example.terminalemulation.R;
 
 /**
@@ -120,7 +120,7 @@ public class SoftKeyboard extends InputMethodService implements
             mLastDisplayWidth = displayWidth;
         }
         
-        /*String Language = CipherConnectSettingInfo.getLanguage(this);
+        /*String Language = TESettingsInfo.getLanguage(this);
         if (Language.equals("No select"))
         {
         	mQwertyKeyboard = new LatinKeyboard(this, R.xml.qwerty_none);
@@ -183,7 +183,7 @@ public class SoftKeyboard extends InputMethodService implements
         mComposing.setLength(0);
         updateCandidates();
         
-        //String Language = CipherConnectSettingInfo.getLanguage(this);
+        //String Language = TESettingsInfo.getLanguage(this);
         
         //Log.d(TAG, "mLangKeyboard_1= " + mLangKeyboard);
         
@@ -236,7 +236,7 @@ public class SoftKeyboard extends InputMethodService implements
             // normal alphabetic keyboard, and assume that we should
             // be doing predictive text (showing candidates as the
             // user types).
-            boolean flag=false ;//= CipherConnectSettingInfo.isMinimum(this);
+            boolean flag=false ;//= TESettingsInfo.isMinimum(this);
             if (flag == true) {
                 mMode = TURN_ON;
                 mCurKeyboard = mOneLineKeyboard;

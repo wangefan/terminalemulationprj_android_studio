@@ -3,7 +3,7 @@ package com.te.UI;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.TESettings;
 
 public class SessionSettingsBase extends AppCompatActivity {
@@ -12,7 +12,7 @@ public class SessionSettingsBase extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CipherConnectSettingInfo.saveSessionSettings();
+        TESettingsInfo.saveSessionSettings();
     }
 
     @Override

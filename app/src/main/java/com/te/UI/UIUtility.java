@@ -15,8 +15,6 @@ import com.example.terminalemulation.R;
 
 import java.io.UnsupportedEncodingException;
 
-import Terminals.CipherConnectSettingInfo;
-
 public class UIUtility {
 	public interface OnEditMessageBoxListener {
 		void onResult(String result);

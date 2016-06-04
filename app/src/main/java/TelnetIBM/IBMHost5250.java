@@ -13,7 +13,7 @@ import com.te.UI.UIUtility;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 import Terminals.typeConvertion;
 
@@ -375,8 +375,8 @@ public class IBMHost5250 extends IBMHostBase {
     protected boolean autoLogin() {
         if (FieldList.size() <= 1)
             return false;
-        String loginName = CipherConnectSettingInfo.getHostUserNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        String pwd = CipherConnectSettingInfo.getHostPassWordByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.GetSessionIndex());
+        String pwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.GetSessionIndex());
         //get first field and set login name.
         IBM_FIELD nameField = FieldList.get(0);
         IBM_FIELD pwdField = FieldList.get(1);
@@ -457,8 +457,8 @@ public class IBMHost5250 extends IBMHostBase {
                 break;
             case Write_Error_Code:
                 setKeyLock(true);
-                int nErrorRow = CipherConnectSettingInfo.getErrorRow(CipherConnectSettingInfo.GetSessionIndex());
-                boolean bPopupDialog = CipherConnectSettingInfo.getPopupErrorDialog(CipherConnectSettingInfo.GetSessionIndex());
+                int nErrorRow = TESettingsInfo.getErrorRow(TESettingsInfo.GetSessionIndex());
+                boolean bPopupDialog = TESettingsInfo.getPopupErrorDialog(TESettingsInfo.GetSessionIndex());
                 if(bPopupDialog) {
                     StringBuilder sb = new StringBuilder();
                     PrintErrorMessage(new Point(1, nErrorRow), sb);
@@ -1910,7 +1910,7 @@ public class IBMHost5250 extends IBMHostBase {
                 }
 
                 if (Character.isLetter(KeyCode)) {
-                    if(CurField.Monocase || CipherConnectSettingInfo.getUpperCaseByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true)
+                    if(CurField.Monocase || TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.GetSessionIndex()) == true)
                         Code = ConvertAsciiToEBCD(Character.toUpperCase((char) KeyCode));
                 }
 
@@ -1938,7 +1938,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private boolean isKeyLocked() {
-       if(CipherConnectSettingInfo.getIsIBMAutoUnlock(CipherConnectSettingInfo.GetSessionIndex()) == true)
+       if(TESettingsInfo.getIsIBMAutoUnlock(TESettingsInfo.GetSessionIndex()) == true)
            bKeybaordLock = false;
         return bKeybaordLock;
     }
@@ -1994,17 +1994,17 @@ public class IBMHost5250 extends IBMHostBase {
             CaretBegin();
             putString(barcodeOriginal);
         } else { // check field length
-            int nFDLEN = CipherConnectSettingInfo.getCheckFieldLength(CipherConnectSettingInfo.GetSessionIndex());
+            int nFDLEN = TESettingsInfo.getCheckFieldLength(TESettingsInfo.GetSessionIndex());
             switch (nFDLEN) {
-                case CipherConnectSettingInfo.FDLEN_REJECT:
+                case TESettingsInfo.FDLEN_REJECT:
                     PlayWarningSounds();
                     UIUtility.messageBox(R.string.MSG_FDChek_reject);
                     break;
-                case CipherConnectSettingInfo.FDLEN_TRUN:
+                case TESettingsInfo.FDLEN_TRUN:
                     CaretBegin();
                     putString(barcodeOriginal.substring(0, cField.Lenth));
                     break;
-                case CipherConnectSettingInfo.FDLEN_SPLT:
+                case TESettingsInfo.FDLEN_SPLT:
                     CaretBegin();
                     putString(barcodeOriginal);
                     break;

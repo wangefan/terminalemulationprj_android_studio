@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import Terminals.CipherConnectSettingInfo;
+import Terminals.TESettingsInfo;
 import Terminals.CipherReaderControl;
 import Terminals.TerminalLogWriter;
 import Terminals.stdActivityRef;
@@ -117,8 +117,8 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     protected boolean autoLogin() {
-        String loginNameProm = CipherConnectSettingInfo.getHostLoginPromtByIndex(CipherConnectSettingInfo.GetSessionIndex());
-        String pwdProm = CipherConnectSettingInfo.getHostPassWordPromtByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String loginNameProm = TESettingsInfo.getHostLoginPromtByIndex(TESettingsInfo.GetSessionIndex());
+        String pwdProm = TESettingsInfo.getHostPassWordPromtByIndex(TESettingsInfo.GetSessionIndex());
         boolean bHasNameProm = false, bHasPwdProm = false;
         //Parse content to see if loginNameProm and pwdProm exist or not
         for (int idxRow = 0; idxRow < CharGrid.length; idxRow++) {
@@ -131,18 +131,18 @@ public class CVT100 extends CVT100Enum {
         if (bHasNameProm == false && bHasPwdProm == false)
             return false;
 
-        int nTerm = CipherConnectSettingInfo.getHostTermLoginByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        int nTerm = TESettingsInfo.getHostTermLoginByIndex(TESettingsInfo.GetSessionIndex());
         String sendString = "";
         if (bHasNameProm) {
-            String loginName = CipherConnectSettingInfo.getHostUserNameByIndex(CipherConnectSettingInfo.GetSessionIndex());
-            if (nTerm == CipherConnectSettingInfo.TERM_TAB) {
+            String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.GetSessionIndex());
+            if (nTerm == TESettingsInfo.TERM_TAB) {
                 sendString = loginName + "\t";
             } else {
                 sendString = loginName + "\r\n";
             }
         }
         if (bHasPwdProm) {
-            String loginPwd = CipherConnectSettingInfo.getHostPassWordByIndex(CipherConnectSettingInfo.GetSessionIndex());
+            String loginPwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.GetSessionIndex());
             sendString = sendString + loginPwd + "\r\n";
         }
 
@@ -204,7 +204,7 @@ public class CVT100 extends CVT100Enum {
         String StrCmd = GetActionString(e);
 
 
-        String strGood = CipherConnectSettingInfo.getHostGoodfeedbackCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strGood = TESettingsInfo.getHostGoodfeedbackCmdByIndex(TESettingsInfo.GetSessionIndex());
         if (strGood != null && strGood.isEmpty() == false) {
             if (StrCmd.equals(strGood)) {
 
@@ -224,7 +224,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strErr = CipherConnectSettingInfo.getHostErrorfeedbackCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strErr = TESettingsInfo.getHostErrorfeedbackCmdByIndex(TESettingsInfo.GetSessionIndex());
         if (strErr != null && strErr.isEmpty() == false) {
             if (StrCmd.equals(strErr)) {
                 SoundPool soundPool;
@@ -242,7 +242,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strReader = CipherConnectSettingInfo.getHostEnableReaderCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strReader = TESettingsInfo.getHostEnableReaderCmdByIndex(TESettingsInfo.GetSessionIndex());
         if (strReader != null && strReader.isEmpty() == false) {
             if (StrCmd.equals(strReader)) {
                 SoundPool soundPool;
@@ -262,7 +262,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strDisableReader = CipherConnectSettingInfo.getHostDisableReaderCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strDisableReader = TESettingsInfo.getHostDisableReaderCmdByIndex(TESettingsInfo.GetSessionIndex());
         if (strDisableReader != null && strDisableReader.isEmpty() == false) {
             if (StrCmd.equals(strDisableReader)) {
                 SoundPool soundPool;
@@ -1164,7 +1164,7 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void handleBarcodeFire(String Code) {
-        if(CipherConnectSettingInfo.getUpperCaseByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true)
+        if(TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.GetSessionIndex()) == true)
             Code = Code.toUpperCase();
         DispatchMessage(this, Code);
         ViewPostInvalidate();
@@ -1182,11 +1182,11 @@ public class CVT100 extends CVT100Enum {
         String formattedDate = df.format(c.getTime());
 
 
-        Boolean IsLog = CipherConnectSettingInfo.getHostIsWriteLogkByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.GetSessionIndex());
         if (IsLog)
             LogFile = new TerminalLogWriter(formattedDate + ".txt");
 
-        byte[] SendData = CipherConnectSettingInfo.getVTHostSendToHostByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        byte[] SendData = TESettingsInfo.getVTHostSendToHostByIndex(TESettingsInfo.GetSessionIndex());
 
         if (SendData != null && SendData.length > 0) {
             DispatchMessageRaw(this, SendData, SendData.length);
@@ -1198,7 +1198,7 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        Boolean IsLineBuffer = CipherConnectSettingInfo.getHostIsLineBufferByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        Boolean IsLineBuffer = TESettingsInfo.getHostIsLineBufferByIndex(TESettingsInfo.GetSessionIndex());
 
         if (IsLineBuffer) {
             KeyEventVal Key = new KeyEventVal();
@@ -1215,7 +1215,7 @@ public class CVT100 extends CVT100Enum {
                 LineBufferList.clear();
                 return;
             } else {
-                Boolean IsEcho = CipherConnectSettingInfo.getHostIsLocalEchoByIndex(CipherConnectSettingInfo.GetSessionIndex());
+                Boolean IsEcho = TESettingsInfo.getHostIsLocalEchoByIndex(TESettingsInfo.GetSessionIndex());
                 if (IsEcho)
                     LineBufferInput(keyCode, event);
             }
@@ -1517,7 +1517,7 @@ public class CVT100 extends CVT100Enum {
     }
 
     private void PutAsciiKey(int KeyCode) {
-        if (Character.isLetter((char)KeyCode) && CipherConnectSettingInfo.getUpperCaseByIndex(CipherConnectSettingInfo.GetSessionIndex()) == true) {
+        if (Character.isLetter((char)KeyCode) && TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.GetSessionIndex()) == true) {
             KeyCode = Character.toUpperCase((char) KeyCode);
         }
 
