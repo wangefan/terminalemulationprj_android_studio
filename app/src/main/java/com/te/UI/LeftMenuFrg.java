@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.example.terminalemulation.R;
  
 public class LeftMenuFrg extends Fragment {
@@ -96,7 +93,7 @@ public class LeftMenuFrg extends Fragment {
 
     void syncSessionsViewFromSettings() {
         mSessionsView.removeAllSessions();
-        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
+        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.getSessionCount(); ++idxSession) {
             String strTitle =
                     String.format(getResources().getString(R.string.Format_Session),
                             Integer.toString(idxSession + 1),
@@ -139,7 +136,7 @@ public class LeftMenuFrg extends Fragment {
         mSessionsView.setOnItemClickPartListener(new SessionsView.OnItemClickPartListener() {
             @Override
             public void onItemClickDelete(int pos) {
-                if(CipherConnectSettingInfo.GetSessionCount() <= 1) {
+                if(CipherConnectSettingInfo.getSessionCount() <= 1) {
                     Toast.makeText(getContext(), R.string.MSG_DeleteSession_Warn, Toast.LENGTH_SHORT).show();
                     return;
                 }

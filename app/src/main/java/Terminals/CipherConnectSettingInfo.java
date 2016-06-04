@@ -48,41 +48,7 @@ public class CipherConnectSettingInfo {
     private static SharedPreferences _sp = null;
     private static int mCurrentSessionIndex;
 
-    static void deleteCurrentSetting() {
-        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
-        if (teJsonFile.exists()) {
-            teJsonFile.delete();
-        }
-    }
-
-    private static TESettings deSerialize(File teJsonFile) {
-        try {
-            FileInputStream inStream = new FileInputStream(teJsonFile);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
-            Gson gson = new Gson();
-            TESettings teSettings = (TESettings) gson.fromJson(reader, TESettings.class);
-            return teSettings;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private static void serialize(File teJsonFile) {
-        FileOutputStream outputStream;
-        try {
-            outputStream = new FileOutputStream(teJsonFile, true);
-            Gson gson = new Gson();
-            String Sjson = gson.toJson(mTESettings);
-            outputStream.write(Sjson.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static boolean initSessionParms(Context context) {
+    public static boolean loadSessionSettings(Context context) {
         mContext = context;
         try {
             File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
@@ -117,28 +83,10 @@ public class CipherConnectSettingInfo {
         return false;
     }
 
-    public static void deleteCurSessionParms() {
-        deleteCurrentSetting();
-    }
-
-    public static SessionSetting createNewDefaultSessionSetting() {
-        SessionSetting setting = null;
-        try {
-            InputStream inputStream = mContext.getAssets().open(mDefaultSettingFilename);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            Gson gson = new Gson();
-            setting = gson.fromJson(reader, SessionSetting.class);
-        } catch (Exception e) {
-
-        }
-
-        return setting;
-    }
-
-    public static void SessionSettingSave() {
+    public static void saveSessionSettings() {
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return;
-        deleteCurrentSetting();
+        deleteJsonFile();
         File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
         try {
             if (teJsonFile.createNewFile()) {
@@ -157,7 +105,55 @@ public class CipherConnectSettingInfo {
         }
     }
 
-    public static void SetSessionIndex(int Index) {
+    public static void deleteJsonFile() {
+        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        if (teJsonFile.exists()) {
+            teJsonFile.delete();
+        }
+    }
+
+    private static TESettings deSerialize(File teJsonFile) {
+        try {
+            FileInputStream inStream = new FileInputStream(teJsonFile);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
+            Gson gson = new Gson();
+            TESettings teSettings = (TESettings) gson.fromJson(reader, TESettings.class);
+            return teSettings;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static void serialize(File teJsonFile) {
+        FileOutputStream outputStream;
+        try {
+            outputStream = new FileOutputStream(teJsonFile, true);
+            Gson gson = new Gson();
+            String Sjson = gson.toJson(mTESettings);
+            outputStream.write(Sjson.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static SessionSetting createNewDefaultSessionSetting() {
+        SessionSetting setting = null;
+        try {
+            InputStream inputStream = mContext.getAssets().open(mDefaultSettingFilename);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            Gson gson = new Gson();
+            setting = gson.fromJson(reader, SessionSetting.class);
+        } catch (Exception e) {
+
+        }
+
+        return setting;
+    }
+
+    public static void setSessionIndex(int Index) {
         mCurrentSessionIndex = Index;
     }
 
@@ -165,7 +161,7 @@ public class CipherConnectSettingInfo {
         return mCurrentSessionIndex;
     }
 
-    public static int GetSessionCount() {
+    public static int getSessionCount() {
         return mTESettings.SETTINGS.size();
     }
 
@@ -341,11 +337,6 @@ public class CipherConnectSettingInfo {
         return Setting.mLoginPassword;
     }
 
-    public static void SetHostPassWordByIndex(int index, String PassWord) {
-        SessionSetting Setting = mTESettings.getSessionSetting(index);
-        Setting.mLoginPassword = PassWord;
-    }
-
     public static boolean getHostIsSshEnableByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.SSH;
@@ -382,12 +373,12 @@ public class CipherConnectSettingInfo {
       
      */
 
-    public static String GetHostGoodfeedbackCmdByIndex(int index) {
+    public static String getHostGoodfeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.goodFeedBackESC;
     }
 
-    public static String GetHostErrorfeedbackCmdByIndex(int index) {
+    public static String getHostErrorfeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.errorFeedBackESC;
     }
@@ -416,12 +407,12 @@ public class CipherConnectSettingInfo {
 	     
 	     */
 
-    public static String GetHostEnableReaderCmdByIndex(int index) {
+    public static String getHostEnableReaderCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.scannerEnableESC;
     }
 
-    public static String GetHostDisableReaderCmdByIndex(int index) {
+    public static String getHostDisableReaderCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.scannerDisableESC;
     }

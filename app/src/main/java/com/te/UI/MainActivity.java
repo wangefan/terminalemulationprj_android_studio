@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initInOnCreate() {
-        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.GetSessionCount(); ++idxSession) {
+        for (int idxSession = 0; idxSession < CipherConnectSettingInfo.getSessionCount(); ++idxSession) {
             TerminalProcess Process = new TerminalProcess();
             mCollSessions.add(Process);
         }
@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity
         stdActivityRef.SetCurrActivity(this);
         CipherReaderControl.InitReader(this, myDataReceiver);
         // Initialize User Parm
-        if (true == CipherConnectSettingInfo.initSessionParms(getApplicationContext())) {
+        if (true == CipherConnectSettingInfo.loadSessionSettings(getApplicationContext())) {
             initInOnCreate();
         } else {
             //ask user to try to clear setting, or exit app
@@ -333,8 +333,8 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            CipherConnectSettingInfo.deleteCurSessionParms();
-                            if (!CipherConnectSettingInfo.initSessionParms(getApplicationContext())) {
+                            CipherConnectSettingInfo.deleteJsonFile();
+                            if (!CipherConnectSettingInfo.loadSessionSettings(getApplicationContext())) {
                                 //Todo:popup warninig window
                                 finish();
                             } else {
@@ -360,7 +360,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        CipherConnectSettingInfo.SessionSettingSave();
+        CipherConnectSettingInfo.saveSessionSettings();
         // ***************************************************//
         // Unregister Broadcast Receiver before app close
         // ***************************************************//
@@ -398,7 +398,7 @@ public class MainActivity extends AppCompatActivity
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
                     CipherConnectSettingInfo.addSession(SessionSettings.gEditSessionSetting);
-                    int nAddedSessionIdx = CipherConnectSettingInfo.GetSessionCount() - 1;
+                    int nAddedSessionIdx = CipherConnectSettingInfo.getSessionCount() - 1;
                     mCollSessions.add(new TerminalProcess());
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
@@ -439,7 +439,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddSession() {
-        if (CipherConnectSettingInfo.GetSessionCount() < CipherConnectSettingInfo.MAX_SESSION_COUNT) {
+        if (CipherConnectSettingInfo.getSessionCount() < CipherConnectSettingInfo.MAX_SESSION_COUNT) {
             Intent intent = new Intent(this, SessionSettings.class);
             intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_ADD);
             startActivityForResult(intent, SessionSettings.REQ_ADD);
@@ -599,7 +599,7 @@ public class MainActivity extends AppCompatActivity
         //bind between TerminalProcess and ContentView
         nextSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(nextSession);
-        CipherConnectSettingInfo.SetSessionIndex(idxSession);
+        CipherConnectSettingInfo.setSessionIndex(idxSession);
         mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
         mContentView.refresh();
@@ -732,7 +732,7 @@ public class MainActivity extends AppCompatActivity
                 int nSession = CipherConnectSettingInfo.GetSessionIndex(), nOriSession = CipherConnectSettingInfo.GetSessionIndex();
                 do {
                     ++nSession;
-                    if(nSession > CipherConnectSettingInfo.GetSessionCount()-1)
+                    if(nSession > CipherConnectSettingInfo.getSessionCount()-1)
                         nSession = 0;
                     if(CipherConnectSettingInfo.getHostIsShowSessionNumber(nSession) == true)
                         break;

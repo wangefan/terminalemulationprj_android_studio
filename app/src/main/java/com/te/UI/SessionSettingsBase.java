@@ -12,7 +12,7 @@ public class SessionSettingsBase extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CipherConnectSettingInfo.SessionSettingSave();
+        CipherConnectSettingInfo.saveSessionSettings();
     }
 
     @Override

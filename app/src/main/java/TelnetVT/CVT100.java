@@ -204,7 +204,7 @@ public class CVT100 extends CVT100Enum {
         String StrCmd = GetActionString(e);
 
 
-        String strGood = CipherConnectSettingInfo.GetHostGoodfeedbackCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strGood = CipherConnectSettingInfo.getHostGoodfeedbackCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
         if (strGood != null && strGood.isEmpty() == false) {
             if (StrCmd.equals(strGood)) {
 
@@ -224,7 +224,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strErr = CipherConnectSettingInfo.GetHostErrorfeedbackCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strErr = CipherConnectSettingInfo.getHostErrorfeedbackCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
         if (strErr != null && strErr.isEmpty() == false) {
             if (StrCmd.equals(strErr)) {
                 SoundPool soundPool;
@@ -242,7 +242,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strReader = CipherConnectSettingInfo.GetHostEnableReaderCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strReader = CipherConnectSettingInfo.getHostEnableReaderCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
         if (strReader != null && strReader.isEmpty() == false) {
             if (StrCmd.equals(strReader)) {
                 SoundPool soundPool;
@@ -262,7 +262,7 @@ public class CVT100 extends CVT100Enum {
             }
         }
 
-        String strDisableReader = CipherConnectSettingInfo.GetHostDisableReaderCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
+        String strDisableReader = CipherConnectSettingInfo.getHostDisableReaderCmdByIndex(CipherConnectSettingInfo.GetSessionIndex());
         if (strDisableReader != null && strDisableReader.isEmpty() == false) {
             if (StrCmd.equals(strDisableReader)) {
                 SoundPool soundPool;
