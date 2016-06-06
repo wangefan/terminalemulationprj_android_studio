@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity
         implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewLsitener
 
 {
-    //MacroRecorder  MacroRec=new MacroRecorder();
     // ReaderManager is using to communicate with Barcode Reader Service
     //private com.cipherlab.barcode.ReaderManager mReaderManager;
     List<TerminalProcess> mCollSessions = new ArrayList<TerminalProcess>();

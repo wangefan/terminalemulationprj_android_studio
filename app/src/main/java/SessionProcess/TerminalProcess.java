@@ -21,7 +21,7 @@ import Terminals.stdActivityRef;
  * Created by Franco.Liu on 2014/2/26.
  */
 public class TerminalProcess {
-    MacroRecorder MacroRec = new MacroRecorder();
+    private MacroRecorder mMacroRec = new MacroRecorder();
     private TerminalBase mTerminal;
     private OnTerminalProcessListener mListener = null;
 
@@ -30,7 +30,7 @@ public class TerminalProcess {
 
     //call from ContentView Begin
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        MacroRec.AddMacroKeyboard(keyCode, event);
+        mMacroRec.AddMacroKeyboard(keyCode, event);
         mTerminal.handleKeyDown(keyCode, event);
         if (mListener != null)
             mListener.onDataInputEvent();
@@ -46,7 +46,7 @@ public class TerminalProcess {
     }
 
     public void PlayMacro() {
-        ArrayList<?> Macroitem = MacroRec.GetItemsList();
+        ArrayList<?> Macroitem = mMacroRec.GetItemsList();
 
         for (int i = 0; i < Macroitem.size(); i++) {
             Macroitem item = (Macroitem) Macroitem.get(i);
@@ -61,28 +61,28 @@ public class TerminalProcess {
     }
 
     public void StopRecMacro() {
-        MacroRec.SetRecord(false);
+        mMacroRec.SetRecord(false);
     }
 
     public void RecMacro() {
-        MacroRec.SetRecord(true);
+        mMacroRec.SetRecord(true);
     }
 
     public boolean ShowColorRecordIcon() {
-        return MacroRec.ShowColorRecordIcon();
+        return mMacroRec.ShowColorRecordIcon();
     }
 
     public boolean ShowColorPlayIcon() {
-        return MacroRec.ShowColorPlayIcon();
+        return mMacroRec.ShowColorPlayIcon();
     }
 
     public boolean ShowColorStopIcon() {
-        return MacroRec.ShowColorStopIcon();
+        return mMacroRec.ShowColorStopIcon();
     }
 
     public void ProcessReadBarcode(String Data) {
         if (mTerminal != null) {
-            MacroRec.AddMacroBarcode(Data);
+            mMacroRec.AddMacroBarcode(Data);
             mTerminal.handleBarcodeFire(Data);
 
             if (mListener != null)
