@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity
 
     private Toolbar mToolbar;
     private LeftMenuFrg mFragmentLeftdrawer;
+    private RelativeLayout mMacroView = null;
     private FloatingActionButton mFAB = null;
     private TEKeyboardViewUtility mKeyboardViewUtility = null;
     private View mSessionStausView = null;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onConnected() {
             showConnectionView(true);
-            UpdateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex()));
+            updateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex()));
             UpdateRecordButton();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Keyboard);
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onDisConnected() {
             showConnectionView(false);
-            UpdateRecordButtonVisible(false);
+            updateRecordButtonVisible(false);
             updateConnMenuItem();
             updateFABStatus(FABStatus.Connect);
             UIUtility.showProgressDlg(false, 0);
@@ -199,25 +200,14 @@ public class MainActivity extends AppCompatActivity
             ButStop.setBackgroundResource(R.drawable.stopicon);
         else
             ButStop.setBackgroundResource(R.drawable.stopgray);
-
-
     }
 
-    private void UpdateRecordButtonVisible(boolean Show) {
-        ImageButton ButStop = (ImageButton) findViewById(R.id.StopButton);
-        ImageButton ButPlay = (ImageButton) findViewById(R.id.PlayButton);
-        ImageButton ButRec = (ImageButton) findViewById(R.id.RecButton);
-
-        if (!Show) {
-            ButStop.setVisibility(View.INVISIBLE);
-            ButPlay.setVisibility(View.INVISIBLE);
-            ButRec.setVisibility(View.INVISIBLE);
+    private void updateRecordButtonVisible(boolean Show) {
+        if (!Show || isCurSessionConnected() == false) {
+            mMacroView.setVisibility(View.GONE);
         } else {
-            ButStop.setVisibility(View.VISIBLE);
-            ButPlay.setVisibility(View.VISIBLE);
-            ButRec.setVisibility(View.VISIBLE);
+            mMacroView.setVisibility(View.VISIBLE);
         }
-
     }
 
     private void initInOnCreate() {
@@ -234,6 +224,8 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
         mFragmentLeftdrawer.setUp(mToolbar);
         mFragmentLeftdrawer.setDrawerListener(this);
+
+        mMacroView = (RelativeLayout) findViewById(R.id.macro_view);
 
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
         updateFABStatus(FABStatus.Connect);
@@ -393,6 +385,7 @@ public class MainActivity extends AppCompatActivity
                 mContentView.refresh();
                 setSessionJumpImage(TESettingsInfo.getSessionIndex());
                 setSessionStatusView();
+                updateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex()));
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
