@@ -20,7 +20,6 @@ public class MacroRecorder {
         MacroItem item = new MacroItem();
         item.setInputType(0);
         item.setEvent(event);
-        item.setKeyCode(code);
         mMacroList.add(item);
     }
 

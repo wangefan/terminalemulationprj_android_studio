@@ -6,7 +6,6 @@ public class MacroItem {
 
     private String mBarcodeData = "";
     private KeyEvent mKeyEvent = null;
-    private int mKeyCode = -1;
     private int mInputType = 0;// 0:key 1:bar
 
     public MacroItem() {
@@ -28,20 +27,11 @@ public class MacroItem {
         mBarcodeData = Data;
     }
 
-
     public KeyEvent getKeyEvent() {
         return mKeyEvent;
     }
 
     public void setEvent(KeyEvent evt) {
         mKeyEvent = evt;
-    }
-
-    public int getKeyCode() {
-        return mKeyCode;
-    }
-
-    public void setKeyCode(int key) {
-        mKeyCode = key;
     }
 }

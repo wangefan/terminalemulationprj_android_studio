@@ -50,7 +50,10 @@ public class TerminalProcess {
             if (item.getInputType() == 1) {
                 playMacroBarcode(item.getBarcodeData());
             } else {
-                mTerminal.handleKeyDown(item.getKeyCode(), item.getKeyEvent());
+                KeyEvent event = item.getKeyEvent();
+                if(event != null) {
+                    mTerminal.handleKeyDown(event.getKeyCode(), event);
+                }
             }
         }
     }
