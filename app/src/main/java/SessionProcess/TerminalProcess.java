@@ -12,7 +12,7 @@ import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 import Terminals.TESettingsInfo;
 import Terminals.MacroRecorder;
-import Terminals.Macroitem;
+import Terminals.MacroItem;
 import Terminals.TerminalBase;
 import Terminals.TerminalBaseEnum;
 import Terminals.stdActivityRef;
@@ -28,73 +28,55 @@ public class TerminalProcess {
     public TerminalProcess() {
     }
 
-    //call from ContentView Begin
     public void handleKeyDown(int keyCode, KeyEvent event) {
         if(mMacroRec.isRecording()) {
             mMacroRec.addMacroKeyboard(keyCode, event);
         }
         mTerminal.handleKeyDown(keyCode, event);
-        if (mListener != null)
-            mListener.onDataInputEvent();
     }
 
     public void handleScreenTouch(int x, int y) {
         mTerminal.OnScreenBufferPos(x, y);
     }
-    //call from ContentView End
 
     public void setListener(OnTerminalProcessListener listener) {
         mListener = listener;
     }
 
-    public void PlayMacro() {
+    public void playMacro() {
         ArrayList<?> Macroitem = mMacroRec.getItemsList();
-
         for (int i = 0; i < Macroitem.size(); i++) {
-            Macroitem item = (Macroitem) Macroitem.get(i);
-
+            MacroItem item = (MacroItem) Macroitem.get(i);
             if (item.GetInputType() == 1) {
-                PlayMacroBarcode(item.GetBarcodeData());
-            } else
+                playMacroBarcode(item.GetBarcodeData());
+            } else {
                 mTerminal.handleKeyDown(item.GetKeyCode(), item.GetEvent());
-
+            }
         }
-
     }
 
-    public void StopRecMacro() {
-        mMacroRec.setRecord(false);
+    public void recMacro(boolean bRec) {
+        mMacroRec.setRecord(bRec);
     }
 
-    public void RecMacro() {
-        mMacroRec.setRecord(true);
+    public boolean isMacroRecording() {
+        return mMacroRec.isRecording();
     }
 
-    public boolean ShowColorRecordIcon() {
-        return mMacroRec.showColorRecordIcon();
+    public boolean hasMacro() {
+        return mMacroRec.hasMacro();
     }
 
-    public boolean ShowColorPlayIcon() {
-        return mMacroRec.showColorPlayIcon();
-    }
-
-    public boolean ShowColorStopIcon() {
-        return mMacroRec.showColorStopIcon();
-    }
-
-    public void ProcessReadBarcode(String Data) {
+    public void processReadBarcode(String Data) {
         if (mTerminal != null) {
             if (mMacroRec.isRecording()) {
                 mMacroRec.addMacroBarcode(Data);
             }
             mTerminal.handleBarcodeFire(Data);
-
-            if (mListener != null)
-                mListener.onDataInputEvent();
         }
     }
 
-    public void PlayMacroBarcode(String Data) {
+    public void playMacroBarcode(String Data) {
         if (mTerminal != null) {
             mTerminal.handleBarcodeFire(Data);
         }
@@ -191,7 +173,5 @@ public class TerminalProcess {
         void onDisConnected();
 
         void onNotify(String action, Object... params);
-
-        void onDataInputEvent();
     }
 }

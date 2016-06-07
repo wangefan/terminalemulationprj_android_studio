@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                 data = intent.getStringExtra(GeneralString.BcReaderData);
 
                 //MacroRec.addMacroBarcode(data);
-                termProc.ProcessReadBarcode(data);
+                termProc.processReadBarcode(data);
                 //mReaderManager.SetActive(false);
                 // show decoded data
                 //e1.setText(data);
@@ -146,11 +146,6 @@ public class MainActivity extends AppCompatActivity
                 mContentView.DrawFieldChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
             }
         }
-
-        @Override
-        public void onDataInputEvent() {
-            UpdateRecordButton();
-        }
     };
 
     private void updateFABStatus(FABStatus fabStatus) {
@@ -180,26 +175,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void UpdateRecordButton() {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         ImageButton ButStop = (ImageButton) findViewById(R.id.StopButton);
         ImageButton ButPlay = (ImageButton) findViewById(R.id.PlayButton);
         ImageButton ButRec = (ImageButton) findViewById(R.id.RecButton);
 
-
-        if (termProc.ShowColorRecordIcon())
+        if (termProc.isMacroRecording() == false) {
             ButRec.setBackgroundResource(R.drawable.record);
-        else
-            ButRec.setBackgroundResource(R.drawable.recordgray);
-
-        if (termProc.ShowColorPlayIcon())
-            ButPlay.setBackgroundResource(R.drawable.playicon);
-        else
-            ButPlay.setBackgroundResource(R.drawable.playgray);
-
-        if (termProc.ShowColorStopIcon())
-            ButStop.setBackgroundResource(R.drawable.stopicon);
-        else
+            if (termProc.hasMacro())
+                ButPlay.setBackgroundResource(R.drawable.playicon);
+            else
+                ButPlay.setBackgroundResource(R.drawable.playgray);
             ButStop.setBackgroundResource(R.drawable.stopgray);
+        } else {
+            ButRec.setBackgroundResource(R.drawable.recordgray);
+            ButPlay.setBackgroundResource(R.drawable.playgray);
+            ButStop.setBackgroundResource(R.drawable.stopicon);
+        }
     }
 
     private void updateRecordButtonVisible() {
@@ -442,19 +434,19 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickStop(View v) {
         TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
-        termProc.StopRecMacro();
+        termProc.recMacro(false);
         UpdateRecordButton();
     }
 
     public void onClickPlay(View v) {
         TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        termProc.PlayMacro();
+        termProc.playMacro();
         UpdateRecordButton();
     }
 
     public void onClickRec(View v) {
         TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        termProc.RecMacro();
+        termProc.recMacro(true);
         UpdateRecordButton();
     }
 

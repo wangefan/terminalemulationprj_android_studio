@@ -2,14 +2,14 @@ package Terminals;
 
 import android.view.KeyEvent;
 
-public class Macroitem {
+public class MacroItem {
 
     private String BarcodeData = "";
     private KeyEvent event;
     private int KeyCode;
     private int GetInputType;// 0:key 1:bar
 
-    public Macroitem() {
+    public MacroItem() {
     }
 
     public int GetInputType() {

@@ -5,55 +5,50 @@ import android.view.KeyEvent;
 import java.util.ArrayList;
 
 public class MacroRecorder {
-    private boolean mRec;
-    private java.util.ArrayList<Macroitem> MacroList = new java.util.ArrayList<Macroitem>();
+    private boolean mIsRecording;
+    private java.util.ArrayList<MacroItem> mMacroList = new java.util.ArrayList<MacroItem>();
 
     public MacroRecorder() {
         reset();
     }
 
     public void reset() {
-        MacroList.clear();
+        mMacroList.clear();
     }
 
     public void addMacroKeyboard(int code, KeyEvent event) {
-        Macroitem item = new Macroitem();
+        MacroItem item = new MacroItem();
         item.SetInputType(0);
         item.SetEvent(event);
         item.SetKeyCode(code);
-        MacroList.add(item);
+        mMacroList.add(item);
     }
 
     public void addMacroBarcode(String code) {
-        Macroitem item = new Macroitem();
+        MacroItem item = new MacroItem();
         item.SetInputType(1);
         item.SetBarcodeData(code);
-        MacroList.add(item);
+        mMacroList.add(item);
     }
 
-    public ArrayList<Macroitem> getItemsList() {
-        return MacroList;
+    public ArrayList<MacroItem> getItemsList() {
+        return mMacroList;
     }
 
     public void setRecord(boolean isRecord) {
-        mRec = isRecord;
+        mIsRecording = isRecord;
+        if(mIsRecording) {
+            reset();
+        }
     }
 
     public boolean isRecording() {
-        return mRec;
+        return mIsRecording;
     }
 
-    public boolean showColorRecordIcon() {
-        return (!mRec);
-    }
-
-    public boolean showColorPlayIcon() {
-        if (MacroList.size() > 0)
+    public boolean hasMacro() {
+        if (mMacroList.size() > 0)
             return true;
         return false;
-    }
-
-    public boolean showColorStopIcon() {
-        return mRec;
     }
 }
