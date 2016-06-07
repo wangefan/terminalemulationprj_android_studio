@@ -2,10 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:id="@+id/macro_view"
     android:layout_alignParentBottom="true"
-    android:visibility="visible">
+    android:visibility="visible"
+    android:background="@color/key_back_color">
     <ImageButton
         android:id="@+id/RecButton"
         android:layout_width="30dp"
@@ -14,7 +15,7 @@
         android:onClick="onClickRec"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"/>
     <ImageButton
         android:id="@+id/PlayButton"
         android:layout_width="30dp"
@@ -22,7 +23,8 @@
         android:background="@drawable/playicon"
         android:onClick="onClickPlay"
         android:layout_toRightOf="@+id/RecButton"
-        android:layout_toEndOf="@+id/RecButton" />
+        android:layout_toEndOf="@+id/RecButton"
+        android:layout_marginLeft="5dp"/>
     <ImageButton
         android:id="@+id/StopButton"
         android:layout_width="30dp"
@@ -31,5 +33,6 @@
         android:onClick="onClickStop"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/PlayButton"
-        android:layout_toEndOf="@+id/PlayButton" />
+        android:layout_toEndOf="@+id/PlayButton"
+        android:layout_marginLeft="5dp"/>
 </RelativeLayout>

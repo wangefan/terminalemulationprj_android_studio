@@ -12,4 +12,5 @@
     <color name="transparent">#00000000</color>
     <drawable name="white">#FFFFFFFF</drawable>
     <drawable name="blue">#FF2DA3CA</drawable>
+    <color name="key_back_color">#8EB4E3</color>
 </resources>
