@@ -18,16 +18,16 @@ public class MacroRecorder {
 
     public void addMacroKeyboard(int code, KeyEvent event) {
         MacroItem item = new MacroItem();
-        item.SetInputType(0);
-        item.SetEvent(event);
-        item.SetKeyCode(code);
+        item.setInputType(0);
+        item.setEvent(event);
+        item.setKeyCode(code);
         mMacroList.add(item);
     }
 
     public void addMacroBarcode(String code) {
         MacroItem item = new MacroItem();
-        item.SetInputType(1);
-        item.SetBarcodeData(code);
+        item.setInputType(1);
+        item.setBarcodeData(code);
         mMacroList.add(item);
     }
 

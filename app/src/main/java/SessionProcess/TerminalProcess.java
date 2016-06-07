@@ -47,10 +47,10 @@ public class TerminalProcess {
         ArrayList<?> Macroitem = mMacroRec.getItemsList();
         for (int i = 0; i < Macroitem.size(); i++) {
             MacroItem item = (MacroItem) Macroitem.get(i);
-            if (item.GetInputType() == 1) {
-                playMacroBarcode(item.GetBarcodeData());
+            if (item.getInputType() == 1) {
+                playMacroBarcode(item.getBarcodeData());
             } else {
-                mTerminal.handleKeyDown(item.GetKeyCode(), item.GetEvent());
+                mTerminal.handleKeyDown(item.getKeyCode(), item.getKeyEvent());
             }
         }
     }

@@ -4,45 +4,44 @@ import android.view.KeyEvent;
 
 public class MacroItem {
 
-    private String BarcodeData = "";
-    private KeyEvent event;
-    private int KeyCode;
-    private int GetInputType;// 0:key 1:bar
+    private String mBarcodeData = "";
+    private KeyEvent mKeyEvent = null;
+    private int mKeyCode = -1;
+    private int mInputType = 0;// 0:key 1:bar
 
     public MacroItem() {
     }
 
-    public int GetInputType() {
-        return GetInputType;
+    public int getInputType() {
+        return mInputType;
     }
 
-    public void SetInputType(int type) {
-        GetInputType = type;
+    public void setInputType(int type) {
+        mInputType = type;
     }
 
-    public String GetBarcodeData() {
-        return BarcodeData;
+    public String getBarcodeData() {
+        return mBarcodeData;
     }
 
-    public void SetBarcodeData(String Data) {
-        BarcodeData = Data;
+    public void setBarcodeData(String Data) {
+        mBarcodeData = Data;
     }
 
 
-    public KeyEvent GetEvent() {
-        return event;
+    public KeyEvent getKeyEvent() {
+        return mKeyEvent;
     }
 
-    public void SetEvent(KeyEvent evt) {
-        event = evt;
+    public void setEvent(KeyEvent evt) {
+        mKeyEvent = evt;
     }
 
-    public int GetKeyCode() {
-        return KeyCode;
+    public int getKeyCode() {
+        return mKeyCode;
     }
 
-    public void SetKeyCode(int key) {
-        KeyCode = key;
+    public void setKeyCode(int key) {
+        mKeyCode = key;
     }
-
 }
