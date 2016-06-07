@@ -16,7 +16,7 @@ public class MacroRecorder {
         mMacroList.clear();
     }
 
-    public void addMacroKeyboard(int code, KeyEvent event) {
+    public void addMacroKeyboard(KeyEvent event) {
         MacroItem item = new MacroItem();
         item.setInputType(0);
         item.setEvent(event);

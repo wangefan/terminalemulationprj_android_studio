@@ -30,7 +30,7 @@ public class TerminalProcess {
 
     public void handleKeyDown(int keyCode, KeyEvent event) {
         if(mMacroRec.isRecording()) {
-            mMacroRec.addMacroKeyboard(keyCode, event);
+            mMacroRec.addMacroKeyboard(event);
         }
         mTerminal.handleKeyDown(keyCode, event);
     }
