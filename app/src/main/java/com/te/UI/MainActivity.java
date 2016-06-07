@@ -42,7 +42,7 @@ import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
 
 public class MainActivity extends AppCompatActivity
-        implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewLsitener
+        implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewListener
 
 {
     // ReaderManager is using to communicate with Barcode Reader Service

@@ -19,7 +19,7 @@ import Terminals.ContentView;
  * Created by yifan.wang on 2016/4/28.
  */
 public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListener {
-    public interface TEKeyboardViewLsitener {
+    public interface TEKeyboardViewListener {
         public void onShowKeyboard();
         public void onHideKeyboard();
     }
@@ -43,7 +43,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private Keyboard mVTFunKeyboard = null;
     private Keyboard mTNFunKeyboard = null;
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
-    private TEKeyboardViewLsitener mLisitener  = null;
+    private TEKeyboardViewListener mLisitener  = null;
 
     public TEKeyboardViewUtility(Context context, KeyboardView view, ContentView contentView) {
         mContext = context;
@@ -68,7 +68,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     }
 
     //Functions
-    public void setListener(TEKeyboardViewLsitener listener) {
+    public void setListener(TEKeyboardViewListener listener) {
         mLisitener = listener;
     }
 
