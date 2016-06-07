@@ -9,16 +9,14 @@ public class MacroRecorder {
     private java.util.ArrayList<Macroitem> MacroList = new java.util.ArrayList<Macroitem>();
 
     public MacroRecorder() {
-        Reset();
+        reset();
     }
 
-    public void Reset() {
+    public void reset() {
         MacroList.clear();
     }
 
-    public void AddMacroKeyboard(int code, KeyEvent event) {
-        if (!GetRecord())
-            return;
+    public void addMacroKeyboard(int code, KeyEvent event) {
         Macroitem item = new Macroitem();
         item.SetInputType(0);
         item.SetEvent(event);
@@ -26,40 +24,36 @@ public class MacroRecorder {
         MacroList.add(item);
     }
 
-    public void AddMacroBarcode(String code) {
-        if (!GetRecord())
-            return;
-
+    public void addMacroBarcode(String code) {
         Macroitem item = new Macroitem();
-        //
         item.SetInputType(1);
         item.SetBarcodeData(code);
         MacroList.add(item);
     }
 
-    public ArrayList<Macroitem> GetItemsList() {
+    public ArrayList<Macroitem> getItemsList() {
         return MacroList;
     }
 
-    public void SetRecord(boolean isRecord) {
+    public void setRecord(boolean isRecord) {
         mRec = isRecord;
     }
 
-    public boolean GetRecord() {
+    public boolean isRecording() {
         return mRec;
     }
 
-    public boolean ShowColorRecordIcon() {
+    public boolean showColorRecordIcon() {
         return (!mRec);
     }
 
-    public boolean ShowColorPlayIcon() {
+    public boolean showColorPlayIcon() {
         if (MacroList.size() > 0)
             return true;
         return false;
     }
 
-    public boolean ShowColorStopIcon() {
+    public boolean showColorStopIcon() {
         return mRec;
     }
 }

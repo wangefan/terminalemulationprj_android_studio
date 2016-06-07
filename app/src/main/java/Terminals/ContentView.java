@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -315,35 +314,6 @@ public class ContentView extends View {
         Cy = PosY / (int) this.mFontRect.height();
 
         return new Point(Cx, Cy);
-    }
-
-    public void showSoftKeyboard(View view) {
-        if (view.requestFocus()) {
-
-            //IMMResult result = new IMMResult();
-            InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-            boolean isOpen = imm.isActive();
-            //imm.hideSoftInputFromWindow(getWindowToken(),0);
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            //imm.hideSoftInputFromWindow(getWindowToken(),0);
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            imm.toggleSoftInputFromWindow(getWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-            //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            //if (imm.isActive()) {
-            //imm.hideSoftInputFromInputMethod(view, InputMethodManager.HIDE_NOT_ALWAYS);
-            // } else {
-            //imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-            //  }
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
-            //imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
-        }
-    }
-
-    public interface OnContentViewListener {
-        void onKeyDown(int keyCode, KeyEvent event);
-        void onScreenTouch(int x, int y);
     }
    
     /*public void surfaceCreated(SurfaceHolder holder) {

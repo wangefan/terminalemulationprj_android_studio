@@ -30,7 +30,9 @@ public class TerminalProcess {
 
     //call from ContentView Begin
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        mMacroRec.AddMacroKeyboard(keyCode, event);
+        if(mMacroRec.isRecording()) {
+            mMacroRec.addMacroKeyboard(keyCode, event);
+        }
         mTerminal.handleKeyDown(keyCode, event);
         if (mListener != null)
             mListener.onDataInputEvent();
@@ -46,7 +48,7 @@ public class TerminalProcess {
     }
 
     public void PlayMacro() {
-        ArrayList<?> Macroitem = mMacroRec.GetItemsList();
+        ArrayList<?> Macroitem = mMacroRec.getItemsList();
 
         for (int i = 0; i < Macroitem.size(); i++) {
             Macroitem item = (Macroitem) Macroitem.get(i);
@@ -61,37 +63,36 @@ public class TerminalProcess {
     }
 
     public void StopRecMacro() {
-        mMacroRec.SetRecord(false);
+        mMacroRec.setRecord(false);
     }
 
     public void RecMacro() {
-        mMacroRec.SetRecord(true);
+        mMacroRec.setRecord(true);
     }
 
     public boolean ShowColorRecordIcon() {
-        return mMacroRec.ShowColorRecordIcon();
+        return mMacroRec.showColorRecordIcon();
     }
 
     public boolean ShowColorPlayIcon() {
-        return mMacroRec.ShowColorPlayIcon();
+        return mMacroRec.showColorPlayIcon();
     }
 
     public boolean ShowColorStopIcon() {
-        return mMacroRec.ShowColorStopIcon();
+        return mMacroRec.showColorStopIcon();
     }
 
     public void ProcessReadBarcode(String Data) {
         if (mTerminal != null) {
-            mMacroRec.AddMacroBarcode(Data);
+            if (mMacroRec.isRecording()) {
+                mMacroRec.addMacroBarcode(Data);
+            }
             mTerminal.handleBarcodeFire(Data);
 
             if (mListener != null)
                 mListener.onDataInputEvent();
         }
     }
-    //ShowColorRecordIcon
-    // ShowColorPlayIcon
-    //ShowColorStopIcon
 
     public void PlayMacroBarcode(String Data) {
         if (mTerminal != null) {

@@ -57,12 +57,6 @@
 						</ScrollView>
 					</HorizontalScrollView>
 					<include layout="@layout/macro_view"/>
-					<!--ImageView
-						android:id="@+id/macro_view"
-						android:layout_width="50dp"
-						android:layout_height="50dp"
-						android:layout_alignParentBottom="true"
-						android:src="@drawable/playicon"/-->
 				</RelativeLayout>
 				<RelativeLayout android:id="@+id/logo_view"
 					android:layout_width="fill_parent"

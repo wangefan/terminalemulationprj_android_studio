@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
                 // extra string from intent
                 data = intent.getStringExtra(GeneralString.BcReaderData);
 
-                //MacroRec.AddMacroBarcode(data);
+                //MacroRec.addMacroBarcode(data);
                 termProc.ProcessReadBarcode(data);
                 //mReaderManager.SetActive(false);
                 // show decoded data
@@ -440,39 +440,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void onClick(View v) {
-
-        //InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        // imm.showSoftInputFromInputMethod(this.getCurrentFocus().getWindowToken(), 0);
-        if (mContentView != null) {
-            if (mContentView.getVisibility() == View.VISIBLE)
-                mContentView.showSoftKeyboard(mContentView);
-        }
-
-    }
-
     public void onClickStop(View v) {
-
         TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.StopRecMacro();
         UpdateRecordButton();
-
     }
 
     public void onClickPlay(View v) {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.PlayMacro();
         UpdateRecordButton();
-
-
     }
 
     public void onClickRec(View v) {
-
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.RecMacro();
         UpdateRecordButton();
-
     }
 
     @Override
