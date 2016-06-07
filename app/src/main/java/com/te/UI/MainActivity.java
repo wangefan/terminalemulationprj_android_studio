@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onConnected() {
             showConnectionView(true);
-            updateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex()));
+            updateRecordButtonVisible();
             UpdateRecordButton();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Keyboard);
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onDisConnected() {
             showConnectionView(false);
-            updateRecordButtonVisible(false);
+            updateRecordButtonVisible();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Connect);
             UIUtility.showProgressDlg(false, 0);
@@ -202,8 +202,9 @@ public class MainActivity extends AppCompatActivity
             ButStop.setBackgroundResource(R.drawable.stopgray);
     }
 
-    private void updateRecordButtonVisible(boolean Show) {
-        if (!Show || isCurSessionConnected() == false) {
+    private void updateRecordButtonVisible() {
+        boolean bShow = TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex());
+        if (!bShow || isCurSessionConnected() == false) {
             mMacroView.setVisibility(View.GONE);
         } else {
             mMacroView.setVisibility(View.VISIBLE);
@@ -226,6 +227,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentLeftdrawer.setDrawerListener(this);
 
         mMacroView = (RelativeLayout) findViewById(R.id.macro_view);
+        updateRecordButtonVisible();
 
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
         updateFABStatus(FABStatus.Connect);
@@ -385,7 +387,7 @@ public class MainActivity extends AppCompatActivity
                 mContentView.refresh();
                 setSessionJumpImage(TESettingsInfo.getSessionIndex());
                 setSessionStatusView();
-                updateRecordButtonVisible(TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex()));
+                updateRecordButtonVisible();
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
@@ -597,6 +599,7 @@ public class MainActivity extends AppCompatActivity
         mContentView.refresh();
         setSessionJumpImage(idxSession);
         setSessionStatusView();
+        updateRecordButtonVisible();
         if (isCurSessionConnected()) {
             updateFABStatus(FABStatus.Keyboard);
         } else {
