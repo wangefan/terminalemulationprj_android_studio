@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 import Terminals.TESettingsInfo;
-import Terminals.MacroRecorder;
+import Terminals.MacroMgr;
 import Terminals.MacroItem;
 import Terminals.TerminalBase;
 import Terminals.TerminalBaseEnum;
@@ -21,7 +21,7 @@ import Terminals.stdActivityRef;
  * Created by Franco.Liu on 2014/2/26.
  */
 public class TerminalProcess {
-    private MacroRecorder mMacroRec = new MacroRecorder();
+    private MacroMgr mMacroRec = new MacroMgr();
     private TerminalBase mTerminal;
     private OnTerminalProcessListener mListener = null;
 

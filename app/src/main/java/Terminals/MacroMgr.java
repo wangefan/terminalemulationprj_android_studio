@@ -4,11 +4,11 @@ import android.view.KeyEvent;
 
 import java.util.ArrayList;
 
-public class MacroRecorder {
+public class MacroMgr {
     private boolean mIsRecording;
     private java.util.ArrayList<MacroItem> mMacroList = new java.util.ArrayList<MacroItem>();
 
-    public MacroRecorder() {
+    public MacroMgr() {
         reset();
     }
 
