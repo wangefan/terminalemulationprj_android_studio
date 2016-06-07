@@ -637,12 +637,12 @@ public class MainActivity extends AppCompatActivity
     private void SessionConnect() {
         UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
         TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        termProc.ProcessConnect();
+        termProc.processConnect();
     }
 
     private void SessionDisConnect() {
         TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        termProc.ProcessDisConnect();
+        termProc.processDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
         mLogoView.setVisibility(View.VISIBLE);
     }

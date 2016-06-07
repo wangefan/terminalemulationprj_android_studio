@@ -85,7 +85,7 @@ public class TerminalProcess {
         }
     }
 
-    public boolean ProcessConnect() {
+    public boolean processConnect() {
 
         String Ip = TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex());
         String Port = TESettingsInfo.getHostPortByIndex(TESettingsInfo.getSessionIndex());
@@ -136,7 +136,7 @@ public class TerminalProcess {
         return mTerminal.TelnetsStart();
     }
 
-    public void ProcessDisConnect() {
+    public void processDisConnect() {
         if (mTerminal != null)
             mTerminal.TelnetDisconnect();
     }
