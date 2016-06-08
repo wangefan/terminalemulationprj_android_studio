@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity
     private void initInOnCreate() {
         for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
             TerminalProcess Process = new TerminalProcess();
+            Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
             mCollSessions.add(Process);
         }
         mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
@@ -433,7 +434,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClickStop(View v) {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.recMacro(false);
         UpdateRecordButton();
     }

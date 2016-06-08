@@ -43,6 +43,12 @@ public class TerminalProcess {
         mListener = listener;
     }
 
+    public void setMacroList(ArrayList<MacroItem> macroList) {
+        if(mMacroRec != null) {
+            mMacroRec.setItemsList(macroList);
+        }
+    }
+
     public void playMacro() {
         ArrayList<?> Macroitem = mMacroRec.getItemsList();
         for (int i = 0; i < Macroitem.size(); i++) {

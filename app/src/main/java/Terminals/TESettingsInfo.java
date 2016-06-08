@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import Terminals.TESettings.SessionSetting;
 
@@ -126,7 +127,14 @@ public class TESettingsInfo {
             FileInputStream inStream = new FileInputStream(teJsonFile);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
             Gson gson = new Gson();
-            TESettings teSettings = (TESettings) gson.fromJson(reader, TESettings.class);
+            TESettings teSettings = gson.fromJson(reader, TESettings.class);
+            for (int idxSetting = 0; idxSetting < teSettings.SETTINGS.size(); idxSetting++) {
+                SessionSetting setting = teSettings.SETTINGS.get(idxSetting);
+                for (int idxMacro = 0; idxMacro < setting.mMacroList.size(); idxMacro++) {
+                    MacroItem item = setting.mMacroList.get(idxMacro);
+                    item.syncFromDeSerialize();
+                }
+            }
             return teSettings;
 
         } catch (Exception e) {
@@ -277,6 +285,16 @@ public class TESettingsInfo {
     public static Boolean getHostIsShowMacroByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mIsActMacro;
+    }
+
+    public static ArrayList<MacroItem> getHostMacroListByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mMacroList;
+    }
+
+    public static void setHostMacroListByIndex(int index, ArrayList<MacroItem> macroList) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        Setting.mMacroList = macroList;
     }
 
     public static boolean getHostIsCursorTrackByIndex(int index) {

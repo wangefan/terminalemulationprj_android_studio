@@ -204,6 +204,9 @@ public class TESettings {
         @SerializedName("isShowMacro")
         public boolean mIsActMacro = false;
 
+        @SerializedName("macroKeyList")
+        public ArrayList<MacroItem> mMacroList = null;
+
         @SerializedName("CursorType")
         public int mNCursorType = 0; //0:Default, 1:Underline, 2:Block
 

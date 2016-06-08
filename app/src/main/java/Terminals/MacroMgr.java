@@ -6,10 +6,9 @@ import java.util.ArrayList;
 
 public class MacroMgr {
     private boolean mIsRecording;
-    private java.util.ArrayList<MacroItem> mMacroList = new java.util.ArrayList<MacroItem>();
+    private java.util.ArrayList<MacroItem> mMacroList = null;
 
     public MacroMgr() {
-        reset();
     }
 
     public void reset() {
@@ -32,6 +31,10 @@ public class MacroMgr {
 
     public ArrayList<MacroItem> getItemsList() {
         return mMacroList;
+    }
+
+    public void setItemsList(ArrayList<MacroItem> macroList) {
+        mMacroList = macroList;
     }
 
     public void setRecord(boolean isRecord) {
