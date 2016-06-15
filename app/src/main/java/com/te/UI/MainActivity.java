@@ -132,9 +132,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onNotify(String action, Object... params) {
-            if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHARLIVE) == 0) {
-                mContentView.DrawCharLive((Character) params[0], (Integer) params[1], (Integer) params[2]);
-            } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
+            if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
                 mContentView.postInvalidate();
             } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_UPDATE_GRID) == 0) {
                 mContentView.updateViewGrid();
@@ -142,8 +140,8 @@ public class MainActivity extends AppCompatActivity
                 mContentView.ClearView();
             } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_SPACE) == 0) {
                 mContentView.DrawSpace((Integer) params[0], (Integer) params[1], (Integer) params[2]);
-            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_FIELD_CHAR) == 0) {
-                mContentView.DrawFieldChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
+            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHAR) == 0) {
+                mContentView.DrawChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
             }
         }
     };
