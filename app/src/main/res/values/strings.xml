@@ -13,6 +13,8 @@
     <string name="MSG_ChangeSession">Change session to %s</string>
     <string name="MSG_DeleteSession_Warn">Must has one session.</string>
     <string name="MSG_FDChek_reject">Barcode data exceeds! The length is not allowed.</string>
+    <string name="MSG_WifiAlert">Wi-Fi Signal Strength:%1$d</string>
+    <string name="MSG_BattAlert">Battery Level:%1$s</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>

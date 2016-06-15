@@ -9,7 +9,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,10 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import SessionProcess.TerminalProcess;
-import Terminals.TESettingsInfo;
 import Terminals.CipherReaderControl;
 import Terminals.ContentView;
 import Terminals.CursorView;
+import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
 
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    private final long UPDATE_ALERT_INTERVAL = 300000; //300 sec, 5 min
+
     private Toolbar mToolbar;
     private LeftMenuFrg mFragmentLeftdrawer;
     private RelativeLayout mMacroView = null;
@@ -107,6 +111,8 @@ public class MainActivity extends AppCompatActivity
     private CursorView Cursor;
     private ImageView mSessionJumpBtn = null;
     private MenuItem mMenuItemConn;
+    private Handler mUpdateWifiAlertHandler = new Handler();
+    private Handler mUpdateBaterAlertHandler = new Handler();
     private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() {
         @Override
         public void onConnected() {
@@ -195,6 +201,40 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void procAlertTimer() {
+        boolean bWifiAlert = TESettingsInfo.getHostIsShowWifiAlertByIndex(TESettingsInfo.getSessionIndex());
+        boolean bBatAlert = TESettingsInfo.getHostIsShowBatteryAlertByIndex(TESettingsInfo.getSessionIndex());
+        if(bWifiAlert) {
+            mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
+            final int nWifiAlert = TESettingsInfo.getHostShowWifiAltLevelByIndex(TESettingsInfo.getSessionIndex());
+            mUpdateWifiAlertHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                    int wifiStrengh = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
+                    if(wifiStrengh < nWifiAlert) {
+                        UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrengh));
+                    }
+                    mUpdateWifiAlertHandler.postDelayed(this, UPDATE_ALERT_INTERVAL);
+                }}, 2000);
+        } else {
+            mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
+        }
+
+        if(bBatAlert) {
+            mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
+            final int nBatAlert = TESettingsInfo.getHostShowBatteryAltLevelByIndex(TESettingsInfo.getSessionIndex());
+            mUpdateBaterAlertHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }, 2000);
+        } else {
+            mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
     private void updateRecordButtonVisible() {
         boolean bShow = TESettingsInfo.getHostIsShowMacroByIndex(TESettingsInfo.getSessionIndex());
         if (!bShow || isCurSessionConnected() == false) {
@@ -278,6 +318,8 @@ public class MainActivity extends AppCompatActivity
         Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
         if (bAutoConn)
             SessionConnect();
+
+        procAlertTimer();
 
 	   /* mReaderManager = ReaderManager.InitInstance(this);
         filter = new IntentFilter();
@@ -382,6 +424,7 @@ public class MainActivity extends AppCompatActivity
                 setSessionJumpImage(TESettingsInfo.getSessionIndex());
                 setSessionStatusView();
                 updateRecordButtonVisible();
+                procAlertTimer();
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
@@ -394,6 +437,7 @@ public class MainActivity extends AppCompatActivity
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     SessionSettings.gEditSessionSetting = null;
                     setSessionJumpImage(TESettingsInfo.getSessionIndex());
+                    procAlertTimer();
                 }
             }
             break;

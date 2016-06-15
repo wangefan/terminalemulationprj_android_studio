@@ -262,6 +262,26 @@ public class TESettingsInfo {
         return Setting.mIsSaveLog;
     }
 
+    public static boolean getHostIsShowWifiAlertByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsShowWifiAlert;
+    }
+
+    public static boolean getHostIsShowBatteryAlertByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsShowBatteryAlert;
+    }
+
+    public static int getHostShowWifiAltLevelByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNShowWifiAlertLevel;
+    }
+
+    public static int getHostShowBatteryAltLevelByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mNShowBatteryAlertLevel;
+    }
+
     public static int getHostFontWidthByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mNFontWidth;
