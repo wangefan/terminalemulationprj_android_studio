@@ -271,7 +271,6 @@ public class TerminalBaseEnum {
         public CharAttribStruct clone()
         {
             CharAttribStruct varCopy = new CharAttribStruct();
-
             varCopy.IsBold = this.IsBold;
             varCopy.IsDim = this.IsDim;
             varCopy.IsUnderscored = this.IsUnderscored;
@@ -287,10 +286,8 @@ public class TerminalBaseEnum {
             varCopy.GR = this.GR;
             varCopy.GS = this.GS;
             varCopy.IsDECSG = this.IsDECSG;
-
             return varCopy;
         }
-
     }
 
     public class uc_Chars

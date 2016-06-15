@@ -848,7 +848,7 @@ public class CVT100 extends CVT100Enum {
         int X = this.Caret.Pos.X;
         int Y = this.Caret.Pos.Y;
 
-        this.AttribGrid[Y][X] = this.CharAttribs;
+        this.AttribGrid[Y][X] = this.CharAttribs.clone();
 
         if (this.CharAttribs.GS != null) {
             CurChar = EmUc_Chars.Get(CurChar, this.AttribGrid[Y][X].GS.Set.Get(), this.AttribGrid[Y][X].GR.Set.Get());
