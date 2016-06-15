@@ -322,6 +322,11 @@ public class TESettingsInfo {
         return Setting.mBAutoConnect;
     }
 
+    public static Boolean getHostIsAutoFullScreenOnConnByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsAutoFullscreenOnConn;
+    }
+
     public static Boolean getHostIsAutoSignByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBAutoSignOn;

@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity
             UpdateRecordButton();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Keyboard);
+            if(TESettingsInfo.getHostIsAutoFullScreenOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                procFullScreen();
+            }
             UIUtility.showProgressDlg(false, 0);
             mKeyboardViewUtility.showTEKeyboard();
         }
