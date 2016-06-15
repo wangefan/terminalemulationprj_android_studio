@@ -22,7 +22,7 @@
   "NamePrompt": "Login:",
   "PassPrompt": "Password:",
   "TermName": "vt100",
-  "TermNameTN": "IBM5250",
+  "TermNameTN": "ibm5250",
   "sendStringOnConnect": "",
   "LineBuffer": 0,
   "bEcho": false,
