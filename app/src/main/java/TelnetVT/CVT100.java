@@ -4,16 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.util.Log;
 import android.view.KeyEvent;
 
+import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import Terminals.TESettingsInfo;
 import Terminals.CipherReaderControl;
+import Terminals.TESettingsInfo;
 import Terminals.TerminalLogWriter;
 import Terminals.stdActivityRef;
 
@@ -165,10 +167,12 @@ public class CVT100 extends CVT100Enum {
     public void drawAll() {
         for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
-                if (this.AttribGrid[idxRow][idxCol] == null)
-                    DrawCharLive(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
-                else
-                    DrawCharLive(this.CharGrid[idxRow][idxCol], idxCol, idxRow, this.AttribGrid[idxRow][idxCol].IsBold, this.AttribGrid[idxRow][idxCol].IsUnderscored);
+                if (this.AttribGrid[idxRow][idxCol] == null) {
+                    DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
+                }
+                else {
+                    DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, this.AttribGrid[idxRow][idxCol].IsBold, this.AttribGrid[idxRow][idxCol].IsUnderscored);
+                }
             }
         }
     }
@@ -866,7 +870,7 @@ public class CVT100 extends CVT100Enum {
         if (CurChar != 0x20 && CurChar != 0) {
             int po = 0;
         }
-        DrawCharLive(CurChar, X, Y, this.CharAttribs.IsBold, this.CharAttribs.IsUnderscored);
+        DrawChar(CurChar, X, Y, this.CharAttribs.IsBold, this.CharAttribs.IsUnderscored);
         this.CaretRight();
     }
 
@@ -1124,10 +1128,12 @@ public class CVT100 extends CVT100Enum {
                 this.AttribGrid[i] = this.AttribGrid[i + 1];
 
                 for (int xcol = 0; xcol < this._cols; ++xcol) {
-                    if (this.AttribGrid[i][xcol] == null)
-                        DrawCharLive(this.CharGrid[i][xcol], xcol, i, false, false);
-                    else
-                        DrawCharLive(this.CharGrid[i][xcol], xcol, i, this.AttribGrid[i][xcol].IsBold, this.AttribGrid[i][xcol].IsUnderscored);
+                    if (this.AttribGrid[i][xcol] == null) {
+                        DrawChar(this.CharGrid[i][xcol], xcol, i, false, false);
+                    }
+                    else {
+                        DrawChar(this.CharGrid[i][xcol], xcol, i, this.AttribGrid[i][xcol].IsBold, this.AttribGrid[i][xcol].IsUnderscored);
+                    }
                 }
 
             }

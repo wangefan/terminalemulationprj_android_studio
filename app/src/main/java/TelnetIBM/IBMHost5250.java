@@ -296,11 +296,7 @@ public class IBMHost5250 extends IBMHostBase {
         for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
                 boolean isNeedLine = FieldList.isNeedLine(idxCol, idxRow);
-                if(isNeedLine) {
-                    DrawFieldChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, isNeedLine);
-                } else {
-                    DrawCharLive(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
-                }
+                DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, isNeedLine);
             }
         }
     }
@@ -1313,17 +1309,9 @@ public class IBMHost5250 extends IBMHostBase {
     private void PrintChar(char Character, int X, int Y, boolean Isfield) {
         if (Y > (this._rows - 1))
             return;
-
         this.AttribGrid[Y][X] = CurAttrib;
         this.CharGrid[Y][X] = Character;
-
-        //_ViewContainer.DrawCharLive(Character, X, Y, false, false);
-        if (Isfield)
-            DrawFieldChar(Character, X, Y, false, Isfield);
-        else
-            DrawCharLive(Character, X, Y, false, false);
-
-
+        DrawChar(Character, X, Y, false, Isfield);
     }
 
     public void PlayWarningSounds() {

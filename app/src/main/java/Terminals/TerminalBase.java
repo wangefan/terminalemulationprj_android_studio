@@ -17,12 +17,11 @@ import SessionProcess.TelnetSshConnMgr;
  * Created by Franco.Liu on 2014/1/9.
  */
 public abstract class TerminalBase extends TerminalBaseEnum {
-    public final static String NOTF_ACT_DRAWCHARLIVE = "NOTF_ACT_DRAWCHARLIVE";
+    public final static String NOTF_ACT_DRAWCHAR = "NOTF_ACT_DRAWCHAR";
     public final static String NOTF_ACT_INVALIDATE ="NOTF_ACT_INVALIDATE";
     public final static String NOTF_ACT_CLEAR_VIEW ="NOTF_ACT_CLEAR_VIEW";
     public final static String NOTF_ACT_UPDATE_GRID ="NOTF_ACT_UPDATE_GRID";
     public final static String NOTF_ACT_DRAW_SPACE ="NOTF_ACT_DRAW_SPACE";
-    public final static String NOTF_ACT_DRAW_FIELD_CHAR = "NOTF_ACT_DRAW_FIELD_CHAR";
     public TerminalLogWriter LogFile;
     public char[][] CharGrid = null;
     public char[][] AttribGrid = null;
@@ -44,9 +43,9 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         if (BuildConfig.DEBUG) {
             String strHex = "";
             for (char C : charArray) {
-                strHex += String.format("[%02x]", (byte) C);
+                strHex += String.format("%02x ", (byte) C);
             }
-            Log.d("TE:", strHex);
+            Log.d("TE:[read data]", strHex);
         }
     }
 
@@ -134,11 +133,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         return mTelnetParser.TryGetMultiChar();
     }
 
-    public void DrawCharLive(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
-        if (mTerminalListener != null)
-            mTerminalListener.onNotify(NOTF_ACT_DRAWCHARLIVE, c, x, y, IsBold, IsUnderLine);
-    }
-
     public void ViewPostInvalidate() {
         if (mTerminalListener != null)
             mTerminalListener.onNotify(NOTF_ACT_INVALIDATE);
@@ -154,9 +148,9 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             mTerminalListener.onNotify(NOTF_ACT_DRAW_SPACE, x, y, space);
     }
 
-    public void DrawFieldChar(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
+    public void DrawChar(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
         if (mTerminalListener != null)
-            mTerminalListener.onNotify(NOTF_ACT_DRAW_FIELD_CHAR, c, x, y, IsBold, IsUnderLine);
+            mTerminalListener.onNotify(NOTF_ACT_DRAWCHAR, c, x, y, IsBold, IsUnderLine);
     }
 
     public String GetLogTitle() {

@@ -157,18 +157,7 @@ public class ContentView extends View {
         return p;
     }
 
-    public void DrawCharLive(Character c, Integer x, Integer y) {
-        if (mCanvas == null)
-            return;
-
-        Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width(), mFontRect.height() * y + mFontRect.height());
-        mCanvas.drawRect(rect, mBgpaint);
-        if (c == 0)
-            c = ' ';
-        mCanvas.drawText(String.valueOf(c), rect.left, rect.bottom - mTextBaselineDis, mFgpaint);
-    }
-
-    public void DrawFieldChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
+    public void DrawChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
         if (mCanvas == null)
             return;
         Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width(), mFontRect.height() * y + mFontRect.height());
