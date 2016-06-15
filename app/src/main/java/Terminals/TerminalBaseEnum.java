@@ -742,20 +742,20 @@ public class TerminalBaseEnum {
     public class uc_Mode
     {
         // For UC
-        public int Locked = 1;           // Unlocked           = off
-        public int BackSpace = 2;           // Delete             = off
-        public int NewLine = 4;           // Line Feed          = off
-        public int Repeat = 8;           // No Repeat          = off
-        public int AutoWrap = 16;          // No AutoWrap        = off
-        public int CursorAppln = 32;          // Std Cursor Codes   = off
-        public int KeypadAppln = 64;          // Std Numeric Codes  = off
-        public int DataProcessing = 128;         // Typewriter         = off
-        public int PositionReports = 256;         // CharacterCodes     = off
-        public int LocalEchoOff = 512;         // LocalEchoOn        = off
-        public int OriginRelative = 1024;        // OriginAbsolute     = off
-        public int LightBackground = 2048;        // DarkBackground     = off
-        public int National = 4096;        // Multinational      = off
-        public int Any = 0x80000000;  // Any Flags
+        final static public int Locked = 1;           // Unlocked           = off
+        final static public int BackSpace = 2;           // Delete             = off
+        final static public int NewLine = 4;           // Line Feed          = off
+        final static public int Repeat = 8;           // No Repeat          = off
+        final static public int AutoWrap = 16;          // No AutoWrap        = off
+        final static public int CursorAppln = 32;          // Std Cursor Codes   = off
+        final static public int KeypadAppln = 64;          // Std Numeric Codes  = off
+        final static public int DataProcessing = 128;         // Typewriter         = off
+        final static public int PositionReports = 256;         // CharacterCodes     = off
+        final static public int LocalEchoOff = 512;         // LocalEchoOn        = off
+        final static public int OriginRelative = 1024;        // OriginAbsolute     = off
+        final static public int LightBackground = 2048;        // DarkBackground     = off
+        final static public int National = 4096;        // Multinational      = off
+        final static public int Any = 0x80000000;  // Any Flags
 
         public int Flags = AutoWrap;
 

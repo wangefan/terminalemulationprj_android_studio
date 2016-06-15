@@ -347,7 +347,10 @@ public class CVT100 extends CVT100Enum {
 
         int Inc = 1; // increment
 
-        //region  Switch Sequence
+        if (BuildConfig.DEBUG) {
+            String strSeq = getCurSeq(e.CurSequence, e.CurParams.Elements);
+            Log.d("TE", String.format("[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq)));
+        }
 
         if (e.CurSequence.equals("")) {
         } else if (e.CurSequence.equals("\u001b" + "7"))//DECSC Save Cursor position and attributes//DECSC Save Cursor position and attributes
@@ -506,7 +509,7 @@ public class CVT100 extends CVT100Enum {
         } else if (e.CurSequence.equals("\u001b[?h")) {
             //this.SetqmhMode(e.CurParams);
         } else if (e.CurSequence.equals("\u001b[?l")) {
-            //this.SetqmlMode(e.CurParams);
+            setQmlMode(e.CurParams);
         } else if (e.CurSequence.equals("\u001b[c")) // DA Device Attributes
         {
             //                    this.DispatchMessage (this, "\x1b[?64;1;2;6;7;8;9c");
@@ -574,6 +577,33 @@ public class CVT100 extends CVT100Enum {
             this.SelectCharSet(this.G3.Set, e.CurSequence.substring(2));
         }
 
+    }
+
+    private String getHex(String str) {
+        String strHex = "";
+        byte [] bData = str.getBytes();
+        for (int idxBy = 0; idxBy < bData.length; idxBy++) {
+            strHex += String.format("%02x ", bData[idxBy]& 0xFF);
+        }
+        return strHex;
+    }
+
+    private String getCurSeq(String sequence, java.util.ArrayList<String> params) {
+        StringBuilder sbResult = new StringBuilder();
+        if(sequence.startsWith("\u001b")) {
+            sbResult.append(sequence.substring(0, sequence.length() - 1));
+            for (int idxParams = 0; idxParams < params.size(); ++idxParams) {
+                String param = params.get(idxParams);
+                if(idxParams > 0) {
+                    sbResult.append(";");
+                }
+                String oriVal = String.valueOf(Integer.valueOf(param));
+                sbResult.append(oriVal);
+            }
+
+            sbResult.append(sequence.charAt(sequence.length() - 1));
+        }
+        return sbResult.toString();
     }
 
     private void ClearCharAttribs() {
@@ -1666,6 +1696,54 @@ public class CVT100 extends CVT100Enum {
 
     private void CarriageReturn() {
         this.CaretToAbs(this.Caret.Pos.Y, 0);
+    }
+
+    public void setQmlMode(uc_Params CurParams) { // set mode for ESC?l command
+        int OptInt = 0;
+
+        for (int idxStr = 0; idxStr < CurParams.Elements.size(); ++idxStr) {
+            String CurOption = CurParams.Elements.get(idxStr);
+            OptInt = Integer.valueOf(CurOption);
+
+            switch (OptInt) {
+                case 1: // set cursor keys to normal cursor mode
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.CursorAppln;
+                    break;
+                case 2: // unlock the keyboard
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.Locked;
+                    break;
+                case 3: // set terminal to 80 column mode
+                    this.SetSize (this._rows, 80);
+                    break;
+                case 5: // Dark Background Mode
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.LightBackground;
+                    //this.RefreshEvent ();
+                    break;
+
+                case 6: // Origin Mode Absolute
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.OriginRelative;
+                    this.CaretToAbs (0, 0);
+                    break;
+
+                case 7: // Autowrap Off
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.AutoWrap;
+                    break;
+
+                case 8: // AutoRepeat Off
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.Repeat;
+                    break;
+
+                case 42: // DECNRCM National Charset
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.National;
+                    break;
+                case 66: // Numeric Keypad Application Mode On
+                    this.Modes.Flags = this.Modes.Flags & ~uc_Mode.KeypadAppln;
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     public class VtParserEvent implements VtParserImplement {
