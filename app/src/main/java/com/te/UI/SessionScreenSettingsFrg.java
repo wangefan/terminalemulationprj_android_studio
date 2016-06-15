@@ -80,9 +80,9 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mChkShowSessionNumber.setChecked(mSetting.mIsShowSessionNumber);
         mChkShowSessionStatus.setChecked(mSetting.mIsShowSessionStatus);
         mSwchShowWiFiAlert.setChecked(mSetting.mIsShowWifiAlert);
-        //Todo: level
+        mSwchShowWiFiAlert.setSummaryOn(String.valueOf(mSetting.mNShowWifiAlertLevel));
         mSwchShowBattrryAlert.setChecked(mSetting.mIsShowBatteryAlert);
-        //Todo: level
+        mSwchShowBattrryAlert.setSummaryOn(String.valueOf(mSetting.mNShowBatteryAlertLevel));
         mChkAcitvateMacro.setChecked(mSetting.mIsActMacro);
         mlstCursorType.setValue(String.valueOf(mSetting.mNCursorType));
         mSwchAutoTracking.setChecked(mSetting.mIsCursorTracking);
@@ -105,10 +105,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             mSetting.mIsShowSessionStatus = mChkShowSessionStatus.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_wifi_alert_key)) == 0) {
             mSetting.mIsShowWifiAlert = mSwchShowWiFiAlert.isChecked();
-            //Todo: level
         } else if(key.compareTo(getResources().getString(R.string.screen_battery_alert_key)) == 0) {
             mSetting.mIsShowBatteryAlert = mSwchShowBattrryAlert.isChecked();
-            //Todo: level
         } else if(key.compareTo(getResources().getString(R.string.screen_act_macro_key)) == 0) {
             mSetting.mIsActMacro = mChkAcitvateMacro.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_cursor_type_key)) == 0) {
@@ -142,7 +140,66 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mChkShowSessionNumber = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_session_number_key));
         mChkShowSessionStatus = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_session_status_key));
         mSwchShowWiFiAlert = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_wifi_alert_key));
+        mSwchShowWiFiAlert.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
+            @Override
+            public void onClick() {
+                int nSelItem = 0;
+                String[] alertItems = getResources().getStringArray(R.array.alert_array);
+                for (int idxAlert = 0; idxAlert < alertItems.length; idxAlert++) {
+                    if(alertItems[idxAlert].compareTo(String.valueOf(mSetting.mNShowWifiAlertLevel)) == 0) {
+                        nSelItem = idxAlert;
+                    }
+                }
+                UIUtility.listMessageBox(R.string.screen_wifi_alert,
+                        R.array.alert_array,
+                        nSelItem,
+                        getActivity(),
+                        new UIUtility.OnListMessageBoxListener() {
+                            @Override
+                            public void onSelResult(String result) {
+                                mSetting.mNShowWifiAlertLevel = Integer.valueOf(result);
+                                mSwchShowWiFiAlert.setSummaryOn(result);
+                                mSwchShowWiFiAlert.setChecked(true);
+                            }
+                        });
+            }
+
+            @Override
+            public void onChecked(boolean isChecked) {
+
+            }
+        });
         mSwchShowBattrryAlert = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_battery_alert_key));
+        mSwchShowBattrryAlert.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
+            @Override
+            public void onClick() {
+                int nSelItem = 0;
+                String[] alertItems = getResources().getStringArray(R.array.alert_array);
+                for (int idxAlert = 0; idxAlert < alertItems.length; idxAlert++) {
+                    if(alertItems[idxAlert].compareTo(String.valueOf(mSetting.mNShowBatteryAlertLevel)) == 0) {
+                        nSelItem = idxAlert;
+                    }
+                }
+                UIUtility.listMessageBox(R.string.screen_battery_alert,
+                        R.array.alert_array,
+                        nSelItem,
+                        getActivity(),
+                        new UIUtility.OnListMessageBoxListener() {
+                            @Override
+                            public void onSelResult(String result) {
+                                mSetting.mNShowBatteryAlertLevel = Integer.valueOf(result);
+                                mSwchShowBattrryAlert.setSummaryOn(result);
+                                mSwchShowBattrryAlert.setChecked(true);
+                            }
+                        });
+            }
+
+            @Override
+            public void onChecked(boolean isChecked) {
+
+            }
+        });
+
         mChkAcitvateMacro = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_act_macro_key));
         mlstCursorType = (ListPreference) findPreference(getResources().getString(R.string.screen_cursor_type_key));
         mSwchAutoTracking = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_auto_scroll_key));
