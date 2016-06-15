@@ -386,7 +386,9 @@ public class MainActivity extends AppCompatActivity
                 if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
                     TESettingsInfo.addSession(SessionSettings.gEditSessionSetting);
                     int nAddedSessionIdx = TESettingsInfo.getSessionCount() - 1;
-                    mCollSessions.add(new TerminalProcess());
+                    TerminalProcess process = new TerminalProcess();
+                    process.setMacroList(TESettingsInfo.getHostMacroListByIndex(nAddedSessionIdx));
+                    mCollSessions.add(process);
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     SessionSettings.gEditSessionSetting = null;
