@@ -5,11 +5,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -211,12 +213,20 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                    int wifiStrengh = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
-                    if(wifiStrengh < nWifiAlert) {
-                        UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrengh));
+                    int wifiStrength = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
+                    if(wifiStrength < nWifiAlert) {
+                        final Runnable tempRun = this;
+                        UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUpdateWifiAlertHandler.postDelayed(tempRun, UPDATE_ALERT_INTERVAL);
+                            }
+                        });
+                    } else {
+                        mUpdateWifiAlertHandler.postDelayed(this, UPDATE_ALERT_INTERVAL);
                     }
-                    mUpdateWifiAlertHandler.postDelayed(this, UPDATE_ALERT_INTERVAL);
-                }}, 2000);
+                }
+            }, 2000);
         } else {
             mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
         }
@@ -225,9 +235,29 @@ public class MainActivity extends AppCompatActivity
             mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
             final int nBatAlert = TESettingsInfo.getHostShowBatteryAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateBaterAlertHandler.postDelayed(new Runnable() {
+                public int getBatteryPct() {
+                    IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+                    Intent batteryStatus = registerReceiver(null, ifilter);
+                    int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+                    int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+                    float batteryPct = level / (float) scale * 100;
+                    return (int) batteryPct;
+                }
+
                 @Override
                 public void run() {
-
+                    int batStrength = getBatteryPct();
+                    if(batStrength < nBatAlert) {
+                        final Runnable tempRun = this;
+                        UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUpdateBaterAlertHandler.postDelayed(tempRun, UPDATE_ALERT_INTERVAL);
+                            }
+                        });
+                    } else {
+                        mUpdateBaterAlertHandler.postDelayed(this, UPDATE_ALERT_INTERVAL);
+                    }
                 }
             }, 2000);
         } else {

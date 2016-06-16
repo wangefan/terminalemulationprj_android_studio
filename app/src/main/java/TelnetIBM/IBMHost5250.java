@@ -458,7 +458,7 @@ public class IBMHost5250 extends IBMHostBase {
                 if(bPopupDialog) {
                     StringBuilder sb = new StringBuilder();
                     PrintErrorMessage(new Point(1, nErrorRow), sb);
-                    UIUtility.messageBoxFromWorkerThread(sb.toString());
+                    UIUtility.messageBoxFromWorkerThread(sb.toString(), null);
                 } else {
                     PrintErrorMessage(new Point(1, nErrorRow), null);
                 }
@@ -1986,7 +1986,7 @@ public class IBMHost5250 extends IBMHostBase {
             switch (nFDLEN) {
                 case TESettingsInfo.FDLEN_REJECT:
                     PlayWarningSounds();
-                    UIUtility.messageBox(R.string.MSG_FDChek_reject);
+                    UIUtility.messageBox(R.string.MSG_FDChek_reject, null);
                     break;
                 case TESettingsInfo.FDLEN_TRUN:
                     CaretBegin();

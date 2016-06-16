@@ -82,32 +82,25 @@ public class UIUtility {
     	}
     }
 
-	public static void messageBox(int nStringID) {
+	public static void messageBox(int nStringID, DialogInterface.OnClickListener positiveClkListener) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setMessage(nStringID).setPositiveButton(R.string.STR_OK, null);
+		builder.setMessage(nStringID).setPositiveButton(R.string.STR_OK, positiveClkListener);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
 
-	public static void messageBox(String message) {
+	public static void messageBox(String message, DialogInterface.OnClickListener positiveClkListener) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setMessage(message).setPositiveButton(R.string.STR_OK, null);
+		builder.setMessage(message).setPositiveButton(R.string.STR_OK, positiveClkListener);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
 
-	public static void messageBox(String message, Context context) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage(message).setPositiveButton(R.string.STR_OK, null);
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-
-	public static void messageBoxFromWorkerThread(final String message) {
+	public static void messageBoxFromWorkerThread(final String message, final DialogInterface.OnClickListener positiveClkListener) {
 		mUIHandler.post(new Runnable() {
 			@Override
 			public void run() {
-				messageBox(message);
+				messageBox(message, positiveClkListener);
 			}
 		});
 	}
