@@ -44,6 +44,7 @@ import Terminals.CursorView;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
+import tourguide.tourguide.TourGuide;
 
 public class MainActivity extends AppCompatActivity
         implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewListener
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem mMenuItemConn;
     private Handler mUpdateWifiAlertHandler = new Handler();
     private Handler mUpdateBaterAlertHandler = new Handler();
+    private TourGuide mTutorial = null;
     private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() {
         @Override
         public void onConnected() {
