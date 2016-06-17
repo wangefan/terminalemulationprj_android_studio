@@ -238,4 +238,6 @@
     <string name="col_title">Col:</string>
     <string name="color_picker_fonts_title">Pick Fonts color</string>
     <string name="color_picker_bg_title">Pick Background color</string>
+    <string name="msg_tour_edit_profile_title">Profile Settings!</string>
+    <string name="msg_tour_edit_profile">You should edit your profile setting to connect your host.Press to exit.</string>
 </resources>

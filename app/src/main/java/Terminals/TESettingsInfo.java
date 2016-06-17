@@ -53,6 +53,7 @@ public class TESettingsInfo {
     //Persist values, not in jason
     private static final String LEFT_MARGIN_KEY = "LEFT_MARGIN_KEY";
     private static final String TOP_MARGIN_KEY = "TOP_MARGIN_KEY";
+    private static final String EDIT_PROFILE_SHOWED = "EDIT_PROFILE_SHOWED";
 
     public static boolean loadSessionSettings(Context context) {
         mContext = context;
@@ -506,5 +507,15 @@ public class TESettingsInfo {
 
     public static int getSessionNumberLocTop() {
         return mSp.getInt(TOP_MARGIN_KEY, 0);
+    }
+
+    public static boolean showEditProfile() {
+        boolean bShowed = mSp.getBoolean(EDIT_PROFILE_SHOWED, false);
+        if(!bShowed) {
+            SharedPreferences.Editor editor = mSp.edit();
+            editor.putBoolean(EDIT_PROFILE_SHOWED, true);
+            editor.commit();
+        }
+        return bShowed == false;
     }
 }

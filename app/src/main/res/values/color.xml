@@ -13,4 +13,6 @@
     <drawable name="white">#FFFFFFFF</drawable>
     <drawable name="blue">#FF2DA3CA</drawable>
     <color name="key_back_color">#8EB4E3</color>
+    <color name="tooltipsColor">#2980b9</color>
+    <color name="tooltipsTextColor">#FFFFFF</color>
 </resources>

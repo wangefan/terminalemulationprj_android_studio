@@ -1,5 +1,6 @@
 package com.te.UI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,6 +16,10 @@ import com.example.terminalemulation.R;
 
 import java.io.UnsupportedEncodingException;
 
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
+
 public class UIUtility {
 	public interface OnEditMessageBoxListener {
 		void onResult(String result);
@@ -28,6 +33,7 @@ public class UIUtility {
 	static private Point mPrgDlgSize = new Point();
 	static private boolean mBShow = false;
 	static private Handler mUIHandler = null;
+	static private TourGuide mTourGuideHandler;
 	
 	//member functions
 	static public void init(Context context) {
@@ -144,5 +150,24 @@ public class UIUtility {
 			}
 		});
 		builder.create().show();
+	}
+
+	public static void showTourEditProfile(Activity activity, View targetView) {
+		ToolTip toolTip = new ToolTip().
+				setTitle(activity.getString(R.string.msg_tour_edit_profile_title)).
+				setDescription(activity.getString(R.string.msg_tour_edit_profile)).
+				setBackgroundColor(activity.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(activity.getResources().getColor(R.color.tooltipsColor)).
+				setShadow(true).
+				setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mTourGuideHandler.cleanUp();
+					}
+				});
+		mTourGuideHandler = TourGuide.init(activity)
+				.setToolTip(toolTip)
+				.setOverlay(new Overlay())
+				.playOn(targetView);
 	}
 }

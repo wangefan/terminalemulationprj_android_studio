@@ -44,7 +44,6 @@ import Terminals.CursorView;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
-import tourguide.tourguide.TourGuide;
 
 public class MainActivity extends AppCompatActivity
         implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewListener
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity
     private MenuItem mMenuItemConn;
     private Handler mUpdateWifiAlertHandler = new Handler();
     private Handler mUpdateBaterAlertHandler = new Handler();
-    private TourGuide mTutorial = null;
     private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() {
         @Override
         public void onConnected() {
@@ -535,6 +533,15 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         mMenuItemConn = menu.findItem(R.id.connection);
+        if(TESettingsInfo.showEditProfile() == true) {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    final View menuItemView = findViewById(R.id.sessionSettings);
+                    UIUtility.showTourEditProfile(MainActivity.this, menuItemView);
+                }
+            });
+        }
         updateConnMenuItem();
         return true;
     }
