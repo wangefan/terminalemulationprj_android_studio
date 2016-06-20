@@ -12,8 +12,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.terminalemulation.R;
 
-import Terminals.TESettingsInfo;
 import Terminals.ContentView;
+import Terminals.TESettingsInfo;
 
 /**
  * Created by yifan.wang on 2016/4/28.
@@ -23,6 +23,13 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         public void onShowKeyboard();
         public void onHideKeyboard();
     }
+    private enum KeyboardType {
+        KT_ABC,
+        KT_Symbol,
+        KT_Fun,
+        KT_Server,
+    }
+
     private final int MY_KEYCODE_DOWN = -7;
     private final int MY_KEYCODE_UP = -8;
     private final int MY_KEYCODE_LEFT = -9;
@@ -35,6 +42,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_HIDE = -16;
     private final int MY_KEYCODE_SYSKEY = -17;
 
+    private KeyboardType mKeyboardType = KeyboardType.KT_ABC;
     private Context mContext = null;
     private ContentView mTargetView = null;
     private KeyboardView mKeyboardView = null;
@@ -80,6 +88,25 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     }
 
     public void showTEKeyboard() {
+        switch (mKeyboardType) {
+            case KT_ABC:
+            default:
+                mKeyboardView.setKeyboard(mABCKeyboard);
+                break;
+            case KT_Symbol:
+                mKeyboardView.setKeyboard(mSymbolKeyboard);
+                break;
+            case KT_Fun:
+            {
+                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                    mKeyboardView.setKeyboard(mTNFunKeyboard);
+                }
+                else {
+                    mKeyboardView.setKeyboard(mVTFunKeyboard);
+                }
+            }
+            break;
+        }
         mKeyboardView.setVisibility(View.VISIBLE);
         mKeyboardView.setEnabled(true);
         if(mTargetView !=null)
@@ -109,11 +136,13 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             case MY_KEYCODE_ABC:
             {
                 mKeyboardView.setKeyboard(mABCKeyboard);
+                mKeyboardType = KeyboardType.KT_ABC;
             }
             break;
             case MY_KEYCODE_SYMBOL:
             {
                 mKeyboardView.setKeyboard(mSymbolKeyboard);
+                mKeyboardType = KeyboardType.KT_Symbol;
             }
             break;
             case MY_KEYCODE_FUNC:
@@ -124,6 +153,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 else {
                     mKeyboardView.setKeyboard(mVTFunKeyboard);
                 }
+                mKeyboardType = KeyboardType.KT_Fun;
             }
             break;
             case MY_KEYCODE_HIDE:
