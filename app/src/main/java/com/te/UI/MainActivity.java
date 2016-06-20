@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initInOnCreate() {
+        TerminalProcess.initKeyCodeMap();
         for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
             TerminalProcess Process = new TerminalProcess();
             Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));

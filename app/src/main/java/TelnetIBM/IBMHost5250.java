@@ -11,6 +11,7 @@ import com.example.terminalemulation.R;
 import com.te.UI.UIUtility;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 import Terminals.TESettingsInfo;
@@ -22,51 +23,69 @@ import Terminals.typeConvertion;
  */
 
 public class IBMHost5250 extends IBMHostBase {
+    //The valuse are the same with TE-C++
+    static final int IBMKEY_NONE = -1;
+    static final int IBMKEY_ATTN = 25;
+    static final int IBMKEY_FBEGIN = 26;
+    static final int IBMKEY_DEL = 27;
+    static final int IBMKEY_FEND = 28;
+    static final int IBMKEY_ERINPUT = 29;
+    static final int IBMKEY_FPLUS = 30;
+    static final int IBMKEY_FMINUS = 31;
+    static final int IBMKEY_FEXIT = 32;
+    static final int IBMKEY_LAST = 33;
+    static final int IBMKEY_NEXT = 34;
+    static final int IBMKEY_ROLDN = 35;
+    static final int IBMKEY_ROLUP = 36;
+    static final int IBMKEY_PREV = 37;
+    static final int IBMKEY_RECORD = 38;
+    static final int IBMKEY_SYSRQ = 39;
+    static final int IBMKEY_INS = 40;
+    static final int IBMKEY_DUP = 41;
+    static final int IBMKEY_HELP = 42;
+    static final int IBMKEY_CLR = 43;
+    static final int IBMKEY_RESET = 44;
+    static final int IBMKEY_ENTER = 45;
+    static final int IBMKEY_LEFT = 46;
+    static final int IBMKEY_LEFTDELETE = 47;
+    static final int IBMKEY_PRINT = 48;
+    static final int IBMKEY_HOME = 57;
+    //static final int IBMKEY_RECORD_BSP = 58;   no need
+    static final int IBMKEY_FMARK = 59;
+    static final int IBMKEY_NEWLINE = 60;
+    static final int IBMKEY_CLREOF = 61;
+    static final int IBMKEY_RIGHT = 63;
+    static final int IBMKEY_UP = 64;
+    static final int IBMKEY_DOWN = 65;
 
-    static final int IBMKEY_SPACE = -10;
-    static final int IBMKEY_F13 = -100;
-    static final int IBMKEY_F14 = -101;
-    static final int IBMKEY_F15 = -102;
-    static final int IBMKEY_F16 = -103;
-    static final int IBMKEY_F17 = -104;
-    static final int IBMKEY_F18 = -105;
-    static final int IBMKEY_F19 = -106;
-    static final int IBMKEY_F20 = -107;
-    static final int IBMKEY_F21 = -108;
-    static final int IBMKEY_F22 = -109;
-    static final int IBMKEY_F23 = -110;
-    static final int IBMKEY_F24 = -111;
-    static final int IBMKEY_PA1 = -200;
-    static final int IBMKEY_PA2 = -201;
-    static final int IBMKEY_PA3 = -202;
-    static final int IBMKEY_FPLUS = -203;
-    static final int IBMKEY_FMINUS = -204;
-    static final int IBMKEY_FEXIT = -205;
-    static final int IBMKEY_ATTN = -206;
-    static final int IBMKEY_FBEGIN = -207;
-    static final int IBMKEY_DEL = -208;
-    static final int IBMKEY_FEND = -209;
-    static final int IBMKEY_FMARK = -210;
-    static final int IBMKEY_ERINPUT = -211;
-    static final int IBMKEY_SYSRQ = -212;
-    static final int IBMKEY_LAST = -213;
-    static final int IBMKEY_NEXT = -214;
-    static final int IBMKEY_CLREOF = -215;
-    static final int IBMKEY_ROLDN = -216;
-    static final int IBMKEY_ROLUP = -217;
-    static final int IBMKEY_PREV = -218;
+    static final int IBMKEY_F1 = 1;
+    static final int IBMKEY_F2 = 2;
+    static final int IBMKEY_F3 = 3;
+    static final int IBMKEY_F4 = 4;
+    static final int IBMKEY_F5 = 5;
+    static final int IBMKEY_F6 = 6;
+    static final int IBMKEY_F7 = 7;
+    static final int IBMKEY_F8 = 8;
+    static final int IBMKEY_F9 = 9;
+    static final int IBMKEY_F10 = 10;
+    static final int IBMKEY_F11 = 11;
+    static final int IBMKEY_F12 = 12;
+    static final int IBMKEY_F13 = 13;
+    static final int IBMKEY_F14 = 14;
+    static final int IBMKEY_F15 = 15;
+    static final int IBMKEY_F16 = 16;
+    static final int IBMKEY_F17 = 17;
+    static final int IBMKEY_F18 = 18;
+    static final int IBMKEY_F19 = 19;
+    static final int IBMKEY_F20 = 20;
+    static final int IBMKEY_F21 = 21;
+    static final int IBMKEY_F22 = 22;
+    static final int IBMKEY_F23 = 23;
+    static final int IBMKEY_F24 = 24;
+    static final int IBMKEY_PA1 = 108;
+    static final int IBMKEY_PA2 = 110;
+    static final int IBMKEY_PA3 = 107;
 
-    // }}#
-    static final int IBMKEY_RECORD = -219;
-    static final int IBMKEY_BKTAB = -220;
-    static final int IBMKEY_DUP = -221;
-    static final int IBMKEY_INS = -222;
-    static final int IBMKEY_RESET = -223;
-    static final int IBMKEY_HOME = -224;
-    static final int IBMKEY_NEWLINE = -225;
-    static final int IBMKEY_BS = -226;
-    static final int IBMKEY_TAB = 61;
-    static final int IBMKEY_CLR = -228;
     public static char[] szEBCDIC =
             {
                     0x00, 0x01, 0x02, 0x03, 0x00, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b, 0x0c, 0x0d, 0x20, 0x20, 0x10, 0x11, 0x12, 0x13, 0x00, 0x00, 0x08, 0x00, 0x18, 0x19, 0x00, 0x00, 0x1c, 0x1d, 0x1e, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x17, 0x1b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x06, 0x07, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x14, 0x15, 0x00, 0x00,
@@ -95,6 +114,29 @@ public class IBMHost5250 extends IBMHostBase {
                     0x20, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba, 0x20, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0x20, 0x20, 0xca, 0xcb, 0xcc, 0x5b, 0x7e, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0x20, 0xd6, 0xd7, 0xd8, 0xd9, 0x5d, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0xdf,
                     0x7b, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x7d, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, 0x50, 0x51, 0x52, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x24, 0x20, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
             };
+    private static java.util.Map<Integer, Integer> mDefaultTNKeyCodeMap = new java.util.HashMap<Integer, Integer>();
+    public static void initKeyCodeMap() {
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, IBMKEY_LEFT);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, IBMKEY_UP);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, IBMKEY_DOWN);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F1, IBMKEY_F1);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F2, IBMKEY_F2);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F3, IBMKEY_F3);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F4, IBMKEY_F4);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F5, IBMKEY_F5);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F6, IBMKEY_F6);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F7, IBMKEY_F7);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F11, IBMKEY_F11);
+        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_F12);
+    }
     //private char[][] CharGrid = null;
     //private char[][] AttribGrid = null;
     final char mAttrMaskNotShow = 0x07;
@@ -155,6 +197,7 @@ public class IBMHost5250 extends IBMHostBase {
     private java.util.ArrayList<Character> DataList = new java.util.ArrayList<Character>();
     private java.util.ArrayList<Character> ParamList = new java.util.ArrayList<Character>();
     private java.util.ArrayList<Character> ControlCodeList = new java.util.ArrayList<Character>();
+    private java.util.Map<Integer, Integer> mTNKeyCodeMap = null;
     // #{{  Char Event List
     private Tn_CharEventInfo[] mTn_CharEvents = {
             //	previous IBMState ,  CharFrom,  CharTo,  Action,             Cur State
@@ -226,11 +269,8 @@ public class IBMHost5250 extends IBMHostBase {
 
     // #{{ constructor & members
     public IBMHost5250() {
-
-
         this.SetSize(25, 80);
-
-
+        mTNKeyCodeMap = new HashMap<Integer, Integer>(mDefaultTNKeyCodeMap);
     }
     // }}#
 
@@ -1688,19 +1728,14 @@ public class IBMHost5250 extends IBMHostBase {
     private void CaretLeft() {
         if (FieldList.size() <= 0)
             return;
-
-
         IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
-
-        if (this.GetIndexCaret() <= 0)//?p?G???_?w?b??@??,?e???eTAB?@?????
-        {
+        if (this.GetIndexCaret() <= 0) {//?p?G???_?w?b??@??,?e???eTAB?@?????
             PrevIndexTab();
             CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
             this.SetIndexCaret(CurField.Lenth - 1);
 
         } else {
             PrvIndexCaret();
-
         }
 
         //UpDateActiveField();
@@ -1710,30 +1745,22 @@ public class IBMHost5250 extends IBMHostBase {
     private void CaretBack() {
         if (FieldList.size() <= 0)
             return;
-
         IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
-
-
-        if (this.GetIndexCaret() <= 0)//?p?G???_?w?b??@??,?e???eTAB?@?????
-        {
-
+        if (this.GetIndexCaret() <= 0) {//?p?G???_?w?b??@??,?e???eTAB?@?????
             PrevIndexTab();
             CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
             this.SetIndexCaret(CurField.Lenth - 1);
 
         } else {
             PrvIndexCaret();
-
         }
 
         for (int i = this.GetIndexCaret(); i < CurField.Lenth; i++) {
             int next = i + 1;
-
             if (next == CurField.Lenth)
                 CurField.Data[i] = (char) 0;
             else
                 CurField.Data[i] = CurField.Data[next];
-
         }
 
         UpDateActiveField();
@@ -1994,244 +2021,182 @@ public class IBMHost5250 extends IBMHostBase {
         if(isKeyLocked())
             return;
 
-        boolean Func = false;
         char pressedKey = (char) event.getUnicodeChar();
+        int nIBMKeyCode = getServerKeyCode(keyCode);
+        if(nIBMKeyCode != IBMKEY_NONE) {
+            switch (nIBMKeyCode) {
+                case IBMKEY_LEFT:
+                    CaretLeft();
+                    break;
+                case IBMKEY_RIGHT:
+                    CaretRight();
+                    break;
+                case IBMKEY_NEXT:
+                    TabToNextField();
+                    break;
+                case IBMKEY_ENTER:
+                    ProcessIbmEnter();
+                    break;
+                case IBMKEY_F1:
+                    ProcessFunctionKey(IBmAID.F1);
+                    break;
+                case IBMKEY_F2:
+                    ProcessFunctionKey(IBmAID.F2);
+                    break;
+                case IBMKEY_F3:
+                    ProcessFunctionKey(IBmAID.F3);
+                    break;
+                case IBMKEY_F4:
+                    ProcessFunctionKey(IBmAID.F4);
+                    break;
+                case IBMKEY_F5:
+                    ProcessFunctionKey(IBmAID.F5);
+                    break;
+                case IBMKEY_F6:
+                    ProcessFunctionKey(IBmAID.F6);
+                    break;
+                case IBMKEY_F7:
+                    ProcessFunctionKey(IBmAID.F7);
+                    break;
+                case IBMKEY_F8:
+                    ProcessFunctionKey(IBmAID.F8);
+                    break;
+                case IBMKEY_F9:
+                    ProcessFunctionKey(IBmAID.F9);
+                    break;
+                case IBMKEY_F10:
+                    ProcessFunctionKey(IBmAID.F10);
+                    break;
+                case IBMKEY_F11:
+                    ProcessFunctionKey(IBmAID.F11);
+                    break;
+                case IBMKEY_F12:
+                    ProcessFunctionKey(IBmAID.F12);
+                    break;
+                case IBMKEY_F13:
+                    ProcessFunctionKey(IBmAID.F13);
+                    break;
+                case IBMKEY_F14:
+                    ProcessFunctionKey(IBmAID.F14);
+                    break;
+                case IBMKEY_F15:
+                    ProcessFunctionKey(IBmAID.F15);
+                    break;
+                case IBMKEY_F16:
+                    ProcessFunctionKey(IBmAID.F16);
+                    break;
+                case IBMKEY_F17:
+                    ProcessFunctionKey(IBmAID.F17);
+                    break;
+                case IBMKEY_F18:
+                    ProcessFunctionKey(IBmAID.F18);
+                    break;
+                case IBMKEY_F19:
+                    ProcessFunctionKey(IBmAID.F19);
+                    break;
+                case IBMKEY_F20:
+                    ProcessFunctionKey(IBmAID.F20);
+                    break;
+                case IBMKEY_F21:
+                    ProcessFunctionKey(IBmAID.F21);
+                    break;
+                case IBMKEY_F22:
+                    ProcessFunctionKey(IBmAID.F22);
+                    break;
+                case IBMKEY_F23:
+                    ProcessFunctionKey(IBmAID.F23);
+                    break;
+                case IBMKEY_F24:
+                    ProcessFunctionKey(IBmAID.F24);
+                    break;
 
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                CaretLeft();
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                CaretRight();
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_TAB:
-                TabToNextField();
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_SPACE:
-                PutAsciiKey(0x20);
-                Func = true;
-
-                break;
-            case KeyEvent.KEYCODE_ENTER:
-
-                ProcessIbmEnter();
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_BACK:
-                ProcessIbmEnter();
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_DEL:
-                CaretBack();
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F1:
-                ProcessFunctionKey(IBmAID.F1);
-                Func = true;
-                break;
-
-            case KeyEvent.KEYCODE_F2:
-                ProcessFunctionKey(IBmAID.F2);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F3:
-                ProcessFunctionKey(IBmAID.F3);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F4:
-                ProcessFunctionKey(IBmAID.F4);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F5:
-                ProcessFunctionKey(IBmAID.F5);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F6:
-                ProcessFunctionKey(IBmAID.F6);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F7:
-                ProcessFunctionKey(IBmAID.F7);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F8:
-                ProcessFunctionKey(IBmAID.F8);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F9:
-                ProcessFunctionKey(IBmAID.F9);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F10:
-                ProcessFunctionKey(IBmAID.F10);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F11:
-                ProcessFunctionKey(IBmAID.F11);
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F12:
-                ProcessFunctionKey(IBmAID.F12);
-                Func = true;
-                break;
-            case IBMKEY_F13:
-                ProcessFunctionKey(IBmAID.F13);
-                Func = true;
-                break;
-            case IBMKEY_F14:
-                ProcessFunctionKey(IBmAID.F14);
-                Func = true;
-                break;
-            case IBMKEY_F15:
-                ProcessFunctionKey(IBmAID.F15);
-                Func = true;
-                break;
-            case IBMKEY_F16:
-                ProcessFunctionKey(IBmAID.F16);
-                Func = true;
-                break;
-            case IBMKEY_F17:
-                ProcessFunctionKey(IBmAID.F17);
-                Func = true;
-                break;
-            case IBMKEY_F18:
-                ProcessFunctionKey(IBmAID.F18);
-                Func = true;
-                break;
-            case IBMKEY_F19:
-                ProcessFunctionKey(IBmAID.F19);
-                Func = true;
-                break;
-            case IBMKEY_F20:
-                ProcessFunctionKey(IBmAID.F20);
-                Func = true;
-                break;
-            case IBMKEY_F21:
-                ProcessFunctionKey(IBmAID.F21);
-                Func = true;
-                break;
-            case IBMKEY_F22:
-                ProcessFunctionKey(IBmAID.F22);
-                Func = true;
-                break;
-            case IBMKEY_F23:
-                ProcessFunctionKey(IBmAID.F23);
-                Func = true;
-                break;
-            case IBMKEY_F24:
-                ProcessFunctionKey(IBmAID.F24);
-                Func = true;
-                break;
-
-            //3270
-            case IBMKEY_PA1:
-            case IBMKEY_PA2:
-            case IBMKEY_PA3:
-                break;
-            case IBMKEY_FPLUS:
-            case IBMKEY_FMINUS: //N mod
-                FieldPlus();
-                Func = true;
-                break;
-            case IBMKEY_FEXIT:
-                FieldExit();
-                Func = true;
-                break;
-            case IBMKEY_ATTN:
-                ProcessFunctionKeyAttn();
-                Func = true;
-                break;
+                //3270
+                case IBMKEY_PA1:
+                case IBMKEY_PA2:
+                case IBMKEY_PA3:
+                    break;
+                case IBMKEY_FPLUS:
+                case IBMKEY_FMINUS: //N mod
+                    FieldPlus();
+                    break;
+                case IBMKEY_FEXIT:
+                    FieldExit();
+                    break;
+                case IBMKEY_ATTN:
+                    ProcessFunctionKeyAttn();
+                    break;
                 case IBMKEY_FBEGIN:
-                CaretBegin();
-                Func = true;
-                break;
-            case IBMKEY_DEL:
-                CaretDelete();
-                Func = true;
-                break;
-            case IBMKEY_FEND:
-                CaretEnd();
-                Func = true;
-                break;
-            case IBMKEY_FMARK://3270
+                    CaretBegin();
+                    break;
+                case IBMKEY_DEL:
+                    CaretDelete();
+                    break;
+                case IBMKEY_FEND:
+                    CaretEnd();
+                    break;
+                case IBMKEY_FMARK://3270
+                    break;
+                case IBMKEY_ERINPUT:
+                    NullFields(true);
+                    TabToFirstField();
+                    break;
 
-            case IBMKEY_ERINPUT:
-                NullFields(true);
-                TabToFirstField();
-                Func = true;
-                break;
-
-            case IBMKEY_SYSRQ:
-                ProcessFunctionKeyRq();
-                Func = true;
-                break;
-            case IBMKEY_LAST:
-                TabToLastField();
-                Func = true;
-                break;
-            case IBMKEY_NEXT:
-                TabToNextField();
-                Func = true;
-                break;
-            case IBMKEY_CLREOF:
-                EraseEof();
-                Func = true;
-                break;
-            case IBMKEY_ROLDN://3270
-            case IBMKEY_ROLUP:
-                break;
-
-            case IBMKEY_PREV:
-                TabToPrevField();
-                Func = true;
-                break;
-            case IBMKEY_RECORD:
-                ProcessFunctionKeyRecord();
-                Func = true;
-                break;
-            //case IBMKEY_BKTAB ://3270
-            case IBMKEY_DUP:
-                Duplicatefield();
-                Func = true;
-                break;
-
-            case IBMKEY_INS:
-                bInsert = !bInsert;
-                Func = true;
-                break;
-            case IBMKEY_RESET:
-                setKeyLock(false);
-                Func = true;
-                break;
-            case IBMKEY_HOME:
-                TabToFirstField();
-                Func = true;
-                break;
-            case IBMKEY_NEWLINE :
-                Func = true;
-                break;
-
-            case IBMKEY_BS:
-                PrvIndexCaret();
-
-                CaretUpdate();
-                CaretDelete();
-                Func = true;
-                break;
-            case IBMKEY_CLR:
-                break;
-        }
-
-        if (!Func) {
+                case IBMKEY_SYSRQ:
+                    ProcessFunctionKeyRq();
+                    break;
+                case IBMKEY_LAST:
+                    TabToLastField();
+                    break;
+                case IBMKEY_CLREOF:
+                    EraseEof();
+                    break;
+                case IBMKEY_ROLDN://3270
+                case IBMKEY_ROLUP:
+                    break;
+                case IBMKEY_PREV:
+                    TabToPrevField();
+                    break;
+                case IBMKEY_RECORD:
+                    ProcessFunctionKeyRecord();
+                    break;
+                //case IBMKEY_BKTAB ://3270
+                case IBMKEY_DUP:
+                    Duplicatefield();
+                    break;
+                case IBMKEY_INS:
+                    bInsert = !bInsert;
+                    break;
+                case IBMKEY_RESET:
+                    setKeyLock(false);
+                    break;
+                case IBMKEY_HOME:
+                    TabToFirstField();
+                    break;
+                case IBMKEY_NEWLINE :
+                    break;
+                case IBMKEY_LEFTDELETE:
+                    CaretBack();
+                    break;
+                case IBMKEY_CLR:
+                    break;
+            }
+        } else {
             if (pressedKey == 0)
                 return;
             PutAsciiKey(pressedKey);
         }
 
         ViewPostInvalidate();
+    }
+
+    private int getServerKeyCode(int keyCode) {
+        Integer nIBMKeyCode = mTNKeyCodeMap.get(keyCode);
+        if(nIBMKeyCode != null) {
+            if(BuildConfig.DEBUG) Log.d("TE", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
+            return nIBMKeyCode;
+        }
+        if(BuildConfig.DEBUG) Log.d("TE", String.format("No Keycode mapped!"));
+        return IBMKEY_NONE;
     }
 
     private void FieldPlus() {
