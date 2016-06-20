@@ -23,32 +23,19 @@ import Terminals.typeConvertion;
 
 public class IBMHost5250 extends IBMHostBase {
 
-    /* 
-    
-    bool mbInsert = false;
-    bool mbLock = false;
-    bool mbError = false;
-    private Boolean LogInSend = false;
-    System.Collections.ArrayList ErrorDataList;
-    private Font _font;
-    Tn_CharEvents TnCharEvents = new Tn_CharEvents();
-    */
-
-
-    // #{{  Key Board Input
-    static final int KEY_SPACE = -10;
-    static final int KEY_F13 = -100;
-    static final int KEY_F14 = -101;
-    static final int KEY_F15 = -102;
-    static final int KEY_F16 = -103;
-    static final int KEY_F17 = -104;
-    static final int KEY_F18 = -105;
-    static final int KEY_F19 = -106;
-    static final int KEY_F20 = -107;
-    static final int KEY_F21 = -108;
-    static final int KEY_F22 = -109;
-    static final int KEY_F23 = -110;
-    static final int KEY_F24 = -111;
+    static final int IBMKEY_SPACE = -10;
+    static final int IBMKEY_F13 = -100;
+    static final int IBMKEY_F14 = -101;
+    static final int IBMKEY_F15 = -102;
+    static final int IBMKEY_F16 = -103;
+    static final int IBMKEY_F17 = -104;
+    static final int IBMKEY_F18 = -105;
+    static final int IBMKEY_F19 = -106;
+    static final int IBMKEY_F20 = -107;
+    static final int IBMKEY_F21 = -108;
+    static final int IBMKEY_F22 = -109;
+    static final int IBMKEY_F23 = -110;
+    static final int IBMKEY_F24 = -111;
     static final int IBMKEY_PA1 = -200;
     static final int IBMKEY_PA2 = -201;
     static final int IBMKEY_PA3 = -202;
@@ -2090,51 +2077,51 @@ public class IBMHost5250 extends IBMHostBase {
                 ProcessFunctionKey(IBmAID.F12);
                 Func = true;
                 break;
-            case KEY_F13:
+            case IBMKEY_F13:
                 ProcessFunctionKey(IBmAID.F13);
                 Func = true;
                 break;
-            case KEY_F14:
+            case IBMKEY_F14:
                 ProcessFunctionKey(IBmAID.F14);
                 Func = true;
                 break;
-            case KEY_F15:
+            case IBMKEY_F15:
                 ProcessFunctionKey(IBmAID.F15);
                 Func = true;
                 break;
-            case KEY_F16:
+            case IBMKEY_F16:
                 ProcessFunctionKey(IBmAID.F16);
                 Func = true;
                 break;
-            case KEY_F17:
+            case IBMKEY_F17:
                 ProcessFunctionKey(IBmAID.F17);
                 Func = true;
                 break;
-            case KEY_F18:
+            case IBMKEY_F18:
                 ProcessFunctionKey(IBmAID.F18);
                 Func = true;
                 break;
-            case KEY_F19:
+            case IBMKEY_F19:
                 ProcessFunctionKey(IBmAID.F19);
                 Func = true;
                 break;
-            case KEY_F20:
+            case IBMKEY_F20:
                 ProcessFunctionKey(IBmAID.F20);
                 Func = true;
                 break;
-            case KEY_F21:
+            case IBMKEY_F21:
                 ProcessFunctionKey(IBmAID.F21);
                 Func = true;
                 break;
-            case KEY_F22:
+            case IBMKEY_F22:
                 ProcessFunctionKey(IBmAID.F22);
                 Func = true;
                 break;
-            case KEY_F23:
+            case IBMKEY_F23:
                 ProcessFunctionKey(IBmAID.F23);
                 Func = true;
                 break;
-            case KEY_F24:
+            case IBMKEY_F24:
                 ProcessFunctionKey(IBmAID.F24);
                 Func = true;
                 break;
@@ -2144,15 +2131,11 @@ public class IBMHost5250 extends IBMHostBase {
             case IBMKEY_PA2:
             case IBMKEY_PA3:
                 break;
-
             case IBMKEY_FPLUS:
             case IBMKEY_FMINUS: //N mod
                 FieldPlus();
                 Func = true;
                 break;
-            //EraseAfterCursor
-
-
             case IBMKEY_FEXIT:
                 FieldExit();
                 Func = true;
@@ -2161,7 +2144,7 @@ public class IBMHost5250 extends IBMHostBase {
                 ProcessFunctionKeyAttn();
                 Func = true;
                 break;
-            case IBMKEY_FBEGIN:
+                case IBMKEY_FBEGIN:
                 CaretBegin();
                 Func = true;
                 break;
@@ -2227,7 +2210,9 @@ public class IBMHost5250 extends IBMHostBase {
                 TabToFirstField();
                 Func = true;
                 break;
-            // case IBMKEY_NEWLINE :
+            case IBMKEY_NEWLINE :
+                Func = true;
+                break;
 
             case IBMKEY_BS:
                 PrvIndexCaret();
@@ -2236,39 +2221,8 @@ public class IBMHost5250 extends IBMHostBase {
                 CaretDelete();
                 Func = true;
                 break;
-
             case IBMKEY_CLR:
                 break;
-
-      /*
-       * case KeyEvent.keycode_f1:
-            ProcessFunctionKey(IBmAID.F13);
-            break;
-        case KeyEvent.KEYCODE_F14:
-            ProcessFunctionKey(IBmAID.F14);
-            break;
-        case KeyEvent.KEYCODE_F15:
-            ProcessFunctionKey(IBmAID.F15);
-            break;
-        case KeyEvent.KEYCODE_F16:
-            ProcessFunctionKey(IBmAID.F16);
-            break;
-        case KeyEvent.KEYCODE_F17:
-            ProcessFunctionKey(IBmAID.F17);
-            break;
-        case KeyEvent.KEYCODE_F18:
-            ProcessFunctionKey(IBmAID.F18);
-            break;
-        case KeyEvent.KEYCODE_F19:
-            ProcessFunctionKey(IBmAID.F19);
-            break;
-        case KeyEvent.KEYCODE_F20:
-            ProcessFunctionKey(IBmAID.F20);
-            break;
-
-            */
-
-
         }
 
         if (!Func) {
