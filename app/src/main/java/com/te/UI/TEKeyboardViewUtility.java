@@ -30,17 +30,32 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         KT_Server,
     }
 
-    private final int MY_KEYCODE_DOWN = -7;
-    private final int MY_KEYCODE_UP = -8;
-    private final int MY_KEYCODE_LEFT = -9;
-    private final int MY_KEYCODE_RIGHT = -10;
-    private final int MY_KEYCODE_TAB = -11;
+    //Top function keys begin
     private final int MY_KEYCODE_ABC = -12;
     private final int MY_KEYCODE_SYMBOL = -13;
     private final int MY_KEYCODE_FUNC = -14;
     private final int MY_KEYCODE_SERVER = -15;
     private final int MY_KEYCODE_HIDE = -16;
     private final int MY_KEYCODE_SYSKEY = -17;
+    //Top function keys end
+
+    //ABC begin
+    private final int MY_KEYCODE_DOWN = -7;
+    private final int MY_KEYCODE_UP = -8;
+    private final int MY_KEYCODE_LEFT = -9;
+    private final int MY_KEYCODE_RIGHT = -10;
+    private final int MY_KEYCODE_TAB = -11;
+    //ABC end
+
+    //TN server key begin
+    private final int MY_KEYCODE_ATTN = -18;
+    private final int MY_KEYCODE_BKSP = -19;
+    private final int MY_KEYCODE_PRVS = -20;
+    private final int MY_KEYCODE_CLR = -21;
+    private final int MY_KEYCODE_CLREOF = -22;
+    private final int MY_KEYCODE_DEL = -23;
+    private final int MY_KEYCODE_HOME = -33;
+    //TN server key end
 
     private KeyboardType mKeyboardType = KeyboardType.KT_ABC;
     private Context mContext = null;
@@ -50,6 +65,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private Keyboard mSymbolKeyboard = null;
     private Keyboard mVTFunKeyboard = null;
     private Keyboard mTNFunKeyboard = null;
+    private Keyboard mTNServerKeyboard = null;
+    private Keyboard mVTServerKeyboard = null;
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
     private TEKeyboardViewListener mLisitener  = null;
 
@@ -61,6 +78,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mSymbolKeyboard = new Keyboard(context, R.xml.keyboard_symbol);
         mTNFunKeyboard = new Keyboard(context, R.xml.keyboard_tn_funl);
         mVTFunKeyboard = new Keyboard(context, R.xml.keyboard_vt_funl);
+        mTNServerKeyboard = new Keyboard(context, R.xml.keyboard_tn_server);
+        mVTServerKeyboard = new Keyboard(context, R.xml.keyboard_vt_server);
         mKeyboardView.setKeyboard(mABCKeyboard);
         mKeyboardView.setOnKeyboardActionListener(this);
         mKeyboardView.setPreviewEnabled(false);
@@ -69,6 +88,11 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private void keyDownUp(int keyEventCode) {
         sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
         sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+    }
+
+    private void serverKeyDownUp(int keyEventCode) {
+        sendKeyEvent(new ServerKeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
+        sendKeyEvent(new ServerKeyEvent(KeyEvent.ACTION_UP, keyEventCode));
     }
 
     private void sendKeyEvent(KeyEvent event) {
@@ -156,6 +180,17 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 mKeyboardType = KeyboardType.KT_Fun;
             }
             break;
+            case MY_KEYCODE_SERVER:
+            {
+                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                    mKeyboardView.setKeyboard(mTNServerKeyboard);
+                }
+                else {
+                    mKeyboardView.setKeyboard(mVTServerKeyboard);
+                }
+                mKeyboardType = KeyboardType.KT_Server;
+            }
+            break;
             case MY_KEYCODE_HIDE:
             {
                 hideTEKeyboard();
@@ -217,6 +252,41 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             case MY_KEYCODE_TAB:
             {
                 keyDownUp(KeyEvent.KEYCODE_TAB);
+            }
+            break;
+            case MY_KEYCODE_ATTN:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ATTN);
+            }
+            break;
+            case MY_KEYCODE_BKSP:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_LEFTDELETE);
+            }
+            break;
+            case MY_KEYCODE_PRVS:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_PREV);
+            }
+            break;
+            case MY_KEYCODE_CLR:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_CLR);
+            }
+            break;
+            case MY_KEYCODE_CLREOF:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_CLREOF);
+            }
+            break;
+            case MY_KEYCODE_DEL:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_DEL);
+            }
+            break;
+            case MY_KEYCODE_HOME:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_HOME);
             }
             break;
             default://Enter(10), space(32), Characters

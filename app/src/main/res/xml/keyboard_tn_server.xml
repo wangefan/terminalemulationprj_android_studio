@@ -1,0 +1,46 @@
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:horizontalGap="0px"
+    android:verticalGap="0px"
+    android:keyWidth="17%p"
+    android:keyHeight="7%p">
+    <Row>
+        <Key android:codes="-12" android:keyLabel="abc" android:isSticky="true" android:keyEdgeFlags="left"/>
+        <Key android:codes="-13" android:keyLabel="!@#" android:isSticky="true" />
+        <Key android:codes="-14" android:keyLabel="Func"/>
+        <Key android:codes="-15" android:keyLabel="Server"/>
+        <Key android:codes="-16" android:keyIcon="@drawable/sym_keyboard_done"/>
+        <Key android:codes="-17" android:keyIcon="@drawable/sym_sys_keyboard_up" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:keyLabel="Attn" android:codes="-18" android:keyEdgeFlags="left"/>
+        <Key android:keyLabel="Backspace" android:codes="-19"/>
+        <Key android:keyLabel="Previous" android:codes="-20"/>
+        <Key android:keyLabel="Clear" android:codes="-21"/>
+        <Key android:keyLabel="Clear EOF" android:codes="-22"/>
+        <Key android:keyLabel="Delete" android:codes="-23" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:keyLabel="Field Mark" android:codes="-24" android:keyEdgeFlags="left"/>
+        <Key android:keyLabel="Field Exit" android:codes="-25"/>
+        <Key android:keyLabel="Begin" android:codes="-26"/>
+        <Key android:keyLabel="End" android:codes="-27"/>
+        <Key android:keyLabel="Duplicate" android:codes="-28"/>
+        <Key android:keyLabel="Erase Input" android:codes="-29" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:keyLabel="Field+" android:codes="-30" android:keyEdgeFlags="left"/>
+        <Key android:keyLabel="Field-" android:codes="-31"/>
+        <Key android:keyLabel="Last" android:codes="-32"/>
+        <Key android:keyLabel="Home" android:codes="-33"/>
+        <Key android:keyLabel="Insert" android:codes="-34"/>
+        <Key android:keyLabel="Newline"  android:codes="-35" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row android:rowEdgeFlags="bottom">
+        <Key android:keyLabel="Reset" android:codes="-36" android:keyEdgeFlags="left"/>
+        <Key android:keyLabel="Roll Up" android:codes="-37"/>
+        <Key android:keyLabel="Roll Down" android:codes="-38"/>
+        <Key android:keyLabel="Sys Req" android:codes="-39"/>
+        <Key android:keyLabel="Next" android:codes="-40"/>
+        <Key android:keyLabel="Record" android:codes="-41" android:keyEdgeFlags="right"/>
+    </Row>
+</Keyboard>

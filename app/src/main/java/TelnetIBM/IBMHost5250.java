@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
+import com.te.UI.ServerKeyEvent;
 import com.te.UI.UIUtility;
 
 import java.util.Arrays;
@@ -25,39 +26,38 @@ import Terminals.typeConvertion;
 public class IBMHost5250 extends IBMHostBase {
     //The valuse are the same with TE-C++
     static final int IBMKEY_NONE = -1;
-    static final int IBMKEY_ATTN = 25;
-    static final int IBMKEY_FBEGIN = 26;
-    static final int IBMKEY_DEL = 27;
-    static final int IBMKEY_FEND = 28;
-    static final int IBMKEY_ERINPUT = 29;
-    static final int IBMKEY_FPLUS = 30;
-    static final int IBMKEY_FMINUS = 31;
-    static final int IBMKEY_FEXIT = 32;
-    static final int IBMKEY_LAST = 33;
-    static final int IBMKEY_NEXT = 34;
-    static final int IBMKEY_ROLDN = 35;
-    static final int IBMKEY_ROLUP = 36;
-    static final int IBMKEY_PREV = 37;
-    static final int IBMKEY_RECORD = 38;
-    static final int IBMKEY_SYSRQ = 39;
-    static final int IBMKEY_INS = 40;
-    static final int IBMKEY_DUP = 41;
-    static final int IBMKEY_HELP = 42;
-    static final int IBMKEY_CLR = 43;
-    static final int IBMKEY_RESET = 44;
-    static final int IBMKEY_ENTER = 45;
-    static final int IBMKEY_LEFT = 46;
-    static final int IBMKEY_LEFTDELETE = 47;
-    static final int IBMKEY_PRINT = 48;
-    static final int IBMKEY_HOME = 57;
+    static final int IBMKEY_ATTN = ServerKeyEvent.TN_KEYCODE_ATTN;
+    static final int IBMKEY_FBEGIN = ServerKeyEvent.TN_KEYCODE_FBEGIN;
+    static final int IBMKEY_DEL = ServerKeyEvent.TN_KEYCODE_DEL;
+    static final int IBMKEY_FEND = ServerKeyEvent.TN_KEYCODE_FEND;
+    static final int IBMKEY_ERINPUT = ServerKeyEvent.TN_KEYCODE_ERINPUT;
+    static final int IBMKEY_FPLUS = ServerKeyEvent.TN_KEYCODE_FPLUS;
+    static final int IBMKEY_FMINUS = ServerKeyEvent.TN_KEYCODE_FMINUS;
+    static final int IBMKEY_FEXIT = ServerKeyEvent.TN_KEYCODE_FEXIT;
+    static final int IBMKEY_LAST = ServerKeyEvent.TN_KEYCODE_LAST;
+    static final int IBMKEY_NEXT = ServerKeyEvent.TN_KEYCODE_NEXT;
+    static final int IBMKEY_ROLDN = ServerKeyEvent.TN_KEYCODE_ROLDN;
+    static final int IBMKEY_ROLUP = ServerKeyEvent.TN_KEYCODE_ROLUP;
+    static final int IBMKEY_PREV = ServerKeyEvent.TN_KEYCODE_PREV;
+    static final int IBMKEY_RECORD = ServerKeyEvent.TN_KEYCODE_RECORD;
+    static final int IBMKEY_SYSRQ = ServerKeyEvent.TN_KEYCODE_SYSRQ;
+    static final int IBMKEY_INS = ServerKeyEvent.TN_KEYCODE_INS;
+    static final int IBMKEY_DUP = ServerKeyEvent.TN_KEYCODE_DUP;
+    static final int IBMKEY_HELP = ServerKeyEvent.TN_KEYCODE_HELP;
+    static final int IBMKEY_CLR = ServerKeyEvent.TN_KEYCODE_CLR;
+    static final int IBMKEY_RESET = ServerKeyEvent.TN_KEYCODE_RESET;
+    static final int IBMKEY_ENTER = ServerKeyEvent.TN_KEYCODE_ENTER;
+    static final int IBMKEY_LEFT = ServerKeyEvent.TN_KEYCODE_LEFT;
+    static final int IBMKEY_LEFTDELETE = ServerKeyEvent.TN_KEYCODE_LEFTDELETE;
+    static final int IBMKEY_PRINT = ServerKeyEvent.TN_KEYCODE_PRINT;
+    static final int IBMKEY_HOME = ServerKeyEvent.TN_KEYCODE_HOME;
     //static final int IBMKEY_RECORD_BSP = 58;   no need
-    static final int IBMKEY_FMARK = 59;
-    static final int IBMKEY_NEWLINE = 60;
-    static final int IBMKEY_CLREOF = 61;
-    static final int IBMKEY_RIGHT = 63;
-    static final int IBMKEY_UP = 64;
-    static final int IBMKEY_DOWN = 65;
-
+    static final int IBMKEY_FMARK = ServerKeyEvent.TN_KEYCODE_FMARK;
+    static final int IBMKEY_NEWLINE = ServerKeyEvent.TN_KEYCODE_NEWLINE;
+    static final int IBMKEY_CLREOF = ServerKeyEvent.TN_KEYCODE_CLREOF;
+    static final int IBMKEY_RIGHT = ServerKeyEvent.TN_KEYCODE_RIGHT;
+    static final int IBMKEY_UP = ServerKeyEvent.TN_KEYCODE_UP;
+    static final int IBMKEY_DOWN = ServerKeyEvent.TN_KEYCODE_DOWN;
     static final int IBMKEY_F1 = 1;
     static final int IBMKEY_F2 = 2;
     static final int IBMKEY_F3 = 3;
@@ -1116,22 +1116,15 @@ public class IBMHost5250 extends IBMHostBase {
     private void EraseAfterCursor() {
         int nRet = 0;
         int nCaret = 0;
-        // GetIndexCaret
         IBM_FIELD cField = GetCurrentField();
-
         if (cField == null)
             return;
-
-
         if (cField.Bypass)
             return;
-
         nRet = cField.Lenth;
         nCaret = GetIndexCaret();
-
         if (cField.ShiftEdit == 7)
             nRet--;
-
         nRet--;
         while (nRet > nCaret) {
             cField.Data[nRet] = 0;
@@ -1427,11 +1420,15 @@ public class IBMHost5250 extends IBMHostBase {
         return Buffer;
     }
 
+    private String PackClearData() {
+        String Buffer = "";
+        Buffer += PackClearHeader();
+        return Buffer;
+    }
+
     private String PackContentRecord() {
         String Buffer = "";
         Buffer += PackRecordHeader();
-
-
         return Buffer;
     }
 
@@ -2021,8 +2018,13 @@ public class IBMHost5250 extends IBMHostBase {
         if(isKeyLocked())
             return;
 
-        char pressedKey = (char) event.getUnicodeChar();
-        int nIBMKeyCode = getServerKeyCode(keyCode);
+        int nIBMKeyCode = IBMKEY_NONE;
+        if(event instanceof ServerKeyEvent) {
+            nIBMKeyCode = keyCode;
+        } else {
+            nIBMKeyCode = getServerKeyCode(keyCode);
+        }
+
         if(nIBMKeyCode != IBMKEY_NONE) {
             switch (nIBMKeyCode) {
                 case IBMKEY_LEFT:
@@ -2178,9 +2180,13 @@ public class IBMHost5250 extends IBMHostBase {
                     CaretBack();
                     break;
                 case IBMKEY_CLR:
+                    ProcessFunctionKeyClear();
+                    NullFields(true);
+                    TabToFirstField();
                     break;
             }
         } else {
+            char pressedKey = (char) event.getUnicodeChar();
             if (pressedKey == 0)
                 return;
             PutAsciiKey(pressedKey);
@@ -2263,6 +2269,12 @@ public class IBMHost5250 extends IBMHostBase {
 
     private void ProcessIbmEnter() {
         String Data = PackInboundData(IBmAID.ENTER);
+        byte[] OutData = ConverPackToRawData(Data);
+        DispatchMessageRaw(this, OutData, OutData.length);
+    }
+
+    private void ProcessFunctionKeyClear() {
+        String Data = PackClearData();
         byte[] OutData = ConverPackToRawData(Data);
         DispatchMessageRaw(this, OutData, OutData.length);
     }
