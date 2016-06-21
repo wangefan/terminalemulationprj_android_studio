@@ -1126,7 +1126,7 @@ public class IBMHost5250 extends IBMHostBase {
         if (cField.ShiftEdit == 7)
             nRet--;
         nRet--;
-        while (nRet > nCaret) {
+        while (nRet >= nCaret) {
             cField.Data[nRet] = 0;
             nRet--;
         }
