@@ -54,7 +54,24 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_CLR = -21;
     private final int MY_KEYCODE_CLREOF = -22;
     private final int MY_KEYCODE_DEL = -23;
+    //private final int MY_KEYCODE_FIELDMARK = -24;  TN3270
+    private final int MY_KEYCODE_FIELD_EXIT = -25;
+    private final int MY_KEYCODE_FIELD_BEG = -26;
+    private final int MY_KEYCODE_FIELD_END = -27;
+    private final int MY_KEYCODE_FIELD_DUP = -28;
+    private final int MY_KEYCODE_ERA_INP = -29;
+    private final int MY_KEYCODE_FIELD_PLUS = -30;
+    private final int MY_KEYCODE_FIELD_MIN = -31;
+    private final int MY_KEYCODE_LAST = -32;
     private final int MY_KEYCODE_HOME = -33;
+    private final int MY_KEYCODE_INSERT = -34;
+    private final int MY_KEYCODE_NEWLINE = -35;
+    private final int MY_KEYCODE_RESET = -36;
+    private final int MY_KEYCODE_ROLLUP = -37;
+    private final int MY_KEYCODE_ROLLDN = -38;
+    private final int MY_KEYCODE_SYSREQ = -39;
+    private final int MY_KEYCODE_NEXT = -40;
+    private final int MY_KEYCODE_RECORD = -41;
     //TN server key end
 
     private KeyboardType mKeyboardType = KeyboardType.KT_ABC;
@@ -284,9 +301,89 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_DEL);
             }
             break;
+            case MY_KEYCODE_FIELD_EXIT:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FEXIT);
+            }
+            break;
+            case MY_KEYCODE_FIELD_BEG:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FBEGIN);
+            }
+            break;
+            case MY_KEYCODE_FIELD_END:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FEND);
+            }
+            break;
+            case MY_KEYCODE_FIELD_DUP:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_DUP);
+            }
+            break;
+            case MY_KEYCODE_ERA_INP:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ERINPUT);
+            }
+            break;
+            case MY_KEYCODE_FIELD_PLUS:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FPLUS);
+            }
+            break;
+            case MY_KEYCODE_FIELD_MIN:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FMINUS);
+            }
+            break;
+            case MY_KEYCODE_LAST:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_LAST);
+            }
+            break;
             case MY_KEYCODE_HOME:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_HOME);
+            }
+            break;
+            case MY_KEYCODE_INSERT:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_INS);
+            }
+            break;
+            case MY_KEYCODE_NEWLINE:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_NEWLINE);
+            }
+            break;
+            case MY_KEYCODE_RESET:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_RESET);
+            }
+            break;
+            case MY_KEYCODE_ROLLUP:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ROLUP);
+            }
+            break;
+            case MY_KEYCODE_ROLLDN:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ROLDN);
+            }
+            break;
+            case MY_KEYCODE_SYSREQ:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_SYSRQ);
+            }
+            break;
+            case MY_KEYCODE_NEXT:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_NEXT);
+            }
+            break;
+            case MY_KEYCODE_RECORD:
+            {
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_RECORD);
             }
             break;
             default://Enter(10), space(32), Characters

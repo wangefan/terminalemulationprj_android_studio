@@ -1260,24 +1260,25 @@ public class IBMHost5250 extends IBMHostBase {
 
     }
 
-    private void NullFields(boolean bMDT) {
+    private void NullField(IBM_FIELD field, boolean bMDT) {
+        if (!field.Bypass) {
+            if (bMDT) {
+                field.Modified = true;
+            }
+            //clear fields
+            for (int c = 0; c < field.Lenth; c++) {
+                field.Data[c] = (char) 0x00;
+            }
+        }
+    }
 
+    private void NullFields(boolean bMDT) {
         if (FieldList.size() <= 0)
             return;
 
         for (int i = 0; i < FieldList.size(); i++) {
             IBM_FIELD Field = (IBM_FIELD) FieldList.get(i);
-            if (!Field.Bypass) {
-
-                if (bMDT) {
-                    Field.Modified = true;
-                }
-
-                //clear fields
-                for (int c = 0; c < Field.Lenth; c++) {
-                    Field.Data[c] = (char) 0x00;
-                }
-            }
+            NullField(Field, bMDT);
             FieldList.set(i, Field);
         }
         UpDateAllField();
@@ -1705,20 +1706,14 @@ public class IBMHost5250 extends IBMHostBase {
         if (FieldList.size() <= 0)
             return;
         this.SetIndexCaret(0);
-        //UpDateActiveField();
         CaretUpdate();
     }
 
     private void CaretEnd() {
         if (FieldList.size() <= 0)
             return;
-
-        IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
-
+        IBM_FIELD CurField = FieldList.get(GetIndexTab());
         this.SetIndexCaret(CurField.Lenth - 1);
-
-
-        //UpDateActiveField();
         CaretUpdate();
     }
 
@@ -2163,7 +2158,7 @@ public class IBMHost5250 extends IBMHostBase {
                     break;
                 //case IBMKEY_BKTAB ://3270
                 case IBMKEY_DUP:
-                    Duplicatefield();
+                    ProcDuplicateField();
                     break;
                 case IBMKEY_INS:
                     bInsert = !bInsert;
@@ -2219,52 +2214,34 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private void FieldExit() {
-
         IBM_FIELD cField = GetCurrentField();
-
         if (cField == null)
             return;
-
         EraseAfterCursor();
-
         TabToNextField();
-
-
     }
 
-    private void Duplicatefield() {
-
-        IBM_FIELD cField = GetCurrentField();
-        IBM_FIELD NextField = GetNextField();
-
-        if (cField == null)
+    private void ProcDuplicateField() {
+        IBM_FIELD srcField = GetCurrentField();
+        IBM_FIELD decField = GetNextField();
+        if (srcField == null || decField == null)
             return;
-        int DupLen = 0;
-
-        if (cField.Lenth >= NextField.Lenth)
-            DupLen = cField.Lenth;
-        else
-            DupLen = NextField.Lenth;
-
-        System.arraycopy(cField.Data, 0, NextField.Data, 0, DupLen);
+        if(isScreenAttributeVisible((byte) srcField.Attrib) == false)
+            return;
+        NullField(decField, true);
+        for (int idxData = 0; idxData < decField.Data.length; idxData++) {
+            decField.Data[idxData] = srcField.Data[idxData];
+        }
         TabToNextField();
-
-
     }
 
     private void EraseEof() {
-
         IBM_FIELD cField = GetCurrentField();
-
         if (cField == null)
             return;
-
         EraseAfterCursor();
-
         UpDateActiveField();
         CaretUpdate();
-
-
     }
 
     private void ProcessIbmEnter() {
