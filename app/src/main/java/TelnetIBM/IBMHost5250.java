@@ -1394,9 +1394,7 @@ public class IBMHost5250 extends IBMHostBase {
         Buffer += PackInboundHeader();
         Buffer += PackCursorAddress();
         Buffer += ((char) Aid.getValue());
-
-        if (Aid == IBmAID.ENTER || Aid == IBmAID.F3)
-            Buffer += PackFieldData();
+        Buffer += PackFieldData();
 
         return Buffer;
     }
@@ -1555,7 +1553,7 @@ public class IBMHost5250 extends IBMHostBase {
     private String PackCursorAddress() {
         String str = "";
         int X, Y;
-        X = Caret.Pos.X + 2;
+        X = Caret.Pos.X + 1;
         Y = Caret.Pos.Y + 1;
         str += (char) Y;
         str += (char) X;
@@ -1876,24 +1874,24 @@ public class IBMHost5250 extends IBMHostBase {
     			    pen input only).
                 111 (7)Signed numeric.*/
                 switch (CurField.ShiftEdit) {
-                    case 0:
+                    case 0://Alpha shift
                         break;
-                    case 1:
+                    case 1://Alpha only
                         if (!Character.isLetter(KeyCode) && KeyCode != ',' && KeyCode != '.' && KeyCode != '-' && KeyCode != ' ') {
                             PlayWarningSounds();
                             return false;
                         }
-                    case 2:
+                    case 2://Numeric shift
                         break;
-                    case 3:
+                    case 3://Numeric only
                         if (!Character.isDigit(KeyCode) && KeyCode != '+' && KeyCode != ',' && KeyCode != '.' && KeyCode != ' ') {
                             PlayWarningSounds();
                             return false;
                         }
-                    case 4:
+                    case 4://Katakana shift
                         break;
-                    case 5:
-                    case 7:
+                    case 5://Digits only
+                    case 7://Signed numeric
                         if (!Character.isDigit(KeyCode)) {
                             PlayWarningSounds();
                             return false;
@@ -2010,14 +2008,16 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
-        if(isKeyLocked())
-            return;
-
         int nIBMKeyCode = IBMKEY_NONE;
         if(event instanceof ServerKeyEvent) {
             nIBMKeyCode = keyCode;
         } else {
             nIBMKeyCode = getServerKeyCode(keyCode);
+        }
+
+        if(isKeyLocked()) {
+            if(nIBMKeyCode != IBMKEY_RESET)
+                return;
         }
 
         if(nIBMKeyCode != IBMKEY_NONE) {
@@ -2113,8 +2113,10 @@ public class IBMHost5250 extends IBMHostBase {
                 case IBMKEY_PA3:
                     break;
                 case IBMKEY_FPLUS:
-                case IBMKEY_FMINUS: //N mod
                     FieldPlus();
+                    break;
+                case IBMKEY_FMINUS: //N mod
+                    FieldMinus();
                     break;
                 case IBMKEY_FEXIT:
                     FieldExit();
@@ -2147,8 +2149,11 @@ public class IBMHost5250 extends IBMHostBase {
                 case IBMKEY_CLREOF:
                     EraseEof();
                     break;
-                case IBMKEY_ROLDN://3270
                 case IBMKEY_ROLUP:
+                    ProcessIbmRolUp();
+                    break;
+                case IBMKEY_ROLDN:
+                    ProcessIbmRolDn();
                     break;
                 case IBMKEY_PREV:
                     TabToPrevField();
@@ -2169,7 +2174,7 @@ public class IBMHost5250 extends IBMHostBase {
                 case IBMKEY_HOME:
                     TabToFirstField();
                     break;
-                case IBMKEY_NEWLINE :
+                case IBMKEY_NEWLINE ://3270
                     break;
                 case IBMKEY_LEFTDELETE:
                     CaretBack();
@@ -2200,25 +2205,31 @@ public class IBMHost5250 extends IBMHostBase {
         return IBMKEY_NONE;
     }
 
-    private void FieldPlus() {
-        //EraseAfterCursor
-        IBM_FIELD cField = GetCurrentField();
-
-        if (cField == null)
-            return;
-
-        cField.Modified = true;
-        FieldExit();
-
-
-    }
-
     private void FieldExit() {
         IBM_FIELD cField = GetCurrentField();
         if (cField == null)
             return;
         EraseAfterCursor();
         TabToNextField();
+    }
+
+    private void FieldPlus() {
+        IBM_FIELD cField = GetCurrentField();
+        if (cField == null)
+            return;
+        cField.Modified = true;
+        FieldExit();
+    }
+
+    private void FieldMinus() {
+        IBM_FIELD cField = GetCurrentField();
+        if (cField == null)
+            return;
+        if(cField.ShiftEdit == 7) { //Signed numeric
+            //Todo:set last character to '"-"
+        }
+        cField.Modified = true;
+        FieldExit();
     }
 
     private void ProcDuplicateField() {
@@ -2246,6 +2257,18 @@ public class IBMHost5250 extends IBMHostBase {
 
     private void ProcessIbmEnter() {
         String Data = PackInboundData(IBmAID.ENTER);
+        byte[] OutData = ConverPackToRawData(Data);
+        DispatchMessageRaw(this, OutData, OutData.length);
+    }
+
+    private void ProcessIbmRolUp() {
+        String Data = PackInboundData(IBmAID.ROLLUP);
+        byte[] OutData = ConverPackToRawData(Data);
+        DispatchMessageRaw(this, OutData, OutData.length);
+    }
+
+    private void ProcessIbmRolDn() {
+        String Data = PackInboundData(IBmAID.ROLLDW);
         byte[] OutData = ConverPackToRawData(Data);
         DispatchMessageRaw(this, OutData, OutData.length);
     }
@@ -2414,8 +2437,8 @@ public class IBMHost5250 extends IBMHostBase {
         CLEAR(189),
         ENTER(241),
         HELP(243),
-        DOWN(244),
-        UP(245),
+        ROLLUP(244),
+        ROLLDW(245),
         PRINT(246),
         RBS(248);
 
@@ -2562,6 +2585,17 @@ public class IBMHost5250 extends IBMHostBase {
         public boolean Bypass;       //bit 2 from left
         public boolean Duplication;  //bit 3 from left
         public boolean Modified;     //bit 4 from left
+        /* ShiftEdit :
+            000 Alphabetic shift.
+			001 Alphabetic only. (1)
+			010 Numeric shift.(2)
+			011 Numeric only. (3)
+			100 Katakana shift. (4)
+			101 Reserved. (5)
+			110 (6)I/O (magnetic stripe can turn on the master MDT bit by placing a field
+			    reader, selector light format word with bit 4 on in the display data stream.
+			    pen input only).
+            111 (7)Signed numeric.*/
         public byte ShiftEdit;     //bit 5~7 from left
 
         //bit 0~7
