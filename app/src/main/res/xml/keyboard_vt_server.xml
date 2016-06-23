@@ -25,11 +25,11 @@
         <Key android:codes="-50" android:keyLabel="LF" android:keyEdgeFlags="right"/>
     </Row>
 
-    <Row >
-        <Key android:codes="-51" android:keyLabel="Find" android:keyEdgeFlags="right"/>
+    <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-51" android:keyLabel="Find" android:keyEdgeFlags="left"/>
         <Key android:codes="-52" android:keyLabel="Select" />
         <Key android:codes="-53" android:keyLabel="Rmv"/>
         <Key android:codes="-54" android:keyLabel="Prev"/>
-        <Key android:codes="-55" android:keyLabel="Next" android:keyEdgeFlags="left"/>
+        <Key android:codes="-55" android:keyLabel="Next" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>
