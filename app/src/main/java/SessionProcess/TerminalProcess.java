@@ -30,6 +30,7 @@ public class TerminalProcess {
 
     static public void initKeyCodeMap() {
         IBMHost5250.initKeyCodeMap();
+        CVT100.initKeyCodeMap();
     }
 
     public void handleKeyDown(int keyCode, KeyEvent event) {

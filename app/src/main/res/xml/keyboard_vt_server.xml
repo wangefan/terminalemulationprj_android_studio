@@ -1,9 +1,9 @@
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
     android:horizontalGap="0px"
     android:verticalGap="0px"
-    android:keyWidth="17%p"
+    android:keyWidth="20%p"
     android:keyHeight="7%p">
-    <Row>
+    <Row android:keyWidth="17%p">
         <Key android:codes="-12" android:keyLabel="abc" android:isSticky="true" android:keyEdgeFlags="left"/>
         <Key android:codes="-13" android:keyLabel="!@#" android:isSticky="true" />
         <Key android:codes="-14" android:keyLabel="Func"/>
@@ -11,36 +11,25 @@
         <Key android:codes="-16" android:keyIcon="@drawable/sym_keyboard_done"/>
         <Key android:codes="-17" android:keyIcon="@drawable/sym_sys_keyboard_up" android:keyEdgeFlags="right"/>
     </Row>
-    <Row>
-        <Key android:keyLabel="F1" android:codes="131" android:keyEdgeFlags="left"/>
-        <Key android:keyLabel="F2" android:codes="132"/>
-        <Key android:keyLabel="F3" android:codes="133"/>
-        <Key android:keyLabel="F4" android:codes="134"/>
-        <Key android:keyLabel="F5" android:codes="135"/>
-        <Key android:keyLabel="F6" android:codes="136" android:keyEdgeFlags="right"/>
+    <Row android:keyWidth="25%p">
+        <Key android:codes="-42" android:keyLabel="Pg Up" android:keyEdgeFlags="left"/>
+        <Key android:codes="-43" android:keyLabel="Pg Dw"/>
+        <Key android:codes="-44" android:keyLabel="Home" />
+        <Key android:codes="-45" android:keyLabel="End" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:keyLabel="F7" android:keyEdgeFlags="left"/>
-        <Key android:keyLabel="F8"/>
-        <Key android:keyLabel="F9"/>
-        <Key android:keyLabel="F10"/>
-        <Key android:keyLabel="F11"/>
-        <Key android:keyLabel="F12" android:keyEdgeFlags="right"/>
+        <Key android:codes="-46" android:keyLabel="Ins" android:keyEdgeFlags="left"/>
+        <Key android:codes="-47" android:keyLabel="BS" />
+        <Key android:codes="-48" android:keyLabel="Del" />
+        <Key android:codes="-49" android:keyLabel="Esc" />
+        <Key android:codes="-50" android:keyLabel="LF" android:keyEdgeFlags="right"/>
     </Row>
-    <Row>
-        <Key android:keyLabel="F13" android:keyEdgeFlags="left"/>
-        <Key android:keyLabel="F14"/>
-        <Key android:keyLabel="F15"/>
-        <Key android:keyLabel="F16"/>
-        <Key android:keyLabel="F17"/>
-        <Key android:keyLabel="F18" android:keyEdgeFlags="right"/>
-    </Row>
-    <Row android:rowEdgeFlags="bottom">
-        <Key android:keyLabel="F19" android:keyEdgeFlags="left"/>
-        <Key android:keyLabel="F20"/>
-        <Key android:keyLabel="F21"/>
-        <Key android:keyLabel="F22"/>
-        <Key android:keyLabel="F23"/>
-        <Key android:keyLabel="F24" android:keyEdgeFlags="right"/>
+
+    <Row >
+        <Key android:codes="-51" android:keyLabel="Find" android:keyEdgeFlags="right"/>
+        <Key android:codes="-52" android:keyLabel="Select" />
+        <Key android:codes="-53" android:keyLabel="Rmv"/>
+        <Key android:codes="-54" android:keyLabel="Prev"/>
+        <Key android:codes="-55" android:keyLabel="Next" android:keyEdgeFlags="left"/>
     </Row>
 </Keyboard>

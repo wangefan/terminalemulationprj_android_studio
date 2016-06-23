@@ -115,6 +115,8 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     abstract public Point getCursorGridPos();
 
+    abstract protected int getServerKeyCode(int keyCode);
+
     abstract public String GetTerminalTypeName();
 
     abstract public void handleKeyDown(int keyCode, KeyEvent event);

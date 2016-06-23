@@ -47,32 +47,63 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_TAB = -11;
     //ABC end
 
+    //F13~F24, F1~F12 no need because pc virtual key board has handled
+    private final int MY_KEYCODE_F13 = -100;
+    private final int MY_KEYCODE_F14 = -101;
+    private final int MY_KEYCODE_F15 = -102;
+    private final int MY_KEYCODE_F16 = -103;
+    private final int MY_KEYCODE_F17 = -104;
+    private final int MY_KEYCODE_F18 = -105;
+    private final int MY_KEYCODE_F19 = -106;
+    private final int MY_KEYCODE_F20 = -107;
+    private final int MY_KEYCODE_F21 = -108;
+    private final int MY_KEYCODE_F22 = -109;
+    private final int MY_KEYCODE_F23 = -110;
+    private final int MY_KEYCODE_F24 = -111;
+
     //TN server key begin
-    private final int MY_KEYCODE_ATTN = -18;
-    private final int MY_KEYCODE_BKSP = -19;
-    private final int MY_KEYCODE_PRVS = -20;
-    private final int MY_KEYCODE_CLR = -21;
-    private final int MY_KEYCODE_CLREOF = -22;
-    private final int MY_KEYCODE_DEL = -23;
-    //private final int MY_KEYCODE_FIELDMARK = -24;  TN3270
-    private final int MY_KEYCODE_FIELD_EXIT = -25;
-    private final int MY_KEYCODE_FIELD_BEG = -26;
-    private final int MY_KEYCODE_FIELD_END = -27;
-    private final int MY_KEYCODE_FIELD_DUP = -28;
-    private final int MY_KEYCODE_ERA_INP = -29;
-    private final int MY_KEYCODE_FIELD_PLUS = -30;
-    private final int MY_KEYCODE_FIELD_MIN = -31;
-    private final int MY_KEYCODE_LAST = -32;
-    private final int MY_KEYCODE_HOME = -33;
-    private final int MY_KEYCODE_INSERT = -34;
-    private final int MY_KEYCODE_NEWLINE = -35;
-    private final int MY_KEYCODE_RESET = -36;
-    private final int MY_KEYCODE_ROLLUP = -37;
-    private final int MY_KEYCODE_ROLLDN = -38;
-    private final int MY_KEYCODE_SYSREQ = -39;
-    private final int MY_KEYCODE_NEXT = -40;
-    private final int MY_KEYCODE_RECORD = -41;
+    private final int MY_KEYCODE_TN_ATTN = -18;
+    private final int MY_KEYCODE_TN_BKSP = -19;
+    private final int MY_KEYCODE_TN_PRVS = -20;
+    private final int MY_KEYCODE_TN_CLR = -21;
+    private final int MY_KEYCODE_TN_CLREOF = -22;
+    private final int MY_KEYCODE_TN_DEL = -23;
+    //private final int MY_KEYCODE_TN_FIELDMARK = -24;  TN3270
+    private final int MY_KEYCODE_TN_FIELD_EXIT = -25;
+    private final int MY_KEYCODE_TN_FIELD_BEG = -26;
+    private final int MY_KEYCODE_TN_FIELD_END = -27;
+    private final int MY_KEYCODE_TN_FIELD_DUP = -28;
+    private final int MY_KEYCODE_TN_ERA_INP = -29;
+    private final int MY_KEYCODE_TN_FIELD_PLUS = -30;
+    private final int MY_KEYCODE_TN_FIELD_MIN = -31;
+    private final int MY_KEYCODE_TN_LAST = -32;
+    private final int MY_KEYCODE_TN_HOME = -33;
+    private final int MY_KEYCODE_TN_INSERT = -34;
+    private final int MY_KEYCODE_TN_NEWLINE = -35;
+    private final int MY_KEYCODE_TN_RESET = -36;
+    private final int MY_KEYCODE_TN_ROLLUP = -37;
+    private final int MY_KEYCODE_TN_ROLLDN = -38;
+    private final int MY_KEYCODE_TN_SYSREQ = -39;
+    private final int MY_KEYCODE_TN_NEXT = -40;
+    private final int MY_KEYCODE_TN_RECORD = -41;
     //TN server key end
+
+    //VT server key begin
+    static final int MY_KEYCODE_VT_PGUP = -42;
+    static final int MY_KEYCODE_VT_PGDW = -43;
+    static final int MY_KEYCODE_VT_HOME = -44;
+    static final int MY_KEYCODE_VT_END = -45;
+    static final int MY_KEYCODE_VT_INS = -46;
+    static final int MY_KEYCODE_VT_BS = -47;
+    static final int MY_KEYCODE_VT_DEL = -48;
+    static final int MY_KEYCODE_VT_ESC = -49;
+    static final int MY_KEYCODE_VT_LF = -50;
+    static final int MY_KEYCODE_VT_FIND = -51;
+    static final int MY_KEYCODE_VT_SELECT = -52;
+    static final int MY_KEYCODE_VT_REMOVE = -53;
+    static final int MY_KEYCODE_VT_PRESCREEN = -54;
+    static final int MY_KEYCODE_VT_NEXTSCREEN = -55;
+    //VT server key end
 
     private KeyboardType mKeyboardType = KeyboardType.KT_ABC;
     private Context mContext = null;
@@ -266,124 +297,208 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 keyDownUp(primaryCode);
             }
             break;
+            case MY_KEYCODE_F13:
+            case MY_KEYCODE_F14:
+            case MY_KEYCODE_F15:
+            case MY_KEYCODE_F16:
+            case MY_KEYCODE_F17:
+            case MY_KEYCODE_F18:
+            case MY_KEYCODE_F19:
+            case MY_KEYCODE_F20:
+            case MY_KEYCODE_F21:
+            case MY_KEYCODE_F22:
+            case MY_KEYCODE_F23:
+            case MY_KEYCODE_F24:
+                keyDownUp(ServerKeyEvent.TN_KEYCODE_NEXT);
+                break;
             case MY_KEYCODE_TAB:
             {
                 keyDownUp(KeyEvent.KEYCODE_TAB);
             }
             break;
-            case MY_KEYCODE_ATTN:
+            case MY_KEYCODE_TN_ATTN:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ATTN);
             }
             break;
-            case MY_KEYCODE_BKSP:
+            case MY_KEYCODE_TN_BKSP:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_LEFTDELETE);
             }
             break;
-            case MY_KEYCODE_PRVS:
+            case MY_KEYCODE_TN_PRVS:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_PREV);
             }
             break;
-            case MY_KEYCODE_CLR:
+            case MY_KEYCODE_TN_CLR:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_CLR);
             }
             break;
-            case MY_KEYCODE_CLREOF:
+            case MY_KEYCODE_TN_CLREOF:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_CLREOF);
             }
             break;
-            case MY_KEYCODE_DEL:
+            case MY_KEYCODE_TN_DEL:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_DEL);
             }
             break;
-            case MY_KEYCODE_FIELD_EXIT:
+            case MY_KEYCODE_TN_FIELD_EXIT:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FEXIT);
             }
             break;
-            case MY_KEYCODE_FIELD_BEG:
+            case MY_KEYCODE_TN_FIELD_BEG:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FBEGIN);
             }
             break;
-            case MY_KEYCODE_FIELD_END:
+            case MY_KEYCODE_TN_FIELD_END:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FEND);
             }
             break;
-            case MY_KEYCODE_FIELD_DUP:
+            case MY_KEYCODE_TN_FIELD_DUP:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_DUP);
             }
             break;
-            case MY_KEYCODE_ERA_INP:
+            case MY_KEYCODE_TN_ERA_INP:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ERINPUT);
             }
             break;
-            case MY_KEYCODE_FIELD_PLUS:
+            case MY_KEYCODE_TN_FIELD_PLUS:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FPLUS);
             }
             break;
-            case MY_KEYCODE_FIELD_MIN:
+            case MY_KEYCODE_TN_FIELD_MIN:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FMINUS);
             }
             break;
-            case MY_KEYCODE_LAST:
+            case MY_KEYCODE_TN_LAST:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_LAST);
             }
             break;
-            case MY_KEYCODE_HOME:
+            case MY_KEYCODE_TN_HOME:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_HOME);
             }
             break;
-            case MY_KEYCODE_INSERT:
+            case MY_KEYCODE_TN_INSERT:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_INS);
             }
             break;
-            case MY_KEYCODE_NEWLINE:
+            case MY_KEYCODE_TN_NEWLINE:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_NEWLINE);
             }
             break;
-            case MY_KEYCODE_RESET:
+            case MY_KEYCODE_TN_RESET:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_RESET);
             }
             break;
-            case MY_KEYCODE_ROLLUP:
+            case MY_KEYCODE_TN_ROLLUP:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ROLUP);
             }
             break;
-            case MY_KEYCODE_ROLLDN:
+            case MY_KEYCODE_TN_ROLLDN:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_ROLDN);
             }
             break;
-            case MY_KEYCODE_SYSREQ:
+            case MY_KEYCODE_TN_SYSREQ:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_SYSRQ);
             }
             break;
-            case MY_KEYCODE_NEXT:
+            case MY_KEYCODE_TN_NEXT:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_NEXT);
             }
             break;
-            case MY_KEYCODE_RECORD:
+            case MY_KEYCODE_TN_RECORD:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_RECORD);
+            }
+            break;
+            case MY_KEYCODE_VT_PGUP:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_PGUP);
+            }
+            break;
+            case MY_KEYCODE_VT_PGDW:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_PGDW);
+            }
+            break;
+            case MY_KEYCODE_VT_HOME:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_HOME);
+            }
+            break;
+            case MY_KEYCODE_VT_END:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_END);
+            }
+            break;
+            case MY_KEYCODE_VT_INS:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_INS);
+            }
+            break;
+            case MY_KEYCODE_VT_BS:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_BS);
+            }
+            break;
+            case MY_KEYCODE_VT_DEL:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_DEL);
+            }
+            break;
+            case MY_KEYCODE_VT_ESC:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_ESC);
+            }
+            break;
+            case MY_KEYCODE_VT_LF:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_LF);
+            }
+            break;
+            case MY_KEYCODE_VT_FIND:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_FIND);
+            }
+            break;
+            case MY_KEYCODE_VT_SELECT:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_SELECT);
+            }
+            break;
+            case MY_KEYCODE_VT_REMOVE:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_REMOVE);
+            }
+            break;
+            case MY_KEYCODE_VT_PRESCREEN:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_PRESCREEN);
+            }
+            break;
+            case MY_KEYCODE_VT_NEXTSCREEN:
+            {
+                serverKeyDownUp(ServerKeyEvent.VT_KEYCODE_NEXTSCREEN);
             }
             break;
             default://Enter(10), space(32), Characters

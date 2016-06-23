@@ -9,10 +9,12 @@ import android.view.KeyEvent;
 
 import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
+import com.te.UI.ServerKeyEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import Terminals.CipherReaderControl;
 import Terminals.TESettingsInfo;
@@ -32,43 +34,79 @@ import Terminals.stdActivityRef;
 //endregion
 
 public class CVT100 extends CVT100Enum {
+    static final int VTKEY_NONE = -1;
+    static final int VTKEY_PGUP = ServerKeyEvent.VT_KEYCODE_PGUP;
+    static final int VTKEY_PGDW = ServerKeyEvent.VT_KEYCODE_PGDW;
+    static final int VTKEY_HOME = ServerKeyEvent.VT_KEYCODE_HOME;
+    static final int VTKEY_END = ServerKeyEvent.VT_KEYCODE_END;
+    static final int VTKEY_INS = ServerKeyEvent.VT_KEYCODE_INS;
+    static final int VTKEY_BS = ServerKeyEvent.VT_KEYCODE_BS;
+    static final int VTKEY_TAB = ServerKeyEvent.VT_KEYCODE_TAB;
+    static final int VTKEY_LEFT = ServerKeyEvent.VT_KEYCODE_LEFT;
+    static final int VTKEY_ENTER = ServerKeyEvent.VT_KEYCODE_ENTER;
+    static final int VTKEY_DEL = ServerKeyEvent.VT_KEYCODE_DEL;
+    static final int VTKEY_UP = ServerKeyEvent.VT_KEYCODE_UP;
+    static final int VTKEY_DW= ServerKeyEvent.VT_KEYCODE_DW;
+    static final int VTKEY_RIGHT = ServerKeyEvent.VT_KEYCODE_RIGHT;
+    static final int VTKEY_ESC = ServerKeyEvent.VT_KEYCODE_ESC;
+    static final int VTKEY_LF = ServerKeyEvent.VT_KEYCODE_LF;
+    static final int VTKEY_FIND = ServerKeyEvent.VT_KEYCODE_FIND;
+    static final int VTKEY_SELECT = ServerKeyEvent.VT_KEYCODE_SELECT;
+    static final int VTKEY_REMOVE = ServerKeyEvent.VT_KEYCODE_REMOVE;
+    static final int VTKEY_PREV = ServerKeyEvent.VT_KEYCODE_PRESCREEN;
+    static final int VTKEY_NEXT = ServerKeyEvent.VT_KEYCODE_NEXTSCREEN;
+    static final int VTKEY_F1 = ServerKeyEvent.FUN_KEYCODE_F1;
+    static final int VTKEY_F2 = ServerKeyEvent.FUN_KEYCODE_F2;
+    static final int VTKEY_F3 = ServerKeyEvent.FUN_KEYCODE_F3;
+    static final int VTKEY_F4 = ServerKeyEvent.FUN_KEYCODE_F4;
+    static final int VTKEY_F5 = ServerKeyEvent.FUN_KEYCODE_F5;
+    static final int VTKEY_F6 = ServerKeyEvent.FUN_KEYCODE_F6;
+    static final int VTKEY_F7 = ServerKeyEvent.FUN_KEYCODE_F7;
+    static final int VTKEY_F8 = ServerKeyEvent.FUN_KEYCODE_F8;
+    static final int VTKEY_F9 = ServerKeyEvent.FUN_KEYCODE_F9;
+    static final int VTKEY_F10 = ServerKeyEvent.FUN_KEYCODE_F10;
+    static final int VTKEY_F11 = ServerKeyEvent.FUN_KEYCODE_F11;
+    static final int VTKEY_F12 = ServerKeyEvent.FUN_KEYCODE_F12;
+    static final int VTKEY_F13 = ServerKeyEvent.FUN_KEYCODE_F13;
+    static final int VTKEY_F14 = ServerKeyEvent.FUN_KEYCODE_F14;
+    static final int VTKEY_F15 = ServerKeyEvent.FUN_KEYCODE_F15;
+    static final int VTKEY_F16 = ServerKeyEvent.FUN_KEYCODE_F16;
+    static final int VTKEY_F17 = ServerKeyEvent.FUN_KEYCODE_F17;
+    static final int VTKEY_F18 = ServerKeyEvent.FUN_KEYCODE_F18;
+    static final int VTKEY_F19 = ServerKeyEvent.FUN_KEYCODE_F19;
+    static final int VTKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
 
-    //region Field
-    static final int KEY_F13 = -100;
-    static final int KEY_F14 = -101;
-    static final int KEY_F15 = -102;
-    static final int KEY_F16 = -103;
-    static final int KEY_F17 = -104;
-    static final int KEY_F18 = -105;
-    static final int KEY_F19 = -106;
-    static final int KEY_F20 = -107;
-    static final int KEY_F21 = -108;
-    static final int KEY_F22 = -109;
-    static final int KEY_F23 = -110;
-    static final int KEY_F24 = -111;
-    static final int VKEY_DEL = -112;
-    static final int VKEY_BS = -113;
-    static final int VKEY_LF = -115;
-    static final int VKEY_FIND = -116;
-    static final int VKEY_SELECT = -117;
-    static final int VKEY_Rmv = -118;
+    private static java.util.Map<Integer, Integer> mDefaultVTKeyCodeMap = new java.util.HashMap<Integer, Integer>();
+    public static void initKeyCodeMap() {
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_TAB);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F11, VTKEY_F11);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
+    }
 
-
-    //endregion
-    //region interface
-    static final int VKEY_INS = -119;
-    static final int VKEY_PREV = -120;
-    static final int VKEY_NEXT = -121;
-    public int Rows;
-    public int Columns;
-    public String Username;
-    public String Password;
     VtParserEvent vtParserEvent = new VtParserEvent();
     private uc_Parser Parser = null;
     private int TopMargin;
     private int BottomMargin;
     private java.util.ArrayList<uc_CaretAttribs> SavedCarets = new java.util.ArrayList<uc_CaretAttribs>();
     private java.util.ArrayList<KeyEventVal> LineBufferList = new java.util.ArrayList<KeyEventVal>();
+    private java.util.Map<Integer, Integer> mVTKeyCodeMap = null;
     private uc_TabStops TabStops = null;  //defined inbase
     private CharAttribStruct[][] AttribGrid = null;//defined inbase
     private CharAttribStruct CharAttribs = new CharAttribStruct();
@@ -98,6 +136,7 @@ public class CVT100 extends CVT100Enum {
         this.CharAttribs.GR = this.G2;
 
         this.SetSize(25, 80);
+        mVTKeyCodeMap = new HashMap<Integer, Integer>(mDefaultVTKeyCodeMap);
         this.Caret = new uc_Caret();
         this.Modes = new uc_Mode();
         this.TabStops = new uc_TabStops();
@@ -156,6 +195,17 @@ public class CVT100 extends CVT100Enum {
     @Override
     public Point getCursorGridPos() {
         return Caret.Pos;
+    }
+
+    @Override
+    protected int getServerKeyCode(int keyCode) {
+        Integer nVTKeyCode = mVTKeyCodeMap.get(keyCode);
+        if(nVTKeyCode != null) {
+            if(BuildConfig.DEBUG) Log.d("TE", String.format("Keycode mapped, Keyevent = %d, VT Keycode = %d", keyCode, nVTKeyCode));
+            return nVTKeyCode;
+        }
+        if(BuildConfig.DEBUG) Log.d("TE", String.format("No Keycode mapped!"));
+        return VTKEY_NONE;
     }
 
     //endregion
@@ -1260,296 +1310,268 @@ public class CVT100 extends CVT100Enum {
     }
 
     public void LineBufferInput(int keyCode, KeyEvent event) {
-
-        //LineBufferList
-        boolean Func = false;
-        char pressedKey = (char) event.getUnicodeChar();
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_TAB:
-
-            case KeyEvent.KEYCODE_ENTER:
-
-            case VKEY_BS:
-
-
-            case KeyEvent.KEYCODE_DEL:
-            case VKEY_DEL:
-
-            case KeyEvent.KEYCODE_F1:
-
-            case KeyEvent.KEYCODE_F2:
-
-            case KeyEvent.KEYCODE_F3:
-
-            case KeyEvent.KEYCODE_F4:
-
-            case KeyEvent.KEYCODE_F5:
-
-            case KeyEvent.KEYCODE_F6:
-
-            case KeyEvent.KEYCODE_F7:
-
-            case KeyEvent.KEYCODE_F8:
-
-            case KeyEvent.KEYCODE_F9:
-
-            case KeyEvent.KEYCODE_F10:
-
-            case KeyEvent.KEYCODE_F11:
-
-            case KeyEvent.KEYCODE_F12:
-
-
-            case KEY_F13:
-
-            case KEY_F14:
-
-            case KEY_F15:
-
-            case KEY_F16:
-
-            case KEY_F17:
-
-            case KEY_F18:
-
-            case KEY_F19:
-
-            case KEY_F20:
-
-                Func = true;
-                break;
-
-
+        int nVTKeyCode = VTKEY_NONE;
+        if(event instanceof ServerKeyEvent) {
+            nVTKeyCode = keyCode;
+        } else {
+            nVTKeyCode = getServerKeyCode(keyCode);
         }
 
-        if (!Func) {
+        if(nVTKeyCode == VTKEY_NONE) {
+            char pressedKey = (char) event.getUnicodeChar();
             if (pressedKey == 0)
                 return;
-
             this.PrintChar(pressedKey);
         }
-
-
         ViewPostInvalidate();
-
     }
 
     public void KeyInput(int keyCode, KeyEvent event) {
-
-        //LineBufferList
-        boolean Func = false;
-        char pressedKey = (char) event.getUnicodeChar();
-        byte SendData[] = new byte[30];
-        int SendLenth = 0;
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'D';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'C';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_DPAD_UP:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'A';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'B';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_TAB:
-                SendData[SendLenth++] = 0x09;
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_ENTER:
-                SendData[SendLenth++] = 0x0d;
-                Func = true;
-                break;
-            case VKEY_BS:
-                SendData[SendLenth++] = 0x08;
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_DEL:
-            case VKEY_DEL:
-                SendData[SendLenth++] = 127;
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F1:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'P';
-                Func = true;
-                break;
-
-            case KeyEvent.KEYCODE_F2:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'Q';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F3:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'R';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F4:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = 'O';
-                SendData[SendLenth++] = 'S';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F5:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = 'M';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F6:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '1';
-                SendData[SendLenth++] = '7';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F7:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '1';
-                SendData[SendLenth++] = '8';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F8:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '1';
-                SendData[SendLenth++] = '9';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F9:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '0';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F10:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '1';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F11:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '3';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KeyEvent.KEYCODE_F12:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '4';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-
-            case KEY_F13:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '5';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F14:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '6';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F15:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '8';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F16:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '9';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F17:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '3';
-                SendData[SendLenth++] = '1';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F18:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '3';
-                SendData[SendLenth++] = '2';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F19:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '3';
-                SendData[SendLenth++] = '3';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-            case KEY_F20:
-                SendData[SendLenth++] = 27;
-                SendData[SendLenth++] = '[';
-                SendData[SendLenth++] = '3';
-                SendData[SendLenth++] = '4';
-                SendData[SendLenth++] = '~';
-                Func = true;
-                break;
-
-
+        int nVTKeyCode = VTKEY_NONE;
+        if(event instanceof ServerKeyEvent) {
+            nVTKeyCode = keyCode;
+        } else {
+            nVTKeyCode = getServerKeyCode(keyCode);
         }
 
-        if (!Func) {
+        if(nVTKeyCode != VTKEY_NONE) {
+            byte SendData[] = new byte[30];
+            int SendLenth = 0;
+            switch (nVTKeyCode) {
+                case VTKEY_PGUP:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = 'V';
+                    break;
+                case VTKEY_PGDW:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = 'U';
+                    break;
+                case VTKEY_HOME:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = 'H';
+                    break;
+                case VTKEY_END:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = 'K';
+                    break;
+                case VTKEY_INS:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_BS:
+                    SendData[SendLenth++] = 0x08;
+                    break;
+                case VTKEY_TAB:
+                    SendData[SendLenth++] = 0x09;
+                    break;
+                case VTKEY_LEFT:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'D';
+                    break;
+                case VTKEY_RIGHT:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'C';
+                    break;
+                case VTKEY_UP:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'A';
+                    break;
+                case VTKEY_DW:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'B';
+                    break;
+                case VTKEY_ENTER:
+                    SendData[SendLenth++] = 0x0d;
+                    break;
+                case VTKEY_DEL:
+                    SendData[SendLenth++] = 0x7f;
+                    break;
+                case VTKEY_ESC:
+                    SendData[SendLenth++] = 0x1b;
+                    break;
+                case VTKEY_LF:
+                    SendData[SendLenth++] = 0x0a;
+                    break;
+                case VTKEY_FIND:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '1';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_SELECT:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '4';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_REMOVE:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_PREV:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '5';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_NEXT:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '6';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F1:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'P';
+                    break;
+
+                case VTKEY_F2:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'Q';
+                    break;
+                case VTKEY_F3:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'R';
+                    break;
+                case VTKEY_F4:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = 'O';
+                    SendData[SendLenth++] = 'S';
+                    break;
+                case VTKEY_F5:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = 'M';
+                    break;
+                case VTKEY_F6:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '1';
+                    SendData[SendLenth++] = '7';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F7:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '1';
+                    SendData[SendLenth++] = '8';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F8:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '1';
+                    SendData[SendLenth++] = '9';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F9:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '0';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F10:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '1';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F11:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F12:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '4';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F13:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '5';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F14:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '6';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F15:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '8';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F16:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '9';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F17:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '1';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F18:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '2';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F19:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '~';
+                    break;
+                case VTKEY_F20:
+                    SendData[SendLenth++] = 27;
+                    SendData[SendLenth++] = '[';
+                    SendData[SendLenth++] = '3';
+                    SendData[SendLenth++] = '4';
+                    SendData[SendLenth++] = '~';
+                    break;
+            }
+            DispatchMessageRaw(this, SendData, SendLenth);
+        } else {
+            char pressedKey = (char) event.getUnicodeChar();
             if (pressedKey == 0)
                 return;
             PutAsciiKey(pressedKey);
-        } else
-            DispatchMessageRaw(this, SendData, SendLenth);
-
+        }
         ViewPostInvalidate();
-
     }
 
     private void PutAsciiKey(int KeyCode) {

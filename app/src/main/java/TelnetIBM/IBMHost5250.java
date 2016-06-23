@@ -58,30 +58,30 @@ public class IBMHost5250 extends IBMHostBase {
     static final int IBMKEY_RIGHT = ServerKeyEvent.TN_KEYCODE_RIGHT;
     static final int IBMKEY_UP = ServerKeyEvent.TN_KEYCODE_UP;
     static final int IBMKEY_DOWN = ServerKeyEvent.TN_KEYCODE_DOWN;
-    static final int IBMKEY_F1 = 1;
-    static final int IBMKEY_F2 = 2;
-    static final int IBMKEY_F3 = 3;
-    static final int IBMKEY_F4 = 4;
-    static final int IBMKEY_F5 = 5;
-    static final int IBMKEY_F6 = 6;
-    static final int IBMKEY_F7 = 7;
-    static final int IBMKEY_F8 = 8;
-    static final int IBMKEY_F9 = 9;
-    static final int IBMKEY_F10 = 10;
-    static final int IBMKEY_F11 = 11;
-    static final int IBMKEY_F12 = 12;
-    static final int IBMKEY_F13 = 13;
-    static final int IBMKEY_F14 = 14;
-    static final int IBMKEY_F15 = 15;
-    static final int IBMKEY_F16 = 16;
-    static final int IBMKEY_F17 = 17;
-    static final int IBMKEY_F18 = 18;
-    static final int IBMKEY_F19 = 19;
-    static final int IBMKEY_F20 = 20;
-    static final int IBMKEY_F21 = 21;
-    static final int IBMKEY_F22 = 22;
-    static final int IBMKEY_F23 = 23;
-    static final int IBMKEY_F24 = 24;
+    static final int IBMKEY_F1 = ServerKeyEvent.FUN_KEYCODE_F1;
+    static final int IBMKEY_F2 = ServerKeyEvent.FUN_KEYCODE_F2;
+    static final int IBMKEY_F3 = ServerKeyEvent.FUN_KEYCODE_F3;
+    static final int IBMKEY_F4 = ServerKeyEvent.FUN_KEYCODE_F4;
+    static final int IBMKEY_F5 = ServerKeyEvent.FUN_KEYCODE_F5;
+    static final int IBMKEY_F6 = ServerKeyEvent.FUN_KEYCODE_F6;
+    static final int IBMKEY_F7 = ServerKeyEvent.FUN_KEYCODE_F7;
+    static final int IBMKEY_F8 = ServerKeyEvent.FUN_KEYCODE_F8;
+    static final int IBMKEY_F9 = ServerKeyEvent.FUN_KEYCODE_F9;
+    static final int IBMKEY_F10 = ServerKeyEvent.FUN_KEYCODE_F10;
+    static final int IBMKEY_F11 = ServerKeyEvent.FUN_KEYCODE_F11;
+    static final int IBMKEY_F12 = ServerKeyEvent.FUN_KEYCODE_F12;
+    static final int IBMKEY_F13 = ServerKeyEvent.FUN_KEYCODE_F13;
+    static final int IBMKEY_F14 = ServerKeyEvent.FUN_KEYCODE_F14;
+    static final int IBMKEY_F15 = ServerKeyEvent.FUN_KEYCODE_F15;
+    static final int IBMKEY_F16 = ServerKeyEvent.FUN_KEYCODE_F16;
+    static final int IBMKEY_F17 = ServerKeyEvent.FUN_KEYCODE_F17;
+    static final int IBMKEY_F18 = ServerKeyEvent.FUN_KEYCODE_F18;
+    static final int IBMKEY_F19 = ServerKeyEvent.FUN_KEYCODE_F19;
+    static final int IBMKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
+    static final int IBMKEY_F21 = ServerKeyEvent.FUN_KEYCODE_F21;
+    static final int IBMKEY_F22 = ServerKeyEvent.FUN_KEYCODE_F22;
+    static final int IBMKEY_F23 = ServerKeyEvent.FUN_KEYCODE_F23;
+    static final int IBMKEY_F24 = ServerKeyEvent.FUN_KEYCODE_F24;
     static final int IBMKEY_PA1 = 108;
     static final int IBMKEY_PA2 = 110;
     static final int IBMKEY_PA3 = 107;
@@ -296,6 +296,17 @@ public class IBMHost5250 extends IBMHostBase {
     @Override
     public Point getCursorGridPos() {
         return Caret.Pos;
+    }
+
+    @Override
+    protected int getServerKeyCode(int keyCode) {
+        Integer nIBMKeyCode = mTNKeyCodeMap.get(keyCode);
+        if(nIBMKeyCode != null) {
+            if(BuildConfig.DEBUG) Log.d("TE", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
+            return nIBMKeyCode;
+        }
+        if(BuildConfig.DEBUG) Log.d("TE", String.format("No Keycode mapped!"));
+        return IBMKEY_NONE;
     }
 
     private void SetSize(int Rows, int Columns) {
@@ -2193,16 +2204,6 @@ public class IBMHost5250 extends IBMHostBase {
         }
 
         ViewPostInvalidate();
-    }
-
-    private int getServerKeyCode(int keyCode) {
-        Integer nIBMKeyCode = mTNKeyCodeMap.get(keyCode);
-        if(nIBMKeyCode != null) {
-            if(BuildConfig.DEBUG) Log.d("TE", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
-            return nIBMKeyCode;
-        }
-        if(BuildConfig.DEBUG) Log.d("TE", String.format("No Keycode mapped!"));
-        return IBMKEY_NONE;
     }
 
     private void FieldExit() {
