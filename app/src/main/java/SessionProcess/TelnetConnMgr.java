@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import Terminals.TESettings;
+import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 
 /**
@@ -16,7 +18,7 @@ import Terminals.TerminalBase;
 
 
 public class TelnetConnMgr implements Runnable {
-    protected String mStrHost = "192.168.1.100";
+    protected String mStrHost = TESettingsInfo.getDefaultIP();
     protected int mPort = 23;
     protected boolean mIsConnected = false;
     protected TerminalBase mTerminal = null;

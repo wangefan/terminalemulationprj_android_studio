@@ -43,7 +43,7 @@ public abstract class SessionSettingsFrgBase extends PreferenceFragment implemen
             p.setSummary(editTextPref.getText());
         } else if (p instanceof MyIPPreference) {
             MyIPPreference ipPref = (MyIPPreference) p;
-            ipPref.setSummary(ipPref.getIp());
+            ipPref.setSummary(ipPref.getAddress());
         }
     }
 

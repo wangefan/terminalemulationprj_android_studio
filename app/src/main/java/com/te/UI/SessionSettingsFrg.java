@@ -60,7 +60,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
             mLstServerType.setValue(mSetting.mTermNameTN);
             mServerSetting.setTitle(R.string.tn_setting);
         }
-        mLstServerIp.setIp(mSetting.mHostIP);
+        mLstServerIp.setAddress(mSetting.mHostIP);
         mPrefPort.setText(mSetting.getHostPort());
         mCkNetworkAlive.setChecked(mSetting.mNetKeepAlive);
         mCkDetectOut.setChecked(mSetting.mIsDetectOutRange);
@@ -89,7 +89,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
                 mSetting.mTermNameTN = selHostTypeName;
             }
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
-            mSetting.mHostIP = mLstServerIp.getIp();
+            mSetting.mHostIP = mLstServerIp.getAddress();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
             mSetting.setHostPort(mPrefPort.getText());
         } else if(key.compareTo(getResources().getString(R.string.keep_alive_key)) == 0) {

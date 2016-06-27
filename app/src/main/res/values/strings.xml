@@ -18,6 +18,8 @@
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
+    <string name="ip_title">IP:</string>
+    <string name="hostname_title">Host Name:</string>
     <string name="dot">.</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>

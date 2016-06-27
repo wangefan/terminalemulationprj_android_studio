@@ -94,7 +94,7 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
         } else {
             mLstServerType.setValue(mSetting.mTermNameTN);
         }
-        mLstServerIp.setIp(mSetting.mHostIP);
+        mLstServerIp.setAddress(mSetting.mHostIP);
         mPrefPort.setText(mSetting.getHostPort());
         mChkAutoConn.setChecked(mSetting.mBAutoConnect);
         mChkAutoSign.setChecked(mSetting.mBAutoSignOn);
@@ -127,7 +127,7 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
             }
             updatePreferenceForVT();
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
-            mSetting.mHostIP = mLstServerIp.getIp();
+            mSetting.mHostIP = mLstServerIp.getAddress();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
             mSetting.setHostPort(mPrefPort.getText());
         } else if(key.compareTo(getResources().getString(R.string.host_auto_conn_key)) == 0) {

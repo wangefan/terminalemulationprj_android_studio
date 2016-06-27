@@ -537,4 +537,8 @@ public class TESettingsInfo {
     public static boolean showResetFullScreen() {
         return showFirstByTag(DEL_RESET_FULL_SHOWED);
     }
+
+    public static String getDefaultIP() {
+        return "192.168.1.100";
+    }
 }

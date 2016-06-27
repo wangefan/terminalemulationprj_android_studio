@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ip_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="5dp">
+        <RadioButton
+            android:id="@+id/ip_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ip_title"
+            android:layout_centerVertical="true"
+            android:textColor="#000"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/ip_1"
@@ -19,7 +29,9 @@
             android:inputType="number"
             android:maxLength="3"
             android:singleLine="true"
-            android:selectAllOnFocus="true">
+            android:selectAllOnFocus="true"
+            android:layout_toEndOf="@id/ip_radio"
+            android:layout_toRightOf="@id/ip_radio">
         </EditText>
 
         <TextView
@@ -99,5 +111,34 @@
             android:maxLength="3"
             android:singleLine="true"
             android:selectAllOnFocus="true"/>
+
     </RelativeLayout>
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/host_name_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="5dp">
+        <RadioButton
+            android:id="@+id/hostname_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hostname_title"
+            android:layout_centerVertical="true"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/host_name"
+            android:labelFor="@id/host_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:singleLine="true"
+            android:layout_toEndOf="@id/hostname_radio"
+            android:layout_toRightOf="@id/hostname_radio"
+            android:inputType="textUri">
+        </EditText>
+    </RelativeLayout>
+</LinearLayout>
