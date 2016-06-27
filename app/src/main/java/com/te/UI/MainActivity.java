@@ -539,7 +539,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     final View menuItemView = findViewById(R.id.sessionSettings);
-                    UIUtility.showTourEditProfile(MainActivity.this, menuItemView);
+                    UIUtility.showTourEditProfile(menuItemView);
                 }
             });
         }
@@ -701,6 +701,9 @@ public class MainActivity extends AppCompatActivity
                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                   | View.SYSTEM_UI_FLAG_IMMERSIVE);
             mBFullScreen = true;
+            if(TESettingsInfo.showResetFullScreen() == true) {
+                UIUtility.showResetFullScreen(mLogoView.findViewById(R.id.ImgLogoView));
+            }
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getSupportActionBar().show();

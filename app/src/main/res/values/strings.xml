@@ -238,6 +238,12 @@
     <string name="col_title">Col:</string>
     <string name="color_picker_fonts_title">Pick Fonts color</string>
     <string name="color_picker_bg_title">Pick Background color</string>
-    <string name="msg_tour_edit_profile_title">Profile Settings!</string>
-    <string name="msg_tour_edit_profile">You should edit your profile setting to connect your host.Press to exit.</string>
+    <string name="msg_tour_edit_profile_title">Edit your profile here.</string>
+    <string name="msg_tour_edit_profile">You should edit your profile setting before connecting to your host.\r\nPress to exit.</string>
+    <string name="msg_tour_add_session_title">Add Session</string>
+    <string name="msg_tour_add_session">You could add more one sessions (maximum 5 sessions).\r\nPress to exit.</string>
+    <string name="msg_tour_del_session_title">Delete Session</string>
+    <string name="msg_tour_del_session">You could delete a session by swipe item (left to right) and press button to delete it.\r\nPress to exit.</string>
+    <string name="msg_tour_screen_title">Leave full screen</string>
+    <string name="msg_tour_screen">You could double click any empty area under screen to leave full screen status.\r\nPress to exit.</string>
 </resources>

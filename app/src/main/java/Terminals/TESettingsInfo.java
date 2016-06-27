@@ -54,6 +54,9 @@ public class TESettingsInfo {
     private static final String LEFT_MARGIN_KEY = "LEFT_MARGIN_KEY";
     private static final String TOP_MARGIN_KEY = "TOP_MARGIN_KEY";
     private static final String EDIT_PROFILE_SHOWED = "EDIT_PROFILE_SHOWED";
+    private static final String ADD_SESSION_SHOWED = "ADD_SESSION_SHOWED";
+    private static final String DEL_SESSION_SHOWED = "DEL_SESSION_SHOWED";
+    private static final String DEL_RESET_FULL_SHOWED = "DEL_RESET_FULL_SHOWED";
 
     public static boolean loadSessionSettings(Context context) {
         mContext = context;
@@ -509,13 +512,29 @@ public class TESettingsInfo {
         return mSp.getInt(TOP_MARGIN_KEY, 0);
     }
 
-    public static boolean showEditProfile() {
-        boolean bShowed = mSp.getBoolean(EDIT_PROFILE_SHOWED, false);
+    private static boolean showFirstByTag(final String tag) {
+        boolean bShowed = mSp.getBoolean(tag, false);
         if(!bShowed) {
             SharedPreferences.Editor editor = mSp.edit();
-            editor.putBoolean(EDIT_PROFILE_SHOWED, true);
+            editor.putBoolean(tag, true);
             editor.commit();
         }
         return bShowed == false;
+    }
+
+    public static boolean showEditProfile() {
+        return showFirstByTag(EDIT_PROFILE_SHOWED);
+    }
+
+    public static boolean showAddSession() {
+        return showFirstByTag(ADD_SESSION_SHOWED);
+    }
+
+    public static boolean showDelSession() {
+        return showFirstByTag(DEL_SESSION_SHOWED);
+    }
+
+    public static boolean showResetFullScreen() {
+        return showFirstByTag(DEL_RESET_FULL_SHOWED);
     }
 }

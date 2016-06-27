@@ -152,12 +152,12 @@ public class UIUtility {
 		builder.create().show();
 	}
 
-	public static void showTourEditProfile(Activity activity, View targetView) {
+	public static void showTourEditProfile(View targetView) {
 		ToolTip toolTip = new ToolTip().
-				setTitle(activity.getString(R.string.msg_tour_edit_profile_title)).
-				setDescription(activity.getString(R.string.msg_tour_edit_profile)).
-				setBackgroundColor(activity.getResources().getColor(R.color.tooltipsColor)).
-				setTextColor(activity.getResources().getColor(R.color.tooltipsColor)).
+				setTitle(mContext.getString(R.string.msg_tour_edit_profile_title)).
+				setDescription(mContext.getString(R.string.msg_tour_edit_profile)).
+				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
 				setShadow(true).
 				setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -165,9 +165,66 @@ public class UIUtility {
 						mTourGuideHandler.cleanUp();
 					}
 				});
-		mTourGuideHandler = TourGuide.init(activity)
+		mTourGuideHandler = TourGuide.init((Activity) mContext)
 				.setToolTip(toolTip)
-				.setOverlay(new Overlay())
+				.setOverlay(new Overlay().disableClickThroughHole(true))
+				.playOn(targetView);
+	}
+
+	public static void showAddSession(View targetView) {
+		ToolTip toolTip = new ToolTip().
+				setTitle(mContext.getString(R.string.msg_tour_add_session_title)).
+				setDescription(mContext.getString(R.string.msg_tour_add_session)).
+				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setShadow(true).
+				setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mTourGuideHandler.cleanUp();
+					}
+				});
+		mTourGuideHandler = TourGuide.init((Activity) mContext)
+				.setToolTip(toolTip)
+				.setOverlay(new Overlay().disableClickThroughHole(true))
+				.playOn(targetView);
+	}
+
+	public static void showDelSession(View targetView) {
+		ToolTip toolTip = new ToolTip().
+				setTitle(mContext.getString(R.string.msg_tour_del_session_title)).
+				setDescription(mContext.getString(R.string.msg_tour_del_session)).
+				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setShadow(true).
+				setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mTourGuideHandler.cleanUp();
+					}
+				});
+		mTourGuideHandler = TourGuide.init((Activity) mContext)
+				.setToolTip(toolTip)
+				.setOverlay(new Overlay().disableClickThroughHole(true))
+				.playOn(targetView);
+	}
+
+	public static void showResetFullScreen(View targetView) {
+		ToolTip toolTip = new ToolTip().
+				setTitle(mContext.getString(R.string.msg_tour_screen_title)).
+				setDescription(mContext.getString(R.string.msg_tour_screen)).
+				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setShadow(true).
+				setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mTourGuideHandler.cleanUp();
+					}
+				});
+		mTourGuideHandler = TourGuide.init((Activity) mContext)
+				.setToolTip(toolTip)
+				.setOverlay(new Overlay().disableClickThroughHole(true))
 				.playOn(targetView);
 	}
 }

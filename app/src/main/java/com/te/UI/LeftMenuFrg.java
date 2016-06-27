@@ -54,6 +54,16 @@ public class LeftMenuFrg extends Fragment {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getActivity().invalidateOptionsMenu();
+                if(TESettingsInfo.showAddSession() == true) {
+                    UIUtility.showAddSession(mAddSession);
+                } else {
+                    final int SHOWDELETESN_COUNT = 2;
+                    if(TESettingsInfo.getSessionCount() >= SHOWDELETESN_COUNT) {
+                        if(TESettingsInfo.showDelSession() == true) {
+                            UIUtility.showDelSession(mSessionsView);
+                        }
+                    }
+                }
             }
  
             @Override
