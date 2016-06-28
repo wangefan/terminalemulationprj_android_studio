@@ -6,8 +6,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
-import android.util.Log;
-import com.cipherlab.barcode.BuildConfig;
 
 import Terminals.TESettings;
 
@@ -66,18 +64,6 @@ public abstract class SessionSettingsFrgBase extends PreferenceFragment implemen
         // Unregister the listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        if(BuildConfig.DEBUG) Log.d("TE", "onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        if(BuildConfig.DEBUG) Log.d("TE", "onDestroyView");
-        super.onDestroyView();
     }
 
     @Override

@@ -5,9 +5,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.util.Log;
 
-import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
 public class SessionHostProfileFrg extends SessionSettingsFrgBase {
@@ -62,7 +60,6 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_host_profile_more);
 

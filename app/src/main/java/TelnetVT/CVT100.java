@@ -4,11 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.util.Log;
 import android.view.KeyEvent;
 
-import com.cipherlab.barcode.BuildConfig;
+import com.example.terminalemulation.BuildConfig;
 import com.example.terminalemulation.R;
+import com.te.UI.CipherLog;
 import com.te.UI.ServerKeyEvent;
 
 import java.text.SimpleDateFormat;
@@ -201,10 +201,10 @@ public class CVT100 extends CVT100Enum {
     protected int getServerKeyCode(int keyCode) {
         Integer nVTKeyCode = mVTKeyCodeMap.get(keyCode);
         if(nVTKeyCode != null) {
-            if(BuildConfig.DEBUG) Log.d("TE", String.format("Keycode mapped, Keyevent = %d, VT Keycode = %d", keyCode, nVTKeyCode));
+            CipherLog.d("CVT100", String.format("Keycode mapped, Keyevent = %d, VT Keycode = %d", keyCode, nVTKeyCode));
             return nVTKeyCode;
         }
-        if(BuildConfig.DEBUG) Log.d("TE", String.format("No Keycode mapped!"));
+        CipherLog.d("CVT100", String.format("No Keycode mapped!"));
         return VTKEY_NONE;
     }
 
@@ -397,9 +397,9 @@ public class CVT100 extends CVT100Enum {
 
         int Inc = 1; // increment
 
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG_MODE) {
             String strSeq = getCurSeq(e.CurSequence, e.CurParams.Elements);
-            Log.d("TE", String.format("[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq)));
+            CipherLog.d("CVT100", String.format("[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq)));
         }
 
         if (e.CurSequence.equals("")) {

@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
 
 import Terminals.TESettings;
@@ -132,7 +130,6 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_screen_settings);
 

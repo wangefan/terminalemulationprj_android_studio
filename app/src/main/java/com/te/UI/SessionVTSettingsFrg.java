@@ -52,7 +52,6 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_vt_settings);
 

@@ -5,8 +5,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.util.Log;
-import com.cipherlab.barcode.BuildConfig;
+
 import com.example.terminalemulation.R;
 
 public class SessionSettingsFrg extends SessionSettingsFrgBase {
@@ -30,7 +29,6 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
         
@@ -99,17 +97,5 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.log_key)) == 0) {
             mSetting.mIsSaveLog = mCkGenLog.isChecked();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        if(BuildConfig.DEBUG) Log.d("TE", "onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        if(BuildConfig.DEBUG) Log.d("TE", "onDestroyView");
-        super.onDestroyView();
     }
 }

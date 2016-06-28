@@ -25,7 +25,6 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if(BuildConfig.DEBUG) Log.d("TE", "onCreate");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_tn_settings);
 

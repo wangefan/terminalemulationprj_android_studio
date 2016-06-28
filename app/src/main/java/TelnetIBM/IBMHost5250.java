@@ -3,11 +3,10 @@ package TelnetIBM;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.util.Log;
 import android.view.KeyEvent;
 
-import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
+import com.te.UI.CipherLog;
 import com.te.UI.ServerKeyEvent;
 import com.te.UI.UIUtility;
 
@@ -302,10 +301,10 @@ public class IBMHost5250 extends IBMHostBase {
     protected int getServerKeyCode(int keyCode) {
         Integer nIBMKeyCode = mTNKeyCodeMap.get(keyCode);
         if(nIBMKeyCode != null) {
-            if(BuildConfig.DEBUG) Log.d("TE", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
+            CipherLog.d("IBMHost5250", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
             return nIBMKeyCode;
         }
-        if(BuildConfig.DEBUG) Log.d("TE", String.format("No Keycode mapped!"));
+        CipherLog.d("IBMHost5250", String.format("No Keycode mapped!"));
         return IBMKEY_NONE;
     }
 
@@ -341,8 +340,7 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void processChar(char ch) {
-        if (BuildConfig.DEBUG)
-            Log.d("TE:", String.format("IBMHost5250.processChar, char = [%02x]", (byte) ch));
+        CipherLog.d("IBMHost5250", String.format("IBMHost5250.processChar, char = [%02x]", (byte) ch));
         AtomicReference<IBmStates> curState = new AtomicReference<IBmStates>(IBmStates.None);
         AtomicReference<IBmActions> curAction = new AtomicReference<IBmActions>(IBmActions.None);
         AtomicReference<IBmActions> stateExitAction = new AtomicReference<IBmActions>(IBmActions.None);
@@ -355,29 +353,24 @@ public class IBMHost5250 extends IBMHostBase {
         } else
             GetStateEventAction(mCurCommand, mLastIBMState, mCurChar, curState, curAction);
 
-        if (BuildConfig.DEBUG)
-            Log.d("TE:", String.format("preState = %s, curState = %s, curAction = %s", mLastIBMState.toString(), curState, curAction));
+        CipherLog.d("IBMHost5250", String.format("preState = %s, curState = %s, curAction = %s", mLastIBMState.toString(), curState, curAction));
 
         boolean bStateChanged = (curState.get() != IBmStates.None && curState.get() != mLastIBMState);
         if (bStateChanged) {
             // check for state exit actions
             mTnIBmStateChangeEvents.GetStateChangeAction(mLastIBMState, Transitions.Exit, stateExitAction);
-            if (BuildConfig.DEBUG)
-                Log.d("TE:", String.format("[Exit] action = %s", stateExitAction));
+            CipherLog.d("IBMHost5250", String.format("[Exit] action = %s", stateExitAction));
             // Process the exit action
             if (stateExitAction.get() != IBmActions.None) DoAction(stateExitAction.get());
         } else {
-            if (BuildConfig.DEBUG)
-                Log.d("TE:", String.format("[Exit] no exit action."));
+            CipherLog.d("IBMHost5250", String.format("[Exit] no exit action."));
         }
 
         if (curAction.get() != IBmActions.None) {
-            if (BuildConfig.DEBUG)
-                Log.d("TE:", String.format("[Cur Action] do action = %s", curAction));
+            CipherLog.d("IBMHost5250", String.format("[Cur Action] do action = %s", curAction));
             DoAction(curAction.get());
         } else {
-            if (BuildConfig.DEBUG)
-                Log.d("TE:", String.format("[Cur Action] no action"));
+            CipherLog.d("IBMHost5250", String.format("[Cur Action] no action"));
         }
 
         mLastAction = curAction.get();
@@ -386,8 +379,7 @@ public class IBMHost5250 extends IBMHostBase {
             // check for state entry actions
             mTnIBmStateChangeEvents.GetStateChangeAction(curState.get(), Transitions.Entry, stateEntryAction);
 
-            if (BuildConfig.DEBUG)
-                Log.d("TE:", String.format("[Entry] action = %s", stateEntryAction));
+            CipherLog.d("IBMHost5250", String.format("[Entry] action = %s", stateEntryAction));
 
             // Process the entry action
             if (stateEntryAction.get() != IBmActions.None) DoAction(stateEntryAction.get());
@@ -395,8 +387,7 @@ public class IBMHost5250 extends IBMHostBase {
             // change the parsers state attribute
             mLastIBMState = curState.get();
         } else {
-            if (BuildConfig.DEBUG)
-                Log.d("TE:", String.format("[Entry] no entry action"));
+            CipherLog.d("IBMHost5250", String.format("[Entry] no entry action"));
         }
 
         if (mbChangeNextStatus) {

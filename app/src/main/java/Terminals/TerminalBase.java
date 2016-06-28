@@ -1,9 +1,9 @@
 package Terminals;
 
-import android.util.Log;
 import android.view.KeyEvent;
 
-import com.cipherlab.barcode.BuildConfig;
+import com.example.terminalemulation.BuildConfig;
+import com.te.UI.CipherLog;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -40,12 +40,12 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     protected void outputHexForDBG(char[] charArray) {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG_MODE) {
             String strHex = "";
             for (char C : charArray) {
                 strHex += String.format("%02x ", (byte) C);
             }
-            Log.d("TE:[read data]", strHex);
+            CipherLog.d("TE:[read data]", strHex);
         }
     }
 

@@ -8,7 +8,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextPaint;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -17,8 +16,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import com.cipherlab.barcode.BuildConfig;
 import com.example.terminalemulation.R;
+import com.te.UI.CipherLog;
 
 import SessionProcess.TerminalProcess;
 import Terminals.TerminalBaseEnum.Point;
@@ -246,9 +245,7 @@ public class ContentView extends View {
 
             mHScrollView.scrollTo(nMoveToX, 0);
             mVScrollView.scrollTo(0, nMoveToY);
-            if (BuildConfig.DEBUG) {
-                Log.d("TE:", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
-            }
+            CipherLog.d("ContentView", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
         }
     }
 
