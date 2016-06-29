@@ -12,6 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.terminalemulation.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Terminals.ContentView;
 import Terminals.TESettingsInfo;
 
@@ -110,11 +113,15 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private ContentView mTargetView = null;
     private KeyboardView mKeyboardView = null;
     private Keyboard mABCKeyboard = null;
+    private List<Keyboard.Key> mListABCKeys = new ArrayList<>();
     private Keyboard mSymbolKeyboard = null;
+    private List<Keyboard.Key> mListSymbolKeys = new ArrayList<>();
     private Keyboard mVTFunKeyboard = null;
     private Keyboard mTNFunKeyboard = null;
+    private List<Keyboard.Key> mListFunKeys = new ArrayList<>();
     private Keyboard mTNServerKeyboard = null;
     private Keyboard mVTServerKeyboard = null;
+    private List<Keyboard.Key> mListServerKeys = new ArrayList<>();
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
     private TEKeyboardViewListener mLisitener  = null;
 
@@ -128,6 +135,35 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mVTFunKeyboard = new Keyboard(context, R.xml.keyboard_vt_funl);
         mTNServerKeyboard = new Keyboard(context, R.xml.keyboard_tn_server);
         mVTServerKeyboard = new Keyboard(context, R.xml.keyboard_vt_server);
+
+        collectKeysToContainer(mABCKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mTNServerKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+
+        collectKeysToContainer(mABCKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mTNServerKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+
+        collectKeysToContainer(mABCKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mTNServerKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+
+        collectKeysToContainer(mABCKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mTNServerKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+
         mKeyboardView.setKeyboard(mABCKeyboard);
         mKeyboardView.setOnKeyboardActionListener(this);
         mKeyboardView.setPreviewEnabled(false);
@@ -147,6 +183,43 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mTargetView.dispatchKeyEvent(event);
     }
 
+    private void collectKeysToContainer(Keyboard keyboard, int nKeycode, List<Keyboard.Key> list) {
+        for (int idxKey = 0; idxKey < keyboard.getKeys().size(); idxKey++) {
+            Keyboard.Key key = keyboard.getKeys().get(idxKey);
+            if (key.codes[0] == nKeycode) {
+                list.add(key);
+            }
+        }
+    }
+
+    private void setListKeysToggle(List<Keyboard.Key> list, boolean bToggle) {
+        for (Keyboard.Key key : list) {
+            key.on = bToggle;
+        }
+    }
+
+    private void setKeysOn(KeyboardType keyboardType) {
+        setListKeysToggle(mListABCKeys, false);
+        setListKeysToggle(mListSymbolKeys, false);
+        setListKeysToggle(mListFunKeys, false);
+        setListKeysToggle(mListServerKeys, false);
+        switch (keyboardType) {
+            case KT_ABC:
+            default:
+                setListKeysToggle(mListABCKeys, true);
+                break;
+            case KT_Symbol:
+                setListKeysToggle(mListSymbolKeys, true);
+                break;
+            case KT_Fun:
+                setListKeysToggle(mListFunKeys, true);
+                break;
+            case KT_Server:
+                setListKeysToggle(mListServerKeys, true);
+                break;
+        }
+    }
+
     //Functions
     public void setListener(TEKeyboardViewListener listener) {
         mLisitener = listener;
@@ -160,6 +233,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     }
 
     public void showTEKeyboard() {
+        setKeysOn(mKeyboardType);
         switch (mKeyboardType) {
             case KT_ABC:
             default:
@@ -219,12 +293,14 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             {
                 mKeyboardView.setKeyboard(mABCKeyboard);
                 mKeyboardType = KeyboardType.KT_ABC;
+                setKeysOn(mKeyboardType);
             }
             break;
             case MY_KEYCODE_SYMBOL:
             {
                 mKeyboardView.setKeyboard(mSymbolKeyboard);
                 mKeyboardType = KeyboardType.KT_Symbol;
+                setKeysOn(mKeyboardType);
             }
             break;
             case MY_KEYCODE_FUNC:
@@ -236,6 +312,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                     mKeyboardView.setKeyboard(mVTFunKeyboard);
                 }
                 mKeyboardType = KeyboardType.KT_Fun;
+                setKeysOn(mKeyboardType);
             }
             break;
             case MY_KEYCODE_SERVER:
@@ -247,6 +324,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                     mKeyboardView.setKeyboard(mVTServerKeyboard);
                 }
                 mKeyboardType = KeyboardType.KT_Server;
+                setKeysOn(mKeyboardType);
             }
             break;
             case MY_KEYCODE_HIDE:
