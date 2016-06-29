@@ -386,18 +386,40 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             }
             break;
             case MY_KEYCODE_F13:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F13);
+                break;
             case MY_KEYCODE_F14:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F14);
+                break;
             case MY_KEYCODE_F15:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F15);
+                break;
             case MY_KEYCODE_F16:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F16);
+                break;
             case MY_KEYCODE_F17:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F17);
+                break;
             case MY_KEYCODE_F18:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F18);
+                break;
             case MY_KEYCODE_F19:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F19);
+                break;
             case MY_KEYCODE_F20:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F20);
+                break;
             case MY_KEYCODE_F21:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F21);
+                break;
             case MY_KEYCODE_F22:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F22);
+                break;
             case MY_KEYCODE_F23:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F23);
+                break;
             case MY_KEYCODE_F24:
-                keyDownUp(ServerKeyEvent.TN_KEYCODE_NEXT);
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F24);
                 break;
             case MY_KEYCODE_TAB:
             {
