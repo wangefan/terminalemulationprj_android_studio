@@ -178,6 +178,16 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 }
             }
             break;
+            case KT_Server:
+            {
+                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                    mKeyboardView.setKeyboard(mTNServerKeyboard);
+                }
+                else {
+                    mKeyboardView.setKeyboard(mVTServerKeyboard);
+                }
+            }
+            break;
         }
         mKeyboardView.setVisibility(View.VISIBLE);
         mKeyboardView.setEnabled(true);
