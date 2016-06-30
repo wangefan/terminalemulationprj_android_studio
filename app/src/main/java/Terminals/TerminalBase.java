@@ -3,7 +3,7 @@ package Terminals;
 import android.view.KeyEvent;
 
 import com.example.terminalemulation.BuildConfig;
-import com.te.UI.CipherLog;
+import com.te.UI.CipherUtility;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -45,7 +45,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             for (char C : charArray) {
                 strHex += String.format("%02x ", (byte) C);
             }
-            CipherLog.d("TE:[read data]", strHex);
+            CipherUtility.Log_d("TE:[read data]", strHex);
         }
     }
 

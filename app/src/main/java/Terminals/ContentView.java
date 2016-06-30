@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.example.terminalemulation.R;
-import com.te.UI.CipherLog;
+import com.te.UI.CipherUtility;
 
 import SessionProcess.TerminalProcess;
 import Terminals.TerminalBaseEnum.Point;
@@ -245,7 +245,7 @@ public class ContentView extends View {
 
             mHScrollView.scrollTo(nMoveToX, 0);
             mVScrollView.scrollTo(0, nMoveToY);
-            CipherLog.d("ContentView", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
+            CipherUtility.Log_d("ContentView", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
         }
     }
 

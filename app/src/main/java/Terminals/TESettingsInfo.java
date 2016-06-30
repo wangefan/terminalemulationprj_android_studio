@@ -382,9 +382,18 @@ public class TESettingsInfo {
     }
 
     public static String getHostPassWordByIndex(int index) {
-        //
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mLoginPassword;
+    }
+
+    public static boolean getHostIsKeepAliveByIndex(int nSessionIndex) {
+        SessionSetting Setting = mTESettings.getSessionSetting(nSessionIndex);
+        return Setting.mNetKeepAlive;
+    }
+
+    public static boolean getHostIsDetectOFRByIndex(int nSessionIndex) {
+        SessionSetting Setting = mTESettings.getSessionSetting(nSessionIndex);
+        return Setting.mIsDetectOutRange;
     }
 
     public static boolean getHostIsSshEnableByIndex(int index) {

@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 
 import com.example.terminalemulation.BuildConfig;
 import com.example.terminalemulation.R;
-import com.te.UI.CipherLog;
+import com.te.UI.CipherUtility;
 import com.te.UI.ServerKeyEvent;
 
 import java.text.SimpleDateFormat;
@@ -201,10 +201,10 @@ public class CVT100 extends CVT100Enum {
     protected int getServerKeyCode(int keyCode) {
         Integer nVTKeyCode = mVTKeyCodeMap.get(keyCode);
         if(nVTKeyCode != null) {
-            CipherLog.d("CVT100", String.format("Keycode mapped, Keyevent = %d, VT Keycode = %d", keyCode, nVTKeyCode));
+            CipherUtility.Log_d("CVT100", String.format("Keycode mapped, Keyevent = %d, VT Keycode = %d", keyCode, nVTKeyCode));
             return nVTKeyCode;
         }
-        CipherLog.d("CVT100", String.format("No Keycode mapped!"));
+        CipherUtility.Log_d("CVT100", String.format("No Keycode mapped!"));
         return VTKEY_NONE;
     }
 
@@ -399,7 +399,7 @@ public class CVT100 extends CVT100Enum {
 
         if (BuildConfig.DEBUG_MODE) {
             String strSeq = getCurSeq(e.CurSequence, e.CurParams.Elements);
-            CipherLog.d("CVT100", String.format("[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq)));
+            CipherUtility.Log_d("CVT100", String.format("[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq)));
         }
 
         if (e.CurSequence.equals("")) {
