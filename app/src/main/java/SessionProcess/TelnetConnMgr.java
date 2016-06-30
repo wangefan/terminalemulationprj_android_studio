@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import Terminals.TESettings;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 
@@ -58,6 +57,9 @@ public class TelnetConnMgr implements Runnable {
             if (mSocket == null)
                 throw new Exception();
             mSocket.connect(new InetSocketAddress(mStrHost, mPort), 5000);
+            if(TESettingsInfo.getHostIsKeepAliveByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                mSocket.setKeepAlive(true);
+            }
             mInStream = mSocket.getInputStream();
             mOutStream = mSocket.getOutputStream();
             mIsConnected = true;

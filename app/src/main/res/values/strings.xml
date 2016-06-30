@@ -38,7 +38,6 @@
     <string name="str_serverType">Server Type</string>
     <string name="str_ip">IP Address</string>
     <string name="str_serverPort">Port</string>
-    <string name="str_ntKeepAlive">Network Keep Alive</string>
     <string name="str_upperCase">Data input uppercase</string>
     <string name="str_network">Network</string>
     <string name="str_autofullscreen">Auto full screen on connection</string>
