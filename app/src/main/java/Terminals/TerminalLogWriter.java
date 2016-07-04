@@ -14,7 +14,7 @@ public class TerminalLogWriter {
 		try {
 			  
 			  File file;
-			  MainContext=stdActivityRef.GetCurrActivity().getApplicationContext();
+			  MainContext=stdActivityRef.getCurrActivity().getApplicationContext();
 			  
 			  File directory = new File(Environment.getExternalStorageDirectory()+File.separator+"TE");
 			  directory.mkdirs();

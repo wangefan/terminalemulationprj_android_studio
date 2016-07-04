@@ -103,7 +103,7 @@ public class TerminalProcess {
         Boolean SSh = TESettingsInfo.getHostIsSshEnableByIndex(TESettingsInfo.getSessionIndex());
         boolean isTN = TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex());
 
-        Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
+        Context context = stdActivityRef.getCurrActivity().getApplicationContext();
         if (isTN == false) {
             String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             assert (serverTypeName.equals(context.getResources().getString(R.string.VT100Val)) ||

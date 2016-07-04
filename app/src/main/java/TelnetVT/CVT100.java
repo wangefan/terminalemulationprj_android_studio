@@ -254,7 +254,7 @@ public class CVT100 extends CVT100Enum {
 
     private void CheckCostomCommand(ParserEventArgs e)//not finish
     {
-        Context context = stdActivityRef.GetCurrActivity().getApplicationContext();
+        Context context = stdActivityRef.getCurrActivity().getApplicationContext();
         String StrCmd = GetActionString(e);
 
 

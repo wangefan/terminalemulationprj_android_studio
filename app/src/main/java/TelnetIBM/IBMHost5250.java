@@ -1340,7 +1340,7 @@ public class IBMHost5250 extends IBMHostBase {
     public void PlayWarningSounds() {
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(stdActivityRef.GetCurrActivity(), notification);
+            Ringtone r = RingtoneManager.getRingtone(stdActivityRef.getCurrActivity(), notification);
             r.play();
         } catch (Exception e) {
             e.printStackTrace();
