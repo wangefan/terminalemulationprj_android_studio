@@ -247,4 +247,5 @@
     <string name="msg_tour_del_session">You could delete a session by swipe item (left to right) and press button to delete it.\r\nPress to exit.</string>
     <string name="msg_tour_screen_title">Leave full screen</string>
     <string name="msg_tour_screen">You could double click any empty area under screen to leave full screen status.\r\nPress to exit.</string>
+    <string name="str_detect_out_title">Waiting for network..</string>
 </resources>

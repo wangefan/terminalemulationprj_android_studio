@@ -28,7 +28,11 @@ public class UIUtility {
 	public interface OnListMessageBoxListener {
 		void onSelResult(String result);
 	}
+	public interface OnDetectOFRListener {
+		void onResult(boolean bHasNetwork);
+	}
 	static private ProgressDialog mPDialog = null;
+	static private ProgressDialog mProgNetwork = null;
 	static private Context mContext;
 	static private Point mPrgDlgSize = new Point();
 	static private boolean mBShow = false;
@@ -226,5 +230,44 @@ public class UIUtility {
 				.setToolTip(toolTip)
 				.setOverlay(new Overlay().disableClickThroughHole(true))
 				.playOn(targetView);
+	}
+
+	public static void detectNetworkOutRange(final OnDetectOFRListener listener) {
+		if(CipherUtility.hasNetwork() == true) {
+			listener.onResult(true);
+			return;
+		}
+
+		final Runnable checkNetwork = new Runnable() {
+			@Override
+			public void run() {
+				if(CipherUtility.hasNetwork() == true) {
+					mProgNetwork.dismiss();
+					listener.onResult(true);
+				} else {
+					mUIHandler.postDelayed(this, 2000);
+				}
+			}
+		};
+		mProgNetwork = new ProgressDialog(mContext);
+		mProgNetwork.setMessage(mContext.getResources().getString(R.string.str_detect_out_title));
+		mProgNetwork.setCancelable(false);
+		mProgNetwork.setButton(DialogInterface.BUTTON_NEGATIVE, mContext.getResources().getString(R.string.STR_Cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				listener.onResult(false);
+				mUIHandler.removeCallbacks(checkNetwork);
+			}
+		});
+		mProgNetwork.show();
+		mUIHandler.post(checkNetwork);
+	}
+
+	public static void cancelDetectNetworkOutRange() {
+		if(mProgNetwork != null && mProgNetwork.isShowing()) {
+			mProgNetwork.dismiss();
+			mUIHandler.removeCallbacksAndMessages(null);
+		}
 	}
 }

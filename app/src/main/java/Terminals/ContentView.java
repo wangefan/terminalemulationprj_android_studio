@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 
 import com.example.terminalemulation.R;
 import com.te.UI.CipherUtility;
+import com.te.UI.UIUtility;
 
 import SessionProcess.TerminalProcess;
 import Terminals.TerminalBaseEnum.Point;
@@ -43,8 +44,8 @@ public class ContentView extends View {
 
     public ContentView(Context context, CursorView Cursor) {
         super(context);
-        mHScrollView = (HorizontalScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainHScroll);
-        mVScrollView = (ScrollView) stdActivityRef.GetCurrActivity().findViewById(R.id.mainVScroll);
+        mHScrollView = (HorizontalScrollView) stdActivityRef.getCurrActivity().findViewById(R.id.mainHScroll);
+        mVScrollView = (ScrollView) stdActivityRef.getCurrActivity().findViewById(R.id.mainVScroll);
         mCorsor = Cursor;
         setPaintColor();
         this.setFocusableInTouchMode(true);
@@ -250,9 +251,24 @@ public class ContentView extends View {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mTerminalProc != null)
-            mTerminalProc.handleKeyDown(keyCode, event);
+    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+        if (mTerminalProc != null) {
+            if(TESettingsInfo.getHostIsDetectOFRByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                UIUtility.detectNetworkOutRange(new UIUtility.OnDetectOFRListener() {
+                    @Override
+                    public void onResult(boolean bHasNetwork) {
+                        if(bHasNetwork == false) {
+                            stdActivityRef.getCurrActivity().SessionDisConnect();
+                            return;
+                        } else {
+                            mTerminalProc.handleKeyDown(keyCode, event);
+                        }
+                    }
+                });
+            } else {
+                mTerminalProc.handleKeyDown(keyCode, event);
+            }
+        }
         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_TAB) {
             return true;
         }

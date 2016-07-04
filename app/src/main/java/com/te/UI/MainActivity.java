@@ -10,7 +10,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
-import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -136,6 +135,7 @@ public class MainActivity extends AppCompatActivity
             updateRecordButtonVisible();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Connect);
+            UIUtility.cancelDetectNetworkOutRange();
             UIUtility.showProgressDlg(false, 0);
             mKeyboardViewUtility.hideTEKeyboard();
             Toast.makeText(MainActivity.this, getString(R.string.MSG_Disonnected), Toast.LENGTH_SHORT).show();
@@ -212,8 +212,7 @@ public class MainActivity extends AppCompatActivity
             mUpdateWifiAlertHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                    int wifiStrength = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
+                    int wifiStrength = CipherUtility.getWiFiStrength();
                     if(wifiStrength < nWifiAlert) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
@@ -345,6 +344,7 @@ public class MainActivity extends AppCompatActivity
         mSessionJumpBtn.setOnTouchListener(sjListener);
 
         UIUtility.init(this);
+        CipherUtility.init(this);
 
         Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
         if (bAutoConn)
@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        stdActivityRef.SetCurrActivity(this);
+        stdActivityRef.setCurrActivity(this);
         CipherReaderControl.InitReader(this, myDataReceiver);
         // Initialize User Parm
         if (true == TESettingsInfo.loadSessionSettings(getApplicationContext())) {
@@ -731,7 +731,7 @@ public class MainActivity extends AppCompatActivity
         termProc.processConnect();
     }
 
-    private void SessionDisConnect() {
+    public void SessionDisConnect() {
         TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
         termProc.processDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
