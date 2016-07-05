@@ -224,7 +224,7 @@
     <string name="screen_font_key">screen_font_key</string>
     <string name="screen_font">Fonts</string>
     <string name="screen_font_size_key">screen_font_size_key</string>
-    <string name="screen_font_size">Fonts Size</string>
+    <string name="screen_font_size">Font Size</string>
     <string name="screen_color_key">screen_color_key</string>
     <string name="screen_color">Color Settings</string>
     <string name="screen_auto_full_on_conn_key">screen_auto_full_on_conn_key</string>
@@ -233,13 +233,13 @@
     <string name="screen_show_taskbar">Show Taskbar On Full Screen</string>
     <string name="full_screen">Full Screen</string>
     <string name="LockedLocFormat">Row: %1$d, Col:%2$d</string>
-    <string name="font_color_title">Fonts Color</string>
+    <string name="font_color_title">Font Color</string>
     <string name="bg_color_title">Background Color</string>
     <string name="FontSizeFormat">%1$d x %2$d</string>
     <string name="row_col_dialog">Location</string>
     <string name="row_title">Row:</string>
     <string name="col_title">Col:</string>
-    <string name="color_picker_fonts_title">Pick Fonts color</string>
+    <string name="color_picker_fonts_title">Pick Font color</string>
     <string name="color_picker_bg_title">Pick Background color</string>
     <string name="vt_control_reader_key">vt_control_reader_key</string>
     <string name="vt_control_reader">Control Reader By Command</string>
