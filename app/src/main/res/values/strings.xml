@@ -7,7 +7,7 @@
     <string name="STR_ClearAll">Clear All</string>
     <string name="preference_file_key">File1</string>
     <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
-    <string name="title_activity_symbol">Sending String</string>
+    <string name="title_activity_symbol">Select String</string>
     <string name="MSG_CharacterTenLimit">The maximum character limit reached! Up to 10 chars allowed.</string>
     <string name="MSG_CharacterOneLimit">The maximum character limit reached! Only one char allowed.</string>
     <string name="MSG_ChangeSession">Change session to %s</string>
