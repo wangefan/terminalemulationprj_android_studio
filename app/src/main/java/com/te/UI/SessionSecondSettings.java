@@ -11,6 +11,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
     public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
     public static final String ACTION_SERVER_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING";
     public static final String ACTION_SCREEN_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING";
+    public static final String ACTION_ALARM_SETTING = "com.te.UI.SessionSecondSettings.ACTION_ALARM_SETTING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,22 @@ public class SessionSecondSettings extends SessionSettingsBase {
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
+        } else if(action.compareTo(ACTION_ALARM_SETTING) == 0) {
+            if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.tn_alarm));
+                /*SessionTNAlarmFrg settingsFrg = new SessionTNAlarmFrg();
+                settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, settingsFrg)
+                        .commit();*/
+            } else {//VT settings
+                getSupportActionBar().setTitle(getResources().getString(R.string.vt_alarm));
+                SessionVTAlarmFrg settingsFrg = new SessionVTAlarmFrg();
+                settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, settingsFrg)
+                        .commit();
+            }
         }
     }
 }

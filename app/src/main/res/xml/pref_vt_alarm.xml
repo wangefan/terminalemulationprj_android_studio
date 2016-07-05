@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.te.UI.TESwitchPreference
+        android:key="@string/vt_control_reader_key"
+        android:title="@string/vt_control_reader"
+        android:summaryOff="@string/vt_control_reader_key_off"
+        android:summaryOn="@string/vt_control_reader_key_on"
+        android:widgetLayout="@layout/te_switch"/>
+    <com.te.UI.TESwitchPreference
+        android:key="@string/vt_feedback_key"
+        android:title="@string/vt_feedback"
+        android:summaryOff="@string/vt_feedback_off"
+        android:summaryOn="@string/vt_feedback_on"
+        android:widgetLayout="@layout/te_switch"/>
+</PreferenceScreen>

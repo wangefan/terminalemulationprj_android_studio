@@ -42,9 +42,14 @@
                 android:action="com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING">
             </intent>
         </Preference>
-        <PreferenceScreen
+        <Preference
             android:title="@string/alarm">
-        </PreferenceScreen>
+            <intent
+                android:targetPackage="com.example.terminalemulation"
+                android:targetClass="com.te.UI.SessionSecondSettings"
+                android:action="com.te.UI.SessionSecondSettings.ACTION_ALARM_SETTING">
+            </intent>
+        </Preference>
         <PreferenceScreen
             android:title="@string/key_mapping">
         </PreferenceScreen>

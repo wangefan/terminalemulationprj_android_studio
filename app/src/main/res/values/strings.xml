@@ -72,6 +72,8 @@
     <string name="MSG_Disonnected_error">Cannot establish connection! Please check network.</string>
     <string name="tn_setting">TN Settings</string>
     <string name="vt_setting">VT Settings</string>
+    <string name="tn_alarm">TN Alarm</string>
+    <string name="vt_alarm">VT Alarm</string>
     <string name="data_upper_case_key">tn_data_upper_case_key</string>
     <string name="data_upper_case">Data Uppercase</string>
     <string name="tn_codepage_key">tn_codepage_key</string>
@@ -239,6 +241,14 @@
     <string name="col_title">Col:</string>
     <string name="color_picker_fonts_title">Pick Fonts color</string>
     <string name="color_picker_bg_title">Pick Background color</string>
+    <string name="vt_control_reader_key">vt_control_reader_key</string>
+    <string name="vt_control_reader">Control Reader By Command</string>
+    <string name="vt_feedback_key">vt_feedback_key</string>
+    <string name="vt_feedback">Feedback By Command/Text</string>
+    <string name="vt_feedback_off">Off</string>
+    <string name="vt_feedback_on">On</string>
+    <string name="vt_control_reader_key_off">Off</string>
+    <string name="vt_control_reader_key_on">On</string>
     <string name="msg_tour_edit_profile_title">Edit your profile here.</string>
     <string name="msg_tour_edit_profile">You should edit your profile setting before connecting to your host.\r\nPress to exit.</string>
     <string name="msg_tour_add_session_title">Add Session</string>
