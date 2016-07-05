@@ -255,6 +255,9 @@ public class TESettings {
         @SerializedName("isShowTaskBarOnFullScreen")
         public boolean mIsShowTaskbarOnConn = false;
 
+        @SerializedName("bScanControl")
+        public boolean mIsScanControl = false;
+
         public boolean SSH = false;
         public String SSHName = "";
         public String SSHPassword="";
@@ -262,7 +265,10 @@ public class TESettings {
 
         //Not sync
         public class ReaderParam {
-            public boolean isEnableScannerByESCCmd = false;
+            public boolean isEnableScannerByESCCmd = false; //Not used in TE C++
+            @SerializedName("FeedbackControlByCmd")
+            public int mIsFeedbackControlByCmd = 0;
+
             public String scannerEnableESC = null;
             public String scannerDisableESC = null;
             public String goodFeedBackESC = null;
