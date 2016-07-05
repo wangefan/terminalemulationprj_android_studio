@@ -64,8 +64,20 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 int nType = Integer.valueOf(mLstGoodFBType.getValue());
                 if(nType == 0) { //Command
                     startActForResult(mSetting.g_ReaderParam.mGoodFeedBackESC, REQ_GOOD);
-                } /*else (nType == 1) { //Text
-                }*/
+                } else if(nType == 1) { //Text
+                    UIUtility.editMessageBox(R.string.fb_good_fb_text_title, getActivity(), new UIUtility.OnEditMessageBoxListener() {
+                        @Override
+                        public void onResult(String result) {
+                            mSetting.g_ReaderParam.mGoodFeedBackText = result;
+                            syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+                }
                 return true;
             }
         });
@@ -77,8 +89,20 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 int nType = Integer.valueOf(mLstErrorFBType.getValue());
                 if(nType == 0) { //Command
                     startActForResult(mSetting.g_ReaderParam.mErrorFeedBackESC, REQ_ERROR);
-                } /*else (nType == 1) { //Text
-                }*/
+                } else if(nType == 1) { //Text
+                    UIUtility.editMessageBox(R.string.fb_error_fb_text_title, getActivity(), new UIUtility.OnEditMessageBoxListener() {
+                        @Override
+                        public void onResult(String result) {
+                            mSetting.g_ReaderParam.mErrorFeedBackText = result;
+                            syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+                }
                 return true;
             }
         });

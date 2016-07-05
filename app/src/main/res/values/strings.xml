@@ -275,4 +275,6 @@
     </string-array>
     <string name="fb_content_command">Command</string>
     <string name="fb_content_text">Text</string>
+    <string name="fb_good_fb_text_title">Good Feedback Text</string>
+    <string name="fb_error_fb_text_title">Error Feedback Text</string>
 </resources>
