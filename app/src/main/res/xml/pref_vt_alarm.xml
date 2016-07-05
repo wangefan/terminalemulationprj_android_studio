@@ -10,5 +10,11 @@
         android:title="@string/vt_feedback"
         android:summaryOff="@string/vt_feedback_off"
         android:summaryOn="@string/vt_feedback_on"
-        android:widgetLayout="@layout/te_switch"/>
+        android:widgetLayout="@layout/te_switch">
+        <intent
+            android:targetPackage="com.example.terminalemulation"
+            android:targetClass="com.te.UI.Session3rdSettings"
+            android:action="com.te.UI.Session3rdSettings.ACTION_FEEDBACK">
+        </intent>
+    </com.te.UI.TESwitchPreference>
 </PreferenceScreen>

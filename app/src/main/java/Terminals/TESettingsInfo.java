@@ -434,12 +434,12 @@ public class TESettingsInfo {
 
     public static String getHostGoodfeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.g_ReaderParam.goodFeedBackESC;
+        return Setting.g_ReaderParam.mGoodFeedBackESC;
     }
 
     public static String getHostErrorfeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.g_ReaderParam.errorFeedBackESC;
+        return Setting.g_ReaderParam.mErrorFeedBackESC;
     }
 	   
     /*Boolean IsGoodfeedback=false;

@@ -245,6 +245,8 @@
     <string name="vt_control_reader">Control Reader By Command</string>
     <string name="vt_feedback_key">vt_feedback_key</string>
     <string name="vt_feedback">Feedback By Command/Text</string>
+    <string name="vt_good_feedback">Good Feedback</string>
+    <string name="vt_error_feedback">Error Feedback</string>
     <string name="vt_feedback_off">Off</string>
     <string name="vt_feedback_on">On</string>
     <string name="vt_control_reader_key_off">Off</string>
@@ -258,4 +260,19 @@
     <string name="msg_tour_screen_title">Leave full screen</string>
     <string name="msg_tour_screen">You could double click any empty area under screen to leave full screen status.\r\nPress to exit.</string>
     <string name="str_detect_out_title">Waiting for network..</string>
+    <string name="fb_good_key">fb_good_key</string>
+    <string name="fb_error_key">fb_error_key</string>
+    <string name="fb_type_title">Feedback Type</string>
+    <string name="fb_good_content_key">fb_good_content_key</string>
+    <string name="fb_error_content_key">fb_error_content_key</string>
+    <string-array name="fb_array">
+        <item>By Command</item>
+        <item>By Text</item>
+    </string-array>
+    <string-array name="fb_array_vals">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="fb_content_command">Command</string>
+    <string name="fb_content_text">Text</string>
 </resources>

@@ -269,10 +269,26 @@ public class TESettings {
             @SerializedName("FeedbackControlByCmd")
             public int mIsFeedbackControlByCmd = 0;
 
+            @SerializedName("goodFeedBackType")
+            public int mGoodFBType = 0; //0:By command, 1:By Text
+
+            @SerializedName("goodFeedBackESC")
+            public String mGoodFeedBackESC = "";
+
+            @SerializedName("goodFeedBackText")
+            public String mGoodFeedBackText = "";
+
+            @SerializedName("errorFeedBackType")
+            public int mErrorFBType = 0; //0:By command, 1:By Text
+
+            @SerializedName("errorFeedBackESC")
+            public String mErrorFeedBackESC = "";
+
+            @SerializedName("errorFeedBackText")
+            public String mErrorFeedBackText = "";
+
             public String scannerEnableESC = null;
             public String scannerDisableESC = null;
-            public String goodFeedBackESC = null;
-            public String errorFeedBackESC = null;
         }
     }
 }
