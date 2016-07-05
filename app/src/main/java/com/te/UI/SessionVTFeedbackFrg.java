@@ -1,5 +1,7 @@
 package com.te.UI;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -7,6 +9,8 @@ import android.preference.Preference;
 import com.example.terminalemulation.R;
 
 public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
+    private final int REQ_GOOD = 0;
+    private final int REQ_ERROR = 1;
 
     private ListPreference mLstGoodFBType = null;
     private Preference mPrefGoodFBContent = null;
@@ -36,6 +40,17 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
         }
     }
 
+    private void startActForResult(String data, int nReqCode) {
+        Intent screen = new Intent(getActivity(), SymbolActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("data", data);
+        bundle.putString("Encode", "windows-1252");
+        bundle.putInt("limit", 10);
+        bundle.putInt("Select", 2);
+        screen.putExtras(bundle);
+        startActivityForResult(screen, nReqCode);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +58,30 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
 
         mLstGoodFBType = (ListPreference) findPreference(getResources().getString(R.string.fb_good_key));
         mPrefGoodFBContent = findPreference(getResources().getString(R.string.fb_good_content_key));
+        mPrefGoodFBContent.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                int nType = Integer.valueOf(mLstGoodFBType.getValue());
+                if(nType == 0) { //Command
+                    startActForResult(mSetting.g_ReaderParam.mGoodFeedBackESC, REQ_GOOD);
+                } /*else (nType == 1) { //Text
+                }*/
+                return true;
+            }
+        });
         mLstErrorFBType = (ListPreference) findPreference(getResources().getString(R.string.fb_error_key));
         mPrefErrorFBContent = findPreference(getResources().getString(R.string.fb_error_content_key));
+        mPrefErrorFBContent.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                int nType = Integer.valueOf(mLstErrorFBType.getValue());
+                if(nType == 0) { //Command
+                    startActForResult(mSetting.g_ReaderParam.mErrorFeedBackESC, REQ_ERROR);
+                } /*else (nType == 1) { //Text
+                }*/
+                return true;
+            }
+        });
     }
 
     @Override
@@ -66,5 +103,25 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             mSetting.g_ReaderParam.mErrorFBType = Integer.valueOf(selErrFBType);
             syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                if(requestCode == REQ_GOOD) {
+                    Bundle bundle = data.getExtras();
+                    mSetting.g_ReaderParam.mGoodFeedBackESC = bundle.getString("data");
+                    syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
+                } else if(requestCode == REQ_ERROR) {
+                    Bundle bundle = data.getExtras();
+                    mSetting.g_ReaderParam.mErrorFeedBackESC = bundle.getString("data");
+                    syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
+                }
+            break;
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
