@@ -8,6 +8,7 @@ import com.example.terminalemulation.R;
 public class Session3rdSettings extends SessionSettingsBase {
     public static final String ACTION_COLOR = "com.te.UI.Session3rdSettings.ACTION_COLOR";
     public static final String ACTION_FEEDBACK = "com.te.UI.Session3rdSettings.ACTION_FEEDBACK";
+    public static boolean gIsModified = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class Session3rdSettings extends SessionSettingsBase {
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
         } else if(action.compareTo(ACTION_FEEDBACK) == 0) {
+            gIsModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.vt_feedback));
             SessionVTFeedbackFrg settingsFrg = new SessionVTFeedbackFrg();
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);

@@ -86,6 +86,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                         public void onResult(String result) {
                             mSetting.g_ReaderParam.mGoodFeedBackText = result;
                             syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
+                            ((Session3rdSettings)getActivity()).gIsModified = true;
                         }
 
                         @Override
@@ -120,6 +121,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                         public void onResult(String result) {
                             mSetting.g_ReaderParam.mErrorFeedBackText = result;
                             syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
+                            ((Session3rdSettings)getActivity()).gIsModified = true;
                         }
 
                         @Override
@@ -171,6 +173,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             String selErrVBIdx = mLstErrVBDur.getValue();
             mSetting.g_ReaderParam.mErrorVBIndex = Integer.valueOf(selErrVBIdx);
         }
+        ((Session3rdSettings)getActivity()).gIsModified = true;
     }
 
     @Override
@@ -186,6 +189,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                     mSetting.g_ReaderParam.mErrorFeedBackESC = bundle.getString("data");
                     syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
                 }
+                ((Session3rdSettings)getActivity()).gIsModified = true;
             break;
             default:
                 break;
