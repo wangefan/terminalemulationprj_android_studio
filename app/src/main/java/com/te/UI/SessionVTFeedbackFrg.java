@@ -8,14 +8,20 @@ import android.preference.Preference;
 
 import com.example.terminalemulation.R;
 
+import java.io.File;
+
 public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
     private final int REQ_GOOD = 0;
     private final int REQ_ERROR = 1;
 
     private ListPreference mLstGoodFBType = null;
     private Preference mPrefGoodFBContent = null;
+    private Preference mPrefGoodSound = null;
+    private ListPreference mLstGoodVBDur = null;
     private ListPreference mLstErrorFBType = null;
     private Preference mPrefErrorFBContent = null;
+    private Preference mPrefErrSound = null;
+    private ListPreference mLstErrVBDur = null;
 
 	public SessionVTFeedbackFrg() {
     }
@@ -28,6 +34,16 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             mPrefGoodFBContent.setTitle(R.string.fb_content_text);
             mPrefGoodFBContent.setSummary(mSetting.g_ReaderParam.mGoodFeedBackText);
         }
+    }
+
+    private void syncSettingToGoodSoundPref(String fullPath) {
+        File file = new File(fullPath);
+        mPrefGoodSound.setSummary(file.getName());
+    }
+
+    private void syncSettingToErrSoundPref(String fullPath) {
+        File file = new File(fullPath);
+        mPrefErrSound.setSummary(file.getName());
     }
 
     private void syncSettingToErrorFBCmdPref(int nType) {
@@ -81,6 +97,15 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
+        mPrefGoodSound = findPreference(getResources().getString(R.string.fb_good_sound_key));
+        mPrefGoodSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                //Todo:add file browse
+                return true;
+            }
+        });
+        mLstGoodVBDur = (ListPreference) findPreference(getResources().getString(R.string.goodvib_key));
         mLstErrorFBType = (ListPreference) findPreference(getResources().getString(R.string.fb_error_key));
         mPrefErrorFBContent = findPreference(getResources().getString(R.string.fb_error_content_key));
         mPrefErrorFBContent.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -106,14 +131,27 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
+        mPrefErrSound = findPreference(getResources().getString(R.string.fb_err_sound_key));
+        mPrefErrSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                //Todo:add file browse
+                return true;
+            }
+        });
+        mLstErrVBDur = (ListPreference) findPreference(getResources().getString(R.string.errvib_key));
     }
 
     @Override
     protected void syncPrefUIFromTESettings() {
         mLstGoodFBType.setValue(String.valueOf(mSetting.g_ReaderParam.mGoodFBType));
         syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
+        syncSettingToGoodSoundPref(mSetting.g_ReaderParam.mGoodSoundFile);
+        mLstGoodVBDur.setValue(String.valueOf(mSetting.g_ReaderParam.mGoodVBIndex));
         mLstErrorFBType.setValue(String.valueOf(mSetting.g_ReaderParam.mErrorFBType));
         syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
+        syncSettingToErrSoundPref(mSetting.g_ReaderParam.mErrorSoundFile);
+        mLstErrVBDur.setValue(String.valueOf(mSetting.g_ReaderParam.mErrorVBIndex));
     }
 
     @Override
@@ -126,6 +164,12 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             String selErrFBType = mLstErrorFBType.getValue();
             mSetting.g_ReaderParam.mErrorFBType = Integer.valueOf(selErrFBType);
             syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
+        } else if(key.compareTo(getResources().getString(R.string.goodvib_key)) == 0) {
+            String selGoodVBIdx = mLstGoodVBDur.getValue();
+            mSetting.g_ReaderParam.mGoodVBIndex = Integer.valueOf(selGoodVBIdx);
+        } else if(key.compareTo(getResources().getString(R.string.errvib_key)) == 0) {
+            String selErrVBIdx = mLstErrVBDur.getValue();
+            mSetting.g_ReaderParam.mErrorVBIndex = Integer.valueOf(selErrVBIdx);
         }
     }
 

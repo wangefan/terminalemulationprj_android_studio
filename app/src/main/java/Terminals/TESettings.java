@@ -278,6 +278,12 @@ public class TESettings {
             @SerializedName("goodFeedBackText")
             public String mGoodFeedBackText = "";
 
+            @SerializedName("goodFeedBackSoundPath")
+            public String mGoodSoundFile = "";
+
+            @SerializedName("goodFeedVibrationTime")
+            public int mGoodVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec
+
             @SerializedName("errorFeedBackType")
             public int mErrorFBType = 0; //0:By command, 1:By Text
 
@@ -286,6 +292,12 @@ public class TESettings {
 
             @SerializedName("errorFeedBackText")
             public String mErrorFeedBackText = "";
+
+            @SerializedName("errorFeedBackSoundPath")
+            public String mErrorSoundFile = "";
+
+            @SerializedName("errorFeedVibrationTime")
+            public int mErrorVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec
 
             public String scannerEnableESC = null;
             public String scannerDisableESC = null;

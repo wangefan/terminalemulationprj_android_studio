@@ -10,6 +10,16 @@
             android:positiveButtonText="@null" />
         <Preference
             android:key="@string/fb_good_content_key"/>
+        <Preference
+            android:key="@string/fb_good_sound_key"
+            android:title="@string/soundfile_title"/>
+        <ListPreference
+            android:key="@string/goodvib_key"
+            android:title="@string/vib_title"
+            android:entries="@array/vib_arr"
+            android:entryValues="@array/vib_arr_vals"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/vt_error_feedback">
@@ -22,5 +32,15 @@
             android:positiveButtonText="@null" />
         <Preference
             android:key="@string/fb_error_content_key"/>
+        <Preference
+            android:key="@string/fb_err_sound_key"
+            android:title="@string/soundfile_title"/>
+        <ListPreference
+            android:key="@string/errvib_key"
+            android:title="@string/vib_title"
+            android:entries="@array/vib_arr"
+            android:entryValues="@array/vib_arr_vals"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
     </PreferenceCategory>
 </PreferenceScreen>

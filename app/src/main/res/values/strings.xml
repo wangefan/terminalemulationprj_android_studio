@@ -277,4 +277,37 @@
     <string name="fb_content_text">Text</string>
     <string name="fb_good_fb_text_title">Good Feedback Text</string>
     <string name="fb_error_fb_text_title">Error Feedback Text</string>
+    <string name="fb_good_sound_key">fb_good_sound_key</string>
+    <string name="fb_err_sound_key">fb_err_sound_key</string>
+    <string name="goodvib_key">goodvib_key</string>
+    <string name="errvib_key">errvib_key</string>
+    <string name="vib_title">Vibration Duration</string>
+    <string name="soundfile_title">Sound File Name</string>
+    <string-array name="vib_arr">
+        <item>0 sec</item>
+        <item>0.5 sec</item>
+        <item>1.0 sec</item>
+        <item>1.5 sec</item>
+        <item>2.0 sec</item>
+        <item>2.5 sec</item>
+        <item>3.0 sec</item>
+        <item>3.5 sec</item>
+        <item>4.0 sec</item>
+        <item>4.5 sec</item>
+        <item>5.0 sec</item>
+    </string-array>
+    <string-array name="vib_arr_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
 </resources>
