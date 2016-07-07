@@ -102,7 +102,20 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
         mPrefGoodSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                //Todo:add file browse
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(), getResources().getString(R.string.STR_Choose_Wav),
+                        SimpleFileDialog.Type.FILE_OPEN,
+                        new SimpleFileDialog.SimpleFileDialogListener() {
+                            @Override
+                            public void onChosenDir(String chosenDir) {
+                                mSetting.g_ReaderParam.mGoodSoundFile = chosenDir;
+                                syncSettingToGoodSoundPref(mSetting.g_ReaderParam.mGoodSoundFile);
+                                ((Session3rdSettings)getActivity()).gIsModified = true;
+                            }
+                        });
+
+                //You can change the default filename using the public variable "Default_File_Name"
+                FileOpenDialog.Default_File_Name = "";
+                FileOpenDialog.chooseFile_or_Dir(mSetting.g_ReaderParam.mGoodSoundFile);
                 return true;
             }
         });

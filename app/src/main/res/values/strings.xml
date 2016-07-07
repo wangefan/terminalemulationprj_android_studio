@@ -28,6 +28,7 @@
     <string name="STR_DllName">Reader Service</string>   
     <string name="STR_OK">OK</string>
     <string name="STR_Cancel">Cancel</string>
+    <string name="STR_Choose_Wav">Choose wave file</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>
@@ -283,6 +284,7 @@
     <string name="errvib_key">errvib_key</string>
     <string name="vib_title">Vibration Duration</string>
     <string name="soundfile_title">Sound File Name</string>
+    <string name="cur_path">Current Path:</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>
