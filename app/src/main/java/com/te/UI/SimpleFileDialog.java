@@ -34,10 +34,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -110,32 +113,31 @@ public class SimpleFileDialog {
         m_dir = dir;
         m_subdirs = getDirectories(dir);
 
-        class SimpleFileDialogOnClickListener implements DialogInterface.OnClickListener {
-            public void onClick(DialogInterface dialog, int item) {
-                String m_dir_old = m_dir;
-                String sel = "" + ((AlertDialog) dialog).getListView().getAdapter().getItem(item);
-                if (sel.charAt(sel.length() - 1) == '/') sel = sel.substring(0, sel.length() - 1);
-
-                // Navigate into the sub-directory
-                if (sel.equals("..")) {
-                    m_dir = m_dir.substring(0, m_dir.lastIndexOf("/"));
-                } else {
-                    m_dir += "/" + sel;
-                }
-                Selected_File_Name = Default_File_Name;
-
-                if ((new File(m_dir).isFile())) // If the selection is a regular file
-                {
-                    m_dir = m_dir_old;
-                    Selected_File_Name = sel;
-                }
-
-                updateDirectory();
-            }
-        }
-
         AlertDialog.Builder dialogBuilder = createDirectoryChooserDialog(dir, m_subdirs,
-                new SimpleFileDialogOnClickListener());
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String m_dir_old = m_dir;
+                        String sel = "" + parent.getItemAtPosition(position);
+                        if (sel.charAt(sel.length() - 1) == '/') sel = sel.substring(0, sel.length() - 1);
+
+                        // Navigate into the sub-directory
+                        if (sel.equals("..")) {
+                            m_dir = m_dir.substring(0, m_dir.lastIndexOf("/"));
+                        } else {
+                            m_dir += "/" + sel;
+                        }
+                        Selected_File_Name = Default_File_Name;
+
+                        if ((new File(m_dir).isFile())) // If the selection is a regular file
+                        {
+                            m_dir = m_dir_old;
+                            Selected_File_Name = sel;
+                        }
+
+                        updateDirectory();
+                    }
+                });
 
         dialogBuilder.setPositiveButton(R.string.STR_OK, new OnClickListener() {
             @Override
@@ -208,13 +210,13 @@ public class SimpleFileDialog {
     //////                                   START DIALOG DEFINITION                                    //////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     private AlertDialog.Builder createDirectoryChooserDialog(String curPath, List<String> listItems,
-                                                             DialogInterface.OnClickListener onClickListener) {
+                                                             OnItemClickListener onClickListener) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(m_context);
 
         // Create custom view for AlertDialog curPath
-        LinearLayout titleLayout = (LinearLayout) LayoutInflater.from(m_context).inflate(R.layout.simple_file_chooser, null);
+        LinearLayout dialogLayout = (LinearLayout) LayoutInflater.from(m_context).inflate(R.layout.simple_file_chooser, null);
 
-        m_tvCurrentPath = (TextView) titleLayout.findViewById(R.id.dialog_cur_path);
+        m_tvCurrentPath = (TextView) dialogLayout.findViewById(R.id.dialog_cur_path);
         m_tvCurrentPath.setText(curPath);
         if (mSelectType == Type.FOLDER_CHOOSE || mSelectType == Type.FILE_SAVE) {
             ///////////////////////////////
@@ -249,18 +251,20 @@ public class SimpleFileDialog {
                                                 }
                                             }
             );
-            titleLayout.addView(newDirButton);
+            dialogLayout.addView(newDirButton);
         }
 
         if (mSelectType == Type.FILE_OPEN) {
             mChooseFile = new TextView(m_context);
-            titleLayout.addView(mChooseFile);
+            dialogLayout.addView(mChooseFile);
         }
 
         dialogBuilder.setTitle(mTitle);
-        dialogBuilder.setView(titleLayout);
+        dialogBuilder.setView(dialogLayout);
         m_listAdapter = createListAdapter(listItems);
-        dialogBuilder.setSingleChoiceItems(m_listAdapter, -1, onClickListener);
+        ListView list = (ListView) dialogLayout.findViewById(R.id.dialoglist);
+        list.setOnItemClickListener(onClickListener);
+        list.setAdapter(m_listAdapter);
         dialogBuilder.setCancelable(false);
         return dialogBuilder;
     }

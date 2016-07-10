@@ -2,14 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:weightSum="8">
     <TextView
+        android:paddingLeft="?dialogPreferredPadding"
+        android:paddingStart="?dialogPreferredPadding"
         android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cur_path"/>
+        android:text="@string/cur_path"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <TextView
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:paddingLeft="?dialogPreferredPadding"
+        android:paddingStart="?dialogPreferredPadding"
         android:id="@+id/dialog_cur_path"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_600"/>
+    <ListView
+        android:id="@+id/dialoglist"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"/>
 </LinearLayout>
