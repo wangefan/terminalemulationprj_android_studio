@@ -113,8 +113,6 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                             }
                         });
 
-                //You can change the default filename using the public variable "Default_File_Name"
-                FileOpenDialog.Default_File_Name = "";
                 FileOpenDialog.chooseFile_or_Dir(mSetting.g_ReaderParam.mGoodSoundFile);
                 return true;
             }

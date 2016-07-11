@@ -285,6 +285,7 @@
     <string name="vib_title">Vibration Duration</string>
     <string name="soundfile_title">Sound File Name</string>
     <string name="cur_path">Current Path:</string>
+    <string name="str_info_title">Chosen File:</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>

@@ -59,15 +59,14 @@ public class SimpleFileDialog {
         FILE_SAVE,
         FOLDER_CHOOSE
     }
-    public String Default_File_Name = "default.txt";
 
     private Type mSelectType = Type.FILE_SAVE;
     private String m_sdcardDirectory = "";
     private String mTitle = "";
     private Context m_context;
     private TextView m_tvCurrentPath;
-    private String Selected_File_Name = Default_File_Name;
-    private TextView mChooseFile;
+    private TextView mtvFileInfoTitle;
+    private TextView mtvFileInfo;
 
     private String m_dir = "";
     private List<String> m_subdirs = null;
@@ -93,10 +92,12 @@ public class SimpleFileDialog {
     ////////////////////////////////////////////////////////////////////////////////
     public void chooseFile_or_Dir(String dir) {
         File dirFile = new File(dir);
+        String curFile = "";
         if (!dirFile.exists()) {
             dir = m_sdcardDirectory;
         } else if(!dirFile.isDirectory()) {
             try {
+                curFile = dirFile.getName();
                 dir = dirFile.getCanonicalPath().replaceAll(dirFile.getName(), "");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -113,7 +114,7 @@ public class SimpleFileDialog {
         m_dir = dir;
         m_subdirs = getDirectories(dir);
 
-        AlertDialog.Builder dialogBuilder = createDirectoryChooserDialog(dir, m_subdirs,
+        AlertDialog.Builder dialogBuilder = createDirectoryChooserDialog(curFile, dir, m_subdirs,
                 new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -127,12 +128,10 @@ public class SimpleFileDialog {
                         } else {
                             m_dir += "/" + sel;
                         }
-                        Selected_File_Name = Default_File_Name;
 
-                        if ((new File(m_dir).isFile())) // If the selection is a regular file
-                        {
+                        if ((new File(m_dir).isFile())) { // If the selection is a regular file
                             m_dir = m_dir_old;
-                            Selected_File_Name = sel;
+                            mtvFileInfo.setText(sel);
                         }
 
                         updateDirectory();
@@ -146,8 +145,7 @@ public class SimpleFileDialog {
                 // Call registered listener supplied with the chosen directory
                 if (m_SimpleFileDialogListener != null) {
                     if (mSelectType == Type.FILE_OPEN || mSelectType == Type.FILE_SAVE) {
-                        Selected_File_Name = mChooseFile.getText() + "";
-                        m_SimpleFileDialogListener.onChosenDir(m_dir + "/" + Selected_File_Name);
+                        m_SimpleFileDialogListener.onChosenDir(m_dir + "/" + mtvFileInfo.getText());
                     } else {
                         m_SimpleFileDialogListener.onChosenDir(m_dir);
                     }
@@ -209,7 +207,7 @@ public class SimpleFileDialog {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////                                   START DIALOG DEFINITION                                    //////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private AlertDialog.Builder createDirectoryChooserDialog(String curPath, List<String> listItems,
+    private AlertDialog.Builder createDirectoryChooserDialog(String curFile, String curPath, List<String> listItems,
                                                              OnItemClickListener onClickListener) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(m_context);
 
@@ -218,6 +216,12 @@ public class SimpleFileDialog {
 
         m_tvCurrentPath = (TextView) dialogLayout.findViewById(R.id.dialog_cur_path);
         m_tvCurrentPath.setText(curPath);
+        mtvFileInfoTitle = (TextView) dialogLayout.findViewById(R.id.info_title);
+        mtvFileInfo = (TextView) dialogLayout.findViewById(R.id.file_name_info);
+        if (mSelectType == Type.FILE_OPEN) {
+            mtvFileInfoTitle.setText(R.string.str_info_title);
+            mtvFileInfo.setText(curFile);
+        }
         if (mSelectType == Type.FOLDER_CHOOSE || mSelectType == Type.FILE_SAVE) {
             ///////////////////////////////
             // Create New Folder Button  //
@@ -254,11 +258,6 @@ public class SimpleFileDialog {
             dialogLayout.addView(newDirButton);
         }
 
-        if (mSelectType == Type.FILE_OPEN) {
-            mChooseFile = new TextView(m_context);
-            dialogLayout.addView(mChooseFile);
-        }
-
         dialogBuilder.setTitle(mTitle);
         dialogBuilder.setView(dialogLayout);
         m_listAdapter = createListAdapter(listItems);
@@ -274,10 +273,6 @@ public class SimpleFileDialog {
         m_subdirs.addAll(getDirectories(m_dir));
         m_tvCurrentPath.setText(m_dir);
         m_listAdapter.notifyDataSetChanged();
-        //#scorch
-        if (mSelectType == Type.FILE_SAVE || mSelectType == Type.FILE_OPEN) {
-            mChooseFile.setText(Selected_File_Name);
-        }
     }
 
     private ArrayAdapter<String> createListAdapter(List<String> items) {

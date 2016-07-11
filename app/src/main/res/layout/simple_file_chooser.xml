@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="8">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:paddingLeft="?dialogPreferredPadding"
         android:paddingStart="?dialogPreferredPadding"
         android:id="@+id/dialog_title"
-        android:layout_width="wrap_content"
-        android:text="@string/cur_path"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cur_path"/>
     <TextView
         android:textAppearance="@android:style/TextAppearance.DeviceDefault"
         android:paddingLeft="?dialogPreferredPadding"
         android:paddingStart="?dialogPreferredPadding"
         android:id="@+id/dialog_cur_path"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <View
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/material_grey_600"/>
     <ListView
         android:id="@+id/dialoglist"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"/>
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_600"/>
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:paddingLeft="?dialogPreferredPadding"
+            android:paddingStart="?dialogPreferredPadding"
+            android:id="@+id/info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+            android:id="@+id/file_name_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>
