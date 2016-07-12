@@ -46,7 +46,7 @@ public class CVT100 extends CVT100Enum {
     static final int VTKEY_ENTER = ServerKeyEvent.VT_KEYCODE_ENTER;
     static final int VTKEY_DEL = ServerKeyEvent.VT_KEYCODE_DEL;
     static final int VTKEY_UP = ServerKeyEvent.VT_KEYCODE_UP;
-    static final int VTKEY_DW= ServerKeyEvent.VT_KEYCODE_DW;
+    static final int VTKEY_DW = ServerKeyEvent.VT_KEYCODE_DW;
     static final int VTKEY_RIGHT = ServerKeyEvent.VT_KEYCODE_RIGHT;
     static final int VTKEY_ESC = ServerKeyEvent.VT_KEYCODE_ESC;
     static final int VTKEY_LF = ServerKeyEvent.VT_KEYCODE_LF;
@@ -77,29 +77,6 @@ public class CVT100 extends CVT100Enum {
     static final int VTKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
 
     private static java.util.Map<Integer, Integer> mDefaultVTKeyCodeMap = new java.util.HashMap<Integer, Integer>();
-    public static void initKeyCodeMap() {
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_TAB);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F11, VTKEY_F11);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
-    }
-
     VtParserEvent vtParserEvent = new VtParserEvent();
     private uc_Parser Parser = null;
     private int TopMargin;
@@ -119,7 +96,6 @@ public class CVT100 extends CVT100Enum {
     private uc_Chars G3;
     private uc_Chars EmUc_Chars;
     private uc_Mode Modes;
-
     //endregion
     //region CVT100 Member
     public CVT100() {
@@ -141,6 +117,29 @@ public class CVT100 extends CVT100Enum {
         this.Modes = new uc_Mode();
         this.TabStops = new uc_TabStops();
         this.LineBufferList.clear();
+    }
+
+    public static void initKeyCodeMap() {
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_TAB);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F11, VTKEY_F11);
+        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
     }
 
     public String GetLogTitle() {
@@ -200,7 +199,7 @@ public class CVT100 extends CVT100Enum {
     @Override
     protected int getServerKeyCode(int keyCode) {
         Integer nVTKeyCode = mVTKeyCodeMap.get(keyCode);
-        if(nVTKeyCode != null) {
+        if (nVTKeyCode != null) {
             CipherUtility.Log_d("CVT100", String.format("Keycode mapped, Keyevent = %d, VT Keycode = %d", keyCode, nVTKeyCode));
             return nVTKeyCode;
         }
@@ -219,8 +218,7 @@ public class CVT100 extends CVT100Enum {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
                 if (this.AttribGrid[idxRow][idxCol] == null) {
                     DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
-                }
-                else {
+                } else {
                     DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, this.AttribGrid[idxRow][idxCol].IsBold, this.AttribGrid[idxRow][idxCol].IsUnderscored);
                 }
             }
@@ -631,20 +629,20 @@ public class CVT100 extends CVT100Enum {
 
     private String getHex(String str) {
         String strHex = "";
-        byte [] bData = str.getBytes();
+        byte[] bData = str.getBytes();
         for (int idxBy = 0; idxBy < bData.length; idxBy++) {
-            strHex += String.format("%02x ", bData[idxBy]& 0xFF);
+            strHex += String.format("%02x ", bData[idxBy] & 0xFF);
         }
         return strHex;
     }
 
     private String getCurSeq(String sequence, java.util.ArrayList<String> params) {
         StringBuilder sbResult = new StringBuilder();
-        if(sequence.startsWith("\u001b")) {
+        if (sequence.startsWith("\u001b")) {
             sbResult.append(sequence.substring(0, sequence.length() - 1));
             for (int idxParams = 0; idxParams < params.size(); ++idxParams) {
                 String param = params.get(idxParams);
-                if(idxParams > 0) {
+                if (idxParams > 0) {
                     sbResult.append(";");
                 }
                 String oriVal = String.valueOf(Integer.valueOf(param));
@@ -1210,8 +1208,7 @@ public class CVT100 extends CVT100Enum {
                 for (int xcol = 0; xcol < this._cols; ++xcol) {
                     if (this.AttribGrid[i][xcol] == null) {
                         DrawChar(this.CharGrid[i][xcol], xcol, i, false, false);
-                    }
-                    else {
+                    } else {
                         DrawChar(this.CharGrid[i][xcol], xcol, i, this.AttribGrid[i][xcol].IsBold, this.AttribGrid[i][xcol].IsUnderscored);
                     }
                 }
@@ -1250,7 +1247,7 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void handleBarcodeFire(String Code) {
-        if(TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true)
+        if (TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true)
             Code = Code.toUpperCase();
         DispatchMessage(this, Code);
         ViewPostInvalidate();
@@ -1291,8 +1288,7 @@ public class CVT100 extends CVT100Enum {
             Key.Set(event, keyCode);
             LineBufferList.add(Key);
 
-            if (Key.GetEventKeycode() == KeyEvent.KEYCODE_TAB || Key.GetEventKeycode() == KeyEvent.KEYCODE_ENTER)
-            {
+            if (Key.GetEventKeycode() == KeyEvent.KEYCODE_TAB || Key.GetEventKeycode() == KeyEvent.KEYCODE_ENTER) {
                 for (int i = 0; i < LineBufferList.size(); i++) {
                     KeyEventVal KeyVal = (KeyEventVal) LineBufferList.get(i);
                     KeyInput(KeyVal.GetEventKeycode(), KeyVal.GetEvent());
@@ -1311,13 +1307,13 @@ public class CVT100 extends CVT100Enum {
 
     public void LineBufferInput(int keyCode, KeyEvent event) {
         int nVTKeyCode = VTKEY_NONE;
-        if(event instanceof ServerKeyEvent) {
+        if (event instanceof ServerKeyEvent) {
             nVTKeyCode = keyCode;
         } else {
             nVTKeyCode = getServerKeyCode(keyCode);
         }
 
-        if(nVTKeyCode == VTKEY_NONE) {
+        if (nVTKeyCode == VTKEY_NONE) {
             char pressedKey = (char) event.getUnicodeChar();
             if (pressedKey == 0)
                 return;
@@ -1328,13 +1324,13 @@ public class CVT100 extends CVT100Enum {
 
     public void KeyInput(int keyCode, KeyEvent event) {
         int nVTKeyCode = VTKEY_NONE;
-        if(event instanceof ServerKeyEvent) {
+        if (event instanceof ServerKeyEvent) {
             nVTKeyCode = keyCode;
         } else {
             nVTKeyCode = getServerKeyCode(keyCode);
         }
 
-        if(nVTKeyCode != VTKEY_NONE) {
+        if (nVTKeyCode != VTKEY_NONE) {
             byte SendData[] = new byte[30];
             int SendLenth = 0;
             switch (nVTKeyCode) {
@@ -1575,7 +1571,7 @@ public class CVT100 extends CVT100Enum {
     }
 
     private void PutAsciiKey(int KeyCode) {
-        if (Character.isLetter((char)KeyCode) && TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true) {
+        if (Character.isLetter((char) KeyCode) && TESettingsInfo.getUpperCaseByIndex(TESettingsInfo.getSessionIndex()) == true) {
             KeyCode = Character.toUpperCase((char) KeyCode);
         }
 
@@ -1651,7 +1647,7 @@ public class CVT100 extends CVT100Enum {
 
         this.Caret.EOL = false;
             /* This code is used when we get a cursor position command from
-			       the host. Even if we're not in relative mode we use this as this will
+                   the host. Even if we're not in relative mode we use this as this will
 			       sort that out for us. The ToAbs code is used internally by this prog
 			       but is smart enough to stay within the margins if the originrelative
 			       flagis set. */
@@ -1735,7 +1731,7 @@ public class CVT100 extends CVT100Enum {
                     this.Modes.Flags = this.Modes.Flags & ~uc_Mode.Locked;
                     break;
                 case 3: // set terminal to 80 column mode
-                    this.SetSize (this._rows, 80);
+                    this.SetSize(this._rows, 80);
                     break;
                 case 5: // Dark Background Mode
                     this.Modes.Flags = this.Modes.Flags & ~uc_Mode.LightBackground;
@@ -1744,7 +1740,7 @@ public class CVT100 extends CVT100Enum {
 
                 case 6: // Origin Mode Absolute
                     this.Modes.Flags = this.Modes.Flags & ~uc_Mode.OriginRelative;
-                    this.CaretToAbs (0, 0);
+                    this.CaretToAbs(0, 0);
                     break;
 
                 case 7: // Autowrap Off
