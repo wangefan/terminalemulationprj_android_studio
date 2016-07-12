@@ -98,6 +98,9 @@ public class CVT100 extends CVT100Enum {
     private uc_Mode Modes;
     //endregion
     //region CVT100 Member
+    private StringBuilder mCurrentGoodFBText = new StringBuilder();
+    private StringBuilder mCurrentErrorFBText = new StringBuilder();
+
     public CVT100() {
         this.Parser = new uc_Parser();
         this.Parser.UcParserEvent = vtParserEvent;
@@ -250,47 +253,47 @@ public class CVT100 extends CVT100Enum {
         }
     }
 
-    private void CheckCostomCommand(ParserEventArgs e)//not finish
-    {
+    private void checkCustomCommand(ParserEventArgs e) {
         Context context = stdActivityRef.getCurrActivity().getApplicationContext();
         String StrCmd = GetActionString(e);
+        if(TESettingsInfo.getHostIsGoodFeedbackByCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            String strGood = TESettingsInfo.getHostGoodFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
+            if (strGood != null && strGood.isEmpty() == false) {
+                if (StrCmd.equals(strGood)) {
 
-
-        String strGood = TESettingsInfo.getHostGoodfeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
-        if (strGood != null && strGood.isEmpty() == false) {
-            if (StrCmd.equals(strGood)) {
-
-                SoundPool soundPool;
-                soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-                soundPool.load(context, R.raw.good, 1);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                    SoundPool soundPool;
+                    soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+                    soundPool.load(context, R.raw.good, 1);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
+                    soundPool.play(1, 1, 1, 0, 0, 1);
+                    stdActivityRef.ApplicationVibration();
                 }
-                //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
-                soundPool.play(1, 1, 1, 0, 0, 1);
-                stdActivityRef.ApplicationVibration();
-
             }
         }
 
-        String strErr = TESettingsInfo.getHostErrorfeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
-        if (strErr != null && strErr.isEmpty() == false) {
-            if (StrCmd.equals(strErr)) {
-                SoundPool soundPool;
-                soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-                soundPool.load(context, R.raw.bad, 1);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+        if(TESettingsInfo.getHostIsErrorFeedbackByCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            String strErr = TESettingsInfo.getHostErrorFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
+            if (strErr != null && strErr.isEmpty() == false) {
+                if (StrCmd.equals(strErr)) {
+                    SoundPool soundPool;
+                    soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+                    soundPool.load(context, R.raw.bad, 1);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
+                    soundPool.play(1, 1, 1, 0, 0, 1);
+                    stdActivityRef.ApplicationVibration();
                 }
-                //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
-                soundPool.play(1, 1, 1, 0, 0, 1);
-                stdActivityRef.ApplicationVibration();
             }
         }
 
@@ -611,7 +614,7 @@ public class CVT100 extends CVT100Enum {
             this.ReverseIndex(Param);
         }
 
-        CheckCostomCommand(e);
+        checkCustomCommand(e);
         //endregion
 
 
@@ -950,6 +953,44 @@ public class CVT100 extends CVT100Enum {
         }
         DrawChar(CurChar, X, Y, this.CharAttribs.IsBold, this.CharAttribs.IsUnderscored);
         this.CaretRight();
+        //Handle alarm by text
+        if(TESettingsInfo.getHostIsGoodFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            String destText = TESettingsInfo.getHostGoodFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
+            if(destText.length() > 0) {
+                mCurrentGoodFBText.append(CurChar);
+                String curText = mCurrentGoodFBText.toString();
+                if(destText.contains(curText)) {
+                    if(destText.length() == curText.length()) {
+                        CipherUtility.playSound(TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                        mCurrentGoodFBText = new StringBuilder();
+                    }
+                } else {
+                    mCurrentGoodFBText = new StringBuilder();
+                    mCurrentGoodFBText.append(CurChar);
+                }
+            }
+        } else {
+            mCurrentGoodFBText = new StringBuilder();
+        }
+
+        if(TESettingsInfo.getHostIsErrorFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            String destText = TESettingsInfo.getHostErrorFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
+            if(destText.length() > 0) {
+                mCurrentErrorFBText.append(CurChar);
+                String curText = mCurrentErrorFBText.toString();
+                if(destText.contains(curText)) {
+                    if(destText.length() == curText.length()) {
+                        CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                        mCurrentErrorFBText = new StringBuilder();
+                    }
+                } else {
+                    mCurrentErrorFBText = new StringBuilder();
+                    mCurrentErrorFBText.append(CurChar);
+                }
+            }
+        } else {
+            mCurrentErrorFBText = new StringBuilder();
+        }
     }
 
     private void Tab() {

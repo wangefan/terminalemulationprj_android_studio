@@ -1,12 +1,16 @@
 package com.te.UI;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.example.terminalemulation.BuildConfig;
+
+import Terminals.stdActivityRef;
 
 public class CipherUtility {
 	static Context mContext = null;
@@ -30,5 +34,22 @@ public class CipherUtility {
 				= (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	static public void playSound(String file) {
+		SoundPool soundPool;
+		soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+		soundPool.load(file, 1);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		soundPool.play(1, 1, 1, 0, 0, 1);
+	}
+
+	static void vibration() {
+		stdActivityRef.ApplicationVibration();
 	}
 }

@@ -418,37 +418,56 @@ public class TESettingsInfo {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mNCursorType;
     }
-    
-    /*
-      getHostIsGoodfeedbackByIndex
-      SetHostIsGoodfeedbackByIndex
-      getHostIsErrorfeedbackByIndex
-      SetHostIsErrorfeedbackByIndex
-      
-      GetHostGoodfeedbackCmdByIndex
-      SetHostGoodfeedbackCmdByIndex
-      GetHostErrorfeedbackCmdByIndex
-      SetHostErrorfeedbackCmdByIndex
-      
-     */
 
-    public static String getHostGoodfeedbackCmdByIndex(int index) {
+    public static boolean getHostIsGoodFeedbackByTextByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mGoodFBType == 1;
+    }
+
+    public static boolean getHostIsGoodFeedbackByCmdByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mGoodFBType == 0;
+    }
+
+    public static boolean getHostIsErrorFeedbackByTextByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mErrorFBType == 1;
+    }
+
+    public static boolean getHostIsErrorFeedbackByCmdByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mErrorFBType == 0;
+    }
+
+    public static String getHostGoodFeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.mGoodFeedBackESC;
     }
 
-    public static String getHostErrorfeedbackCmdByIndex(int index) {
+    public static String getHostErrorFeedbackCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.mErrorFeedBackESC;
     }
-	   
-    /*Boolean IsGoodfeedback=false;
-	   Boolean IsErrorfeedback=false;
-	   byte[] GoodfeedbackCmd=null;  
-	   byte[] ErrorfeedbackCmd=null; 
-	    byte[] EnableReaderCmd=null;  
-	   byte[] DisableReaderCmd=null;
-	    */
+
+    public static String getHostGoodFeedbackTextByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mGoodFeedBackText;
+    }
+
+    public static String getHostErrorFeedbackTextByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mErrorFeedBackText;
+    }
+
+    public static String getHostGoodFeedbackSoundByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mGoodSoundFile;
+    }
+
+    public static String getHostErrorFeedbackSoundByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mErrorSoundFile;
+    }
 
     public static Boolean getHostIsReaderControlByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);

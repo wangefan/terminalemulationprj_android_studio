@@ -148,7 +148,18 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
         mPrefErrSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                //Todo:add file browse
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(), getResources().getString(R.string.STR_Choose_Wav),
+                        SimpleFileDialog.Type.FILE_OPEN,
+                        new SimpleFileDialog.SimpleFileDialogListener() {
+                            @Override
+                            public void onChosenDir(String chosenDir) {
+                                mSetting.g_ReaderParam.mErrorSoundFile = chosenDir;
+                                syncSettingToErrSoundPref(mSetting.g_ReaderParam.mErrorSoundFile);
+                                ((Session3rdSettings)getActivity()).gIsModified = true;
+                            }
+                        });
+
+                FileOpenDialog.chooseFile_or_Dir(mSetting.g_ReaderParam.mErrorSoundFile);
                 return true;
             }
         });
