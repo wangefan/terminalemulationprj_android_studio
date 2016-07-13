@@ -35,7 +35,8 @@ public class SessionVTAlarmFrg extends SessionSettingsFrgBase {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Activity.RESULT_OK:
-                mSetting.mIsFeedbackControlByCmd = Session3rdSettings.gIsModified ? true : false;
+                if(Session3rdSettings.gIsModified)
+                    mSetting.mIsFeedbackControlByCmd = true;
                 //onResume will update UI
                 break;
             default:
