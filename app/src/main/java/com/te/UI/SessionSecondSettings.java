@@ -60,11 +60,11 @@ public class SessionSecondSettings extends SessionSettingsBase {
         } else if(action.compareTo(ACTION_ALARM_SETTING) == 0) {
             if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_alarm));
-                /*SessionTNAlarmFrg settingsFrg = new SessionTNAlarmFrg();
+                SessionTNAlarmFrg settingsFrg = new SessionTNAlarmFrg();
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, settingsFrg)
-                        .commit();*/
+                        .commit();
             } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_alarm));
                 SessionVTAlarmFrg settingsFrg = new SessionVTAlarmFrg();

@@ -292,6 +292,12 @@
     <string name="reader_vib_key">reader_vib_key</string>
     <string name="fb_enable_reader">Enable Command</string>
     <string name="fb_disable_reader">Disable Command</string>
+    <string name="fb_tn_msg_sound_key">fb_tn_msg_sound_key</string>
+    <string name="fb_tn_msg_vib_key">fb_tn_msg_vib_key</string>
+    <string name="fb_tn_err_sound_key">fb_tn_err_sound_key</string>
+    <string name="fb_tn_err_vib_key">fb_tn_err_vib_key</string>
+    <string name="tn_msg_alarm_cate">Message Alarm</string>
+    <string name="tn_err_alarm_cate">Error Alarm</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>
