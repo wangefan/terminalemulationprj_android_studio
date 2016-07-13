@@ -1,8 +1,5 @@
 package TelnetIBM;
 
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.view.KeyEvent;
 
 import com.example.terminalemulation.R;
@@ -663,7 +660,7 @@ public class IBMHost5250 extends IBMHostBase {
             setKeyLock(false);
 
         if ((c & CC_SoundAlarm) > 0)
-            PlayWarningSounds();
+            warning();
 
         switch (mCurCommand) {
             case Write_to_Display:
@@ -1337,14 +1334,9 @@ public class IBMHost5250 extends IBMHostBase {
         DrawChar(Character, X, Y, false, Isfield);
     }
 
-    public void PlayWarningSounds() {
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(stdActivityRef.getCurrActivity(), notification);
-            r.play();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void warning() {
+        CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+        stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
     }
 
     // #{{ Data Packing
@@ -1830,7 +1822,7 @@ public class IBMHost5250 extends IBMHostBase {
             byte by = (byte) string.charAt(idxStr);
             if(by >= 0x20) { // printable char
                 if(PutAsciiKey(string.charAt(idxStr)) == false) {
-                    PlayWarningSounds();
+                    warning();
                     break;
                 }
             } else {
@@ -1862,7 +1854,7 @@ public class IBMHost5250 extends IBMHostBase {
                     CurField.Modified = true;
 
                 if (CurField.Bypass) {
-                    PlayWarningSounds();
+                    warning();
                     return false;
                 }
                 /*  000 Alphabetic shift.
@@ -1880,14 +1872,14 @@ public class IBMHost5250 extends IBMHostBase {
                         break;
                     case 1://Alpha only
                         if (!Character.isLetter(KeyCode) && KeyCode != ',' && KeyCode != '.' && KeyCode != '-' && KeyCode != ' ') {
-                            PlayWarningSounds();
+                            warning();
                             return false;
                         }
                     case 2://Numeric shift
                         break;
                     case 3://Numeric only
                         if (!Character.isDigit(KeyCode) && KeyCode != '+' && KeyCode != ',' && KeyCode != '.' && KeyCode != ' ') {
-                            PlayWarningSounds();
+                            warning();
                             return false;
                         }
                     case 4://Katakana shift
@@ -1895,7 +1887,7 @@ public class IBMHost5250 extends IBMHostBase {
                     case 5://Digits only
                     case 7://Signed numeric
                         if (!Character.isDigit(KeyCode)) {
-                            PlayWarningSounds();
+                            warning();
                             return false;
                         }
                     case 6:
@@ -1991,7 +1983,7 @@ public class IBMHost5250 extends IBMHostBase {
             int nFDLEN = TESettingsInfo.getCheckFieldLength(TESettingsInfo.getSessionIndex());
             switch (nFDLEN) {
                 case TESettingsInfo.FDLEN_REJECT:
-                    PlayWarningSounds();
+                    warning();
                     UIUtility.messageBox(R.string.MSG_FDChek_reject, null);
                     break;
                 case TESettingsInfo.FDLEN_TRUN:
