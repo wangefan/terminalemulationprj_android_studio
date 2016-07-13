@@ -691,7 +691,7 @@
     "isEnableScannerByESCCmd": true,
     "scannerEnableESC": "\u001b[99h",
     "scannerDisableESC": "\u001b[99l",
-    "FeedbackControlByCmd": 0,
+    "FeedbackControlByCmd": 1,
     "goodFeedBackESC": "",
     "goodFeedBackSoundPath": "",
     "goodFeedVibrationTime": 0,

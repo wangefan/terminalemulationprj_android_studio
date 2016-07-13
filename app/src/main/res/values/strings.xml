@@ -286,6 +286,12 @@
     <string name="soundfile_title">Sound File Name</string>
     <string name="cur_path">Current Path:</string>
     <string name="str_info_title">Chosen File:</string>
+    <string name="fb_enable_reader_key">fb_enable_reader_key</string>
+    <string name="fb_disable_reader_key">fb_disable_reader_key</string>
+    <string name="fb_reader_sound_key">fb_reader_sound_key</string>
+    <string name="reader_vib_key">reader_vib_key</string>
+    <string name="fb_enable_reader">Enable Command</string>
+    <string name="fb_disable_reader">Disable Command</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>
