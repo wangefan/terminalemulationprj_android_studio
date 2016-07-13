@@ -49,6 +49,7 @@ public class TESettingsInfo {
     private static Context mContext = null;
     private static SharedPreferences mSp = null;
     private static int mCurrentSessionIndex;
+    private static ArrayList<Long> mListVBTime = new ArrayList<>();
 
     //Persist values, not in jason
     private static final String LEFT_MARGIN_KEY = "LEFT_MARGIN_KEY";
@@ -63,7 +64,18 @@ public class TESettingsInfo {
         if (mSp == null) {
             mSp = context.getSharedPreferences(_NAME, Context.MODE_PRIVATE);
         }
-
+        mListVBTime.clear();
+        mListVBTime.add(500l);
+        mListVBTime.add(1000l);
+        mListVBTime.add(1500l);
+        mListVBTime.add(2000l);
+        mListVBTime.add(2500l);
+        mListVBTime.add(3000l);
+        mListVBTime.add(3500l);
+        mListVBTime.add(4000l);
+        mListVBTime.add(4500l);
+        mListVBTime.add(5000l);
+        mListVBTime.add(5500l);
         try {
             File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
             if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
@@ -419,6 +431,11 @@ public class TESettingsInfo {
         return Setting.mNCursorType;
     }
 
+    public static boolean getHostIsFeedbackByTextCmdByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsFeedbackControlByCmd;
+    }
+
     public static boolean getHostIsGoodFeedbackByTextByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.mGoodFBType == 1;
@@ -464,35 +481,44 @@ public class TESettingsInfo {
         return Setting.g_ReaderParam.mGoodSoundFile;
     }
 
+    public static long getHostGoodFBVBByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return mListVBTime.get(Setting.g_ReaderParam.mGoodVBIndex);
+    }
+
     public static String getHostErrorFeedbackSoundByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.mErrorSoundFile;
     }
 
-    public static Boolean getHostIsReaderControlByIndex(int index) {
+    public static long getHostErrorFBVBByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.g_ReaderParam.isEnableScannerByESCCmd;
+        return mListVBTime.get(Setting.g_ReaderParam.mErrorVBIndex);
     }
 
-	    /*
-	     GetHostEnableReaderCmdByIndex
-	     SetHostEnableReaderCmdByIndex
-	     
-	     GetHostDisableReaderCmdByIndex
-	     SetHostDisableReaderCmdByIndex
-	     GetHostDisableReaderCmdByIndex
-	     SetHostDisableReaderCmdByIndex
-	     
-	     */
+    public static Boolean getHostIsReaderControlByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsScanControl;
+    }
 
     public static String getHostEnableReaderCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.g_ReaderParam.scannerEnableESC;
+        return Setting.g_ReaderParam.mScannerEnableCmd;
     }
 
     public static String getHostDisableReaderCmdByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.g_ReaderParam.scannerDisableESC;
+        return Setting.g_ReaderParam.mScannerDisableCmd;
+    }
+
+    public static String getHostReaderSoundByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mScannerSoundFile;
+    }
+
+    public static long getHostReaderVBByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return mListVBTime.get(Setting.g_ReaderParam.mScannerVBIndex);
     }
 
     public static int getCheckFieldLength(int index) {

@@ -1,13 +1,9 @@
 package TelnetVT;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.view.KeyEvent;
 
 import com.example.terminalemulation.BuildConfig;
-import com.example.terminalemulation.R;
 import com.te.UI.CipherUtility;
 import com.te.UI.ServerKeyEvent;
 
@@ -254,90 +250,51 @@ public class CVT100 extends CVT100Enum {
     }
 
     private void checkCustomCommand(ParserEventArgs e) {
-        Context context = stdActivityRef.getCurrActivity().getApplicationContext();
         String StrCmd = GetActionString(e);
-        if(TESettingsInfo.getHostIsGoodFeedbackByCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
-            String strGood = TESettingsInfo.getHostGoodFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
-            if (strGood != null && strGood.isEmpty() == false) {
-                if (StrCmd.equals(strGood)) {
-
-                    SoundPool soundPool;
-                    soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-                    soundPool.load(context, R.raw.good, 1);
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
+        if(TESettingsInfo.getHostIsFeedbackByTextCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            if(TESettingsInfo.getHostIsGoodFeedbackByCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                String strGood = TESettingsInfo.getHostGoodFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
+                if (strGood != null && strGood.isEmpty() == false) {
+                    if (StrCmd.compareTo(strGood) == 0) {
+                        String strGoodSoundFile = TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+                        CipherUtility.playSound(strGoodSoundFile);
+                        stdActivityRef.ApplicationVibration(TESettingsInfo.getHostGoodFBVBByIndex(TESettingsInfo.getSessionIndex()));
                     }
-                    //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
-                    soundPool.play(1, 1, 1, 0, 0, 1);
-                    stdActivityRef.ApplicationVibration();
                 }
             }
-        }
 
-        if(TESettingsInfo.getHostIsErrorFeedbackByCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
-            String strErr = TESettingsInfo.getHostErrorFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());
-            if (strErr != null && strErr.isEmpty() == false) {
-                if (StrCmd.equals(strErr)) {
-                    SoundPool soundPool;
-                    soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-                    soundPool.load(context, R.raw.bad, 1);
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
+            if(TESettingsInfo.getHostIsErrorFeedbackByCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                String strErr = TESettingsInfo.getHostErrorFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());if (strErr != null && strErr.isEmpty() == false) {
+                    if (StrCmd.compareTo(strErr) == 0) {
+                        String strErrSoundFile = TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+                        CipherUtility.playSound(strErrSoundFile);
+                        stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
                     }
-                    //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
-                    soundPool.play(1, 1, 1, 0, 0, 1);
-                    stdActivityRef.ApplicationVibration();
                 }
             }
         }
 
-        String strReader = TESettingsInfo.getHostEnableReaderCmdByIndex(TESettingsInfo.getSessionIndex());
-        if (strReader != null && strReader.isEmpty() == false) {
-            if (StrCmd.equals(strReader)) {
-                SoundPool soundPool;
-                soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-                soundPool.load(context, R.raw.enable, 1);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+        if(TESettingsInfo.getHostIsReaderControlByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            String strReader = TESettingsInfo.getHostEnableReaderCmdByIndex(TESettingsInfo.getSessionIndex());
+            if (strReader != null && strReader.isEmpty() == false) {
+                if (StrCmd.compareTo(strReader) == 0) {
+                    String strReaderSoundFile = TESettingsInfo.getHostReaderSoundByIndex(TESettingsInfo.getSessionIndex());
+                    CipherUtility.playSound(strReaderSoundFile);
+                    stdActivityRef.ApplicationVibration(TESettingsInfo.getHostReaderVBByIndex(TESettingsInfo.getSessionIndex()));
+                    CipherReaderControl.SetActived(true);
                 }
-                //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
-                soundPool.play(1, 1, 1, 0, 0, 1);
-                stdActivityRef.ApplicationVibration();
-                CipherReaderControl.SetActived(true);
+            }
 
+            String strDisableReader = TESettingsInfo.getHostDisableReaderCmdByIndex(TESettingsInfo.getSessionIndex());
+            if (strDisableReader != null && strDisableReader.isEmpty() == false) {
+                if (StrCmd.compareTo(strDisableReader) == 0) {
+                    String strReaderSoundFile = TESettingsInfo.getHostReaderSoundByIndex(TESettingsInfo.getSessionIndex());
+                    CipherUtility.playSound(strReaderSoundFile);
+                    stdActivityRef.ApplicationVibration(TESettingsInfo.getHostReaderVBByIndex(TESettingsInfo.getSessionIndex()));
+                    CipherReaderControl.SetActived(false);
+                }
             }
         }
-
-        String strDisableReader = TESettingsInfo.getHostDisableReaderCmdByIndex(TESettingsInfo.getSessionIndex());
-        if (strDisableReader != null && strDisableReader.isEmpty() == false) {
-            if (StrCmd.equals(strDisableReader)) {
-                SoundPool soundPool;
-                soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-                soundPool.load(context, R.raw.disable, 1);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                //soundPool.play(1, 0.99f, 0.1f, 0, -1, 0.7f);
-                soundPool.play(1, 1, 1, 0, 0, 1);
-                stdActivityRef.ApplicationVibration();
-                CipherReaderControl.SetActived(false);
-
-            }
-        }
-
-
     }
 
     private String GetActionString(ParserEventArgs e)//not finish
@@ -616,7 +573,6 @@ public class CVT100 extends CVT100Enum {
 
         checkCustomCommand(e);
         //endregion
-
 
         if (e.CurSequence.startsWith("\u001b(")) {
             this.SelectCharSet(this.G0.Set, e.CurSequence.substring(2));
@@ -954,42 +910,44 @@ public class CVT100 extends CVT100Enum {
         DrawChar(CurChar, X, Y, this.CharAttribs.IsBold, this.CharAttribs.IsUnderscored);
         this.CaretRight();
         //Handle alarm by text
-        if(TESettingsInfo.getHostIsGoodFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
-            String destText = TESettingsInfo.getHostGoodFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
-            if(destText.length() > 0) {
-                mCurrentGoodFBText.append(CurChar);
-                String curText = mCurrentGoodFBText.toString();
-                if(destText.contains(curText)) {
-                    if(destText.length() == curText.length()) {
-                        CipherUtility.playSound(TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
-                        mCurrentGoodFBText = new StringBuilder();
-                    }
-                } else {
-                    mCurrentGoodFBText = new StringBuilder();
+        if(TESettingsInfo.getHostIsFeedbackByTextCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            if(TESettingsInfo.getHostIsGoodFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                String destText = TESettingsInfo.getHostGoodFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
+                if(destText.length() > 0) {
                     mCurrentGoodFBText.append(CurChar);
-                }
-            }
-        } else {
-            mCurrentGoodFBText = new StringBuilder();
-        }
-
-        if(TESettingsInfo.getHostIsErrorFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
-            String destText = TESettingsInfo.getHostErrorFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
-            if(destText.length() > 0) {
-                mCurrentErrorFBText.append(CurChar);
-                String curText = mCurrentErrorFBText.toString();
-                if(destText.contains(curText)) {
-                    if(destText.length() == curText.length()) {
-                        CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
-                        mCurrentErrorFBText = new StringBuilder();
+                    String curText = mCurrentGoodFBText.toString();
+                    if(destText.contains(curText)) {
+                        if(destText.length() == curText.length()) {
+                            CipherUtility.playSound(TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                            mCurrentGoodFBText = new StringBuilder();
+                        }
+                    } else {
+                        mCurrentGoodFBText = new StringBuilder();
+                        mCurrentGoodFBText.append(CurChar);
                     }
-                } else {
-                    mCurrentErrorFBText = new StringBuilder();
-                    mCurrentErrorFBText.append(CurChar);
                 }
+            } else {
+                mCurrentGoodFBText = new StringBuilder();
             }
-        } else {
-            mCurrentErrorFBText = new StringBuilder();
+
+            if(TESettingsInfo.getHostIsErrorFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                String destText = TESettingsInfo.getHostErrorFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
+                if(destText.length() > 0) {
+                    mCurrentErrorFBText.append(CurChar);
+                    String curText = mCurrentErrorFBText.toString();
+                    if(destText.contains(curText)) {
+                        if(destText.length() == curText.length()) {
+                            CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                            mCurrentErrorFBText = new StringBuilder();
+                        }
+                    } else {
+                        mCurrentErrorFBText = new StringBuilder();
+                        mCurrentErrorFBText.append(CurChar);
+                    }
+                }
+            } else {
+                mCurrentErrorFBText = new StringBuilder();
+            }
         }
     }
 

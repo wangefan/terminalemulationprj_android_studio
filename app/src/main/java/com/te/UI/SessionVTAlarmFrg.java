@@ -35,7 +35,7 @@ public class SessionVTAlarmFrg extends SessionSettingsFrgBase {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Activity.RESULT_OK:
-                mSetting.g_ReaderParam.mIsFeedbackControlByCmd = Session3rdSettings.gIsModified ? 1 : 0;
+                mSetting.mIsFeedbackControlByCmd = Session3rdSettings.gIsModified ? true : false;
                 //onResume will update UI
                 break;
             default:
@@ -47,7 +47,7 @@ public class SessionVTAlarmFrg extends SessionSettingsFrgBase {
     @Override
     protected void syncPrefUIFromTESettings() {
         mSwchCtrlReader.setChecked(mSetting.mIsScanControl);
-        mSwchFeedback.setChecked(mSetting.g_ReaderParam.mIsFeedbackControlByCmd > 0);
+        mSwchFeedback.setChecked(mSetting.mIsFeedbackControlByCmd);
     }
 
     @Override
@@ -55,11 +55,7 @@ public class SessionVTAlarmFrg extends SessionSettingsFrgBase {
         if(key.compareTo(getResources().getString(R.string.vt_control_reader_key)) == 0) {
             mSetting.mIsScanControl = mSwchCtrlReader.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.vt_feedback_key)) == 0) {
-            if(mSwchFeedback.isChecked()) {
-                mSetting.g_ReaderParam.mIsFeedbackControlByCmd = 1;
-            } else {
-                mSetting.g_ReaderParam.mIsFeedbackControlByCmd = 0;
-            }
+            mSetting.mIsFeedbackControlByCmd = mSwchFeedback.isChecked();
         }
     }
 }

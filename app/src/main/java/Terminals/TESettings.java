@@ -258,6 +258,9 @@ public class TESettings {
         @SerializedName("bScanControl")
         public boolean mIsScanControl = false;
 
+        @SerializedName("isControlFeedbackByCmd")
+        public boolean mIsFeedbackControlByCmd = false;
+
         public boolean SSH = false;
         public String SSHName = "";
         public String SSHPassword="";
@@ -266,8 +269,6 @@ public class TESettings {
         //Not sync
         public class ReaderParam {
             public boolean isEnableScannerByESCCmd = false; //Not used in TE C++
-            @SerializedName("FeedbackControlByCmd")
-            public int mIsFeedbackControlByCmd = 0;
 
             @SerializedName("goodFeedBackType")
             public int mGoodFBType = 0; //0:By command, 1:By Text
@@ -299,8 +300,17 @@ public class TESettings {
             @SerializedName("errorFeedVibrationTime")
             public int mErrorVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec
 
-            public String scannerEnableESC = null;
-            public String scannerDisableESC = null;
+            @SerializedName("scannerEnableESC")
+            public String mScannerEnableCmd = "";
+
+            @SerializedName("scannerDisableESC")
+            public String mScannerDisableCmd = "";
+
+            @SerializedName("cmdScannerSoundPath")
+            public String mScannerSoundFile = "";
+
+            @SerializedName("cmdScannerVibrationTime")
+            public int mScannerVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec
         }
     }
 }

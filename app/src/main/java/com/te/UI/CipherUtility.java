@@ -49,7 +49,7 @@ public class CipherUtility {
 		soundPool.play(1, 1, 1, 0, 0, 1);
 	}
 
-	static void vibration() {
-		stdActivityRef.ApplicationVibration();
+	static void vibration(long milliseconds) {
+		stdActivityRef.ApplicationVibration(milliseconds);
 	}
 }

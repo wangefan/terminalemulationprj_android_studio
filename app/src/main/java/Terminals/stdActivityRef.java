@@ -33,10 +33,9 @@ public class stdActivityRef {
         return true;
     }
 
-    public static void ApplicationVibration() {
-
+    public static void ApplicationVibration(long milliseconds) {
         Vibrator myVibrator = (Vibrator) getCurrActivity().getApplication().getSystemService(Service.VIBRATOR_SERVICE);
-        myVibrator.vibrate(3000);
+        myVibrator.vibrate(milliseconds);
     }
 
 }
