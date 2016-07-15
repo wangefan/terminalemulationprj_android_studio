@@ -102,11 +102,13 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
         mPrefGoodSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(), getResources().getString(R.string.STR_Choose_Wav),
-                        SimpleFileDialog.Type.FILE_OPEN,
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
+                        getResources().getString(R.string.STR_Choose_Wav),
+                        getResources().getString(R.string.STR_ExtWav),
+                        SimpleFileDialog.Type.FILE_CHOOSE,
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
-                            public void onChosenDir(String chosenDir) {
+                            public void onFilePath(String chosenDir) {
                                 mSetting.g_ReaderParam.mGoodSoundFile = chosenDir;
                                 syncSettingToGoodSoundPref(mSetting.g_ReaderParam.mGoodSoundFile);
                                 ((Session3rdSettings)getActivity()).gIsModified = true;
@@ -148,11 +150,13 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
         mPrefErrSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(), getResources().getString(R.string.STR_Choose_Wav),
-                        SimpleFileDialog.Type.FILE_OPEN,
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
+                        getResources().getString(R.string.STR_Choose_Wav),
+                        getResources().getString(R.string.STR_ExtWav),
+                        SimpleFileDialog.Type.FILE_CHOOSE,
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
-                            public void onChosenDir(String chosenDir) {
+                            public void onFilePath(String chosenDir) {
                                 mSetting.g_ReaderParam.mErrorSoundFile = chosenDir;
                                 syncSettingToErrSoundPref(mSetting.g_ReaderParam.mErrorSoundFile);
                                 ((Session3rdSettings)getActivity()).gIsModified = true;

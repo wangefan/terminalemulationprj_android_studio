@@ -32,19 +32,36 @@
         android:layout_height="1dp"
         android:background="@color/material_grey_600"/>
     <LinearLayout
-        android:id="@+id/bottom"
+        android:id="@+id/lay_choose_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
             android:paddingLeft="?dialogPreferredPadding"
             android:paddingStart="?dialogPreferredPadding"
-            android:id="@+id/info_title"
+            android:id="@+id/chosen_file_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-            android:id="@+id/file_name_info"
+            android:id="@+id/chosen_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lay_create_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/create_file_title"
+            android:paddingLeft="?dialogPreferredPadding"
+            android:paddingStart="?dialogPreferredPadding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/create_file"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

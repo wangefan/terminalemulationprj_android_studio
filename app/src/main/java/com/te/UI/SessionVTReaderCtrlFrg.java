@@ -67,11 +67,13 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
         mPrefSoundFile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(), getResources().getString(R.string.STR_Choose_Wav),
-                        SimpleFileDialog.Type.FILE_OPEN,
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
+                        getResources().getString(R.string.STR_Choose_Wav),
+                        getResources().getString(R.string.STR_ExtWav),
+                        SimpleFileDialog.Type.FILE_CHOOSE,
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
-                            public void onChosenDir(String chosenDir) {
+                            public void onFilePath(String chosenDir) {
                                 mSetting.g_ReaderParam.mScannerSoundFile = chosenDir;
                                 syncSettingToSoundPref(mSetting.g_ReaderParam.mScannerSoundFile);
                                 ((Session3rdSettings)getActivity()).gIsModified = true;
