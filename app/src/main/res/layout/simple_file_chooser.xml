@@ -59,8 +59,14 @@
             android:paddingStart="?dialogPreferredPadding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
+        <EditText
             android:id="@+id/create_file"
+            android:text="TE_Settings"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/create_file_ext"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

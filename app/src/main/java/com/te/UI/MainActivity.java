@@ -571,6 +571,19 @@ public class MainActivity extends AppCompatActivity
             case R.id.activation_key:
                 break;
             case R.id.export_settings:
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(this,
+                        getResources().getString(R.string.STR_expot_setting),
+                        getResources().getString(R.string.STR_ExtJson),
+                        SimpleFileDialog.Type.FILE_CREATE,
+
+                        new SimpleFileDialog.SimpleFileDialogListener() {
+                            @Override
+                            public void onFilePath(String chosenDir) {
+                                //Todo:
+                            }
+                        });
+
+                FileOpenDialog.chooseFile_or_Dir("");
                 break;
             case R.id.import_settings:
                 break;

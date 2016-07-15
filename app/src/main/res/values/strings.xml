@@ -304,6 +304,8 @@
     <string name="str_export">Export Settings</string>
     <string name="str_import">Import Settings</string>
     <string name="STR_ExtWav">wav</string>
+    <string name="STR_expot_setting">Export Settings</string>
+    <string name="STR_ExtJson">json</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>

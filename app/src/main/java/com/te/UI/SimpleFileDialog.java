@@ -36,6 +36,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,8 +65,8 @@ public class SimpleFileDialog {
     private TextView mtvChosenFileTitle;
     private TextView mtvChosenFile;
     private TextView mtvCreateFileTitle;
-    private TextView mtvCreateFile;
-
+    private EditText medCreateFile;
+    private TextView mtvCreateFileExt;
     private String m_dir = "";
     private List<String> m_subdirs = null;
     private SimpleFileDialogListener m_SimpleFileDialogListener = null;
@@ -215,7 +216,9 @@ public class SimpleFileDialog {
         mtvChosenFileTitle = (TextView) dialogLayout.findViewById(R.id.chosen_file_title);
         mtvChosenFile = (TextView) dialogLayout.findViewById(R.id.chosen_file);
         mtvCreateFileTitle = (TextView) dialogLayout.findViewById(R.id.create_file_title);
-        mtvCreateFile = (TextView) dialogLayout.findViewById(R.id.create_file);
+        medCreateFile = (EditText) dialogLayout.findViewById(R.id.create_file);
+        mtvCreateFileExt = (TextView) dialogLayout.findViewById(R.id.create_file_ext);
+
         if (mSelectType == Type.FILE_CHOOSE) {
             layChooseFile.setVisibility(View.VISIBLE);
             layCreateFile.setVisibility(View.GONE);
@@ -225,7 +228,8 @@ public class SimpleFileDialog {
             layChooseFile.setVisibility(View.GONE);
             layCreateFile.setVisibility(View.VISIBLE);
             mtvCreateFileTitle.setText(R.string.str_create_file_title);
-            mtvCreateFile.setText(curFile);
+            medCreateFile.setText(curFile);
+            mtvCreateFileExt.setText(mExtension);
         }
         /*if (mSelectType == Type.FILE_CREATE) {
             ///////////////////////////////
