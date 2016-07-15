@@ -566,11 +566,24 @@ public class MainActivity extends AppCompatActivity
             case R.id.full_screen:
                 procFullScreen();
                 break;
+            case R.id.access_ctrl:
+                break;
+            case R.id.activation_key:
+                break;
+            case R.id.export_settings:
+                break;
+            case R.id.import_settings:
+                break;
+            case R.id.about:
+                onAbout();
+                break;
+            case R.id.exit:
+                onExit();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     public void onAbout() {
         View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
         TextView AppVer = (TextView) messageView.findViewById(R.id.txt_app_ver);
@@ -609,7 +622,6 @@ public class MainActivity extends AppCompatActivity
         builder.show();
     }
 
-    @Override
     public void onExit() {
         HideKeyboard();
         finish();

@@ -24,8 +24,6 @@ public class LeftMenuFrg extends Fragment {
         public void onDrawerItemDelete(int position);
         public void onDrawerItemSetting(int position);
         public void onAddSession();
-        public void onAbout();
-        public void onExit();
     }
 
     private RelativeLayout mAddSession = null;
@@ -111,8 +109,6 @@ public class LeftMenuFrg extends Fragment {
                             TESettingsInfo.getHostAddrByIndex(idxSession));
             mSessionsView.addSession(strTitle);
         }
-        mSessionsView.addSession(getResources().getString(R.string.about));
-        mSessionsView.addSession(getResources().getString(R.string.exit));
         mSessionsView.refresh();
     }
 
@@ -182,16 +178,6 @@ public class LeftMenuFrg extends Fragment {
             @Override
             public void onItemClickSetting(int pos) {
                 mLeftMenuListener.onDrawerItemSetting(pos);
-            }
-
-            @Override
-            public void onItemClickAbout() {
-                mLeftMenuListener.onAbout();
-            }
-
-            @Override
-            public void onItemClickExit() {
-                mLeftMenuListener.onExit();
             }
         });
         return leftMenuView;

@@ -19,4 +19,34 @@
         android:title="@string/strFullScreen"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/access_ctrl"
+        android:title="@string/str_access_ctrl"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/activation_key"
+        android:title="@string/str_activation_key"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/export_settings"
+        android:title="@string/str_export"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/import_settings"
+        android:title="@string/str_import"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/exit"
+        android:title="@string/exit"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

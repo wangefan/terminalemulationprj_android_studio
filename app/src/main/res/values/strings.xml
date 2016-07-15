@@ -298,6 +298,10 @@
     <string name="fb_tn_err_vib_key">fb_tn_err_vib_key</string>
     <string name="tn_msg_alarm_cate">Message Alarm</string>
     <string name="tn_err_alarm_cate">Error Alarm</string>
+    <string name="str_access_ctrl">Access Control</string>
+    <string name="str_activation_key">Activation Key</string>
+    <string name="str_export">Export Settings</string>
+    <string name="str_import">Import Settings</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>

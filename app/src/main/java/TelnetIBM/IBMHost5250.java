@@ -1970,8 +1970,11 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void handleBarcodeFire(String barcodeOriginal) {
-        if(isKeyLocked())
+        if(isKeyLocked()) {
+            warning();
             return;
+        }
+
         IBM_FIELD cField = GetCurrentField();
         if (cField == null)
             return;
