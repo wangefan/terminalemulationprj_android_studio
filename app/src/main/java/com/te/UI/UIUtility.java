@@ -39,6 +39,9 @@ public class UIUtility {
 	public interface OnAccessCtrlChkListener {
 		void onValid();
 	}
+	public interface OnActivationListener {
+		void onResult(boolean bActivate);
+	}
 	static private ProgressDialog mPDialog = null;
 	static private ProgressDialog mProgNetwork = null;
 	static private Context mContext;
@@ -161,6 +164,26 @@ public class UIUtility {
 				}
 			}
 		});
+		builder.create().show();
+	}
+
+	public static void doActivationDialog(final OnActivationListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		final View activationView = inflater.inflate(R.layout.activation, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(R.string.str_activation_key);
+		builder.setView(activationView);
+		builder.setPositiveButton(R.string.STR_Activate, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				EditText editKey = (EditText) (activationView.findViewById(R.id.ed_key));
+				boolean bAct = false;/*todo: compare to key*/
+				if(listener != null) {
+					listener.onResult(bAct);
+				}
+			}
+		});
+		builder.setNegativeButton(R.string.STR_Cancel, null);
 		builder.create().show();
 	}
 

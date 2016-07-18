@@ -585,6 +585,14 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case R.id.activation_key:
+                UIUtility.doActivationDialog(new UIUtility.OnActivationListener() {
+                    @Override
+                    public void onResult(boolean bActivate) {
+                        if(bActivate == false) {
+                            Toast.makeText(MainActivity.this, R.string.MSG_Activate_Warn, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
             case R.id.export_settings:
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(this,

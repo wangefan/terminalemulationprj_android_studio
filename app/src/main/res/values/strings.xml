@@ -16,6 +16,7 @@
     <string name="MSG_WifiAlert">Wi-Fi Signal Strength:%1$d</string>
     <string name="MSG_BattAlert">Battery Level:%1$s</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
+    <string name="MSG_Activate_Warn">The activation key is not valid.</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
     <string name="ip_title">IP:</string>
@@ -27,6 +28,7 @@
     <string name="STR_CopyRight">Copyright © CipherLab Co. Ltd.</string>
     <string name="STR_DllName">Reader Service</string>   
     <string name="STR_OK">OK</string>
+    <string name="STR_Activate">Activate</string>
     <string name="STR_Cancel">Cancel</string>
     <string name="STR_Confirm">Confirm Settings</string>
     <string name="STR_pass">Pass</string>
