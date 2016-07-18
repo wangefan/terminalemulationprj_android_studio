@@ -13,7 +13,9 @@
         android:id="@+id/ed_pwd1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword">
+        android:inputType="textPassword"
+        android:maxLength="8">
+        <requestFocus />
     </EditText>
     <TextView
         android:layout_width="wrap_content"
@@ -23,8 +25,8 @@
         android:id="@+id/ed_pwd2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword">
-        <requestFocus />
+        android:inputType="textPassword"
+        android:maxLength="8">
     </EditText>
     <TextView
         android:layout_width="wrap_content"
