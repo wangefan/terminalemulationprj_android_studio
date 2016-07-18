@@ -7,15 +7,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.terminalemulation.R;
 
 import java.io.UnsupportedEncodingException;
 
+import Terminals.TESettingsInfo;
 import tourguide.tourguide.Overlay;
 import tourguide.tourguide.ToolTip;
 import tourguide.tourguide.TourGuide;
@@ -30,6 +35,9 @@ public class UIUtility {
 	}
 	public interface OnDetectOFRListener {
 		void onResult(boolean bHasNetwork);
+	}
+	public interface OnAccessCtrlChkListener {
+		void onValid();
 	}
 	static private ProgressDialog mPDialog = null;
 	static private ProgressDialog mProgNetwork = null;
@@ -154,6 +162,117 @@ public class UIUtility {
 			}
 		});
 		builder.create().show();
+	}
+
+	public static void doAccessCtrlDialog() {
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		final View accessCtrlDialog = inflater.inflate(R.layout.access_control, null);
+		final EditText edPwd1 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd1));
+		final EditText edPwd2 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd2));
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(R.string.str_access_ctrl);
+		builder.setView(accessCtrlDialog);
+		builder.setPositiveButton(R.string.STR_Confirm, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				CheckBox ckIsSettingsProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_settings);
+				CheckBox ckIsExitProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit);
+				CheckBox ckIsExitFullProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
+				TESettingsInfo.setAccessCtrlProtect(true);
+				TESettingsInfo.setSettingsProtect(ckIsSettingsProct.isChecked());
+				TESettingsInfo.setExitProtect(ckIsExitProct.isChecked());
+				TESettingsInfo.setExitFullScreenProtect(ckIsExitFullProct.isChecked());
+				TESettingsInfo.setAccessCtrlProtectedPassword(edPwd2.getText().toString());
+			}
+		});
+		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		final Button btnPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+		btnPositive.setEnabled(false);
+		edPwd1.requestFocus();
+		edPwd1.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String confirm = edPwd2.getText().toString();
+				if(confirm.length() > 0 && confirm.compareTo(s.toString()) == 0) {
+					btnPositive.setEnabled(true);
+				} else {
+					btnPositive.setEnabled(false);
+				}
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+		edPwd2.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String ori = edPwd1.getText().toString();
+				if(ori.length() > 0 && ori.compareTo(s.toString()) == 0) {
+					btnPositive.setEnabled(true);
+				} else {
+					btnPositive.setEnabled(false);
+				}
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+	}
+
+	public static void doCheckAccessCtrlDialog(final OnAccessCtrlChkListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		final View accessChkCtrlDialog = inflater.inflate(R.layout.access_control_check, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(R.string.str_access_ctrl_check);
+		builder.setView(accessChkCtrlDialog);
+		builder.setPositiveButton(R.string.STR_pass, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				listener.onValid();
+			}
+		});
+		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		final Button btnPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+		btnPositive.setEnabled(false);
+		final EditText check_pwd = (EditText) (accessChkCtrlDialog.findViewById(R.id.check_pwd));
+		check_pwd.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String password = TESettingsInfo.getAccessCtrlProtectedPassword();
+				if(password.length() > 0 && password.compareTo(s.toString()) == 0) {
+					btnPositive.setEnabled(true);
+				} else {
+					btnPositive.setEnabled(false);
+				}
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
 	}
 
 	public static void showTourEditProfile(View targetView) {

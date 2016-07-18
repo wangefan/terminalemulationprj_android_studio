@@ -261,6 +261,21 @@ public class TESettings {
         @SerializedName("isControlFeedbackByCmd")
         public boolean mIsFeedbackControlByCmd = false;
 
+        @SerializedName("protectorPassword")
+        public String mProtectorPassword = "";
+
+        @SerializedName("isEnableProtect")
+        public boolean mIsProtectedAccessControl = false;
+
+        @SerializedName("isProtectSettings")
+        public boolean mIsProtectedSettings = false;
+
+        @SerializedName("isProtectExit")
+        public boolean mIsProtectedExit = false;
+
+        @SerializedName("isProtectExitFullScreen")
+        public boolean mIsProtectedExitFullScreen = false;
+
         public boolean SSH = false;
         public String SSHName = "";
         public String SSHPassword="";

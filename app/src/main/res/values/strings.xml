@@ -28,6 +28,8 @@
     <string name="STR_DllName">Reader Service</string>   
     <string name="STR_OK">OK</string>
     <string name="STR_Cancel">Cancel</string>
+    <string name="STR_Confirm">Confirm Settings</string>
+    <string name="STR_pass">Pass</string>
     <string name="STR_Choose_Wav">Choose wave file</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
@@ -300,12 +302,20 @@
     <string name="tn_msg_alarm_cate">Message Alarm</string>
     <string name="tn_err_alarm_cate">Error Alarm</string>
     <string name="str_access_ctrl">Access Control</string>
+    <string name="str_access_ctrl_check">Enter Password</string>
     <string name="str_activation_key">Activation Key</string>
     <string name="str_export">Export Settings</string>
     <string name="str_import">Import Settings</string>
     <string name="STR_ExtWav">wav</string>
     <string name="STR_expot_setting">Export Settings</string>
     <string name="STR_ExtJson">json</string>
+    <string name="enter_pwd">Enter Password</string>
+    <string name="enter_pwd2">Confirm Password</string>
+    <string name="protect_settings">Select to apply password protection</string>
+    <string name="protect_item_settings">Settings</string>
+    <string name="protect_item_exit">Exit Application</string>
+    <string name="protect_item_exit_full_screen">Exit Full Screen</string>
+    <string name="check_pwd">Password (maximum 8 characters)</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>

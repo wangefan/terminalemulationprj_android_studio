@@ -567,6 +567,22 @@ public class MainActivity extends AppCompatActivity
                 procFullScreen();
                 break;
             case R.id.access_ctrl:
+                if(TESettingsInfo.getIsAccessCtrlProtected()) {
+                    UIUtility.doCheckAccessCtrlDialog(
+                            new UIUtility.OnAccessCtrlChkListener() {
+                                @Override
+                                public void onValid() {
+                                    TESettingsInfo.setAccessCtrlProtect(false);
+                                    TESettingsInfo.setAccessCtrlProtectedPassword("");
+                                    TESettingsInfo.setSettingsProtect(false);
+                                    TESettingsInfo.setExitProtect(false);
+                                    TESettingsInfo.setExitFullScreenProtect(false);
+                                    UIUtility.doAccessCtrlDialog();
+                                }
+                            });
+                } else {
+                    UIUtility.doAccessCtrlDialog();
+                }
                 break;
             case R.id.activation_key:
                 break;

@@ -190,6 +190,41 @@ public class TESettingsInfo {
         mCurrentSessionIndex = Index;
     }
 
+    public static boolean getIsAccessCtrlProtected() { //always use first session
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mIsProtectedAccessControl;
+    }
+
+    public static String getAccessCtrlProtectedPassword() { //always use first session
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mProtectorPassword;
+    }
+
+    public static void setAccessCtrlProtectedPassword(String password) { //always use first session
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mProtectorPassword = password;
+    }
+
+    public static void setAccessCtrlProtect(boolean bProctect) {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mIsProtectedAccessControl = bProctect;
+    }
+
+    public static void setSettingsProtect(boolean bProctect) {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mIsProtectedSettings = bProctect;
+    }
+
+    public static void setExitProtect(boolean bProctect) {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mIsProtectedExit = bProctect;
+    }
+
+    public static void setExitFullScreenProtect(boolean bProctect) {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mIsProtectedExitFullScreen = bProctect;
+    }
+
     public static int getSessionIndex() {
         return mCurrentSessionIndex;
     }
