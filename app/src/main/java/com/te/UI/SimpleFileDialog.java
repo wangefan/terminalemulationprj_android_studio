@@ -144,7 +144,11 @@ public class SimpleFileDialog {
                 // Current directory chosen
                 // Call registered listener supplied with the chosen directory
                 if (m_SimpleFileDialogListener != null) {
-                    m_SimpleFileDialogListener.onFilePath(m_dir + "/" + mtvChosenFile.getText());
+                    if(mSelectType == Type.FILE_CREATE) {
+                        m_SimpleFileDialogListener.onFilePath(m_dir + "/" + medCreateFile.getText() + mExtension);
+                    } else if(mSelectType == Type.FILE_CHOOSE) {
+                        m_SimpleFileDialogListener.onFilePath(m_dir + "/" + mtvChosenFile.getText());
+                    }
                 }
             }
         }).setNegativeButton(R.string.STR_Cancel, null);
@@ -217,6 +221,7 @@ public class SimpleFileDialog {
         mtvChosenFile = (TextView) dialogLayout.findViewById(R.id.chosen_file);
         mtvCreateFileTitle = (TextView) dialogLayout.findViewById(R.id.create_file_title);
         medCreateFile = (EditText) dialogLayout.findViewById(R.id.create_file);
+        medCreateFile.setText(R.string.str_default_export_name);
         mtvCreateFileExt = (TextView) dialogLayout.findViewById(R.id.create_file_ext);
 
         if (mSelectType == Type.FILE_CHOOSE) {
@@ -228,7 +233,9 @@ public class SimpleFileDialog {
             layChooseFile.setVisibility(View.GONE);
             layCreateFile.setVisibility(View.VISIBLE);
             mtvCreateFileTitle.setText(R.string.str_create_file_title);
-            medCreateFile.setText(curFile);
+            if(!curFile.isEmpty()) {
+                medCreateFile.setText(curFile);
+            }
             mtvCreateFileExt.setText(mExtension);
         }
         /*if (mSelectType == Type.FILE_CREATE) {

@@ -17,6 +17,8 @@
     <string name="MSG_BattAlert">Battery Level:%1$s</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="MSG_Activate_Warn">The activation key is not valid.</string>
+    <string name="MSG_Export_Warn">Export settings fail.</string>
+    <string name="MSG_Export_ok">Export settings success.</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
     <string name="ip_title">IP:</string>
@@ -307,6 +309,7 @@
     <string name="str_access_ctrl_check">Enter Password</string>
     <string name="str_activation_key">Activation Key</string>
     <string name="str_export">Export Settings</string>
+    <string name="str_default_export_name">TE_settings</string>
     <string name="str_import">Import Settings</string>
     <string name="STR_ExtWav">wav</string>
     <string name="STR_expot_setting">Export Settings</string>

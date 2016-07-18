@@ -603,7 +603,11 @@ public class MainActivity extends AppCompatActivity
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
                             public void onFilePath(String chosenDir) {
-                                //Todo:
+                                if(TESettingsInfo.exportSessionSettings(chosenDir) == false) {
+                                    Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
 

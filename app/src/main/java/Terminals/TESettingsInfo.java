@@ -109,13 +109,9 @@ public class TESettingsInfo {
         return false;
     }
 
-    public static void saveSessionSettings() {
-        if (mTESettings == null || mTESettings.SETTINGS == null)
-            return;
-        deleteJsonFile();
-        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+    private static boolean createJsonFile(File file) {
         try {
-            if (teJsonFile.createNewFile()) {
+            if (file.createNewFile()) {
                 //Set active session index
                 for (int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
                     if (mCurrentSessionIndex == idxSession)
@@ -123,12 +119,30 @@ public class TESettingsInfo {
                     else
                         mTESettings.SETTINGS.get(idxSession).mIsSelected = false;
                 }
-                serialize(teJsonFile);
+                serialize(file);
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            return false;
         }
+        return true;
+    }
+
+    public static void saveSessionSettings() {
+        if (mTESettings == null || mTESettings.SETTINGS == null)
+            return;
+        deleteJsonFile();
+        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        createJsonFile(teJsonFile);
+    }
+
+    public static boolean exportSessionSettings(String path) {
+        if (mTESettings == null || mTESettings.SETTINGS == null)
+            return false;
+        File teJsonFile = new File(path);
+        if(teJsonFile.isDirectory() || teJsonFile.exists() == true)
+            return false;
+        return createJsonFile(teJsonFile);
     }
 
     public static void deleteJsonFile() {
