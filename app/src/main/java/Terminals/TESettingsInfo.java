@@ -151,12 +151,10 @@ public class TESettingsInfo {
     }
 
     public static boolean importSessionSettings(String path) {
-        if (mTESettings == null || mTESettings.SETTINGS == null)
-            return false;
         File teJsonFile = new File(path);
-        if(teJsonFile.isDirectory() || teJsonFile.exists() == true)
+        if(teJsonFile.isDirectory() || teJsonFile.exists() == false)
             return false;
-        return createJsonFile(teJsonFile);
+        return importSettings(teJsonFile);
     }
 
     public static void deleteJsonFile() {

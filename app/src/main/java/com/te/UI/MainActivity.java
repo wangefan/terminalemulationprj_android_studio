@@ -275,23 +275,16 @@ public class MainActivity extends AppCompatActivity
 
     private void initInOnCreate() {
         TerminalProcess.initKeyCodeMap();
-        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
-            TerminalProcess Process = new TerminalProcess();
-            Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
-            mCollSessions.add(Process);
-        }
         mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mSessionStausView = findViewById(R.id.id_session_statuse);
-        setSessionStatusView();
         mFragmentLeftdrawer = (LeftMenuFrg)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_left_drawer);
         mFragmentLeftdrawer.setUp(mToolbar);
         mFragmentLeftdrawer.setDrawerListener(this);
 
         mMacroView = (RelativeLayout) findViewById(R.id.macro_view);
-        updateRecordButtonVisible();
 
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
         updateFABStatus(FABStatus.Connect);
@@ -326,11 +319,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //Bind TerminalProcess and ContentView
-        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        actSession.setListener(mOnTerminalProcessListener);
-        mContentView.setTerminalProc(actSession);
-
         mKeyboardViewUtility = new TEKeyboardViewUtility(this, (KeyboardView) findViewById(R.id.software_keyboard_view), mContentView);
         mKeyboardViewUtility.setListener(this);
 
@@ -339,18 +327,17 @@ public class MainActivity extends AppCompatActivity
         mMainRelLayout.setVisibility(View.INVISIBLE);
 
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
-        setSessionJumpImage(TESettingsInfo.getSessionIndex());
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
 
         UIUtility.init(this);
         CipherUtility.init(this);
 
+        syncSessionsFromSettings();
+
         Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
         if (bAutoConn)
             SessionConnect();
-
-        procAlertTimer();
 
 	   /* mReaderManager = ReaderManager.InitInstance(this);
         filter = new IntentFilter();
@@ -359,8 +346,23 @@ public class MainActivity extends AppCompatActivity
 		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_READERSERVICE_CONNECTED);*/
 
         //mReaderManager.SetActive(false);
-
         this.registerForContextMenu(mMainRelLayout);
+    }
+
+    private void syncSessionsFromSettings() {
+        mCollSessions.clear();
+        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
+            TerminalProcess Process = new TerminalProcess();
+            Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
+            mCollSessions.add(Process);
+        }
+        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        actSession.setListener(mOnTerminalProcessListener);
+        mContentView.setTerminalProc(actSession);
+        setSessionStatusView();
+        updateRecordButtonVisible();
+        setSessionJumpImage(TESettingsInfo.getSessionIndex());
+        procAlertTimer();
     }
 
     private void setSessionStatusView() {
@@ -466,7 +468,6 @@ public class MainActivity extends AppCompatActivity
                     mCollSessions.add(process);
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
-                    SessionSettings.gEditSessionSetting = null;
                     setSessionJumpImage(TESettingsInfo.getSessionIndex());
                     procAlertTimer();
                 }
@@ -626,6 +627,8 @@ public class MainActivity extends AppCompatActivity
                                 if(TESettingsInfo.importSessionSettings(chosenDir) == false) {
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_Warn, Toast.LENGTH_SHORT).show();
                                 } else {
+                                    syncSessionsFromSettings();
+                                    mFragmentLeftdrawer.syncSessionsViewFromSettings();
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_ok, Toast.LENGTH_SHORT).show();
                                 }
                                 TESettingsInfo.setImportSettingsPath(chosenDir);
