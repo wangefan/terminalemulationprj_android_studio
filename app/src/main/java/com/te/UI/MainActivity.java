@@ -595,7 +595,7 @@ public class MainActivity extends AppCompatActivity
                 });
                 break;
             case R.id.export_settings:
-                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(this,
+                SimpleFileDialog exptDialog = new SimpleFileDialog(this,
                         getResources().getString(R.string.STR_expot_setting),
                         getResources().getString(R.string.STR_ExtJson),
                         SimpleFileDialog.Type.FILE_CREATE,
@@ -608,12 +608,31 @@ public class MainActivity extends AppCompatActivity
                                 } else {
                                     Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
                                 }
+                                TESettingsInfo.setExportSettingsPath(chosenDir);
                             }
                         });
 
-                FileOpenDialog.chooseFile_or_Dir("");
+                exptDialog.chooseFile_or_Dir(TESettingsInfo.getExportSettingsPath());
                 break;
             case R.id.import_settings:
+                SimpleFileDialog imptDialog = new SimpleFileDialog(this,
+                        getResources().getString(R.string.str_import),
+                        getResources().getString(R.string.STR_ExtJson),
+                        SimpleFileDialog.Type.FILE_CHOOSE,
+
+                        new SimpleFileDialog.SimpleFileDialogListener() {
+                            @Override
+                            public void onFilePath(String chosenDir) {
+                                if(TESettingsInfo.importSessionSettings(chosenDir) == false) {
+                                    Toast.makeText(MainActivity.this, R.string.MSG_Import_Warn, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MainActivity.this, R.string.MSG_Import_ok, Toast.LENGTH_SHORT).show();
+                                }
+                                TESettingsInfo.setImportSettingsPath(chosenDir);
+                            }
+                        });
+
+                imptDialog.chooseFile_or_Dir(TESettingsInfo.getImportSettingsPath());
                 break;
             case R.id.about:
                 onAbout();

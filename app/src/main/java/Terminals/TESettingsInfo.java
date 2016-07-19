@@ -58,6 +58,8 @@ public class TESettingsInfo {
     private static final String ADD_SESSION_SHOWED = "ADD_SESSION_SHOWED";
     private static final String DEL_SESSION_SHOWED = "DEL_SESSION_SHOWED";
     private static final String DEL_RESET_FULL_SHOWED = "DEL_RESET_FULL_SHOWED";
+    private static final String EXPORT_PATH = "EXPORT_PATH";
+    private static final String IMPORT_PATH = "IMPORT_PATH";
 
     public static boolean loadSessionSettings(Context context) {
         mContext = context;
@@ -76,9 +78,9 @@ public class TESettingsInfo {
         mListVBTime.add(4500l);
         mListVBTime.add(5000l);
         mListVBTime.add(5500l);
-        try {
-            File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
-            if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
+        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
+            try {
                 InputStream inputStream = mContext.getAssets().open(mSettingFilename);
                 FileOutputStream fileOutputStream = new FileOutputStream(teJsonFile.getAbsolutePath());
                 byte[] buffer = new byte[100];
@@ -92,21 +94,24 @@ public class TESettingsInfo {
                 fileOutputStream.close();
                 fileOutputStream = null;
             }
-
-            mTESettings = deSerialize(teJsonFile);
-            if (mTESettings == null || mTESettings.SETTINGS == null)
+            catch (Exception e) {
                 return false;
-
-            //Get active session index
-            for (int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
-                if (mTESettings.SETTINGS.get(idxSession).mIsSelected)
-                    mCurrentSessionIndex = idxSession;
             }
-            return true;
-        } catch (Exception e) {
-
         }
-        return false;
+        return importSettings(teJsonFile);
+    }
+
+    private static boolean importSettings(File teJsonFile) {
+        mTESettings = deSerialize(teJsonFile);
+        if (mTESettings == null || mTESettings.SETTINGS == null)
+            return false;
+
+        //Get active session index
+        for (int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
+            if (mTESettings.SETTINGS.get(idxSession).mIsSelected)
+                mCurrentSessionIndex = idxSession;
+        }
+        return true;
     }
 
     private static boolean createJsonFile(File file) {
@@ -137,6 +142,15 @@ public class TESettingsInfo {
     }
 
     public static boolean exportSessionSettings(String path) {
+        if (mTESettings == null || mTESettings.SETTINGS == null)
+            return false;
+        File teJsonFile = new File(path);
+        if(teJsonFile.isDirectory() || teJsonFile.exists() == true)
+            return false;
+        return createJsonFile(teJsonFile);
+    }
+
+    public static boolean importSessionSettings(String path) {
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return false;
         File teJsonFile = new File(path);
@@ -598,6 +612,26 @@ public class TESettingsInfo {
     public static String getCustDevName(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mDevName;
+    }
+
+    public static void setExportSettingsPath(String path) {
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putString(EXPORT_PATH, path);
+        editor.commit();
+    }
+
+    public static String getExportSettingsPath() {
+        return mSp.getString(EXPORT_PATH, "");
+    }
+
+    public static void setImportSettingsPath(String path) {
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putString(IMPORT_PATH, path);
+        editor.commit();
+    }
+
+    public static String getImportSettingsPath() {
+        return mSp.getString(IMPORT_PATH, "");
     }
 
     public static void setSessionNumberLoc(int leftMargin, int topMargin) {

@@ -19,6 +19,8 @@
     <string name="MSG_Activate_Warn">The activation key is not valid.</string>
     <string name="MSG_Export_Warn">Export settings fail.</string>
     <string name="MSG_Export_ok">Export settings success.</string>
+    <string name="MSG_Import_Warn">Import settings fail.</string>
+    <string name="MSG_Import_ok">Import settings success.</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
     <string name="ip_title">IP:</string>
