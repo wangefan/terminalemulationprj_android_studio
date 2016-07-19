@@ -63,7 +63,8 @@
             android:id="@+id/create_file"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"/>
         <TextView
             android:id="@+id/create_file_ext"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
