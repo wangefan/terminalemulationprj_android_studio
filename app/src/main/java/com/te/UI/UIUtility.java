@@ -192,15 +192,18 @@ public class UIUtility {
 		final View accessCtrlDialog = inflater.inflate(R.layout.access_control, null);
 		final EditText edPwd1 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd1));
 		final EditText edPwd2 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd2));
+		final CheckBox ckIsSettingsProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_settings);
+		ckIsSettingsProct.setChecked(TESettingsInfo.getIsSettingsProtect());
+		final CheckBox ckIsExitProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit);
+		ckIsExitProct.setChecked(TESettingsInfo.getIsExitProtect());
+		final CheckBox ckIsExitFullProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
+		ckIsExitFullProct.setChecked(TESettingsInfo.getIsExitFullScreenProtect());
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(R.string.str_access_ctrl);
 		builder.setView(accessCtrlDialog);
 		builder.setPositiveButton(R.string.STR_Confirm, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				CheckBox ckIsSettingsProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_settings);
-				CheckBox ckIsExitProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit);
-				CheckBox ckIsExitFullProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
 				TESettingsInfo.setAccessCtrlProtect(true);
 				TESettingsInfo.setSettingsProtect(ckIsSettingsProct.isChecked());
 				TESettingsInfo.setExitProtect(ckIsExitProct.isChecked());

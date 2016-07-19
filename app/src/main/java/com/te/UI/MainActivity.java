@@ -575,9 +575,6 @@ public class MainActivity extends AppCompatActivity
                                 public void onValid() {
                                     TESettingsInfo.setAccessCtrlProtect(false);
                                     TESettingsInfo.setAccessCtrlProtectedPassword("");
-                                    TESettingsInfo.setSettingsProtect(false);
-                                    TESettingsInfo.setExitProtect(false);
-                                    TESettingsInfo.setExitFullScreenProtect(false);
                                     UIUtility.doAccessCtrlDialog();
                                 }
                             });
@@ -686,8 +683,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onExit() {
-        HideKeyboard();
-        finish();
+        if(TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitProtect()) {
+            UIUtility.doCheckAccessCtrlDialog(
+                    new UIUtility.OnAccessCtrlChkListener() {
+                        @Override
+                        public void onValid() {
+                            HideKeyboard();
+                            finish();
+                        }
+                    });
+        } else {
+            HideKeyboard();
+            finish();
+        }
     }
 
     //Listener TEKeyboardView Begin
@@ -780,13 +788,30 @@ public class MainActivity extends AppCompatActivity
                 UIUtility.showResetFullScreen(mLogoView.findViewById(R.id.ImgLogoView));
             }
         } else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getSupportActionBar().show();
-            mDecorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                  | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                  | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            mBFullScreen = false;
+            if(TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitFullScreenProtect()) {
+                UIUtility.doCheckAccessCtrlDialog(
+                        new UIUtility.OnAccessCtrlChkListener() {
+                            @Override
+                            public void onValid() {
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                                getSupportActionBar().show();
+                                mDecorView.setSystemUiVisibility(
+                                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                                mBFullScreen = false;
+                                setSessionStatusView();
+                            }
+                        });
+            } else {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                getSupportActionBar().show();
+                mDecorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                mBFullScreen = false;
+            }
         }
         setSessionStatusView();
     }
@@ -813,11 +838,24 @@ public class MainActivity extends AppCompatActivity
         mLogoView.setVisibility(View.VISIBLE);
     }
 
-    private void SessionSetting(int nSessionIdx) {
-        Intent intent = new Intent(this, SessionSettings.class);
-        intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
-        intent.putExtra(SessionSettings.ACT_SETTING_EDIT_GET_SESSION_IDX, nSessionIdx);
-        startActivityForResult(intent, SessionSettings.REQ_EDIT);
+    private void SessionSetting(final int nSessionIdx) {
+        if(TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsSettingsProtect()) {
+            UIUtility.doCheckAccessCtrlDialog(
+                    new UIUtility.OnAccessCtrlChkListener() {
+                        @Override
+                        public void onValid() {
+                            Intent intent = new Intent(MainActivity.this, SessionSettings.class);
+                            intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
+                            intent.putExtra(SessionSettings.ACT_SETTING_EDIT_GET_SESSION_IDX, nSessionIdx);
+                            startActivityForResult(intent, SessionSettings.REQ_EDIT);
+                        }
+                    });
+        } else {
+            Intent intent = new Intent(this, SessionSettings.class);
+            intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
+            intent.putExtra(SessionSettings.ACT_SETTING_EDIT_GET_SESSION_IDX, nSessionIdx);
+            startActivityForResult(intent, SessionSettings.REQ_EDIT);
+        }
     }
 
     public void setSessionJumpImage(int sessionIndex) {

@@ -216,9 +216,9 @@ public class TESettingsInfo {
         mCurrentSessionIndex = Index;
     }
 
-    public static boolean getIsAccessCtrlProtected() { //always use first session
+    public static void setAccessCtrlProtectedPassword(String password) { //always use first session
         SessionSetting Setting = mTESettings.getSessionSetting(0);
-        return Setting.mIsProtectedAccessControl;
+        Setting.mProtectorPassword = password;
     }
 
     public static String getAccessCtrlProtectedPassword() { //always use first session
@@ -226,14 +226,14 @@ public class TESettingsInfo {
         return Setting.mProtectorPassword;
     }
 
-    public static void setAccessCtrlProtectedPassword(String password) { //always use first session
-        SessionSetting Setting = mTESettings.getSessionSetting(0);
-        Setting.mProtectorPassword = password;
-    }
-
     public static void setAccessCtrlProtect(boolean bProctect) {
         SessionSetting Setting = mTESettings.getSessionSetting(0);
         Setting.mIsProtectedAccessControl = bProctect;
+    }
+
+    public static boolean getIsAccessCtrlProtected() { //always use first session
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mIsProtectedAccessControl;
     }
 
     public static void setSettingsProtect(boolean bProctect) {
@@ -241,14 +241,29 @@ public class TESettingsInfo {
         Setting.mIsProtectedSettings = bProctect;
     }
 
+    public static boolean getIsSettingsProtect() {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mIsProtectedSettings;
+    }
+
     public static void setExitProtect(boolean bProctect) {
         SessionSetting Setting = mTESettings.getSessionSetting(0);
         Setting.mIsProtectedExit = bProctect;
     }
 
+    public static boolean getIsExitProtect() {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mIsProtectedExit;
+    }
+
     public static void setExitFullScreenProtect(boolean bProctect) {
         SessionSetting Setting = mTESettings.getSessionSetting(0);
         Setting.mIsProtectedExitFullScreen = bProctect;
+    }
+
+    public static boolean getIsExitFullScreenProtect() {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mIsProtectedExitFullScreen;
     }
 
     public static int getSessionIndex() {
