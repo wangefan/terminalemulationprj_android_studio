@@ -12,7 +12,7 @@
         android:positiveButtonText="@null"/>
     <CheckBoxPreference
         android:key="@string/tn_auto_reset_key"
-        android:title="@string/tn_auto_reset"
+        android:title="@string/tn_auto_unlock"
         android:defaultValue="false" />
 
     <ListPreference

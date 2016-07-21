@@ -276,6 +276,9 @@ public class MainActivity extends AppCompatActivity
 
     private void initInOnCreate() {
         TerminalProcess.initKeyCodeMap();
+        if(ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
+            stdActivityRef.gIsActivate = true;
+        }
         mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -545,6 +548,8 @@ public class MainActivity extends AppCompatActivity
                 }
             });
         }
+        MenuItem activation = menu.findItem(R.id.activation_key);
+        activation.setEnabled(stdActivityRef.gIsActivate == false);
         updateConnMenuItem();
         return true;
     }
@@ -589,6 +594,9 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(boolean bActivate) {
                         if(bActivate == false) {
                             Toast.makeText(MainActivity.this, R.string.MSG_Activate_Warn, Toast.LENGTH_SHORT).show();
+                        } else {
+                            ActivateKeyUtility.getInstance().genKeyFile();
+                            Toast.makeText(MainActivity.this, R.string.MSG_Activate_Succ, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -11,6 +11,7 @@ import com.te.UI.MainActivity;
 public class stdActivityRef {
 
     public static MainActivity activity = null;
+    public static boolean gIsActivate = false;
 
     public static void setCurrActivity(MainActivity act) {
         activity = act;

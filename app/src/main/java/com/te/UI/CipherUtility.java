@@ -10,6 +10,13 @@ import android.util.Log;
 
 import com.example.terminalemulation.BuildConfig;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import Terminals.stdActivityRef;
 
 public class CipherUtility {
@@ -51,5 +58,23 @@ public class CipherUtility {
 
 	static void vibration(long milliseconds) {
 		stdActivityRef.ApplicationVibration(milliseconds);
+	}
+
+	public static void copyFile(InputStream inputStream, OutputStream fileOutputStream) throws IOException {
+		byte[] buffer = new byte[100];
+		int read;
+		while ((read = inputStream.read(buffer)) != -1) {
+			fileOutputStream.write(buffer, 0, read);
+		}
+	}
+
+	public static void copyFile(File source, File dest) {
+		try {
+			InputStream input = new FileInputStream(source);
+			OutputStream output = new FileOutputStream(dest);
+			copyFile(input, output);
+		} catch (Exception e) {
+
+		}
 	}
 }

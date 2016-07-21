@@ -17,6 +17,7 @@
     <string name="MSG_BattAlert">Battery Level:%1$s</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="MSG_Activate_Warn">The activation key is not valid.</string>
+    <string name="MSG_Activate_Succ">You have activated successful, please re-execute the application to use full functions.</string>
     <string name="MSG_Export_Warn">Export settings fail.</string>
     <string name="MSG_Export_ok">Export settings success.</string>
     <string name="MSG_Import_Warn">Import settings fail.</string>
@@ -88,7 +89,7 @@
     <string name="tn_codepage_key">tn_codepage_key</string>
     <string name="tn_codepage">Code Page</string>
     <string name="tn_auto_reset_key">auto_reset_key</string>
-    <string name="tn_auto_reset">Auto Reset</string>
+    <string name="tn_auto_unlock">Auto Unlock Input</string>
     <string name="tn_field_length_if_exceed_key">field_length_if_exceed_key</string>
     <string name="tn_field_length_if_exceed">Field Length if Exceed</string>
     <string name="tn_popup_window_key">tn_popup_window_key</string>

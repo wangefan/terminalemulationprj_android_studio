@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.te.UI.CipherUtility;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,7 +22,7 @@ import Terminals.TESettings.SessionSetting;
  */
 public class TESettingsInfo {
     final public static int MAX_SESSION_COUNT = 5;
-    public static final boolean _DEBUG = false;
+    public static final boolean gIsActivation = false;
     public static final String _NAME = "TerminalEmulation";
     public static final int TERM_TAB = 0;
     public static final int TERM_ENTER = 1;
@@ -83,11 +84,7 @@ public class TESettingsInfo {
             try {
                 InputStream inputStream = mContext.getAssets().open(mSettingFilename);
                 FileOutputStream fileOutputStream = new FileOutputStream(teJsonFile.getAbsolutePath());
-                byte[] buffer = new byte[100];
-                int read;
-                while ((read = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, read);
-                }
+                CipherUtility.copyFile(inputStream, fileOutputStream);
                 inputStream.close();
                 inputStream = null;
                 fileOutputStream.flush();

@@ -177,7 +177,8 @@ public class UIUtility {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				EditText editKey = (EditText) (activationView.findViewById(R.id.ed_key));
-				boolean bAct = false;/*todo: compare to key*/
+				String inputKey = editKey.getText().toString();
+				boolean bAct = ActivateKeyUtility.getInstance().verifyKey(inputKey);
 				if(listener != null) {
 					listener.onResult(bAct);
 				}
