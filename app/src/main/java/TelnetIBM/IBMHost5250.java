@@ -505,6 +505,8 @@ public class IBMHost5250 extends IBMHostBase {
             char c = ((Character) ch).charValue();
             if (IsCharAttributes(c)) {
                 this.CurAttrib = c;
+                this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
+                this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0;
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
                 if (isScreenAttributeVisible((byte) CurAttrib))
@@ -599,6 +601,8 @@ public class IBMHost5250 extends IBMHostBase {
             char c = ((Character) ch).charValue();
             if (IsCharAttributes(c)) {
                 this.CurAttrib = c;
+                this.AttribGrid[posTemp.Y][posTemp.X] = CurAttrib;
+                this.CharGrid[posTemp.Y][posTemp.X] = 0;
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
                 PrintChar(Chater, posTemp.X, posTemp.Y, FieldList.isNeedLine(posTemp.X, posTemp.Y));
@@ -1295,6 +1299,8 @@ public class IBMHost5250 extends IBMHostBase {
         for (int i = 0; i < CurField.Lenth; i++) {
             if (IsCharAttributes((char) CurField.Data[i])) {
                 this.CurAttrib = CurField.Data[i];
+                this.AttribGrid[Y][X] = CurAttrib;
+                this.CharGrid[Y][X] = 0;
             } else {
                 char Chater = szEBCDIC[(int) CurField.Data[i]];
                 if (isScreenAttributeVisible((byte) CurField.Attrib))
