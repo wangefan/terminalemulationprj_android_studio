@@ -169,7 +169,6 @@ public class IBMHost5250 extends IBMHostBase {
     IBmCommands mCurCommand = IBmCommands.None;
     boolean bKeybaordLock = false;
     boolean bMoveCursor = false;
-    int RecordToField = 0;
     Ibm_Caret InsertCaret = null;
     Ibm_Caret BufferAddr = new Ibm_Caret();
     Ibm_Caret Caret = new Ibm_Caret();
@@ -475,7 +474,6 @@ public class IBMHost5250 extends IBMHostBase {
                 break;
             case Write_to_Display:
                 ParserFieldData();
-                SetRecordToField(0);
                 break;
             case Write_Error_Code:
                 setKeyLock(true);
@@ -489,7 +487,6 @@ public class IBMHost5250 extends IBMHostBase {
                     PrintErrorMessage(new Point(1, nErrorRow), null);
                 }
 
-                SetRecordToField(0);
                 break;
             case Restore_Screen:
                 ParserRestoreData();
@@ -511,7 +508,7 @@ public class IBMHost5250 extends IBMHostBase {
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
                 if (isScreenAttributeVisible((byte) CurAttrib))
-                    PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, (IsRecordToField() > 0));
+                    PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y));
             }
 
             movePosToNext(BufferAddr.Pos);
@@ -604,7 +601,7 @@ public class IBMHost5250 extends IBMHostBase {
                 this.CurAttrib = c;
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
-                PrintChar(Chater, posTemp.X, posTemp.Y, (IsRecordToField() > 0));
+                PrintChar(Chater, posTemp.X, posTemp.Y, FieldList.isNeedLine(posTemp.X, posTemp.Y));
                 if(sbRet != null) {
                     sbRet.append(Chater);
                 }
@@ -1002,16 +999,11 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private void AddNewField(IBM_FIELD Field) {
-
         FieldList.add(Field);
-
         if (FieldList.size() == 1) {
             ResetTabPosition();
             CaretUpdate();
         }
-
-        SetRecordToField(1);
-
     }
 
     public void ParseEnd() {
@@ -1029,14 +1021,6 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     // #{{ Parser Flags & conditions
-    private void SetRecordToField(int Flag) {
-        this.RecordToField = Flag;
-    }
-
-    private int IsRecordToField() {
-        return this.RecordToField;
-
-    }
 
     private void SetPadding(int padding) {
         if (PanddingLenth > 0)
@@ -1169,7 +1153,6 @@ public class IBMHost5250 extends IBMHostBase {
             case OrdersBeging:
                 OrderLenthPanding();
                 DataList.clear();
-                SetRecordToField(0);
                 break;
             case OrdersRecord:
                 ParamList.add(mCurChar);
@@ -1213,7 +1196,7 @@ public class IBMHost5250 extends IBMHostBase {
         char Chater = (char) szEBCDIC[(int) Data];
 
         for (int i = 0; i < Repeatlen; i++) {
-            PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, (IsRecordToField() > 0));
+            PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y));
             movePosToNext(BufferAddr.Pos);
         }
     }
