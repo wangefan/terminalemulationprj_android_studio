@@ -1,76 +1,75 @@
 package Terminals;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.File;
-import 	android.content.Context;
+
+import android.media.MediaScannerConnection;
 import android.os.Environment;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class TerminalLogWriter {
-      
-	FileOutputStream outputStream;
-	Context MainContext;
-	public TerminalLogWriter(String Filename)
-	{
-		try {
-			  
-			  File file;
-			  MainContext=stdActivityRef.getCurrActivity().getApplicationContext();
-			  
-			  File directory = new File(Environment.getExternalStorageDirectory()+File.separator+"TE");
-			  directory.mkdirs();
-			  
-			  //File path = Environment.getExternalStoragePublicDirectory(
-			            //Environment.DIRECTORY_PICTURES);
-			  //file = new File(path, "DemoPicture.jpg");
+    private FileOutputStream mOutputStream;
+    private String mFilePath = "";
+    public TerminalLogWriter() {
+    }
 
-			   file = new File(directory,Filename);
-			  
-			 
-                  if (!file.exists()) {
-                      file.createNewFile();
-                  }
-                  outputStream = new FileOutputStream(file,true);
-               
-			  
-			  //outputStream = new FileOutputStream(Filename, Context.MODE_PRIVATE);
-		     
-			 // outputStream.w
-			 
-			  
-			} catch (Exception e) {
-			  e.printStackTrace();
-			}
-	}
-	public void Write(String Title,byte[] data,int len,boolean isRecv)
-	{
-		String LogTitle;
-		String Content;
-		if (isRecv)
-		   LogTitle= Title+" Recv:";
-		else
-		   LogTitle= Title+" Send:";
-		
-		String hexStr="";
-		for (int i=0;i<len;i++)
-		{
-			String hex = "["+Integer.toHexString(data[i]& 0xFF )+"]";
-			hexStr+=hex;
-			
-		}
-		
-		Content=LogTitle+hexStr;
-		//content.getBytes()
-		try {
-			outputStream.write(Content.getBytes());
-			outputStream.write(0x0d);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-     }
+    private void openFile() {
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy 'at' HH-mm-ss");
+            String fileName = df.format(Calendar.getInstance().getTime());
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + "TE" + File.separator  + fileName + ".log");
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+                mFilePath = file.toString();
+                MediaScannerConnection.scanFile(stdActivityRef.getCurrActivity(), new String[] {}, null, null);
+            }
+            mOutputStream = new FileOutputStream(file, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mOutputStream = null;
+        }
+    }
 
-	 
-	
-	
-	
+    public void endLog() {
+        if(mOutputStream != null) {
+            try {
+                mOutputStream.close();
+                MediaScannerConnection.scanFile(stdActivityRef.getCurrActivity(), new String[] {mFilePath}, null, null);
+                mFilePath = "";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mOutputStream = null;
+        }
+    }
+
+    public void write(String Title, byte[] data, int len, boolean isRecv) {
+        if(mOutputStream == null) {
+            openFile();
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String time  = df.format(Calendar.getInstance().getTime());
+        String logTitle;
+        if (isRecv)
+            logTitle = Title + ":recv:" + time;
+        else
+            logTitle = Title + ":send:" + time;
+
+        String hexStr = "";
+        for (int i = 0; i < len; i++) {
+            String hex = String.format("[%02x]", (data[i] & 0xFF));
+            hexStr += hex;
+        }
+        String content = logTitle + hexStr + "\r\n";
+        try {
+            mOutputStream.write(content.getBytes());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

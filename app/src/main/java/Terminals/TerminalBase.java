@@ -6,8 +6,6 @@ import com.example.terminalemulation.BuildConfig;
 import com.te.UI.CipherUtility;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicReference;
 
 import SessionProcess.TelnetConnMgr;
@@ -22,7 +20,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public final static String NOTF_ACT_CLEAR_VIEW ="NOTF_ACT_CLEAR_VIEW";
     public final static String NOTF_ACT_UPDATE_GRID ="NOTF_ACT_UPDATE_GRID";
     public final static String NOTF_ACT_DRAW_SPACE ="NOTF_ACT_DRAW_SPACE";
-    public TerminalLogWriter LogFile;
+    public TerminalLogWriter mDebugLog = new TerminalLogWriter();
     public char[][] CharGrid = null;
     public char[][] AttribGrid = null;
     public int _cols;
@@ -65,16 +63,15 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         mSsh = ssh;
     }
 
-    public Boolean IsWriteToLogFile() {
+    public void writeToLogFile(byte[] data, int len, boolean isRecv) {
         Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.getSessionIndex());
-
-        if (!IsLog)
-            return false;
-
-        if (LogFile == null)
-            return false;
-
-        return true;
+        if (!IsLog || mDebugLog == null)
+            return;
+        if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex())) {
+            mDebugLog.write("tn", data, len, isRecv);
+        } else {
+            mDebugLog.write("vt", data, len, isRecv);
+        }
     }
 
     public boolean TelnetsStart() {
@@ -94,20 +91,13 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     public void OnConnected() {
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c.getTime());
-
-        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.getSessionIndex());
-        if (IsLog)
-            LogFile = new TerminalLogWriter(formattedDate + ".txt");
-
         if (mTerminalListener != null) {
             mTerminalListener.onConnected();
         }
     }
 
     public void OnDisconnected() {
+        mDebugLog.endLog();
         if (mTerminalListener != null) {
             mTerminalListener.onDisconnected();
         }
@@ -155,10 +145,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             mTerminalListener.onNotify(NOTF_ACT_DRAWCHAR, c, x, y, IsBold, IsUnderLine);
     }
 
-    public String GetLogTitle() {
-        return "";
-    }
-
     public void handleBufferReceived(byte[] data, int offset, int lenth) {
         char[] charArr = new char[lenth];
 
@@ -168,8 +154,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             charArr[i] &= 255;
         }
 
-        if (IsWriteToLogFile())
-            LogFile.Write(this.GetLogTitle(), data, lenth, true);
+        writeToLogFile(data, lenth, true);
 
         mTelnetParser.ParseData(charArr);
         ParseEnd();
@@ -333,8 +318,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     }
 
     public void DispatchMessageRaw(Object sender, byte[] Data, int lenth) {
-        if (IsWriteToLogFile())
-            LogFile.Write(this.GetLogTitle(), Data, lenth, false);
+        writeToLogFile(Data, lenth, false);
         mTelConn.Send(Data);
     }
 
@@ -344,8 +328,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             bytes[i] = (byte) strText.charAt(i);
         }
 
-        if (IsWriteToLogFile())
-            LogFile.Write(this.GetLogTitle(), bytes, strText.length(), false);
+        writeToLogFile(bytes, strText.length(), false);
         mTelConn.Send(bytes);
     }
 

@@ -7,14 +7,11 @@ import com.example.terminalemulation.BuildConfig;
 import com.te.UI.CipherUtility;
 import com.te.UI.ServerKeyEvent;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import Terminals.CipherReaderControl;
 import Terminals.TESettingsInfo;
-import Terminals.TerminalLogWriter;
 import Terminals.stdActivityRef;
 
 //import TelnetIBM.IBMHost5250.IBmAID;
@@ -1259,17 +1256,7 @@ public class CVT100 extends CVT100Enum {
 
     @Override
     public void OnConnected() {
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c.getTime());
-
-
-        Boolean IsLog = TESettingsInfo.getHostIsWriteLogkByIndex(TESettingsInfo.getSessionIndex());
-        if (IsLog)
-            LogFile = new TerminalLogWriter(formattedDate + ".txt");
-
         byte[] SendData = TESettingsInfo.getVTHostSendToHostByIndex(TESettingsInfo.getSessionIndex());
-
         if (SendData != null && SendData.length > 0) {
             DispatchMessageRaw(this, SendData, SendData.length);
         }
