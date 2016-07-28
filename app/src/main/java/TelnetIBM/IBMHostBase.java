@@ -6,7 +6,7 @@ import Terminals.*;
 public abstract class IBMHostBase extends TerminalBase {
 
 
-	 public boolean bInsert;
+	 public boolean mBInsertMode;
 
 	 public class Ibm_Caret
 	    {

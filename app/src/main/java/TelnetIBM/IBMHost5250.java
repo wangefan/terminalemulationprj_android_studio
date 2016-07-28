@@ -1889,7 +1889,7 @@ public class IBMHost5250 extends IBMHostBase {
                         Code = ConvertAsciiToEBCD(Character.toUpperCase((char) KeyCode));
                 }
 
-                if (bInsert)
+                if (mBInsertMode)
                     InsertChar(CurField);
 
                 CurField.Data[this.GetIndexCaret()] = Code;
@@ -2152,7 +2152,7 @@ public class IBMHost5250 extends IBMHostBase {
                     ProcDuplicateField();
                     break;
                 case IBMKEY_INS:
-                    bInsert = !bInsert;
+                    mBInsertMode = !mBInsertMode;
                     break;
                 case IBMKEY_RESET:
                     setKeyLock(false);
