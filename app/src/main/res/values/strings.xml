@@ -111,15 +111,15 @@
     <string name="auto_track_center">Center</string>
     <string name="auto_track_locked">Locked Location</string>
     <string-array name="alert_array">
-        <item>10%</item>
-        <item>20%</item>
-        <item>30%</item>
-        <item>40%</item>
-        <item>50%</item>
-        <item>60%</item>
-        <item>70%</item>
-        <item>80%</item>
-        <item>90%</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
     </string-array>
     <string-array name="codepage_array">
         <item>Single Byte Character</item>
@@ -218,9 +218,9 @@
     <string name="screen_session_status_key">screen_session_status_key</string>
     <string name="screen_session_status">Show Connecting Host IP</string>
     <string name="screen_wifi_alert_key">screen_wifi_alert_key</string>
-    <string name="screen_wifi_alert">Show Wi-Fi Alert</string>
+    <string name="screen_wifi_alert">Choose Wi-Fi Alert Level(%)</string>
     <string name="screen_battery_alert_key">screen_battery_alert_key</string>
-    <string name="screen_battery_alert">Show Battery Alert</string>
+    <string name="screen_battery_alert">Choose Battery Alert Level(%)</string>
     <string name="screen_act_macro_key">screen_act_macro_key</string>
     <string name="screen_act_macro">Activate Macro</string>
     <string name="screen_cursor_type_key">screen_cursor_type_key</string>
