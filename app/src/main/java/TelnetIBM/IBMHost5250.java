@@ -312,13 +312,16 @@ public class IBMHost5250 extends IBMHostBase {
         this.BottomMargin = Rows - 1;
         this.LeftMargin = 0;
         this.RightMargin = Columns - 1;
-        this.CharGrid = new char[Rows][];
-        this.AttribGrid = new char[Rows][];
-        for (int i = 0; i < this.CharGrid.length; i++) {
-            this.CharGrid[i] = new char[Columns];
-            this.AttribGrid[i] = new char[Columns];
-        }
+        resetGrid();
+    }
 
+    private void resetGrid() {
+        CharGrid = new char[_rows][];
+        AttribGrid = new char[_rows][];
+        for (int i = 0; i < this.CharGrid.length; i++) {
+            CharGrid[i] = new char[_cols];
+            AttribGrid[i] = new char[_cols];
+        }
     }
 
     public String GetTerminalTypeName() {
@@ -721,6 +724,9 @@ public class IBMHost5250 extends IBMHostBase {
                 break;
             case Clear_Unit:
                 setKeyLock(true);
+                mBInsertMode = false;
+                CurAttrib = 0;
+                resetGrid();
                 ViewClear();
                 this.FieldList.clear();
                 break;
