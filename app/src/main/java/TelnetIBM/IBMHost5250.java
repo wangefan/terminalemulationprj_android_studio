@@ -284,6 +284,35 @@ public class IBMHost5250 extends IBMHostBase {
         return (attr & mAttrMaskNotShow) != mAttrMaskNotShow;
     }
 
+    private String extractScreenContent(int startX, int startY, AtomicReference<Integer> noneZeroX, AtomicReference<Integer> noneZeroY) {
+        boolean bFind = false;
+        StringBuilder sbResult = new StringBuilder();
+        while(true) {
+            if (CharGrid[startY][startX] != 0 ) {
+                if (!bFind) {
+                    bFind = true;
+                    noneZeroX.set(startX);
+                    noneZeroY.set(startY);
+                }
+                sbResult.append(CharGrid[startY][startX]);
+                sbResult.append(AttribGrid[startY][startX]);
+            } else {
+                if (bFind) {
+                    break;
+                }
+            }
+
+            startX = startX + 1;
+            if (startX >= _cols) {
+                startY = startY + 1;
+                startX = 0;
+                if (startY >= _rows)
+                    break;
+            }
+        }
+        return sbResult.toString();
+    }
+
     public String GetLogTitle() {
         return "TN";
     }
@@ -711,8 +740,42 @@ public class IBMHost5250 extends IBMHostBase {
                 break;
 
             case Save:
+            {
+                int x = 0;
+                int y = 0;
+                StringBuilder sbSendContent = new StringBuilder();
+                sbSendContent.append(new char[]{0x12, 0xa0, 0x00, 0x00, 0x04, 0x00, 0x00, 0x05, 0x04, 0x12});
 
-                break;
+                while(true) {
+                    AtomicReference<Integer> noneZeroX = new AtomicReference<>();
+                    AtomicReference<Integer> noneZeroY = new AtomicReference<>();
+                    String tempContent = extractScreenContent(x, y, noneZeroX, noneZeroY);
+
+                    if (tempContent.length() == 0) {
+                        sbSendContent.append(0x00);
+                        break;
+                    }
+                    int nScreenBufferLen = tempContent.length() / 2;
+                    sbSendContent.append((char) (nScreenBufferLen));
+                    sbSendContent.append((char) (int) noneZeroX.get());
+                    sbSendContent.append((char)(int) noneZeroY.get());
+                    sbSendContent.append(tempContent);
+
+                    y = noneZeroY.get();
+                    x = noneZeroX.get() + nScreenBufferLen;
+                    if (x >= _cols) {
+                        y++;
+                        x = 0;
+                        if (y >= _rows) {
+                            break;
+                        }
+                    }
+                }
+
+                byte[] outData = ConverPackToRawData(sbSendContent.toString());
+                DispatchMessageRaw(this, outData, outData.length);
+            }
+            break;
             default:
                 break;
         }
