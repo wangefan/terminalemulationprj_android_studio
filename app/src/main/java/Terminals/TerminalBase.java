@@ -2,7 +2,6 @@ package Terminals;
 
 import android.view.KeyEvent;
 
-import com.example.terminalemulation.BuildConfig;
 import com.te.UI.CipherUtility;
 
 import java.io.UnsupportedEncodingException;
@@ -35,16 +34,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public TerminalBase() {
         this.mTelnetParser = new TelnetParser();
         mTerminalListener = null;
-    }
-
-    protected void outputHexForDBG(char[] charArray) {
-        if (BuildConfig.DEBUG_MODE) {
-            String strHex = "";
-            for (char C : charArray) {
-                strHex += String.format("%02x ", (byte) C);
-            }
-            CipherUtility.Log_d("TE:[read data]", strHex);
-        }
     }
 
     public void setOnTerminalListener(OnTerminalListener onTerminalListener) {
@@ -319,6 +308,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     public void DispatchMessageRaw(Object sender, byte[] Data, int lenth) {
         writeToLogFile(Data, lenth, false);
+        CipherUtility.outputHex("TerminalBase", Data);
         mTelConn.Send(Data);
     }
 
@@ -361,7 +351,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             AtomicReference<TntActions> stateEntryAction = new AtomicReference<TntActions>(TntActions.None);
 
             CurDataArray = charArray;
-            outputHexForDBG(CurDataArray);
+            CipherUtility.outputHex("TerminalBase", CurDataArray);
 
             //char[] charArray = InString.toCharArray();
             for (CurIndex = 0; CurIndex < charArray.length; CurIndex++) {

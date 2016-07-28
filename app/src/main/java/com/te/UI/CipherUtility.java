@@ -30,6 +30,26 @@ public class CipherUtility {
 			Log.d("TE:", "[" + tag + "]:" + msg);
 	}
 
+	static public void outputHex(String tag, char[] charArray) {
+		if (BuildConfig.DEBUG_MODE) {
+			String strHex = "";
+			for (char C : charArray) {
+				strHex += String.format("%02x ", (byte) C);
+			}
+			CipherUtility.Log_d("TE:", "[" + tag + "]:" + strHex);
+		}
+	}
+
+	static public void outputHex(String tag, byte[] byteArray) {
+		if (BuildConfig.DEBUG_MODE) {
+			String strHex = "";
+			for (byte by : byteArray) {
+				strHex += String.format("%02x ", by);
+			}
+			CipherUtility.Log_d("TE:", "[" + tag + "]:" + strHex);
+		}
+	}
+
 	static public int getWiFiStrength() {
 		WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 		int wifiStrength = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
