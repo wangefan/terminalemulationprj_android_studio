@@ -98,7 +98,7 @@ public class SimpleFileDialog {
         } else if(!dirFile.isDirectory()) {
             try {
                 curFile = dirFile.getName();
-                dir = dirFile.getCanonicalPath().replaceAll(dirFile.getName(), "");
+                dir = dirFile.getCanonicalPath().replaceAll(File.separator + dirFile.getName(), "");
             } catch (IOException e) {
                 e.printStackTrace();
             }
