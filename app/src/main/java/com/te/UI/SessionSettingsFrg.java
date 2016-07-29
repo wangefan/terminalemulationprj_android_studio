@@ -20,6 +20,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
     private MyIPPreference mLstServerIp = null;
     private EditTextPreference mPrefPort = null;
     private Preference mServerSetting = null;
+    private Preference mSSH = null;
     private CheckBoxPreference mCkNetworkAlive = null;
     private CheckBoxPreference mCkDetectOut = null;
     private CheckBoxPreference mCkGenLog = null;
@@ -44,6 +45,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
         mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
         mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
+        mSSH = findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
         mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
@@ -54,9 +56,11 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         if(mSetting.mIsTN == 0) {
             mLstServerType.setValue(mSetting.mTermName);
             mServerSetting.setTitle(R.string.vt_setting);
+            mSSH.setEnabled(true);
         } else {
             mLstServerType.setValue(mSetting.mTermNameTN);
             mServerSetting.setTitle(R.string.tn_setting);
+            mSSH.setEnabled(false);
         }
         mLstServerIp.setAddress(mSetting.mHostIP);
         mPrefPort.setText(mSetting.getHostPort());
@@ -73,12 +77,14 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
                     selHostTypeName.compareToIgnoreCase(mTN3270HostTypeName) == 0) {
                 mSetting.mIsTN = 1;
                 mServerSetting.setTitle(R.string.tn_setting);
+                mSSH.setEnabled(false);
             } else if(selHostTypeName.compareToIgnoreCase(mVT100HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mVT102HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mVT220HostTypeName) == 0 ||
                     selHostTypeName.compareToIgnoreCase(mVTAnsiHostTypeName) == 0){
                 mSetting.mIsTN = 0;
                 mServerSetting.setTitle(R.string.vt_setting);
+                mSSH.setEnabled(true);
             }
 
             if(mSetting.mIsTN == 0) {
