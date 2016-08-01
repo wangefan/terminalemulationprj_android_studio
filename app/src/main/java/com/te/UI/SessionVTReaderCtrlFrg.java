@@ -89,8 +89,8 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
 
     @Override
     protected void syncPrefUIFromTESettings() {
-        syncSettingToCmdPref(mSetting.g_ReaderParam.mScannerEnableCmd, mPrefEnableCmd);
-        syncSettingToCmdPref(mSetting.g_ReaderParam.mScannerDisableCmd, mPrefDisableCmd);
+        syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerEnableCmd), mPrefEnableCmd);
+        syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerDisableCmd), mPrefDisableCmd);
         syncSettingToSoundPref(mSetting.g_ReaderParam.mScannerSoundFile);
         mLstVBDur.setValue(String.valueOf(mSetting.g_ReaderParam.mScannerVBIndex));
     }
@@ -111,11 +111,11 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
                 if(requestCode == REQ_ENABLE) {
                     Bundle bundle = data.getExtras();
                     mSetting.g_ReaderParam.mScannerEnableCmd = bundle.getString("data");
-                    syncSettingToCmdPref(mSetting.g_ReaderParam.mScannerEnableCmd, mPrefEnableCmd);
+                    syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerEnableCmd), mPrefEnableCmd);
                 } else if(requestCode == REQ_DISABLE) {
                     Bundle bundle = data.getExtras();
                     mSetting.g_ReaderParam.mScannerDisableCmd = bundle.getString("data");
-                    syncSettingToCmdPref(mSetting.g_ReaderParam.mScannerDisableCmd, mPrefDisableCmd);
+                    syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerDisableCmd), mPrefDisableCmd);
                 }
                 ((Session3rdSettings)getActivity()).gIsModified = true;
             break;
