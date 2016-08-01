@@ -35,6 +35,7 @@ import com.example.terminalemulation.R;
 import com.te.UI.LeftMenuFrg.LeftMenuListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import SessionProcess.TerminalProcess;
@@ -617,6 +618,10 @@ public class MainActivity extends AppCompatActivity
                                 }
                                 TESettingsInfo.setExportSettingsPath(chosenDir);
                             }
+
+                            @Override
+                            public void onFileSel(String path) {
+                            }
                         });
 
                 exptDialog.chooseFile_or_Dir(TESettingsInfo.getExportSettingsPath());
@@ -624,7 +629,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.import_settings:
                 SimpleFileDialog imptDialog = new SimpleFileDialog(this,
                         getResources().getString(R.string.str_import),
-                        getResources().getString(R.string.STR_ExtJson),
+                        new ArrayList<>(Arrays.asList((getResources().getString(R.string.STR_ExtJson)))),
                         SimpleFileDialog.Type.FILE_CHOOSE,
 
                         new SimpleFileDialog.SimpleFileDialogListener() {
@@ -638,6 +643,10 @@ public class MainActivity extends AppCompatActivity
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_ok, Toast.LENGTH_SHORT).show();
                                 }
                                 TESettingsInfo.setImportSettingsPath(chosenDir);
+                            }
+
+                            @Override
+                            public void onFileSel(String path) {
                             }
                         });
 

@@ -37,7 +37,7 @@
     <string name="STR_Cancel">Cancel</string>
     <string name="STR_Confirm">Confirm Settings</string>
     <string name="STR_pass">Pass</string>
-    <string name="STR_Choose_Wav">Choose wave file</string>
+    <string name="STR_Choose_Audio">Choose Audio file</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>
@@ -315,6 +315,8 @@
     <string name="str_default_export_name">TE_settings</string>
     <string name="str_import">Import Settings</string>
     <string name="STR_ExtWav">wav</string>
+    <string name="STR_ExtMp3">mp3</string>
+    <string name="STR_ExtOgg">ogg</string>
     <string name="STR_expot_setting">Export Settings</string>
     <string name="STR_ExtJson">json</string>
     <string name="enter_pwd">Enter Password</string>

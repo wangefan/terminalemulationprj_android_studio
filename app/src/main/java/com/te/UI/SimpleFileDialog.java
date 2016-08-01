@@ -59,7 +59,8 @@ public class SimpleFileDialog {
     private Type mSelectType = Type.FILE_CREATE;
     private String m_sdcardDirectory = "";
     private String mTitle = "";
-    private String mExtension = "";
+    private String mCreateExtension = "";
+    private ArrayList<String> mChooseExtensions = new ArrayList<>(); //could choose multi kind files.
     private Context m_context;
     private TextView m_tvCurrentPath;
     private TextView mtvChosenFileTitle;
@@ -72,10 +73,10 @@ public class SimpleFileDialog {
     private SimpleFileDialogListener m_SimpleFileDialogListener = null;
     private ArrayAdapter<String> m_listAdapter = null;
 
-    public SimpleFileDialog(Context context, String title, String ext, Type file_select_type, SimpleFileDialogListener SimpleFileDialogListener) {
+    public SimpleFileDialog(Context context, String title, String extCreate, Type file_select_type, SimpleFileDialogListener SimpleFileDialogListener) {
         mSelectType = file_select_type;
         mTitle = title;
-        mExtension = String.format(".%s", ext);
+        mCreateExtension = String.format(".%s", extCreate);
         m_context = context;
         m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
         m_SimpleFileDialogListener = SimpleFileDialogListener;
@@ -83,6 +84,16 @@ public class SimpleFileDialog {
         try {
             m_sdcardDirectory = new File(m_sdcardDirectory).getCanonicalPath();
         } catch (IOException ioe) {
+        }
+    }
+
+    public SimpleFileDialog(Context context, String title, ArrayList<String> exts, Type file_select_type, SimpleFileDialogListener SimpleFileDialogListener) {
+        this(context, title, "", file_select_type, SimpleFileDialogListener);
+        mChooseExtensions = exts;
+        for (int idxChoose = 0; idxChoose < mChooseExtensions.size(); idxChoose++) {
+            String ext = mChooseExtensions.get(idxChoose);
+            String chooseExt = String.format(".%s", ext);
+            mChooseExtensions.set(idxChoose, chooseExt);
         }
     }
 
@@ -130,6 +141,7 @@ public class SimpleFileDialog {
                         }
 
                         if ((new File(m_dir).isFile())) { // If the selection is a regular file
+                            m_SimpleFileDialogListener.onFileSel(m_dir);
                             m_dir = m_dir_old;
                             mtvChosenFile.setText(sel);
                         }
@@ -145,7 +157,7 @@ public class SimpleFileDialog {
                 // Call registered listener supplied with the chosen directory
                 if (m_SimpleFileDialogListener != null) {
                     if(mSelectType == Type.FILE_CREATE) {
-                        m_SimpleFileDialogListener.onFilePath(m_dir + "/" + medCreateFile.getText() + mExtension);
+                        m_SimpleFileDialogListener.onFilePath(m_dir + "/" + medCreateFile.getText() + mCreateExtension);
                     } else if(mSelectType == Type.FILE_CHOOSE) {
                         m_SimpleFileDialogListener.onFilePath(m_dir + "/" + mtvChosenFile.getText());
                     }
@@ -181,15 +193,27 @@ public class SimpleFileDialog {
                 if (file.isDirectory()) {
                     // Add "/" to directory names to identify them in the list
                     dirs.add(file.getName() + "/");
-                } else if (mSelectType == Type.FILE_CREATE || mSelectType == Type.FILE_CHOOSE) {
-                    if(mExtension.length() > 0) {
+                } else if (mSelectType == Type.FILE_CREATE) {
+                    if(mCreateExtension.length() > 0) {
                         String fileName = file.getName();
-                        int idxExt = fileName.lastIndexOf(mExtension);
+                        int idxExt = fileName.lastIndexOf(mCreateExtension);
                         if(idxExt >=0) {
                             dirs.add(file.getName());
                         }
                     } else {
                         dirs.add(file.getName());
+                    }
+                } else if (mSelectType == Type.FILE_CHOOSE) {
+                    for (String ext: mChooseExtensions) {
+                        if(ext.length() > 0) {
+                            String fileName = file.getName();
+                            int idxExt = fileName.lastIndexOf(ext);
+                            if(idxExt >=0) {
+                                dirs.add(file.getName());
+                            }
+                        } else {
+                            dirs.add(file.getName());
+                        }
                     }
                 }
             }
@@ -236,7 +260,7 @@ public class SimpleFileDialog {
             if(!curFile.isEmpty()) {
                 medCreateFile.setText(curFile);
             }
-            mtvCreateFileExt.setText(mExtension);
+            mtvCreateFileExt.setText(mCreateExtension);
         }
         /*if (mSelectType == Type.FILE_CREATE) {
             ///////////////////////////////
@@ -312,5 +336,6 @@ public class SimpleFileDialog {
     //////////////////////////////////////////////////////
     public interface SimpleFileDialogListener {
         void onFilePath(String path);
+        void onFileSel(String path);
     }
 } 

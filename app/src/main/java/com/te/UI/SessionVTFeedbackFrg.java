@@ -9,6 +9,8 @@ import android.preference.Preference;
 import com.example.terminalemulation.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
     private final int REQ_GOOD = 0;
@@ -103,8 +105,10 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
-                        getResources().getString(R.string.STR_Choose_Wav),
-                        getResources().getString(R.string.STR_ExtWav),
+                        getResources().getString(R.string.STR_Choose_Audio),
+                        new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtWav),
+                                getResources().getString(R.string.STR_ExtMp3),
+                                getResources().getString(R.string.STR_ExtOgg))),
                         SimpleFileDialog.Type.FILE_CHOOSE,
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
@@ -112,6 +116,11 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                                 mSetting.g_ReaderParam.mGoodSoundFile = chosenDir;
                                 syncSettingToGoodSoundPref(mSetting.g_ReaderParam.mGoodSoundFile);
                                 ((Session3rdSettings)getActivity()).gIsModified = true;
+                            }
+
+                            @Override
+                            public void onFileSel(String path) {
+                                CipherUtility.playSound(path);
                             }
                         });
 
@@ -151,8 +160,10 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
-                        getResources().getString(R.string.STR_Choose_Wav),
-                        getResources().getString(R.string.STR_ExtWav),
+                        getResources().getString(R.string.STR_Choose_Audio),
+                        new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtWav),
+                                getResources().getString(R.string.STR_ExtMp3),
+                                getResources().getString(R.string.STR_ExtOgg))),
                         SimpleFileDialog.Type.FILE_CHOOSE,
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
@@ -160,6 +171,11 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                                 mSetting.g_ReaderParam.mErrorSoundFile = chosenDir;
                                 syncSettingToErrSoundPref(mSetting.g_ReaderParam.mErrorSoundFile);
                                 ((Session3rdSettings)getActivity()).gIsModified = true;
+                            }
+
+                            @Override
+                            public void onFileSel(String path) {
+                                CipherUtility.playSound(path);
                             }
                         });
 

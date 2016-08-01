@@ -9,6 +9,8 @@ import android.preference.Preference;
 import com.example.terminalemulation.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
     private final int REQ_ENABLE = 0;
@@ -68,8 +70,10 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
-                        getResources().getString(R.string.STR_Choose_Wav),
-                        getResources().getString(R.string.STR_ExtWav),
+                        getResources().getString(R.string.STR_Choose_Audio),
+                        new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtWav),
+                                getResources().getString(R.string.STR_ExtMp3),
+                                getResources().getString(R.string.STR_ExtOgg))),
                         SimpleFileDialog.Type.FILE_CHOOSE,
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
@@ -77,6 +81,11 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
                                 mSetting.g_ReaderParam.mScannerSoundFile = chosenDir;
                                 syncSettingToSoundPref(mSetting.g_ReaderParam.mScannerSoundFile);
                                 ((Session3rdSettings)getActivity()).gIsModified = true;
+                            }
+
+                            @Override
+                            public void onFileSel(String path) {
+                                CipherUtility.playSound(path);
                             }
                         });
 
