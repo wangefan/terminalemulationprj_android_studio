@@ -47,14 +47,10 @@ public class ContentView extends View {
         mHScrollView = (HorizontalScrollView) stdActivityRef.getCurrActivity().findViewById(R.id.mainHScroll);
         mVScrollView = (ScrollView) stdActivityRef.getCurrActivity().findViewById(R.id.mainVScroll);
         mCorsor = Cursor;
-        setPaintColor();
         this.setFocusableInTouchMode(true);
         this.setFocusable(true);
-
         if (isInEditMode())
             return;
-
-
     }
 
     private void setPaintColor() {

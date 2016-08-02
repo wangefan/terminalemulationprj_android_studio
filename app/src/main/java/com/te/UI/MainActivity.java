@@ -276,11 +276,59 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initInOnCreate() {
-
         if(ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
             stdActivityRef.gIsActivate = true;
         }
-        mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
+
+        syncSessionsFromSettings();
+
+        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
+        if (bAutoConn)
+            SessionConnect();
+
+        this.registerForContextMenu(mMainRelLayout);
+    }
+
+    private void syncSessionsFromSettings() {
+        mCollSessions.clear();
+        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
+            TerminalProcess Process = new TerminalProcess();
+            Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
+            mCollSessions.add(Process);
+        }
+        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        actSession.setListener(mOnTerminalProcessListener);
+        mContentView.setTerminalProc(actSession);
+        mContentView.refresh();
+        setSessionStatusView();
+        updateRecordButtonVisible();
+        setSessionJumpImage(TESettingsInfo.getSessionIndex());
+        procAlertTimer();
+        mFragmentLeftdrawer.syncSessionsViewFromSettings();
+        mFragmentLeftdrawer.clickSession(TESettingsInfo.getSessionIndex());
+    }
+
+    private void setSessionStatusView() {
+        if(TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
+            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
+            TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
+            tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
+                    serverTypeName,
+                    String.valueOf(TESettingsInfo.getSessionIndex()+1),
+                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex())));
+            mSessionStausView.setVisibility(View.VISIBLE);
+        } else {
+            mSessionStausView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        stdActivityRef.setCurrActivity(this);
+
+        //Initialize Views
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mSessionStausView = findViewById(R.id.id_session_statuse);
@@ -323,69 +371,17 @@ public class MainActivity extends AppCompatActivity
                 return dbClickDetector.onTouchEvent(event);
             }
         });
-
-        mKeyboardViewUtility = new TEKeyboardViewUtility(this, (KeyboardView) findViewById(R.id.software_keyboard_view), mContentView);
-        mKeyboardViewUtility.setListener(this);
-
+        mMainRelLayout = (RelativeLayout) findViewById(R.id.mainRelLayout);
         mMainRelLayout.addView(mContentView);
         mMainRelLayout.addView(Cursor);
         mMainRelLayout.setVisibility(View.INVISIBLE);
 
+        mKeyboardViewUtility = new TEKeyboardViewUtility(this, (KeyboardView) findViewById(R.id.software_keyboard_view), mContentView);
+        mKeyboardViewUtility.setListener(this);
+
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
-
-        syncSessionsFromSettings();
-
-        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
-        if (bAutoConn)
-            SessionConnect();
-
-	   /* mReaderManager = ReaderManager.InitInstance(this);
-        filter = new IntentFilter();
-		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_SOFTTRIGGER_DATA);
-		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_PASS_TO_APP);
-		filter.addAction(com.cipherlab.barcode.GeneralString.Intent_READERSERVICE_CONNECTED);*/
-
-        //mReaderManager.SetActive(false);
-        this.registerForContextMenu(mMainRelLayout);
-    }
-
-    private void syncSessionsFromSettings() {
-        mCollSessions.clear();
-        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
-            TerminalProcess Process = new TerminalProcess();
-            Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
-            mCollSessions.add(Process);
-        }
-        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        actSession.setListener(mOnTerminalProcessListener);
-        mContentView.setTerminalProc(actSession);
-        setSessionStatusView();
-        updateRecordButtonVisible();
-        setSessionJumpImage(TESettingsInfo.getSessionIndex());
-        procAlertTimer();
-    }
-
-    private void setSessionStatusView() {
-        if(TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
-            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
-            TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
-            tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
-                    serverTypeName,
-                    String.valueOf(TESettingsInfo.getSessionIndex()+1),
-                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex())));
-            mSessionStausView.setVisibility(View.VISIBLE);
-        } else {
-            mSessionStausView.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        stdActivityRef.setCurrActivity(this);
 
         CipherReaderControl.InitReader(this, myDataReceiver);
         TerminalProcess.initKeyCodeMap();
@@ -643,7 +639,6 @@ public class MainActivity extends AppCompatActivity
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_Warn, Toast.LENGTH_SHORT).show();
                                 } else {
                                     syncSessionsFromSettings();
-                                    mFragmentLeftdrawer.syncSessionsViewFromSettings();
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_ok, Toast.LENGTH_SHORT).show();
                                 }
                                 TESettingsInfo.setImportSettingsPath(chosenDir);

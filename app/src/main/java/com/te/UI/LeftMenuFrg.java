@@ -84,10 +84,6 @@ public class LeftMenuFrg extends Fragment {
                 mDrawerToggle.syncState();
             }
         });
- 
-        // preparing session items
-        syncSessionsViewFromSettings();
-        mSessionsView.setSelected(TESettingsInfo.getSessionIndex());
     }
 
     public void updateCurSessionTitle() {
