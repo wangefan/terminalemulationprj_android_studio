@@ -285,8 +285,6 @@ public class MainActivity extends AppCompatActivity
         Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
         if (bAutoConn)
             SessionConnect();
-
-        this.registerForContextMenu(mMainRelLayout);
     }
 
     private void syncSessionsFromSettings() {
@@ -382,6 +380,8 @@ public class MainActivity extends AppCompatActivity
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
+
+        registerForContextMenu(mMainRelLayout);
 
         CipherReaderControl.InitReader(this, myDataReceiver);
         TerminalProcess.initKeyCodeMap();
