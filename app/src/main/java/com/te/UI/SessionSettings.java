@@ -13,6 +13,7 @@ import Terminals.TESettingsInfo;
 public class SessionSettings extends SessionSettingsBase {
     public static final int REQ_EDIT = 1;
     public static final int REQ_ADD = 2;
+    public static final int RESULT_ADD = 3;
     public static final String ACT_SETTING = "ACT_SETTING";
     public static final String ACT_SETTING_EDIT = "ACT_SETTING_EDIT";
     public static final String ACT_SETTING_EDIT_GET_SESSION_IDX = "ACT_SETTING_EDIT_GET_SESSION_IDX";
@@ -48,7 +49,7 @@ public class SessionSettings extends SessionSettingsBase {
             layOK.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     setResult(RESULT_OK);
+                     setResult(RESULT_ADD);
                      finish();
                  }
             });

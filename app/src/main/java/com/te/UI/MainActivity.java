@@ -465,7 +465,7 @@ public class MainActivity extends AppCompatActivity
                 procAlertTimer();
                 break;
             case SessionSettings.REQ_ADD: {
-                if (resultCode == RESULT_OK && SessionSettings.gEditSessionSetting != null) {
+                if (resultCode == SessionSettings.RESULT_ADD && SessionSettings.gEditSessionSetting != null) {
                     TESettingsInfo.addSession(SessionSettings.gEditSessionSetting);
                     int nAddedSessionIdx = TESettingsInfo.getSessionCount() - 1;
                     TerminalProcess process = new TerminalProcess();
