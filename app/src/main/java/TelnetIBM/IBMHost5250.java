@@ -133,6 +133,9 @@ public class IBMHost5250 extends IBMHostBase {
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F11, IBMKEY_F11);
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_F12);
     }
+    public static void clearKeyCodeMap() {
+        mDefaultTNKeyCodeMap.clear();
+    }
     //private char[][] CharGrid = null;
     //private char[][] AttribGrid = null;
     final char mAttrMaskNotShow = 0x07;

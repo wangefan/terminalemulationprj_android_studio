@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initInOnCreate() {
-        TerminalProcess.initKeyCodeMap();
+
         if(ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
             stdActivityRef.gIsActivate = true;
         }
@@ -335,9 +335,6 @@ public class MainActivity extends AppCompatActivity
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
 
-        UIUtility.init(this);
-        CipherUtility.init(this);
-
         syncSessionsFromSettings();
 
         Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
@@ -389,7 +386,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         stdActivityRef.setCurrActivity(this);
+
         CipherReaderControl.InitReader(this, myDataReceiver);
+        TerminalProcess.initKeyCodeMap();
+        UIUtility.init(this);
+        CipherUtility.init(this);
+
         // Initialize User Parm
         if (true == TESettingsInfo.loadSessionSettings(getApplicationContext())) {
             initInOnCreate();
@@ -426,6 +428,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        TerminalProcess.clearKeyCodeMap();
 
         TESettingsInfo.saveSessionSettings();
         // ***************************************************//

@@ -138,6 +138,10 @@ public class CVT100 extends CVT100Enum {
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
     }
 
+    public static void clearKeyCodeMap() {
+        mDefaultVTKeyCodeMap.clear();
+    }
+
     public String GetLogTitle() {
         return "VT";
     }

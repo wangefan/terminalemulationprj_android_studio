@@ -33,6 +33,11 @@ public class TerminalProcess {
         CVT100.initKeyCodeMap();
     }
 
+    static public void clearKeyCodeMap() {
+        IBMHost5250.clearKeyCodeMap();
+        CVT100.clearKeyCodeMap();
+    }
+
     public void handleKeyDown(int keyCode, KeyEvent event) {
         if(mMacroRec.isRecording()) {
             mMacroRec.addMacroKeyboard(event);
