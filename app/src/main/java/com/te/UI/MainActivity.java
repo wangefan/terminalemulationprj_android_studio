@@ -36,7 +36,6 @@ import com.te.UI.LeftMenuFrg.LeftMenuListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import SessionProcess.TerminalProcess;
 import Terminals.CipherReaderControl;
@@ -50,9 +49,10 @@ public class MainActivity extends AppCompatActivity
         implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewListener
 
 {
+    private static final String TAG_TERPROC_FRAGMENT = "TAG_TERPROC_FRAGMENT";
+    private static final String KEY_FULL_SCREEEN = "KEY_FULL_SCREEEN";
     // ReaderManager is using to communicate with Barcode Reader Service
     //private com.cipherlab.barcode.ReaderManager mReaderManager;
-    List<TerminalProcess> mCollSessions = new ArrayList<TerminalProcess>();
     private final BroadcastReceiver myDataReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                 //e1.setText(data);
             } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
                 // If user disable KeyboardEmulation, barcode reader service will broadcast Intent_PASS_TO_APP
-                TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
+                TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
                 // extra string from intent
                 data = intent.getStringExtra(GeneralString.BcReaderData);
 
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem mMenuItemConn;
     private Handler mUpdateWifiAlertHandler = new Handler();
     private Handler mUpdateBaterAlertHandler = new Handler();
+    private TerminalProcessFrg mTerminalProcessFrg = null;
     private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() {
         @Override
         public void onConnected() {
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void UpdateRecordButton() {
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         ImageButton ButStop = (ImageButton) findViewById(R.id.StopButton);
         ImageButton ButPlay = (ImageButton) findViewById(R.id.PlayButton);
         ImageButton ButRec = (ImageButton) findViewById(R.id.RecButton);
@@ -275,26 +276,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void initInOnCreate() {
-        if(ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
-            stdActivityRef.gIsActivate = true;
-        }
-
-        syncSessionsFromSettings();
-
-        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
-        if (bAutoConn)
-            SessionConnect();
-    }
-
     private void syncSessionsFromSettings() {
-        mCollSessions.clear();
-        for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
-            TerminalProcess Process = new TerminalProcess();
-            Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
-            mCollSessions.add(Process);
-        }
-        TerminalProcess actSession = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess actSession = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         actSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(actSession);
         mContentView.refresh();
@@ -387,37 +370,51 @@ public class MainActivity extends AppCompatActivity
         TerminalProcess.initKeyCodeMap();
         UIUtility.init(this);
         CipherUtility.init(this);
+        if(ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
+            stdActivityRef.gIsActivate = true;
+        }
 
-        // Initialize User Parm
-        if (true == TESettingsInfo.loadSessionSettings(getApplicationContext())) {
-            initInOnCreate();
-        } else {
-            //ask user to try to clear setting, or exit app
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        mTerminalProcessFrg = (TerminalProcessFrg) getSupportFragmentManager().findFragmentByTag(TAG_TERPROC_FRAGMENT);
+        // If the Fragment is null, then it is first create.
+        if (mTerminalProcessFrg == null) {
+            UIUtility.doLoadSettingProc(getApplicationContext(), new UIUtility.OnLoadSettingProcListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            TESettingsInfo.deleteJsonFile();
-                            if (!TESettingsInfo.loadSessionSettings(getApplicationContext())) {
-                                //Todo:popup warninig window
-                                finish();
-                            } else {
-                                initInOnCreate();
-                            }
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            finish();
-                            break;
+                public void onLoadResult(boolean bSuccess) {
+                    if(bSuccess) {
+                        mTerminalProcessFrg = new TerminalProcessFrg();
+                        getSupportFragmentManager().beginTransaction().add(mTerminalProcessFrg, TAG_TERPROC_FRAGMENT).commit();
+                        mTerminalProcessFrg.syncSessionsFromSettings();
+                        syncSessionsFromSettings();
+                        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
+                        if (bAutoConn)
+                            SessionConnect();
+                    } else {
+                        //Todo: give a warning
+                        finish();
                     }
                 }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage(R.string.MSG_clear_setting).setPositiveButton(R.string.str_positive, dialogClickListener)
-                    .setNegativeButton(R.string.str_negative, dialogClickListener);
-            AlertDialog alert = builder.create();
-            alert.show();
+            });
+        } else { // If the Fragment is non-null, then it is being retained over a configuration change.
+            // Restore saved state.
+            syncSessionsFromSettings();
+            showConnectionView(isCurSessionConnected());
+            mContentView.refresh();
+            setSessionJumpImage(TESettingsInfo.getSessionIndex());
+            if (savedInstanceState != null) {
+                boolean bLastFullScreen = savedInstanceState.getBoolean(KEY_FULL_SCREEEN);
+                if(bLastFullScreen) {
+                    mBFullScreen = false; //To trigger full screen in procFullScreen
+                    procFullScreen();
+                } else {
+                    setSessionStatusView();
+                }
+            }
+            updateRecordButtonVisible();
+            if (isCurSessionConnected()) {
+                updateFABStatus(FABStatus.Keyboard);
+            } else {
+                updateFABStatus(FABStatus.Connect);
+            }
         }
     }
 
@@ -443,12 +440,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();  // Always call the superclass method first
-
         HideKeyboard();
-
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED);
+    }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_FULL_SCREEEN, mBFullScreen);
     }
 
     @Override
@@ -470,7 +469,7 @@ public class MainActivity extends AppCompatActivity
                     int nAddedSessionIdx = TESettingsInfo.getSessionCount() - 1;
                     TerminalProcess process = new TerminalProcess();
                     process.setMacroList(TESettingsInfo.getHostMacroListByIndex(nAddedSessionIdx));
-                    mCollSessions.add(process);
+                    mTerminalProcessFrg.addTerminalProcess(process);
                     mFragmentLeftdrawer.syncSessionsViewFromSettings();
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     setSessionJumpImage(TESettingsInfo.getSessionIndex());
@@ -500,7 +499,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDrawerItemDelete(int position) {
-        mCollSessions.remove(position);
+        mTerminalProcessFrg.removeTerminalProc(position);
     }
 
     @Override
@@ -518,19 +517,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClickStop(View v) {
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.recMacro(false);
         UpdateRecordButton();
     }
 
     public void onClickPlay(View v) {
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.playMacro();
         UpdateRecordButton();
     }
 
     public void onClickRec(View v) {
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.recMacro(true);
         UpdateRecordButton();
     }
@@ -638,6 +637,7 @@ public class MainActivity extends AppCompatActivity
                                 if(TESettingsInfo.importSessionSettings(chosenDir) == false) {
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_Warn, Toast.LENGTH_SHORT).show();
                                 } else {
+                                    mTerminalProcessFrg.syncSessionsFromSettings();
                                     syncSessionsFromSettings();
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_ok, Toast.LENGTH_SHORT).show();
                                 }
@@ -732,7 +732,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean isCurSessionConnected() {
-        TerminalProcess termProc = (TerminalProcess) mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         return (termProc != null && termProc.isConnected());
     }
 
@@ -748,8 +748,8 @@ public class MainActivity extends AppCompatActivity
     private void SessionChange(int idxSession) {
         if (TESettingsInfo.getSessionIndex() == idxSession)
             return;
-        TerminalProcess curSeesion = mCollSessions.get(TESettingsInfo.getSessionIndex());
-        TerminalProcess nextSession = mCollSessions.get(idxSession);
+        TerminalProcess curSeesion = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
+        TerminalProcess nextSession = mTerminalProcessFrg.getTerminalProc(idxSession);
 
         //un-bind between TerminalProcess and MainActivity (Actually is ContentView)
         curSeesion.setListener(null);
@@ -844,12 +844,12 @@ public class MainActivity extends AppCompatActivity
 
     private void SessionConnect() {
         UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.processConnect();
     }
 
-    public void SessionDisConnect() {
-        TerminalProcess termProc = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        public void SessionDisConnect() {
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.processDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
         mLogoView.setVisibility(View.VISIBLE);

@@ -26,6 +26,9 @@ import tourguide.tourguide.ToolTip;
 import tourguide.tourguide.TourGuide;
 
 public class UIUtility {
+	public interface OnLoadSettingProcListener {
+		void onLoadResult(boolean bSuccess);
+	}
 	public interface OnEditMessageBoxListener {
 		void onResult(String result);
 		void onCancel();
@@ -413,6 +416,33 @@ public class UIUtility {
 		if(mProgNetwork != null && mProgNetwork.isShowing()) {
 			mProgNetwork.dismiss();
 			mUIHandler.removeCallbacksAndMessages(null);
+		}
+	}
+
+	public static void doLoadSettingProc(final Context context, final OnLoadSettingProcListener listener) {
+		//ask user to try to clear setting, or exit app
+		if(TESettingsInfo.loadSessionSettings(context) == false) {
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+						case DialogInterface.BUTTON_POSITIVE:
+							TESettingsInfo.deleteJsonFile();
+							listener.onLoadResult(TESettingsInfo.loadSessionSettings(context));
+							break;
+						case DialogInterface.BUTTON_NEGATIVE:
+							listener.onLoadResult(false);
+							break;
+					}
+				}
+			};
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setMessage(R.string.MSG_clear_setting).setPositiveButton(R.string.str_positive, dialogClickListener)
+					.setNegativeButton(R.string.str_negative, dialogClickListener);
+			AlertDialog alert = builder.create();
+			alert.show();
+		} else {
+			listener.onLoadResult(true);
 		}
 	}
 }
