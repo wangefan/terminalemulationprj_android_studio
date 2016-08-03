@@ -51,6 +51,24 @@ public class MainActivity extends AppCompatActivity
 {
     private static final String TAG_TERPROC_FRAGMENT = "TAG_TERPROC_FRAGMENT";
     private static final String KEY_FULL_SCREEEN = "KEY_FULL_SCREEEN";
+    private final long UPDATE_ALERT_INTERVAL = 300000; //300 sec, 5 min
+    private Toolbar mToolbar;
+    private LeftMenuFrg mFragmentLeftdrawer;
+    private RelativeLayout mMacroView = null;
+    private FloatingActionButton mFAB = null;
+    private TEKeyboardViewUtility mKeyboardViewUtility = null;
+    private View mSessionStausView = null;
+    private View mDecorView = null;
+    private boolean mBFullScreen = false;
+    private ContentView mContentView;
+    private RelativeLayout mLogoView = null;
+    private RelativeLayout mMainRelLayout;
+    private CursorView Cursor;
+    private ImageView mSessionJumpBtn = null;
+    private MenuItem mMenuItemConn;
+    private Handler mUpdateWifiAlertHandler = new Handler();
+    private Handler mUpdateBaterAlertHandler = new Handler();
+    private TerminalProcessFrg mTerminalProcessFrg = null;
     // ReaderManager is using to communicate with Barcode Reader Service
     //private com.cipherlab.barcode.ReaderManager mReaderManager;
     private final BroadcastReceiver myDataReceiver = new BroadcastReceiver() {
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity
                 //e1.setText(myReaderType.toString());
 
 					/*NotificationParams settings = new NotificationParams();
-					mReaderManager.Get_NotificationParams(settings);
+                    mReaderManager.Get_NotificationParams(settings);
 
 					ReaderOutputConfiguration settings2 = new ReaderOutputConfiguration();
 					mReaderManager.Get_ReaderOutputConfiguration(settings2);
@@ -97,26 +115,6 @@ public class MainActivity extends AppCompatActivity
 
         }
     };
-
-    private final long UPDATE_ALERT_INTERVAL = 300000; //300 sec, 5 min
-
-    private Toolbar mToolbar;
-    private LeftMenuFrg mFragmentLeftdrawer;
-    private RelativeLayout mMacroView = null;
-    private FloatingActionButton mFAB = null;
-    private TEKeyboardViewUtility mKeyboardViewUtility = null;
-    private View mSessionStausView = null;
-    private View mDecorView = null;
-    private boolean mBFullScreen = false;
-    private ContentView mContentView;
-    private RelativeLayout mLogoView = null;
-    private RelativeLayout mMainRelLayout;
-    private CursorView Cursor;
-    private ImageView mSessionJumpBtn = null;
-    private MenuItem mMenuItemConn;
-    private Handler mUpdateWifiAlertHandler = new Handler();
-    private Handler mUpdateBaterAlertHandler = new Handler();
-    private TerminalProcessFrg mTerminalProcessFrg = null;
     private TerminalProcess.OnTerminalProcessListener mOnTerminalProcessListener = new TerminalProcess.OnTerminalProcessListener() {
         @Override
         public void onConnected() {
@@ -125,7 +123,7 @@ public class MainActivity extends AppCompatActivity
             UpdateRecordButton();
             updateConnMenuItem();
             updateFABStatus(FABStatus.Keyboard);
-            if(TESettingsInfo.getHostIsAutoFullScreenOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            if (TESettingsInfo.getHostIsAutoFullScreenOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 procFullScreen();
             }
             UIUtility.showProgressDlg(false, 0);
@@ -148,13 +146,13 @@ public class MainActivity extends AppCompatActivity
         public void onNotify(String action, Object... params) {
             if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
                 mContentView.postInvalidate();
-            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_UPDATE_GRID) == 0) {
+            } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_UPDATE_GRID) == 0) {
                 mContentView.updateViewGrid();
-            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_CLEAR_VIEW) == 0) {
+            } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_CLEAR_VIEW) == 0) {
                 mContentView.ClearView();
-            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_SPACE) == 0) {
+            } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_SPACE) == 0) {
                 mContentView.DrawSpace((Integer) params[0], (Integer) params[1], (Integer) params[2]);
-            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHAR) == 0) {
+            } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHAR) == 0) {
                 mContentView.DrawChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
             }
         }
@@ -209,14 +207,14 @@ public class MainActivity extends AppCompatActivity
     private void procAlertTimer() {
         boolean bWifiAlert = TESettingsInfo.getHostIsShowWifiAlertByIndex(TESettingsInfo.getSessionIndex());
         boolean bBatAlert = TESettingsInfo.getHostIsShowBatteryAlertByIndex(TESettingsInfo.getSessionIndex());
-        if(bWifiAlert) {
+        if (bWifiAlert) {
             mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
             final int nWifiAlert = TESettingsInfo.getHostShowWifiAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateWifiAlertHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     int wifiStrength = CipherUtility.getWiFiStrength();
-                    if(wifiStrength < nWifiAlert) {
+                    if (wifiStrength < nWifiAlert) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
                             @Override
@@ -233,7 +231,7 @@ public class MainActivity extends AppCompatActivity
             mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
         }
 
-        if(bBatAlert) {
+        if (bBatAlert) {
             mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
             final int nBatAlert = TESettingsInfo.getHostShowBatteryAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateBaterAlertHandler.postDelayed(new Runnable() {
@@ -249,7 +247,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     int batStrength = getBatteryPct();
-                    if(batStrength < nBatAlert) {
+                    if (batStrength < nBatAlert) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
                             @Override
@@ -290,12 +288,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setSessionStatusView() {
-        if(TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
+        if (TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
             String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
             tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
                     serverTypeName,
-                    String.valueOf(TESettingsInfo.getSessionIndex()+1),
+                    String.valueOf(TESettingsInfo.getSessionIndex() + 1),
                     TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex())));
             mSessionStausView.setVisibility(View.VISIBLE);
         } else {
@@ -370,7 +368,7 @@ public class MainActivity extends AppCompatActivity
         TerminalProcess.initKeyCodeMap();
         UIUtility.init(this);
         CipherUtility.init(this);
-        if(ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
+        if (ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
             stdActivityRef.gIsActivate = true;
         }
 
@@ -380,7 +378,7 @@ public class MainActivity extends AppCompatActivity
             UIUtility.doLoadSettingProc(getApplicationContext(), new UIUtility.OnLoadSettingProcListener() {
                 @Override
                 public void onLoadResult(boolean bSuccess) {
-                    if(bSuccess) {
+                    if (bSuccess) {
                         mTerminalProcessFrg = new TerminalProcessFrg();
                         getSupportFragmentManager().beginTransaction().add(mTerminalProcessFrg, TAG_TERPROC_FRAGMENT).commit();
                         mTerminalProcessFrg.syncSessionsFromSettings();
@@ -402,7 +400,7 @@ public class MainActivity extends AppCompatActivity
             setSessionJumpImage(TESettingsInfo.getSessionIndex());
             if (savedInstanceState != null) {
                 boolean bLastFullScreen = savedInstanceState.getBoolean(KEY_FULL_SCREEEN);
-                if(bLastFullScreen) {
+                if (bLastFullScreen) {
                     mBFullScreen = false; //To trigger full screen in procFullScreen
                     procFullScreen();
                 } else {
@@ -539,7 +537,7 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         mMenuItemConn = menu.findItem(R.id.connection);
-        if(TESettingsInfo.showEditProfile() == true) {
+        if (TESettingsInfo.showEditProfile() == true) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -574,7 +572,7 @@ public class MainActivity extends AppCompatActivity
                 procFullScreen();
                 break;
             case R.id.access_ctrl:
-                if(TESettingsInfo.getIsAccessCtrlProtected()) {
+                if (TESettingsInfo.getIsAccessCtrlProtected()) {
                     UIUtility.doCheckAccessCtrlDialog(
                             new UIUtility.OnAccessCtrlChkListener() {
                                 @Override
@@ -592,7 +590,7 @@ public class MainActivity extends AppCompatActivity
                 UIUtility.doActivationDialog(new UIUtility.OnActivationListener() {
                     @Override
                     public void onResult(boolean bActivate) {
-                        if(bActivate == false) {
+                        if (bActivate == false) {
                             Toast.makeText(MainActivity.this, R.string.MSG_Activate_Warn, Toast.LENGTH_SHORT).show();
                         } else {
                             ActivateKeyUtility.getInstance().genKeyFile();
@@ -610,7 +608,7 @@ public class MainActivity extends AppCompatActivity
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
                             public void onFilePath(String chosenDir) {
-                                if(TESettingsInfo.exportSessionSettings(chosenDir) == false) {
+                                if (TESettingsInfo.exportSessionSettings(chosenDir) == false) {
                                     Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
@@ -634,7 +632,7 @@ public class MainActivity extends AppCompatActivity
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
                             public void onFilePath(String chosenDir) {
-                                if(TESettingsInfo.importSessionSettings(chosenDir) == false) {
+                                if (TESettingsInfo.importSessionSettings(chosenDir) == false) {
                                     Toast.makeText(MainActivity.this, R.string.MSG_Import_Warn, Toast.LENGTH_SHORT).show();
                                 } else {
                                     mTerminalProcessFrg.syncSessionsFromSettings();
@@ -700,7 +698,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onExit() {
-        if(TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitProtect()) {
+        if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitProtect()) {
             UIUtility.doCheckAccessCtrlDialog(
                     new UIUtility.OnAccessCtrlChkListener() {
                         @Override
@@ -789,23 +787,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void procFullScreen() {
-        if(mBFullScreen == false) {
+        if (mBFullScreen == false) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getSupportActionBar().hide();
             mDecorView.setFitsSystemWindows(false);
             mDecorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                  | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                  | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                  |  View.SYSTEM_UI_FLAG_FULLSCREEN
-                  | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                  | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
             mBFullScreen = true;
-            if(TESettingsInfo.showResetFullScreen() == true) {
+            if (TESettingsInfo.showResetFullScreen() == true) {
                 UIUtility.showResetFullScreen(mLogoView.findViewById(R.id.ImgLogoView));
             }
         } else {
-            if(TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitFullScreenProtect()) {
+            if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitFullScreenProtect()) {
                 UIUtility.doCheckAccessCtrlDialog(
                         new UIUtility.OnAccessCtrlChkListener() {
                             @Override
@@ -848,7 +846,7 @@ public class MainActivity extends AppCompatActivity
         termProc.processConnect();
     }
 
-        public void SessionDisConnect() {
+    public void SessionDisConnect() {
         TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.processDisConnect();
         mMainRelLayout.setVisibility(View.INVISIBLE);
@@ -856,7 +854,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void SessionSetting(final int nSessionIdx) {
-        if(TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsSettingsProtect()) {
+        if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsSettingsProtect()) {
             UIUtility.doCheckAccessCtrlDialog(
                     new UIUtility.OnAccessCtrlChkListener() {
                         @Override
@@ -876,7 +874,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setSessionJumpImage(int sessionIndex) {
-        if(TESettingsInfo.getHostIsShowSessionNumber(sessionIndex) == false) {
+        if (TESettingsInfo.getHostIsShowSessionNumber(sessionIndex) == false) {
             mSessionJumpBtn.setVisibility(View.INVISIBLE);
         } else {
             mSessionJumpBtn.setVisibility(View.VISIBLE);
@@ -927,12 +925,12 @@ public class MainActivity extends AppCompatActivity
                 int nSession = TESettingsInfo.getSessionIndex(), nOriSession = TESettingsInfo.getSessionIndex();
                 do {
                     ++nSession;
-                    if(nSession > TESettingsInfo.getSessionCount()-1)
+                    if (nSession > TESettingsInfo.getSessionCount() - 1)
                         nSession = 0;
-                    if(TESettingsInfo.getHostIsShowSessionNumber(nSession) == true)
+                    if (TESettingsInfo.getHostIsShowSessionNumber(nSession) == true)
                         break;
                 } while (true);
-                if(nSession != nOriSession) {
+                if (nSession != nOriSession) {
                     mFragmentLeftdrawer.clickSession(nSession);
                     updateConnMenuItem();
                 }
@@ -943,7 +941,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 float fDisX = 0, fDisY = 0;
-                if(e2 != null) {
+                if (e2 != null) {
                     fDisX = mPrevX - e2.getX();
                     fDisY = mPrevY - e2.getY();
                 }
@@ -962,7 +960,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             mView = view;
-            if(event.getAction() == MotionEvent.ACTION_UP) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
                 RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) mSessionJumpBtn.getLayoutParams();
                 TESettingsInfo.setSessionNumberLoc(parms.leftMargin, parms.topMargin);
             }
