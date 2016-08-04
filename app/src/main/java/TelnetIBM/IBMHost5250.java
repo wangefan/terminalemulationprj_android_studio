@@ -544,6 +544,8 @@ public class IBMHost5250 extends IBMHostBase {
                 this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0;
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
+                this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
+                this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = Chater;
                 if (isScreenAttributeVisible((byte) CurAttrib))
                     PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y));
             }
@@ -640,6 +642,7 @@ public class IBMHost5250 extends IBMHostBase {
                 this.CharGrid[posTemp.Y][posTemp.X] = 0;
             } else {
                 char Chater = (char) szEBCDIC[(int) c];
+                this.CharGrid[posTemp.Y][posTemp.X] = Chater;
                 PrintChar(Chater, posTemp.X, posTemp.Y, FieldList.isNeedLine(posTemp.X, posTemp.Y));
                 if(sbRet != null) {
                     sbRet.append(Chater);
@@ -1272,6 +1275,8 @@ public class IBMHost5250 extends IBMHostBase {
         char Chater = (char) szEBCDIC[(int) Data];
 
         for (int i = 0; i < Repeatlen; i++) {
+            this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
+            this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = Chater;
             PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y));
             movePosToNext(BufferAddr.Pos);
         }
@@ -1375,6 +1380,8 @@ public class IBMHost5250 extends IBMHostBase {
                 this.CharGrid[Y][X] = 0;
             } else {
                 char Chater = szEBCDIC[(int) CurField.Data[i]];
+                this.CharGrid[Y][X] = Chater;
+                this.AttribGrid[Y][X] = CurField.Attrib;
                 if (isScreenAttributeVisible((byte) CurField.Attrib))
                     PrintChar(Chater, X, Y, true);
             }
@@ -1390,8 +1397,6 @@ public class IBMHost5250 extends IBMHostBase {
     private void PrintChar(char Character, int X, int Y, boolean Isfield) {
         if (Y > (this._rows - 1))
             return;
-        this.AttribGrid[Y][X] = CurAttrib;
-        this.CharGrid[Y][X] = Character;
         DrawChar(Character, X, Y, false, Isfield);
     }
 
