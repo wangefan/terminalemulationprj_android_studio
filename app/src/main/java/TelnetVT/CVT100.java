@@ -217,9 +217,9 @@ public class CVT100 extends CVT100Enum {
         for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
                 if (this.AttribGrid[idxRow][idxCol] == null) {
-                    DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false);
+                    DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, false, false);
                 } else {
-                    DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, this.AttribGrid[idxRow][idxCol].IsBold, this.AttribGrid[idxRow][idxCol].IsUnderscored);
+                    DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, this.AttribGrid[idxRow][idxCol].IsBold, this.AttribGrid[idxRow][idxCol].IsUnderscored, false);
                 }
             }
         }
@@ -335,9 +335,9 @@ public class CVT100 extends CVT100Enum {
                 MultiChar = TryGetMultiChar();
 
                 if (MultiChar != null)
-                    this.PrintChar(MultiChar);
+                    this.PrintChar(MultiChar, true);
                 else
-                    this.PrintChar(e.CurChar);
+                    this.PrintChar(e.CurChar, false);
 
                 break;
 
@@ -403,7 +403,7 @@ public class CVT100 extends CVT100Enum {
                 this.CaretToAbs(y, 0);
 
                 for (int x = 0; x < this._cols; x++) {
-                    this.PrintChar('E');
+                    this.PrintChar('E', false);
                 }
             }
         } else if (e.CurSequence.equals("\u001b=")) // Keypad to Application mode
@@ -871,9 +871,7 @@ public class CVT100 extends CVT100Enum {
     }
 
     //region  PrintToBmp
-    private void PrintChar(char CurChar)//not finish
-    {
-
+    private void PrintChar(char CurChar, boolean bMultiByte) { //not finish
         if (this.Caret.EOL == true) {
             //if ((this.Modes.Flags & Modes.AutoWrap) == Modes.AutoWrap)
             {
@@ -905,11 +903,18 @@ public class CVT100 extends CVT100Enum {
         }
 
         this.CharGrid[Y][X] = CurChar;
+        if(bMultiByte) {
+            CharGrid[Y][X+1] = CurChar;
+        }
         if (CurChar != 0x20 && CurChar != 0) {
             int po = 0;
         }
-        DrawChar(CurChar, X, Y, this.CharAttribs.IsBold, this.CharAttribs.IsUnderscored);
+
+        DrawChar(CurChar, X, Y, this.CharAttribs.IsBold, this.CharAttribs.IsUnderscored, bMultiByte);
         this.CaretRight();
+        if(bMultiByte) {
+            this.CaretRight();
+        }
         //Handle alarm by text
         if(TESettingsInfo.getHostIsFeedbackByTextCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
             if(TESettingsInfo.getHostIsGoodFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
@@ -1207,9 +1212,9 @@ public class CVT100 extends CVT100Enum {
 
                 for (int xcol = 0; xcol < this._cols; ++xcol) {
                     if (this.AttribGrid[i][xcol] == null) {
-                        DrawChar(this.CharGrid[i][xcol], xcol, i, false, false);
+                        DrawChar(this.CharGrid[i][xcol], xcol, i, false, false, false);
                     } else {
-                        DrawChar(this.CharGrid[i][xcol], xcol, i, this.AttribGrid[i][xcol].IsBold, this.AttribGrid[i][xcol].IsUnderscored);
+                        DrawChar(this.CharGrid[i][xcol], xcol, i, this.AttribGrid[i][xcol].IsBold, this.AttribGrid[i][xcol].IsUnderscored, false);
                     }
                 }
 
@@ -1307,7 +1312,7 @@ public class CVT100 extends CVT100Enum {
             char pressedKey = (char) event.getUnicodeChar();
             if (pressedKey == 0)
                 return;
-            this.PrintChar(pressedKey);
+            this.PrintChar(pressedKey, false);
         }
         ViewPostInvalidate();
     }

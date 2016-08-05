@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
             } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAW_SPACE) == 0) {
                 mContentView.DrawSpace((Integer) params[0], (Integer) params[1], (Integer) params[2]);
             } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHAR) == 0) {
-                mContentView.DrawChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4]);
+                mContentView.DrawChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4], (Boolean) params[5]);
             }
         }
     };

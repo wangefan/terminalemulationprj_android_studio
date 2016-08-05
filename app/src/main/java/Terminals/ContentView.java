@@ -153,10 +153,13 @@ public class ContentView extends View {
         return p;
     }
 
-    public void DrawChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine) {
+    public void DrawChar(char c, int x, int y, boolean IsBold, boolean IsUnderLine, boolean bMultiByte) {
         if (mCanvas == null)
             return;
-        Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width(), mFontRect.height() * y + mFontRect.height());
+        int nFontWidthUnit = 1;
+        if(bMultiByte)
+            nFontWidthUnit = 2;
+        Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width() * nFontWidthUnit, mFontRect.height() * y + mFontRect.height());
         mCanvas.drawRect(rect, mBgpaint);
         if (c == 0) {
             c = ' ';

@@ -129,9 +129,9 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             mTerminalListener.onNotify(NOTF_ACT_DRAW_SPACE, x, y, space);
     }
 
-    public void DrawChar(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine) {
+    public void DrawChar(Character c, Integer x, Integer y, Boolean IsBold, Boolean IsUnderLine, Boolean bMultiByte) {
         if (mTerminalListener != null)
-            mTerminalListener.onNotify(NOTF_ACT_DRAWCHAR, c, x, y, IsBold, IsUnderLine);
+            mTerminalListener.onNotify(NOTF_ACT_DRAWCHAR, c, x, y, IsBold, IsUnderLine, bMultiByte);
     }
 
     public void handleBufferReceived(byte[] data, int offset, int lenth) {
