@@ -28,6 +28,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     protected String mIp = "";
     protected String mPort = "";
     protected boolean mSsh = false;
+    protected boolean mBLstChar = false;
     private boolean mBAutoLoginProcessed = false;
     private TelnetConnMgr mTelConn;
     private TelnetParser mTelnetParser = null;
@@ -355,6 +356,9 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
             //char[] charArray = InString.toCharArray();
             for (CurIndex = 0; CurIndex < charArray.length; CurIndex++) {
+                if(CurIndex == charArray.length - 1) {
+                    mBLstChar = true;
+                }
                 mCurChar = charArray[CurIndex];
 
                 // Get the next state and associated action based

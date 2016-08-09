@@ -82,6 +82,8 @@ public class IBMHost5250 extends IBMHostBase {
     static final int IBMKEY_PA1 = 108;
     static final int IBMKEY_PA2 = 110;
     static final int IBMKEY_PA3 = 107;
+    final char DBCS_LEADING = 0x0e;
+    final char DBCS_ENDING = 0x0f;
 
     public static char[] szEBCDIC =
             {
@@ -227,7 +229,6 @@ public class IBMHost5250 extends IBMHostBase {
             new Tn_CharEventInfo(IBmStates.CommandCcodeEnd, '\u0003', '\u0003', IBmActions.OrdersRecord, IBmStates.Orders),
             new Tn_CharEventInfo(IBmStates.CommandCcodeEnd, '\u0012', '\u0012', IBmActions.OrdersRecord, IBmStates.Orders),
             new Tn_CharEventInfo(IBmStates.CommandCcodeEnd, '\u0004', '\u0004', IBmActions.RecordCommad, IBmStates.Command),
-            new Tn_CharEventInfo(IBmStates.CommandCcodeEnd, '\u00EF', '\u00EF', IBmActions.None, IBmStates.Ground),
             new Tn_CharEventInfo(IBmStates.CommandCcodeEnd, '\u0000', '\u00fE', IBmActions.RecordData, IBmStates.CommandEndEx),
             new Tn_CharEventInfo(IBmStates.Anywhere, '\u00FF', '\u00FF', IBmActions.None, IBmStates.Ground),
 
@@ -239,7 +240,6 @@ public class IBMHost5250 extends IBMHostBase {
             new Tn_CharEventInfo(IBmStates.CommandEndEx, '\u0014', '\u0014', IBmActions.OrdersRecord, IBmStates.Orders),
             new Tn_CharEventInfo(IBmStates.CommandEndEx, '\u0003', '\u0003', IBmActions.OrdersRecord, IBmStates.Orders),
             new Tn_CharEventInfo(IBmStates.CommandEndEx, '\u0012', '\u0012', IBmActions.OrdersRecord, IBmStates.Orders),
-            new Tn_CharEventInfo(IBmStates.CommandEndEx, '\u00EF', '\u00EF', IBmActions.None, IBmStates.Ground),
             new Tn_CharEventInfo(IBmStates.Orders, '\u0011', '\u0011', IBmActions.OrdersRecord, IBmStates.OrdersEx),
             new Tn_CharEventInfo(IBmStates.Orders, '\u0013', '\u0013', IBmActions.OrdersRecord, IBmStates.OrdersEx),
             new Tn_CharEventInfo(IBmStates.Orders, '\u0002', '\u0002', IBmActions.OrdersRecord, IBmStates.OrdersEx),
@@ -260,7 +260,6 @@ public class IBMHost5250 extends IBMHostBase {
             new Tn_CharEventInfo(IBmStates.OrdersEx, '\u0004', '\u0004', IBmActions.RecordCommad, IBmStates.Command),
             new Tn_CharEventInfo(IBmStates.Orders, '\u0000', '\u00ff', IBmActions.RecordData, IBmStates.CommandEndEx),//after padding
             new Tn_CharEventInfo(IBmStates.OrdersEx, '\u0000', '\u00ff', IBmActions.RecordData, IBmStates.CommandEndEx),//after padding
-            new Tn_CharEventInfo(IBmStates.CommandEnd, '\u00ef', '\u00ef', IBmActions.None, IBmStates.Ground),
 
             new Tn_CharEventInfo(IBmStates.CommandEnd, '\u0000', '\u00ff', IBmActions.RecordData, IBmStates.CommandEndEx),
             new Tn_CharEventInfo(IBmStates.CommandEndEx, '\u0000', '\u00ff', IBmActions.RecordData, IBmStates.CommandEndEx),
@@ -461,6 +460,13 @@ public class IBMHost5250 extends IBMHostBase {
             return true;
         }
 
+        if(mBLstChar && curChar == 0xef) {
+            state.set(IBmStates.Ground);
+            action.set(IBmActions.None);
+            mBLstChar = false;
+            return true;
+        }
+
         for (int i = 0; i < mTn_CharEvents.length; i++) {
             Tn_CharEventInfo tnEvent = mTn_CharEvents[i];
 
@@ -538,19 +544,17 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private void ParserFieldData() {
-        final char DBCSLeading = 0x0e;
-        final char DBCSEnding = 0x0f;
         StringBuilder dbcsTemp = new StringBuilder();
         for (Object ch : DataList) {
             char c = ((Character) ch).charValue();
             switch (c) {
-                case DBCSLeading:
+                case DBCS_LEADING:
                     mBDBCS = true;
                     this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                     this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0x20;
                     movePosToNext(BufferAddr.Pos);
                     break;
-                case DBCSEnding:
+                case DBCS_ENDING:
                     mBDBCS = false;
                     this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                     this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0x20;
@@ -2605,13 +2609,6 @@ public class IBMHost5250 extends IBMHostBase {
         OrdersStart,
         OrdersEnd,
         Anywhere
-    }
-
-    private enum TryDBCSResultType {
-        SBCS,
-        DBCS_Leaing,
-        DBCS_Ending,
-        DBCS_Content,
     }
 
     private class IBmStateChangeEvents {
