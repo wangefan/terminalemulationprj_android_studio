@@ -793,10 +793,8 @@ public class MainActivity extends AppCompatActivity
             mDecorView.setFitsSystemWindows(false);
             mDecorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
             mBFullScreen = true;
             if (TESettingsInfo.showResetFullScreen() == true) {
@@ -812,7 +810,6 @@ public class MainActivity extends AppCompatActivity
                                 getSupportActionBar().show();
                                 mDecorView.setSystemUiVisibility(
                                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
                                 mBFullScreen = false;
                                 setSessionStatusView();
@@ -823,7 +820,6 @@ public class MainActivity extends AppCompatActivity
                 getSupportActionBar().show();
                 mDecorView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
                 mBFullScreen = false;
             }
