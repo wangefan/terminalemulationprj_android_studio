@@ -83,8 +83,10 @@ public class ContentView extends View {
     }
 
     public final void updateViewGrid() {
-        int nNewBmpWidth = mTerminalProc.getCols() * mFontRect.width();
-        int nNewBmpHeight = mTerminalProc.getRows() * mFontRect.height();
+        int nScreenWidth = CipherUtility.getScreenWidth();
+        int nScreenHeight = CipherUtility.getScreenHeight();
+        int nNewBmpWidth = Math.max(Math.max(mTerminalProc.getCols() * mFontRect.width(), nScreenWidth), nScreenHeight);
+        int nNewBmpHeight = Math.max(Math.max(mTerminalProc.getRows() * mFontRect.height(), nScreenWidth), nScreenHeight);
         if(nNewBmpWidth == mBmpWidth && nNewBmpHeight == mBmpHeight) {
             ClearView();
             return;

@@ -6,7 +6,10 @@ import android.media.SoundPool;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.example.terminalemulation.BuildConfig;
 
@@ -16,13 +19,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import Terminals.stdActivityRef;
 
 public class CipherUtility {
 	static Context mContext = null;
+	static WindowManager mWMgr = null;
 	static public void init(Context context) {
 		mContext = context;
+		mWMgr = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 	}
 
 	static public void Log_d(String tag, String msg) {
@@ -95,6 +102,50 @@ public class CipherUtility {
 			copyFile(input, output);
 		} catch (Exception e) {
 
+		}
+	}
+
+	public static int getScreenWidth() {
+		final DisplayMetrics metrics = new DisplayMetrics();
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			mWMgr.getDefaultDisplay().getRealMetrics(metrics);
+			return metrics.widthPixels;
+		} else {
+			try {
+				Method GetRawW = Display.class.getMethod("getRawWidth");
+				return (Integer) GetRawW.invoke(mWMgr.getDefaultDisplay());
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+				return 0;
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+				return 0;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		}
+	}
+
+	public static int getScreenHeight() {
+		final DisplayMetrics metrics = new DisplayMetrics();
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			mWMgr.getDefaultDisplay().getRealMetrics(metrics);
+			return metrics.heightPixels;
+		} else {
+			try {
+				Method GetRawW = Display.class.getMethod("getRawHeight");
+				return (Integer) GetRawW.invoke(mWMgr.getDefaultDisplay());
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+				return 0;
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+				return 0;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				return 0;
+			}
 		}
 	}
 }
