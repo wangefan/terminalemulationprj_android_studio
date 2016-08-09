@@ -57,21 +57,21 @@ public class LanguageTable {
 
     public String findGB(String key) {
         if(mGBMap.size() <= 0) { //create table
-            createTableFromFile("GBTable.txt", mGBMap, "GB");
+            createTableFromFile("GBTable.txt", mGBMap, "GBK");
         }
         return mGBMap.get(key);
     }
 
     public String findKor(String key) {
         if(mKorMap.size() <= 0) { //create table
-            createTableFromFile("KorTable.txt", mKorMap, "");
+            createTableFromFile("KorTable.txt", mKorMap, "MS949");
         }
         return mKorMap.get(key);
     }
 
     public String findJap(String key) {
         if(mJapMap.size() <= 0) { //create table
-            createTableFromFile("JapTable.txt", mJapMap, "");
+            createTableFromFile("JapTable.txt", mJapMap, "MS932");
         }
         return mJapMap.get(key);
     }
