@@ -599,6 +599,12 @@ public class TESettingsInfo {
         return Setting.mCheckFieldLength;
     }
 
+    //0: single byte char, 1:TC, 2:SC, 3:Kor, 4:Jap, 5:Gre, 6:Fre
+    public static int getTELanguage(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mTELanguage;
+    }
+
     public static boolean getIsIBMAutoUnlock(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBIBMAutoReset;

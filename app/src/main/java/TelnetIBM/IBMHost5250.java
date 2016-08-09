@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-import Terminals.Big5;
+import Terminals.LanguageTable;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 import Terminals.typeConvertion;
@@ -590,12 +590,28 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private String converToDBCSByTable(String key) {
-
-        /*if(codePage not == multibyte) {
-            return "";
-        }*/
-        //Todo: switch code page to choose table
-        String strResult = Big5.instance().find(key);
+        String strResult = "X";
+        //0: single byte char, 1:TC, 2:SC, 3:Kor, 4:Jap, 5:Gre, 6:Fre
+        int nLanguage = TESettingsInfo.getTELanguage(TESettingsInfo.getSessionIndex());
+        switch (nLanguage) {
+            case 1: //1: TC
+                strResult = LanguageTable.instance().findBig5(key);
+                break;
+            case 2: //2: SC
+                strResult = LanguageTable.instance().findGB(key);
+                break;
+            case 3: //3: Kor
+                strResult = LanguageTable.instance().findKor(key);
+                break;
+            case 4: //4: Jap
+                strResult = LanguageTable.instance().findJap(key);
+                break;
+            case 0: //0: single byte char
+            case 5: //5: Gre
+            case 6: //6: Fre
+            default:
+            break;
+        }
         return strResult;
     }
 
