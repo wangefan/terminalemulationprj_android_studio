@@ -288,6 +288,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
 
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
+        CipherUtility.vibration(100);
         switch(primaryCode) {
             case MY_KEYCODE_ABC:
             {
