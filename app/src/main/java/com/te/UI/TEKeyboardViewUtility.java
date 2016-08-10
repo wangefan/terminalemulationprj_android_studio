@@ -23,10 +23,11 @@ import Terminals.TESettingsInfo;
  */
 public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListener {
     public interface TEKeyboardViewListener {
-        public void onShowKeyboard();
-        public void onHideKeyboard();
+        void onSetKeyboardType(KeyboardType kType);
+        void onShowKeyboard();
+        void onHideKeyboard();
     }
-    private enum KeyboardType {
+    public enum KeyboardType {
         KT_ABC,
         KT_Symbol,
         KT_Fun,
@@ -108,7 +109,6 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     static final int MY_KEYCODE_VT_NEXTSCREEN = -55;
     //VT server key end
 
-    private KeyboardType mKeyboardType = KeyboardType.KT_ABC;
     private Context mContext = null;
     private ContentView mTargetView = null;
     private KeyboardView mKeyboardView = null;
@@ -123,7 +123,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private Keyboard mVTServerKeyboard = null;
     private List<Keyboard.Key> mListServerKeys = new ArrayList<>();
     private KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
-    private TEKeyboardViewListener mLisitener  = null;
+    private TEKeyboardViewListener mListener = null;
 
     public TEKeyboardViewUtility(Context context, KeyboardView view, ContentView contentView) {
         mContext = context;
@@ -164,7 +164,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         collectKeysToContainer(mTNServerKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
         collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
 
-        mKeyboardView.setKeyboard(mABCKeyboard);
+        setKeyboard(KeyboardType.KT_ABC);
         mKeyboardView.setOnKeyboardActionListener(this);
         mKeyboardView.setPreviewEnabled(false);
     }
@@ -198,52 +198,30 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         }
     }
 
-    private void setKeysOn(KeyboardType keyboardType) {
+    //Functions
+    public void setListener(TEKeyboardViewListener listener) {
+        mListener = listener;
+    }
+
+    public void setKeyboard(KeyboardType kType) {
         setListKeysToggle(mListABCKeys, false);
         setListKeysToggle(mListSymbolKeys, false);
         setListKeysToggle(mListFunKeys, false);
         setListKeysToggle(mListServerKeys, false);
-        switch (keyboardType) {
+
+        switch (kType) {
             case KT_ABC:
             default:
                 setListKeysToggle(mListABCKeys, true);
-                break;
-            case KT_Symbol:
-                setListKeysToggle(mListSymbolKeys, true);
-                break;
-            case KT_Fun:
-                setListKeysToggle(mListFunKeys, true);
-                break;
-            case KT_Server:
-                setListKeysToggle(mListServerKeys, true);
-                break;
-        }
-    }
-
-    //Functions
-    public void setListener(TEKeyboardViewListener listener) {
-        mLisitener = listener;
-    }
-
-    public void hideTEKeyboard() {
-        mKeyboardView.setVisibility(View.GONE);
-        mKeyboardView.setEnabled(false);
-        if(mLisitener != null)
-            mLisitener.onHideKeyboard();
-    }
-
-    public void showTEKeyboard() {
-        setKeysOn(mKeyboardType);
-        switch (mKeyboardType) {
-            case KT_ABC:
-            default:
                 mKeyboardView.setKeyboard(mABCKeyboard);
                 break;
             case KT_Symbol:
+                setListKeysToggle(mListSymbolKeys, true);
                 mKeyboardView.setKeyboard(mSymbolKeyboard);
                 break;
             case KT_Fun:
             {
+                setListKeysToggle(mListFunKeys, true);
                 if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                     mKeyboardView.setKeyboard(mTNFunKeyboard);
                 }
@@ -254,6 +232,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             break;
             case KT_Server:
             {
+                setListKeysToggle(mListServerKeys, true);
                 if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                     mKeyboardView.setKeyboard(mTNServerKeyboard);
                 }
@@ -263,12 +242,22 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             }
             break;
         }
+    }
+
+    public void showTEKeyboard() {
         mKeyboardView.setVisibility(View.VISIBLE);
         mKeyboardView.setEnabled(true);
         if(mTargetView !=null)
             ((InputMethodManager) mContext.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mTargetView.getWindowToken(), 0);
-        if(mLisitener != null)
-            mLisitener.onShowKeyboard();
+        if(mListener != null)
+            mListener.onShowKeyboard();
+    }
+
+    public void hideTEKeyboard() {
+        mKeyboardView.setVisibility(View.GONE);
+        mKeyboardView.setEnabled(false);
+        if(mListener != null)
+            mListener.onHideKeyboard();
     }
 
     public boolean isTEKeyboardVisible() {
@@ -292,40 +281,26 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         switch(primaryCode) {
             case MY_KEYCODE_ABC:
             {
-                mKeyboardView.setKeyboard(mABCKeyboard);
-                mKeyboardType = KeyboardType.KT_ABC;
-                setKeysOn(mKeyboardType);
+                setKeyboard(KeyboardType.KT_ABC);
+                mListener.onSetKeyboardType(KeyboardType.KT_ABC);
             }
             break;
             case MY_KEYCODE_SYMBOL:
             {
-                mKeyboardView.setKeyboard(mSymbolKeyboard);
-                mKeyboardType = KeyboardType.KT_Symbol;
-                setKeysOn(mKeyboardType);
+                setKeyboard(KeyboardType.KT_Symbol);
+                mListener.onSetKeyboardType(KeyboardType.KT_Symbol);
             }
             break;
             case MY_KEYCODE_FUNC:
             {
-                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
-                    mKeyboardView.setKeyboard(mTNFunKeyboard);
-                }
-                else {
-                    mKeyboardView.setKeyboard(mVTFunKeyboard);
-                }
-                mKeyboardType = KeyboardType.KT_Fun;
-                setKeysOn(mKeyboardType);
+                setKeyboard(KeyboardType.KT_Fun);
+                mListener.onSetKeyboardType(KeyboardType.KT_Fun);
             }
             break;
             case MY_KEYCODE_SERVER:
             {
-                if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
-                    mKeyboardView.setKeyboard(mTNServerKeyboard);
-                }
-                else {
-                    mKeyboardView.setKeyboard(mVTServerKeyboard);
-                }
-                mKeyboardType = KeyboardType.KT_Server;
-                setKeysOn(mKeyboardType);
+                setKeyboard(KeyboardType.KT_Server);
+                mListener.onSetKeyboardType(KeyboardType.KT_Server);
             }
             break;
             case MY_KEYCODE_HIDE:

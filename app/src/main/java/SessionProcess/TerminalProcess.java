@@ -5,14 +5,15 @@ import android.content.Context;
 import android.view.KeyEvent;
 
 import com.example.terminalemulation.R;
+import com.te.UI.TEKeyboardViewUtility;
 
 import java.util.ArrayList;
 
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
-import Terminals.TESettingsInfo;
-import Terminals.MacroMgr;
 import Terminals.MacroItem;
+import Terminals.MacroMgr;
+import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.TerminalBaseEnum;
 import Terminals.stdActivityRef;
@@ -24,6 +25,8 @@ public class TerminalProcess {
     private MacroMgr mMacroRec = new MacroMgr();
     private TerminalBase mTerminal;
     private OnTerminalProcessListener mListener = null;
+    private boolean mBisShowKeyboard = false;
+    private TEKeyboardViewUtility.KeyboardType mKeyboardType = TEKeyboardViewUtility.KeyboardType.KT_ABC;
 
     public TerminalProcess() {
     }
@@ -57,6 +60,22 @@ public class TerminalProcess {
         if(mMacroRec != null) {
             mMacroRec.setItemsList(macroList);
         }
+    }
+
+    public void setKeyboardType(TEKeyboardViewUtility.KeyboardType kType) {
+        mKeyboardType = kType;
+    }
+
+    public TEKeyboardViewUtility.KeyboardType getKeyboardType() {
+        return mKeyboardType;
+    }
+
+    public void setShowKeyboard(boolean bShow) {
+        mBisShowKeyboard = bShow;
+    }
+
+    public boolean getShowKeyboard() {
+        return mBisShowKeyboard;
     }
 
     public void playMacro() {

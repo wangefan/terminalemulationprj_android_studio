@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity
                 procFullScreen();
             }
             UIUtility.showProgressDlg(false, 0);
+            mKeyboardViewUtility.setKeyboard(TEKeyboardViewUtility.KeyboardType.KT_ABC);
             mKeyboardViewUtility.showTEKeyboard();
         }
 
@@ -715,11 +716,16 @@ public class MainActivity extends AppCompatActivity
 
     //Listener TEKeyboardView Begin
     @Override
-    public void onShowKeyboard() {
-        if (isCurSessionConnected())
-            updateFABStatus(FABStatus.Gone);
+    public void onSetKeyboardType(TEKeyboardViewUtility.KeyboardType kType) {
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
+        termProc.setKeyboardType(kType);
     }
-    //Listener TEKeyboardView End
+
+    @Override
+    public void onShowKeyboard() {
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
+        termProc.setShowKeyboard(true);
+    }
 
     @Override
     public void onHideKeyboard() {
@@ -727,7 +733,10 @@ public class MainActivity extends AppCompatActivity
             updateFABStatus(FABStatus.Keyboard);
         else
             updateFABStatus(FABStatus.Connect);
+        TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
+        termProc.setShowKeyboard(false);
     }
+    //Listener TEKeyboardView End
 
     private boolean isCurSessionConnected() {
         TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
@@ -755,16 +764,21 @@ public class MainActivity extends AppCompatActivity
         nextSession.setListener(mOnTerminalProcessListener);
         mContentView.setTerminalProc(nextSession);
         TESettingsInfo.setSessionIndex(idxSession);
-        mKeyboardViewUtility.hideTEKeyboard();
         showConnectionView(isCurSessionConnected());
         mContentView.refresh();
         setSessionJumpImage(idxSession);
         setSessionStatusView();
         updateRecordButtonVisible();
-        if (isCurSessionConnected()) {
+        mKeyboardViewUtility.setKeyboard(nextSession.getKeyboardType());
+        if (isCurSessionConnected() == false) {
+            mKeyboardViewUtility.hideTEKeyboard();
+            updateFABStatus(FABStatus.Connect);
+        } else if(nextSession.getShowKeyboard() == false) {
+            mKeyboardViewUtility.hideTEKeyboard();
             updateFABStatus(FABStatus.Keyboard);
         } else {
-            updateFABStatus(FABStatus.Connect);
+            mKeyboardViewUtility.showTEKeyboard();
+            updateFABStatus(FABStatus.Gone);
         }
 
         String strMsg = String.format(getResources().getString(R.string.MSG_ChangeSession), mFragmentLeftdrawer.getItemTitle(idxSession));
