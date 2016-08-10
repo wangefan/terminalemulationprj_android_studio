@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
             updateRecordButtonVisible();
             UpdateRecordButton();
             updateConnMenuItem();
-            updateFABStatus(FABStatus.Keyboard);
+            updateFABStatus(FABStatus.Gone);
             if (TESettingsInfo.getHostIsAutoFullScreenOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 procFullScreen();
             }
