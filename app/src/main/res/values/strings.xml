@@ -325,6 +325,7 @@
     <string name="STR_ExtOgg">ogg</string>
     <string name="STR_expot_setting">Export Settings</string>
     <string name="STR_ExtJson">json</string>
+    <string name="set_pwd">Set Password</string>
     <string name="enter_pwd">Enter Password</string>
     <string name="enter_pwd2">Confirm Password</string>
     <string name="protect_settings">Select to apply password protection</string>

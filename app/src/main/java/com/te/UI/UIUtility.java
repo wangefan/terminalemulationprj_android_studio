@@ -198,10 +198,28 @@ public class UIUtility {
 		final EditText edPwd2 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd2));
 		final CheckBox ckIsSettingsProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_settings);
 		ckIsSettingsProct.setChecked(TESettingsInfo.getIsSettingsProtect());
+		accessCtrlDialog.findViewById(R.id.id_lay_item_settings).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ckIsSettingsProct.setChecked(!ckIsSettingsProct.isChecked());
+			}
+		});
 		final CheckBox ckIsExitProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit);
 		ckIsExitProct.setChecked(TESettingsInfo.getIsExitProtect());
+		accessCtrlDialog.findViewById(R.id.id_lay_item_exit).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ckIsExitProct.setChecked(!ckIsExitProct.isChecked());
+			}
+		});
 		final CheckBox ckIsExitFullProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
 		ckIsExitFullProct.setChecked(TESettingsInfo.getIsExitFullScreenProtect());
+		accessCtrlDialog.findViewById(R.id.id_lay_item_exit_full_screen).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ckIsExitFullProct.setChecked(!ckIsExitFullProct.isChecked());
+			}
+		});
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(R.string.str_access_ctrl);
 		builder.setView(accessCtrlDialog);

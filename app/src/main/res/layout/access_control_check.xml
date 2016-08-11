@@ -8,12 +8,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/check_pwd"/>
+        android:text="@string/check_pwd"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
     <EditText
         android:id="@+id/check_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight ="30dp"
         android:maxLength="8">
     </EditText>
 </LinearLayout>
