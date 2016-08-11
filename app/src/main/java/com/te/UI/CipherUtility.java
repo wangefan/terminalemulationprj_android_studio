@@ -9,6 +9,8 @@ import android.net.wifi.WifiManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.example.terminalemulation.BuildConfig;
@@ -145,6 +147,18 @@ public class CipherUtility {
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 				return 0;
+			}
+		}
+	}
+
+	public static void enableAllChild(ViewGroup layout, boolean bEnabled) {
+		layout.setEnabled(bEnabled);
+		for (int i = 0; i < layout.getChildCount(); i++) {
+			View child = layout.getChildAt(i);
+			if (child instanceof ViewGroup) {
+				enableAllChild((ViewGroup) child, bEnabled);
+			} else if (child instanceof View == true){
+				child.setEnabled(bEnabled);
 			}
 		}
 	}

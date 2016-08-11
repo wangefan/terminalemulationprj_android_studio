@@ -578,9 +578,7 @@ public class MainActivity extends AppCompatActivity
                             new UIUtility.OnAccessCtrlChkListener() {
                                 @Override
                                 public void onValid() {
-                                    TESettingsInfo.setAccessCtrlProtect(false);
-                                    TESettingsInfo.setAccessCtrlProtectedPassword("");
-                                    UIUtility.doAccessCtrlDialog();
+                                    UIUtility.doAccessCtrlModDialog();
                                 }
                             });
                 } else {
