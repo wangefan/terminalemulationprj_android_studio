@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Terminal Emulation</string>
-    <string name="app_Version">0.0.0.1</string>
+    <string name="app_Version">0.0.0.2</string>
     <string name="action_settings">Settings</string>
     <string name="STR_Save">Save</string>
     <string name="STR_ClearAll">Clear All</string>
