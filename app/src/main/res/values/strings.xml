@@ -333,6 +333,7 @@
     <string name="protect_item_exit">Exit Application</string>
     <string name="protect_item_exit_full_screen">Exit Full Screen</string>
     <string name="check_pwd">Password (maximum 8 characters)</string>
+    <string name="STR_Reset">Reset</string>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>

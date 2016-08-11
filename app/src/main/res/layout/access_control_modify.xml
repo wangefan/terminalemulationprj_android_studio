@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+    <RelativeLayout android:id="@+id/set_password"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/set_pwd" />
+        <Switch
+            android:id="@+id/mod_pwd_switch"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/password_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/enter_pwd"/>
+        <EditText
+            android:id="@+id/ed_pwd1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight ="30dp"
+            android:inputType="textPassword"
+            android:maxLength="8">
+            <requestFocus />
+        </EditText>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/enter_pwd2"/>
+        <EditText
+            android:id="@+id/ed_pwd2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight ="30dp"
+            android:inputType="textPassword"
+            android:maxLength="8">
+        </EditText>
+    </LinearLayout>
+    <RelativeLayout
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/protect_settings"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/id_lay_item_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/protect_item_settings"
+            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
+            android:layout_centerVertical="true" />
+        <CheckBox
+            android:id="@+id/id_protect_item_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/id_lay_item_exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/protect_item_exit"
+            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
+            android:layout_centerVertical="true" />
+        <CheckBox
+            android:id="@+id/id_protect_item_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/id_lay_item_exit_full_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/protect_item_exit_full_screen"
+            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
+            android:layout_centerVertical="true" />
+        <CheckBox
+            android:id="@+id/id_protect_item_exit_full_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp" />
+    </RelativeLayout>
+</LinearLayout>
