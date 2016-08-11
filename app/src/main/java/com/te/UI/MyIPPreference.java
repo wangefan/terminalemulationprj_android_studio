@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -135,18 +134,6 @@ public class MyIPPreference extends DialogPreference {
         return matcher.matches();
     }
 
-    private static void enableAllChild(ViewGroup layout, boolean bEnabled) {
-        layout.setEnabled(bEnabled);
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            View child = layout.getChildAt(i);
-            if (child instanceof ViewGroup) {
-                enableAllChild((ViewGroup) child, bEnabled);
-            } else if (child instanceof RadioButton != true){
-                child.setEnabled(bEnabled);
-            }
-        }
-    }
-
     @Override
     public void onClick(DialogInterface dialog, int which) {
         super.onClick(dialog, which);
@@ -164,14 +151,14 @@ public class MyIPPreference extends DialogPreference {
     public void setIPAddressType(boolean bIPAddressType) {
         if(bIPAddressType) {
             mBtnIP.setChecked(true);
-            enableAllChild(mIPCateGory, true);
+            CipherUtility.enableAllChild(mIPCateGory, true);
             mBtnHost.setChecked(false);
-            enableAllChild(mHostNameCateGory, false);
+            CipherUtility.enableAllChild(mHostNameCateGory, false);
         } else {
             mBtnIP.setChecked(false);
-            enableAllChild(mIPCateGory, false);
+            CipherUtility.enableAllChild(mIPCateGory, false);
             mBtnHost.setChecked(true);
-            enableAllChild(mHostNameCateGory, true);
+            CipherUtility.enableAllChild(mHostNameCateGory, true);
         }
     }
 
