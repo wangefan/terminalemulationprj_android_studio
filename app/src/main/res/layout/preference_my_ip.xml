@@ -32,9 +32,7 @@
                 android:inputType="number"
                 android:maxLength="3"
                 android:singleLine="true"
-                android:selectAllOnFocus="true"
-                android:layout_toEndOf="@id/ip_radio"
-                android:layout_toRightOf="@id/ip_radio">
+                android:selectAllOnFocus="true">
             </EditText>
 
             <TextView
@@ -142,8 +140,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:singleLine="true"
-                android:layout_toEndOf="@id/hostname_radio"
-                android:layout_toRightOf="@id/hostname_radio"
                 android:inputType="textUri">
             </EditText>
         </RelativeLayout>
