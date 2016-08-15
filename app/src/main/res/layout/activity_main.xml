@@ -38,25 +38,13 @@
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent"
 					android:layout_above="@+id/software_keyboard_view">
-					<HorizontalScrollView
-						android:id="@+id/mainHScroll"
-						android:layout_width="match_parent"
-						android:layout_height="fill_parent"
-						android:fillViewport="true"
-						android:layout_above="@+id/macro_view">
-						<ScrollView
-							android:id="@+id/mainVScroll"
-							android:layout_width="wrap_content"
-							android:layout_height="fill_parent"
-							android:fillViewport="true">
-							<RelativeLayout
-								android:id="@+id/mainRelLayout"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:background="#FFFFFF"
-								android:orientation="vertical"/>
-						</ScrollView>
-					</HorizontalScrollView>
+					<RelativeLayout
+						android:id="@+id/mainRelLayout"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:background="#FFFFFF"
+						android:orientation="vertical"
+						android:layout_above="@+id/macro_view"/>
 					<include layout="@layout/macro_view"/>
 				</RelativeLayout>
 				<RelativeLayout android:id="@+id/logo_view"

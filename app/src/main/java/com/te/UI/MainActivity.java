@@ -326,6 +326,16 @@ public class MainActivity extends AppCompatActivity
 
         Cursor = new CursorView(this);
         mContentView = new ContentView(this, Cursor);
+        mContentView.setOnDoubleTapListener(new ContentView.OnContentViewListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    procFullScreen();
+                    return true;
+                }
+                return false;
+            }
+        });
         final GestureDetector dbClickDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
@@ -336,13 +346,7 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
-        mContentView.setClickable(true);
-        mContentView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return dbClickDetector.onTouchEvent(event);
-            }
-        });
+
         mLogoView = (RelativeLayout) findViewById(R.id.logo_view);
         mLogoView.setClickable(true);
         mLogoView.setOnTouchListener(new View.OnTouchListener() {
