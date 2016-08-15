@@ -362,10 +362,35 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     public void drawAll() {
+        StringBuilder dbcsTemp = new StringBuilder();
         for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
-                boolean isNeedLine = FieldList.isNeedLine(idxCol, idxRow);
-                DrawChar(this.CharGrid[idxRow][idxCol], idxCol, idxRow, false, isNeedLine, false);
+                char c = CharGrid[idxRow][idxCol];
+                switch (c) {
+                    case DBCS_LEADING:
+                        mBDBCS = true;
+                        break;
+                    case DBCS_ENDING:
+                        mBDBCS = false;
+                        break;
+                    default://data
+                        if(mBDBCS == false) { //Single Byte
+                            if (IsCharAttributes(c) == false) {
+                                char chater = szEBCDIC[(int) c];
+                                char curAttr = AttribGrid[idxRow][idxCol];
+                                if (isScreenAttributeVisible((byte) curAttr))
+                                    DrawChar(chater, idxCol, idxRow, false, FieldList.isNeedLine(idxCol, idxRow), false);
+                            }
+                        } else { //Double byte
+                            dbcsTemp.append(c);
+                            if(dbcsTemp.length() >= 2) {
+                                String word = converToDBCSByTable(dbcsTemp.toString());
+                                DrawChar(Character.valueOf(word.charAt(0)), idxCol, idxRow, false, FieldList.isNeedLine(idxCol, idxRow), true);
+                                dbcsTemp.setLength(0);
+                            }
+                        }
+                        break;
+                }
             }
         }
     }
@@ -544,20 +569,19 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     private void ParserFieldData() {
-        StringBuilder dbcsTemp = new StringBuilder();
         for (Object ch : DataList) {
             char c = ((Character) ch).charValue();
             switch (c) {
                 case DBCS_LEADING:
                     mBDBCS = true;
                     this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
-                    this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0x20;
+                    this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
                     movePosToNext(BufferAddr.Pos);
                     break;
                 case DBCS_ENDING:
                     mBDBCS = false;
                     this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
-                    this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0x20;
+                    this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
                     movePosToNext(BufferAddr.Pos);
                     break;
                 default://data
@@ -567,22 +591,14 @@ public class IBMHost5250 extends IBMHostBase {
                             this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                             this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = 0;
                         } else {
-                            char Chater = (char) szEBCDIC[(int) c];
                             this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
-                            this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = Chater;
-                            if (isScreenAttributeVisible((byte) CurAttrib))
-                                PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y), false);
+                            this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
                         }
                         movePosToNext(BufferAddr.Pos);
                     } else { //Double byte
-                        dbcsTemp.append(c);
-                        if(dbcsTemp.length() >= 2) {
-                            String word = converToDBCSByTable(dbcsTemp.toString());
-                            PrintChar(Character.valueOf(word.charAt(0)), BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y), true);
-                            dbcsTemp.setLength(0);
-                            movePosToNext(BufferAddr.Pos);
-                            movePosToNext(BufferAddr.Pos);
-                        }
+                        this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
+                        this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
+                        movePosToNext(BufferAddr.Pos);
                     }
                     break;
             }
@@ -702,11 +718,11 @@ public class IBMHost5250 extends IBMHostBase {
                 this.AttribGrid[posTemp.Y][posTemp.X] = CurAttrib;
                 this.CharGrid[posTemp.Y][posTemp.X] = 0;
             } else {
-                char Chater = (char) szEBCDIC[(int) c];
-                this.CharGrid[posTemp.Y][posTemp.X] = Chater;
-                PrintChar(Chater, posTemp.X, posTemp.Y, FieldList.isNeedLine(posTemp.X, posTemp.Y), false);
+                this.CharGrid[posTemp.Y][posTemp.X] = c;
+                char chater = szEBCDIC[(int) c];
+                DrawChar(chater, posTemp.X, posTemp.Y, false, FieldList.isNeedLine(posTemp.X, posTemp.Y), false);
                 if(sbRet != null) {
-                    sbRet.append(Chater);
+                    sbRet.append(chater);
                 }
             }
             movePosToNext(posTemp);
@@ -1147,6 +1163,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     public void ParseEnd() {
+        drawAll();
         tryInsertCaret();
     }
 
@@ -1333,12 +1350,9 @@ public class IBMHost5250 extends IBMHostBase {
         if (Repeatlen <= 0)
             return;
 
-        char Chater = (char) szEBCDIC[(int) Data];
-
         for (int i = 0; i < Repeatlen; i++) {
             this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
-            this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = Chater;
-            PrintChar(Chater, BufferAddr.Pos.X, BufferAddr.Pos.Y, FieldList.isNeedLine(BufferAddr.Pos.X, BufferAddr.Pos.Y), false);
+            this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = Data;
             movePosToNext(BufferAddr.Pos);
         }
     }
@@ -1429,36 +1443,25 @@ public class IBMHost5250 extends IBMHostBase {
         if (FieldList.size() <= 0)
             return;
 
-        IBM_FIELD CurField = (IBM_FIELD) FieldList.get(index);
+        IBM_FIELD CurField = FieldList.get(index);
 
-        int X = CurField.CaretAddr.Pos.X;
-        int Y = CurField.CaretAddr.Pos.Y;
+        Point posTemp = new Point(CurField.CaretAddr.Pos.X, CurField.CaretAddr.Pos.Y);
 
         for (int i = 0; i < CurField.Lenth; i++) {
             if (IsCharAttributes((char) CurField.Data[i])) {
                 this.CurAttrib = CurField.Data[i];
-                this.AttribGrid[Y][X] = CurAttrib;
-                this.CharGrid[Y][X] = 0;
+                this.AttribGrid[posTemp.Y][posTemp.X] = CurAttrib;
+                this.CharGrid[posTemp.Y][posTemp.X] = 0;
             } else {
-                char Chater = szEBCDIC[(int) CurField.Data[i]];
-                this.CharGrid[Y][X] = Chater;
-                this.AttribGrid[Y][X] = CurField.Attrib;
-                if (isScreenAttributeVisible((byte) CurField.Attrib))
-                    PrintChar(Chater, X, Y, true, false);
+                this.CharGrid[posTemp.Y][posTemp.X] = CurField.Data[i];
+                this.AttribGrid[posTemp.Y][posTemp.X] = CurField.Attrib;
+                if (isScreenAttributeVisible((byte) CurField.Attrib)) {
+                    char chater = szEBCDIC[(int) CurField.Data[i]];
+                    DrawChar(chater, posTemp.X, posTemp.Y, false, true, false);
+                }
             }
-
-            if (X >= this.RightMargin) {
-                X = this.LeftMargin;
-                Y++;
-            } else
-                X++;
+            movePosToNext(posTemp);
         }
-    }
-
-    private void PrintChar(char Character, int X, int Y, boolean Isfield, boolean bMulti) {
-        if (Y > (this._rows - 1))
-            return;
-        DrawChar(Character, X, Y, false, Isfield, bMulti);
     }
 
     public void warning() {
