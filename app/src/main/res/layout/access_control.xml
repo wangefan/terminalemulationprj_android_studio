@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="30dp"
                 android:paddingStart="30dp"
+                android:textStyle="italic"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/msg_pwd_not_match"/>
         </LinearLayout>
