@@ -741,6 +741,9 @@ public class MainActivity extends AppCompatActivity
     //Listener TEKeyboardView End
 
     private boolean isCurSessionConnected() {
+        if(mTerminalProcessFrg == null) {
+            return false;
+        }
         TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         return (termProc != null && termProc.isConnected());
     }
