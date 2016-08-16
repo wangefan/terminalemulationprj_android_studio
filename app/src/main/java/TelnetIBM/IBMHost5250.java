@@ -1162,6 +1162,7 @@ public class IBMHost5250 extends IBMHostBase {
         }
     }
 
+    @Override
     public void ParseEnd() {
         drawAll();
         tryInsertCaret();

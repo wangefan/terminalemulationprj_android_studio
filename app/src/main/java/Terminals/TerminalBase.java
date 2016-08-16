@@ -161,12 +161,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     //endregion
     //region  TelnetInterpreter
-    public void ParseEnd() {
-        // Boolean ChkisUserprompt=false;
-        //Boolean ChkisPwdprompt=false;
-
-
-    }
+    public abstract void ParseEnd();
 
     public abstract void processChar(char ch);
 

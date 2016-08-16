@@ -209,6 +209,7 @@ public class CVT100 extends CVT100Enum {
 
     //endregion
     //region  TelnetInterpreter
+    @Override
     public void ParseEnd() {
 
     }
