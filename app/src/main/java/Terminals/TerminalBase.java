@@ -107,6 +107,10 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     abstract public void drawAll();
 
+    abstract public void ParseEnd();
+
+    abstract public void processChar(char ch);
+
     public char GetCharFromCurrentIndex(int index) {
         return mTelnetParser.GetCharFromCurrent(index);
     }
@@ -161,9 +165,6 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     //endregion
     //region  TelnetInterpreter
-    public abstract void ParseEnd();
-
-    public abstract void processChar(char ch);
 
     protected abstract boolean autoLogin();
 
