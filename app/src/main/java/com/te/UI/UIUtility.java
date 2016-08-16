@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.terminalemulation.R;
 
@@ -54,6 +55,21 @@ public class UIUtility {
 	static private boolean mBShow = false;
 	static private Handler mUIHandler = null;
 	static private TourGuide mTourGuideHandler;
+
+	//Access control dialog begin
+	static View mAccessCtrlDialog = null;
+	static LinearLayout mLayPassword = null;
+	static Switch mSwSetPwd = null;
+	static EditText mEdPwd1 = null;
+	static EditText mEdPwd2 = null;
+	static TextView mTVNotMatch = null;
+	static LinearLayout mLayAllSettings = null;
+	static CheckBox mCkIsSettingsProct = null;
+	static CheckBox mCkIsExitProct = null;
+	static CheckBox mCkIsExitFullProct = null;
+	static Button mBtnPositive = null;
+	static boolean mIsDirty = false;
+	//Access control dialog end
 	
 	//member functions
 	static public void init(Context context) {
@@ -193,152 +209,146 @@ public class UIUtility {
 		builder.create().show();
 	}
 
-	public static void doAccessCtrlDialog() {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-		final View accessCtrlDialog = inflater.inflate(R.layout.access_control, null);
-		final EditText edPwd1 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd1));
-		final EditText edPwd2 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd2));
-		final CheckBox ckIsSettingsProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_settings);
-		ckIsSettingsProct.setChecked(TESettingsInfo.getIsSettingsProtect());
-		accessCtrlDialog.findViewById(R.id.id_lay_item_settings).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ckIsSettingsProct.setChecked(!ckIsSettingsProct.isChecked());
+	private static void updateAllPwdsEditUI(boolean bEnable) {
+		if(bEnable) {
+			CipherUtility.enableAllChild(mLayPassword, true);
+			if(mEdPwd1.getText().length() <= 0) {
+				mEdPwd2.setEnabled(false);
 			}
-		});
-		final CheckBox ckIsExitProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit);
-		ckIsExitProct.setChecked(TESettingsInfo.getIsExitProtect());
-		accessCtrlDialog.findViewById(R.id.id_lay_item_exit).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ckIsExitProct.setChecked(!ckIsExitProct.isChecked());
-			}
-		});
-		final CheckBox ckIsExitFullProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
-		ckIsExitFullProct.setChecked(TESettingsInfo.getIsExitFullScreenProtect());
-		accessCtrlDialog.findViewById(R.id.id_lay_item_exit_full_screen).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ckIsExitFullProct.setChecked(!ckIsExitFullProct.isChecked());
-			}
-		});
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle(R.string.str_access_ctrl);
-		builder.setView(accessCtrlDialog);
-		builder.setPositiveButton(R.string.STR_Confirm, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				TESettingsInfo.setAccessCtrlProtect(true);
-				TESettingsInfo.setSettingsProtect(ckIsSettingsProct.isChecked());
-				TESettingsInfo.setExitProtect(ckIsExitProct.isChecked());
-				TESettingsInfo.setExitFullScreenProtect(ckIsExitFullProct.isChecked());
-				TESettingsInfo.setAccessCtrlProtectedPassword(edPwd2.getText().toString());
-			}
-		});
-		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog dialog = builder.create();
-		dialog.show();
-		final Button btnPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-		btnPositive.setEnabled(false);
-		edPwd1.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String confirm = edPwd2.getText().toString();
-				if(confirm.length() > 0 && confirm.compareTo(s.toString()) == 0) {
-					btnPositive.setEnabled(true);
-				} else {
-					btnPositive.setEnabled(false);
-				}
-			}
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
-		edPwd2.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String ori = edPwd1.getText().toString();
-				if(ori.length() > 0 && ori.compareTo(s.toString()) == 0) {
-					btnPositive.setEnabled(true);
-				} else {
-					btnPositive.setEnabled(false);
-				}
-			}
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
+		} else {
+			CipherUtility.enableAllChild(mLayPassword, false);
+		}
 	}
 
-	public static void doAccessCtrlModDialog() {
+	private static void updatePostiveBtn() {
+		boolean bEnable = false;
+		if(mIsDirty) {
+			if(mSwSetPwd.isChecked() == true) {
+				String strPwd1 = mEdPwd1.getText().toString();
+				String strPwd2 = mEdPwd2.getText().toString();
+				if(strPwd1.length() > 0 &&
+						strPwd2.length() > 0 &&
+						strPwd1.compareTo(strPwd2) == 0) {
+					bEnable = true;
+				}
+			} else {
+				bEnable = true;
+			}
+		}
+		mBtnPositive.setEnabled(bEnable);
+	}
+
+	public static void doAccessCtrlDialog() {
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		final View accessCtrlDialog = inflater.inflate(R.layout.access_control_modify, null);
-		final LinearLayout layPassword = (LinearLayout) (accessCtrlDialog.findViewById(R.id.password_lay));
-		CipherUtility.enableAllChild(layPassword, false);
-		final Switch swSetPwd = (Switch) (accessCtrlDialog.findViewById(R.id.mod_pwd_switch));
-		final EditText edPwd1 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd1));
-		final EditText edPwd2 = (EditText) (accessCtrlDialog.findViewById(R.id.ed_pwd2));
-		final CheckBox ckIsSettingsProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_settings);
-		ckIsSettingsProct.setChecked(TESettingsInfo.getIsSettingsProtect());
-		accessCtrlDialog.findViewById(R.id.id_lay_item_settings).setOnClickListener(new View.OnClickListener() {
+		mAccessCtrlDialog = inflater.inflate(R.layout.access_control, null);
+		mLayPassword = (LinearLayout) (mAccessCtrlDialog.findViewById(R.id.password_lay));
+		mSwSetPwd = (Switch) (mAccessCtrlDialog.findViewById(R.id.mod_pwd_switch));
+		mAccessCtrlDialog.findViewById(R.id.set_password).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ckIsSettingsProct.setChecked(!ckIsSettingsProct.isChecked());
+				mIsDirty = true;
+				mSwSetPwd.setChecked(!mSwSetPwd.isChecked());
+				updateAllPwdsEditUI(mSwSetPwd.isChecked());
+				CipherUtility.enableAllChild(mLayAllSettings, mSwSetPwd.isChecked());
+				updatePostiveBtn();
 			}
 		});
-		final CheckBox ckIsExitProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit);
-		ckIsExitProct.setChecked(TESettingsInfo.getIsExitProtect());
-		accessCtrlDialog.findViewById(R.id.id_lay_item_exit).setOnClickListener(new View.OnClickListener() {
+		mEdPwd1 = (EditText) mAccessCtrlDialog.findViewById(R.id.ed_pwd1);
+		mEdPwd1.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onClick(View v) {
-				ckIsExitProct.setChecked(!ckIsExitProct.isChecked());
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				mIsDirty = true;
+				updateAllPwdsEditUI(true);
+				updatePostiveBtn();
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
 			}
 		});
-		final CheckBox ckIsExitFullProct = (CheckBox) accessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
-		ckIsExitFullProct.setChecked(TESettingsInfo.getIsExitFullScreenProtect());
-		accessCtrlDialog.findViewById(R.id.id_lay_item_exit_full_screen).setOnClickListener(new View.OnClickListener() {
+		mEdPwd1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus) {
+					mEdPwd1.selectAll();
+				}
+			}
+		});
+		mEdPwd2 = (EditText) mAccessCtrlDialog.findViewById(R.id.ed_pwd2);
+		mEdPwd2.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				mIsDirty = true;
+				if(s.length() > mEdPwd1.length()) {
+					mTVNotMatch.setVisibility(View.VISIBLE);
+				} else
+				if(s.length() == mEdPwd1.length() && mEdPwd1.getText().toString().compareTo(s.toString()) != 0) {
+					mTVNotMatch.setVisibility(View.VISIBLE);
+				} else {
+					mTVNotMatch.setVisibility(View.GONE);
+				}
+				updatePostiveBtn();
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+		mTVNotMatch = (TextView) mAccessCtrlDialog.findViewById(R.id.id_msg_not_match);
+		mTVNotMatch.setVisibility(View.GONE);
+		mLayAllSettings = (LinearLayout) mAccessCtrlDialog.findViewById(R.id.all_settings_lay);
+		mCkIsSettingsProct = (CheckBox) mAccessCtrlDialog.findViewById(R.id.id_protect_item_settings);
+		mCkIsSettingsProct.setClickable(false);
+		mAccessCtrlDialog.findViewById(R.id.id_lay_item_settings).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ckIsExitFullProct.setChecked(!ckIsExitFullProct.isChecked());
+				mIsDirty = true;
+				mCkIsSettingsProct.setChecked(!mCkIsSettingsProct.isChecked());
+				updatePostiveBtn();
+			}
+		});
+		mCkIsExitProct = (CheckBox) mAccessCtrlDialog.findViewById(R.id.id_protect_item_exit);
+		mCkIsExitProct.setClickable(false);
+		mAccessCtrlDialog.findViewById(R.id.id_lay_item_exit).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mIsDirty = true;
+				mCkIsExitProct.setChecked(!mCkIsExitProct.isChecked());
+				updatePostiveBtn();
+			}
+		});
+		mCkIsExitFullProct = (CheckBox) mAccessCtrlDialog.findViewById(R.id.id_protect_item_exit_full_screen);
+		mCkIsExitFullProct.setClickable(false);
+		mAccessCtrlDialog.findViewById(R.id.id_lay_item_exit_full_screen).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mIsDirty = true;
+				mCkIsExitFullProct.setChecked(!mCkIsExitFullProct.isChecked());
+				updatePostiveBtn();
 			}
 		});
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(R.string.str_access_ctrl);
-		builder.setView(accessCtrlDialog);
+		builder.setView(mAccessCtrlDialog);
 		builder.setPositiveButton(R.string.STR_Confirm, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				TESettingsInfo.setAccessCtrlProtect(true);
-				TESettingsInfo.setSettingsProtect(ckIsSettingsProct.isChecked());
-				TESettingsInfo.setExitProtect(ckIsExitProct.isChecked());
-				TESettingsInfo.setExitFullScreenProtect(ckIsExitFullProct.isChecked());
-				if(swSetPwd.isChecked()) {
-					TESettingsInfo.setAccessCtrlProtectedPassword(edPwd2.getText().toString());
-				}
+				TESettingsInfo.setAccessCtrlProtect(mSwSetPwd.isChecked());
+				TESettingsInfo.setSettingsProtect(mCkIsSettingsProct.isChecked());
+				TESettingsInfo.setExitProtect(mCkIsExitProct.isChecked());
+				TESettingsInfo.setExitFullScreenProtect(mCkIsExitFullProct.isChecked());
+				TESettingsInfo.setAccessCtrlProtectedPassword(mEdPwd2.getText().toString());
+				mIsDirty = false;
 			}
 		});
-		builder.setNeutralButton(R.string.STR_Reset, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				TESettingsInfo.setAccessCtrlProtect(false);
-				TESettingsInfo.setSettingsProtect(false);
-				TESettingsInfo.setExitProtect(false);
-				TESettingsInfo.setExitFullScreenProtect(false);
-				TESettingsInfo.setAccessCtrlProtectedPassword("");
-			}
-		});
+		builder.setNeutralButton(R.string.STR_Reset, null);
+
 		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -346,61 +356,37 @@ public class UIUtility {
 		});
 		AlertDialog dialog = builder.create();
 		dialog.show();
-		final Button btnPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-		accessCtrlDialog.findViewById(R.id.set_password).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				swSetPwd.setChecked(!swSetPwd.isChecked());
-				CipherUtility.enableAllChild(layPassword, swSetPwd.isChecked());
-				if(swSetPwd.isChecked())  {
-					if(edPwd1.getText().length() > 0 &&
-							edPwd2.getText().length() > 0 &&
-							edPwd1.getText().toString().compareTo(edPwd2.getText().toString()) == 0)
-						btnPositive.setEnabled(true);
-					else {
-						btnPositive.setEnabled(false);
-					}
-				} else {
-					btnPositive.setEnabled(true);
+		mBtnPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+		Button btnReset = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+		if(btnReset != null) {
+			btnReset.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mIsDirty = true;
+					mSwSetPwd.setChecked(false);
+					mEdPwd1.setText("");
+					mEdPwd2.setText("");
+					CipherUtility.enableAllChild(mLayPassword, false);
+					mCkIsSettingsProct.setChecked(false);
+					mCkIsExitProct.setChecked(false);
+					mCkIsExitFullProct.setChecked(false);
+					CipherUtility.enableAllChild(mLayAllSettings, false);
+					updatePostiveBtn();
 				}
-			}
-		});
-		edPwd1.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
+			});
+		}
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String confirm = edPwd2.getText().toString();
-				if(confirm.length() > 0 && confirm.compareTo(s.toString()) == 0) {
-					btnPositive.setEnabled(true);
-				} else {
-					btnPositive.setEnabled(false);
-				}
-			}
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
-		edPwd2.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
+		mSwSetPwd.setChecked(TESettingsInfo.getIsAccessCtrlProtected());
+		mEdPwd1.setText(TESettingsInfo.getAccessCtrlProtectedPassword());
+		mEdPwd2.setText(TESettingsInfo.getAccessCtrlProtectedPassword());
+		updateAllPwdsEditUI(mSwSetPwd.isChecked());
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String ori = edPwd1.getText().toString();
-				if(ori.length() > 0 && ori.compareTo(s.toString()) == 0) {
-					btnPositive.setEnabled(true);
-				} else {
-					btnPositive.setEnabled(false);
-				}
-			}
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
+		mCkIsSettingsProct.setChecked(TESettingsInfo.getIsSettingsProtect());
+		mCkIsExitProct.setChecked(TESettingsInfo.getIsExitProtect());
+		mCkIsExitFullProct.setChecked(TESettingsInfo.getIsExitFullScreenProtect());
+		CipherUtility.enableAllChild(mLayAllSettings, mSwSetPwd.isChecked());
+		mIsDirty = false;
+		updatePostiveBtn();
 	}
 
 	public static void doCheckAccessCtrlDialog(final OnAccessCtrlChkListener listener) {

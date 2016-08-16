@@ -582,7 +582,7 @@ public class MainActivity extends AppCompatActivity
                             new UIUtility.OnAccessCtrlChkListener() {
                                 @Override
                                 public void onValid() {
-                                    UIUtility.doAccessCtrlModDialog();
+                                    UIUtility.doAccessCtrlDialog();
                                 }
                             });
                 } else {
