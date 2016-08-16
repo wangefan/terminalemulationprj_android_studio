@@ -310,46 +310,50 @@ public class ContentView extends View {
                             return;
                         } else {
                             mTerminalProc.handleKeyDown(keyCode, event);
+                            procCursorTrack();
                         }
                     }
                 });
             } else {
                 mTerminalProc.handleKeyDown(keyCode, event);
-                Boolean IsTracking = TESettingsInfo.getHostIsCursorTrackByIndex(TESettingsInfo.getSessionIndex());
-
-                if (IsTracking) {
-                    Point cursorPos = mTerminalProc.getCursorGridPos();
-                    int nBmpPosX = cursorPos.X * mFontRect.width();
-                    int nBmpPosY = cursorPos.Y * mFontRect.height();
-                    int nMoveToX = 0, nMoveToY = 0;
-                    switch (TESettingsInfo.getHostAutoTrackTypeByIndex(TESettingsInfo.getSessionIndex())) {
-                        case AutoTrackType_Visible:
-                            nMoveToX = getXPosByRate(0.75f, nBmpPosX);
-                            nMoveToY = getYPosByRate(0.75f, nBmpPosY);
-                            break;
-                        case AutoTrackType_Center:
-                            nMoveToX = getXPosByRate(0.5f, nBmpPosX);
-                            nMoveToY = getYPosByRate(0.5f, nBmpPosY);
-                            break;
-                        case AutoTrackType_Lock:
-                            int nFixRow = TESettingsInfo.getHostLockerRowIndex(TESettingsInfo.getSessionIndex());
-                            int nFixCol = TESettingsInfo.getHostLockerColIndex(TESettingsInfo.getSessionIndex());
-                            nMoveToX = Math.min(nFixCol * mFontRect.width(), mBmpWidth);
-                            nMoveToY = Math.min(nFixRow * mFontRect.height(), mBmpHeight);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    mOverScroller.startScroll(mScrollPosX, mScrollPosY, nMoveToX - mScrollPosX, nMoveToY - mScrollPosY);
-                    CipherUtility.Log_d("ContentView", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
-                }
+                procCursorTrack();
             }
         }
         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_TAB) {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void procCursorTrack() {
+        Boolean IsTracking = TESettingsInfo.getHostIsCursorTrackByIndex(TESettingsInfo.getSessionIndex());
+        if (IsTracking) {
+            Point cursorPos = mTerminalProc.getCursorGridPos();
+            int nBmpPosX = cursorPos.X * mFontRect.width();
+            int nBmpPosY = cursorPos.Y * mFontRect.height();
+            int nMoveToX = 0, nMoveToY = 0;
+            switch (TESettingsInfo.getHostAutoTrackTypeByIndex(TESettingsInfo.getSessionIndex())) {
+                case AutoTrackType_Visible:
+                    nMoveToX = getXPosByRate(0.75f, nBmpPosX);
+                    nMoveToY = getYPosByRate(0.75f, nBmpPosY);
+                    break;
+                case AutoTrackType_Center:
+                    nMoveToX = getXPosByRate(0.5f, nBmpPosX);
+                    nMoveToY = getYPosByRate(0.5f, nBmpPosY);
+                    break;
+                case AutoTrackType_Lock:
+                    int nFixRow = TESettingsInfo.getHostLockerRowIndex(TESettingsInfo.getSessionIndex());
+                    int nFixCol = TESettingsInfo.getHostLockerColIndex(TESettingsInfo.getSessionIndex());
+                    nMoveToX = Math.min(nFixCol * mFontRect.width(), mBmpWidth);
+                    nMoveToY = Math.min(nFixRow * mFontRect.height(), mBmpHeight);
+                    break;
+                default:
+                    break;
+            }
+
+            mOverScroller.startScroll(mScrollPosX, mScrollPosY, nMoveToX - mScrollPosX, nMoveToY - mScrollPosY);
+            CipherUtility.Log_d("ContentView", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
+        }
     }
 
     @Override

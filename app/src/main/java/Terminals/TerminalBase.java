@@ -19,6 +19,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public final static String NOTF_ACT_CLEAR_VIEW ="NOTF_ACT_CLEAR_VIEW";
     public final static String NOTF_ACT_UPDATE_GRID ="NOTF_ACT_UPDATE_GRID";
     public final static String NOTF_ACT_DRAW_SPACE ="NOTF_ACT_DRAW_SPACE";
+    public final static String NOTF_ACT_CURSOR_TRACK ="NOTF_ACT_CURSOR_TRACK";
     public TerminalLogWriter mDebugLog = new TerminalLogWriter();
     public char[][] CharGrid = null;
     public char[][] AttribGrid = null;
@@ -139,6 +140,11 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             mTerminalListener.onNotify(NOTF_ACT_DRAWCHAR, c, x, y, IsBold, IsUnderLine, bMultiByte);
     }
 
+    public void procCursorTrack() {
+        if (mTerminalListener != null)
+            mTerminalListener.onNotify(NOTF_ACT_CURSOR_TRACK);
+    }
+
     public void handleBufferReceived(byte[] data, int offset, int lenth) {
         char[] charArr = new char[lenth];
 
@@ -158,7 +164,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             if(autoLogin())
                 mBAutoLoginProcessed = true;
         }
-
+        procCursorTrack();
         ViewPostInvalidate();
     }
     //region  TelnetInt Parser Entry

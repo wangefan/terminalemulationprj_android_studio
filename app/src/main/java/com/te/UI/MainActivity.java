@@ -155,6 +155,8 @@ public class MainActivity extends AppCompatActivity
                 mContentView.DrawSpace((Integer) params[0], (Integer) params[1], (Integer) params[2]);
             } else if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_DRAWCHAR) == 0) {
                 mContentView.DrawChar((Character) params[0], (Integer) params[1], (Integer) params[2], (Boolean) params[3], (Boolean) params[4], (Boolean) params[5]);
+            } else if(action.compareToIgnoreCase(TerminalBase.NOTF_ACT_CURSOR_TRACK) == 0) {
+                mContentView.procCursorTrack();
             }
         }
     };
