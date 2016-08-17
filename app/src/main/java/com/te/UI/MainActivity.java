@@ -807,16 +807,21 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
     private void procFullScreen() {
+        final boolean bShowStatusBarOnFull = TESettingsInfo.getHostShowTaskBarOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         if (mBFullScreen == false) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getSupportActionBar().hide();
+            int uiFullScreenOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE;
+
+            if(bShowStatusBarOnFull == false) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //Handle status bar for API level <=16
+                uiFullScreenOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN; //Handle status bar for API level >16
+            }
             mDecorView.setFitsSystemWindows(false);
-            mDecorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+            mDecorView.setSystemUiVisibility(uiFullScreenOptions);
             mBFullScreen = true;
             if (TESettingsInfo.showResetFullScreen() == true) {
                 UIUtility.showResetFullScreen(mLogoView.findViewById(R.id.ImgLogoView));
@@ -827,7 +832,9 @@ public class MainActivity extends AppCompatActivity
                         new UIUtility.OnAccessCtrlChkListener() {
                             @Override
                             public void onValid() {
-                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                                if(bShowStatusBarOnFull == false) {
+                                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                                }
                                 getSupportActionBar().show();
                                 mDecorView.setSystemUiVisibility(
                                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -837,7 +844,9 @@ public class MainActivity extends AppCompatActivity
                             }
                         });
             } else {
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                if(bShowStatusBarOnFull == false) {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
                 getSupportActionBar().show();
                 mDecorView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

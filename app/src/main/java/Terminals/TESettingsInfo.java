@@ -436,6 +436,11 @@ public class TESettingsInfo {
         return Setting.mIsAutoFullscreenOnConn;
     }
 
+    public static Boolean getHostShowTaskBarOnFullScreenByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsShowTaskbarOnConn;
+    }
+
     public static Boolean getHostIsAutoSignByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBAutoSignOn;
