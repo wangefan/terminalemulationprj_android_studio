@@ -253,7 +253,19 @@ public class TESettings {
         public boolean mIsAutoFullscreenOnConn = false;
 
         @SerializedName("isShowTaskBarOnFullScreen")
-        public boolean mIsShowTaskbarOnConn = false;
+        public boolean mIsShowStatusbarOnFull = false;
+
+        @SerializedName("isShowWifiItem")
+        public boolean mIsShowWifiIconOnFull = false;
+
+        @SerializedName("isShowBatteryItem")
+        public boolean mIsShowBatteryIconOnFull = false;
+
+        @SerializedName("isUpdateWifi")
+        public boolean mIsUpdateWiFiIconOnFull = false;
+
+        @SerializedName("isUpdateBattery")
+        public boolean mIsUpdateBatteryIconOnFull = false;
 
         @SerializedName("bScanControl")
         public boolean mIsScanControl = false;

@@ -37,7 +37,7 @@ public class UIUtility {
 		void onCancel();
 	}
 	public interface OnListMessageBoxListener {
-		void onSelResult(String result);
+		void onSelResult(String result, int selIndex);
 	}
 	public interface OnDetectOFRListener {
 		void onResult(boolean bHasNetwork);
@@ -180,7 +180,7 @@ public class UIUtility {
 				String [] items = context.getResources().getStringArray(nStingArrayID);
 				if(items != null) {
 					String result = items[which];
-					listener.onSelResult(result);
+					listener.onSelResult(result, which);
 					dialog.dismiss();
 				}
 			}

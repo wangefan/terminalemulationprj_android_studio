@@ -245,8 +245,9 @@
     <string name="screen_color">Color Settings</string>
     <string name="screen_auto_full_on_conn_key">screen_auto_full_on_conn_key</string>
     <string name="screen_auto_full_on_conn">Auto Full Screen On Connection</string>
-    <string name="screen_show_taskbar_key">screen_show_taskbar_key</string>
-    <string name="screen_show_taskbar">Show Taskbar On Full Screen</string>
+    <string name="screen_show_wf_batt_key">screen_show_wf_batt_key</string>
+    <string name="screen_show_wf_bt_status">Show Wi-Fi/Battery Info On Full Screen</string>
+    <string name="screen_show_wf_bt_status_off">None</string>
     <string name="full_screen">Full Screen</string>
     <string name="LockedLocFormat">Row: %1$d, Col:%2$d</string>
     <string name="font_color_title">Font Color</string>
@@ -335,6 +336,31 @@
     <string name="check_pwd">Password (maximum 8 characters)</string>
     <string name="STR_Reset">Reset</string>
     <string name="msg_pwd_not_match">※ Passwords do not match</string>
+    <string name="show_wf_batt_info_title">Wi-Fi/Battery Status</string>
+    <string-array name="show_wf_batt_info_array">
+        <item>Show Status Bar</item>
+        <item>Show Wi-Fi Status</item>
+        <item>Show Battery Status</item>
+        <item>Show Wi-Fi and Battery Status</item>
+    </string-array>
+    <string name="screen_icon_update_interval_key">screen_icon_update_interval_key</string>
+    <string name="screen_icon_update_interval">Update Wi-Fi/Battery Icon Interval</string>
+    <string-array name="icon_update_interval_array">
+        <item>1 min</item>
+        <item>3 min</item>
+        <item>5 min</item>
+        <item>15 min</item>
+        <item>30 min</item>
+        <item>60 min</item>
+    </string-array>
+    <string-array name="icon_update_interval_array_vals">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
     <string-array name="vib_arr">
         <item>0 sec</item>
         <item>0.5 sec</item>

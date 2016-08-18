@@ -66,9 +66,17 @@
             android:key="@string/screen_auto_full_on_conn_key"
             android:title="@string/screen_auto_full_on_conn"
             android:defaultValue="false"/>
-        <CheckBoxPreference
-            android:key="@string/screen_show_taskbar_key"
-            android:title="@string/screen_show_taskbar"
-            android:defaultValue="false"/>
+        <com.te.UI.TESwitchPreference
+            android:key="@string/screen_show_wf_batt_key"
+            android:title="@string/screen_show_wf_bt_status"
+            android:summaryOff="@string/screen_show_wf_bt_status_off"
+            android:widgetLayout="@layout/te_switch"/>
+        <ListPreference
+            android:key="@string/screen_icon_update_interval_key"
+            android:title="@string/screen_icon_update_interval"
+            android:entries="@array/icon_update_interval_array"
+            android:entryValues="@array/icon_update_interval_array_vals"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
     </PreferenceCategory>
 </PreferenceScreen>

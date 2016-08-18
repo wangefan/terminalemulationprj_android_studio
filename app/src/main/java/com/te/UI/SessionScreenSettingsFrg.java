@@ -16,6 +16,11 @@ import Terminals.TESettings;
 
 public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
 
+    private static final int STRIDX_SHOW_STATUSBAR = 0;
+    private static final int STRIDX_SHOW_WIFI = 1;
+    private static final int STRIDX_SHOW_BATT = 2;
+    private static final int STRIDX_SHOW_WIFI_BATT = 3;
+
     //Data members
     private CheckBoxPreference mChkShowSessionNumber = null;
     private CheckBoxPreference mChkShowSessionStatus = null;
@@ -28,7 +33,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     private ListPreference mlstFont = null;
     private ListPreference mlstFontSize = null;
     private CheckBoxPreference mChkAutoFullScreenOnConn = null;
-    private CheckBoxPreference mChkShowTaskbarOnFullScreen = null;
+    private TESwitchPreference mSwhShowWFBTOnFullScreen = null;
+    private ListPreference mlstUpdateIconInterval = null;
 
     public SessionScreenSettingsFrg() {
     }
@@ -87,10 +93,37 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mPrefLockedLoc.setSummary(getLockedLocString(mSetting.mNCursorLockRow, mSetting.mNCursorLockCol));
         mlstFont.setValue(String.valueOf(mSetting.mNFontType));
         mlstFontSize.setValue(getFontSizeValFromSetting(mSetting.mNFontWidth, mSetting.mNFontHeight));
-        //Todo: mPrefFontColor
-        //Todo: mPrefBGColor
         mChkAutoFullScreenOnConn.setChecked(mSetting.mIsAutoFullscreenOnConn);
-        mChkShowTaskbarOnFullScreen.setChecked(mSetting.mIsShowTaskbarOnConn);
+        if(mSetting.mIsShowStatusbarOnFull ||
+                mSetting.mIsShowWifiIconOnFull ||
+                mSetting.mIsShowBatteryIconOnFull) {
+            mSwhShowWFBTOnFullScreen.setChecked(true);
+            mSwhShowWFBTOnFullScreen.setSummaryOn(
+                    getShowWFBTOnFullScreenSummary(
+                            mSetting.mIsShowStatusbarOnFull,
+                            mSetting.mIsShowWifiIconOnFull,
+                            mSetting.mIsShowBatteryIconOnFull));
+        } else {
+            mSwhShowWFBTOnFullScreen.setChecked(false);
+        }
+    }
+
+    private String getShowWFBTOnFullScreenSummary(boolean isShowTaskbarOnFull, boolean isShowWifiIconOnFull, boolean isShowBatteryIconOnFull) {
+        String [] wf_batt_sum_array = getResources().getStringArray(R.array.show_wf_batt_info_array);
+        if(wf_batt_sum_array.length <= 0) {
+            return "";
+        }
+
+        if(isShowWifiIconOnFull && isShowBatteryIconOnFull) {
+            return wf_batt_sum_array[STRIDX_SHOW_WIFI_BATT];
+        } else if(isShowTaskbarOnFull) {
+            return wf_batt_sum_array[STRIDX_SHOW_STATUSBAR];
+        } else if(isShowWifiIconOnFull) {
+            return wf_batt_sum_array[STRIDX_SHOW_WIFI];
+        } else if(isShowBatteryIconOnFull){
+            return wf_batt_sum_array[STRIDX_SHOW_BATT];
+        }
+        return "";
     }
 
     @Override
@@ -121,8 +154,35 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             }
         } else if(key.compareTo(getResources().getString(R.string.screen_auto_full_on_conn_key)) == 0) {
             mSetting.mIsAutoFullscreenOnConn = mChkAutoFullScreenOnConn.isChecked();
-        } else if(key.compareTo(getResources().getString(R.string.screen_show_taskbar_key)) == 0) {
-            mSetting.mIsShowTaskbarOnConn = mChkShowTaskbarOnFullScreen.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.screen_show_wf_batt_key)) == 0) {
+            if(mSwhShowWFBTOnFullScreen.isChecked() == false) {
+                mSetting.mIsShowStatusbarOnFull = false;
+                mSetting.mIsShowWifiIconOnFull = false;
+                mSetting.mIsShowBatteryIconOnFull = false;
+            } else {
+                String summOn = mSwhShowWFBTOnFullScreen.getSummaryOn().toString();
+                String statusBarOnFull = getResources().getStringArray(R.array.show_wf_batt_info_array)[0];
+                String showWiFiOnFull = getResources().getStringArray(R.array.show_wf_batt_info_array)[1];
+                String showBattOnFull = getResources().getStringArray(R.array.show_wf_batt_info_array)[2];
+                String showWiFiAndBattOnFull = getResources().getStringArray(R.array.show_wf_batt_info_array)[3];
+                if(summOn.compareTo(statusBarOnFull) == 0) {
+                    mSetting.mIsShowStatusbarOnFull = true;
+                    mSetting.mIsShowWifiIconOnFull = false;
+                    mSetting.mIsShowBatteryIconOnFull = false;
+                } else if(summOn.compareTo(showWiFiOnFull) == 0) {
+                    mSetting.mIsShowStatusbarOnFull = false;
+                    mSetting.mIsShowWifiIconOnFull = true;
+                    mSetting.mIsShowBatteryIconOnFull = false;
+                } else if(summOn.compareTo(showBattOnFull) == 0) {
+                    mSetting.mIsShowStatusbarOnFull = false;
+                    mSetting.mIsShowWifiIconOnFull = false;
+                    mSetting.mIsShowBatteryIconOnFull = true;
+                } else if(summOn.compareTo(showWiFiAndBattOnFull) == 0) {
+                    mSetting.mIsShowStatusbarOnFull = false;
+                    mSetting.mIsShowWifiIconOnFull = true;
+                    mSetting.mIsShowBatteryIconOnFull = true;
+                }
+            }
         }
     }
 
@@ -151,7 +211,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                         getActivity(),
                         new UIUtility.OnListMessageBoxListener() {
                             @Override
-                            public void onSelResult(String result) {
+                            public void onSelResult(String result, int nSelIdx) {
                                 mSetting.mNShowWifiAlertLevel = Integer.valueOf(result);
                                 mSwchShowWiFiAlert.setSummaryOn(result);
                                 mSwchShowWiFiAlert.setChecked(true);
@@ -181,7 +241,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                         getActivity(),
                         new UIUtility.OnListMessageBoxListener() {
                             @Override
-                            public void onSelResult(String result) {
+                            public void onSelResult(String result, int nSelIdx) {
                                 mSetting.mNShowBatteryAlertLevel = Integer.valueOf(result);
                                 mSwchShowBattrryAlert.setSummaryOn(result);
                                 mSwchShowBattrryAlert.setChecked(true);
@@ -214,7 +274,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                         getActivity(),
                          new UIUtility.OnListMessageBoxListener() {
                     @Override
-                    public void onSelResult(String result) {
+                    public void onSelResult(String result, int nSelIdx) {
                         TESettings.SessionSetting.AutoTrackType trackType = getAutoTrackTypeFromString(result);
                         mSetting.setAutoTrackType(trackType);
                         mSwchAutoTracking.setSummaryOn(getAutoTrackString(mSetting.getAutoTrackType()));
@@ -266,6 +326,62 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
         mChkAutoFullScreenOnConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_auto_full_on_conn_key));
-        mChkShowTaskbarOnFullScreen = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_show_taskbar_key));
+        mSwhShowWFBTOnFullScreen = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_show_wf_batt_key));
+        mSwhShowWFBTOnFullScreen.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
+            @Override
+            public void onClick() {
+                int nSelItem = -1;
+                if(mSetting.mIsShowBatteryIconOnFull && mSetting.mIsShowWifiIconOnFull) {
+                    nSelItem = STRIDX_SHOW_WIFI_BATT;
+                } else if(mSetting.mIsShowBatteryIconOnFull) {
+                    nSelItem = STRIDX_SHOW_BATT;
+                } else if(mSetting.mIsShowWifiIconOnFull) {
+                    nSelItem = STRIDX_SHOW_WIFI;
+                } else if(mSetting.mIsShowStatusbarOnFull){
+                    nSelItem = STRIDX_SHOW_STATUSBAR;
+                }
+
+                UIUtility.listMessageBox(R.string.show_wf_batt_info_title,
+                        R.array.show_wf_batt_info_array,
+                        nSelItem,
+                        getActivity(),
+                        new UIUtility.OnListMessageBoxListener() {
+                            @Override
+                            public void onSelResult(String result, int selIndex) {
+                                switch (selIndex) {
+                                    case STRIDX_SHOW_STATUSBAR:
+                                    default:
+                                        mSetting.mIsShowStatusbarOnFull = true;
+                                        mSetting.mIsShowWifiIconOnFull = false;
+                                        mSetting.mIsShowBatteryIconOnFull = false;
+                                        break;
+                                    case STRIDX_SHOW_WIFI:
+                                        mSetting.mIsShowStatusbarOnFull = false;
+                                        mSetting.mIsShowWifiIconOnFull = true;
+                                        mSetting.mIsShowBatteryIconOnFull = false;
+                                        break;
+                                    case STRIDX_SHOW_BATT:
+                                        mSetting.mIsShowStatusbarOnFull = false;
+                                        mSetting.mIsShowWifiIconOnFull = false;
+                                        mSetting.mIsShowBatteryIconOnFull = true;
+                                        break;
+                                    case STRIDX_SHOW_WIFI_BATT:
+                                        mSetting.mIsShowStatusbarOnFull = false;
+                                        mSetting.mIsShowWifiIconOnFull = true;
+                                        mSetting.mIsShowBatteryIconOnFull = true;
+                                        break;
+                                }
+                                mSwhShowWFBTOnFullScreen.setSummaryOn(result);
+                                mSwhShowWFBTOnFullScreen.setChecked(true);
+                            }
+                        });
+            }
+
+            @Override
+            public void onChecked(boolean isChecked) {
+
+            }
+        });
+        mlstUpdateIconInterval = (ListPreference) findPreference(getResources().getString(R.string.screen_icon_update_interval_key));
     }
 }
