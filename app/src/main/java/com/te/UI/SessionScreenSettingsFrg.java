@@ -27,8 +27,6 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     private Preference mPrefLockedLoc = null;
     private ListPreference mlstFont = null;
     private ListPreference mlstFontSize = null;
-    private Preference mPrefFontColor = null;
-    private Preference mPrefBGColor = null;
     private CheckBoxPreference mChkAutoFullScreenOnConn = null;
     private CheckBoxPreference mChkShowTaskbarOnFullScreen = null;
 
@@ -267,8 +265,6 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         });
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
-        //Todo: mPrefFontColor
-        //Todo: mPrefBGColor
         mChkAutoFullScreenOnConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_auto_full_on_conn_key));
         mChkShowTaskbarOnFullScreen = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_show_taskbar_key));
     }
