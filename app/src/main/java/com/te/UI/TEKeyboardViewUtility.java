@@ -29,6 +29,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     }
     public enum KeyboardType {
         KT_ABC,
+        KT_ABC_UPPER_SHIFT_ONCE,
+        KT_ABC_UPPER_SHIFT_TOGGLE,
         KT_Symbol,
         KT_Fun,
         KT_Server,
@@ -49,6 +51,9 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_LEFT = -9;
     private final int MY_KEYCODE_RIGHT = -10;
     private final int MY_KEYCODE_TAB = -11;
+    private final int MY_KEYCODE_SHIFT = -1;
+    private final int MY_KEYCODE_SHIFT_ONCE = -2;
+    private final int MY_KEYCODE_SHIFT_TOGGLE = -3;
     //ABC end
 
     //F13~F24, F1~F12 no need because pc virtual key board has handled
@@ -112,7 +117,10 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private Context mContext = null;
     private ContentView mTargetView = null;
     private KeyboardView mKeyboardView = null;
+    private KeyboardType mCurKBType = KeyboardType.KT_ABC;
     private Keyboard mABCKeyboard = null;
+    private Keyboard mABCUpperShiftOnceKeyboard = null;
+    private Keyboard mABCUpperShiftToggleKeyboard = null;
     private List<Keyboard.Key> mListABCKeys = new ArrayList<>();
     private Keyboard mSymbolKeyboard = null;
     private List<Keyboard.Key> mListSymbolKeys = new ArrayList<>();
@@ -130,12 +138,17 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         mKeyboardView = view;
         mTargetView = contentView;
         mABCKeyboard = new Keyboard(context, R.xml.keyboard_abc);
+        mABCUpperShiftOnceKeyboard = new Keyboard(context, R.xml.keyboard_abc_upper_shift_once);
+        mABCUpperShiftToggleKeyboard = new Keyboard(context, R.xml.keyboard_abc_upper_shift_toogle);
         mSymbolKeyboard = new Keyboard(context, R.xml.keyboard_symbol);
         mTNFunKeyboard = new Keyboard(context, R.xml.keyboard_tn_funl);
         mVTFunKeyboard = new Keyboard(context, R.xml.keyboard_vt_funl);
         mTNServerKeyboard = new Keyboard(context, R.xml.keyboard_tn_server);
         mVTServerKeyboard = new Keyboard(context, R.xml.keyboard_vt_server);
 
+        collectKeysToContainer(mABCKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mABCUpperShiftOnceKeyboard, MY_KEYCODE_ABC, mListABCKeys);
+        collectKeysToContainer(mABCUpperShiftToggleKeyboard, MY_KEYCODE_ABC, mListABCKeys);
         collectKeysToContainer(mABCKeyboard, MY_KEYCODE_ABC, mListABCKeys);
         collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_ABC, mListABCKeys);
         collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_ABC, mListABCKeys);
@@ -144,6 +157,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_ABC, mListABCKeys);
 
         collectKeysToContainer(mABCKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mABCUpperShiftOnceKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
+        collectKeysToContainer(mABCUpperShiftToggleKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
         collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
         collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
         collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
@@ -151,6 +166,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_SYMBOL, mListSymbolKeys);
 
         collectKeysToContainer(mABCKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mABCUpperShiftOnceKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
+        collectKeysToContainer(mABCUpperShiftToggleKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
         collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
         collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
         collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
@@ -158,6 +175,8 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
         collectKeysToContainer(mVTServerKeyboard, MY_KEYCODE_FUNC, mListFunKeys);
 
         collectKeysToContainer(mABCKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mABCUpperShiftOnceKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
+        collectKeysToContainer(mABCUpperShiftToggleKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
         collectKeysToContainer(mSymbolKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
         collectKeysToContainer(mTNFunKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
         collectKeysToContainer(mVTFunKeyboard, MY_KEYCODE_SERVER, mListServerKeys);
@@ -204,6 +223,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     }
 
     public void setKeyboard(KeyboardType kType) {
+        mCurKBType = kType;
         setListKeysToggle(mListABCKeys, false);
         setListKeysToggle(mListSymbolKeys, false);
         setListKeysToggle(mListFunKeys, false);
@@ -214,6 +234,14 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             default:
                 setListKeysToggle(mListABCKeys, true);
                 mKeyboardView.setKeyboard(mABCKeyboard);
+                break;
+            case KT_ABC_UPPER_SHIFT_ONCE:
+                mKeyboardView.setKeyboard(mABCUpperShiftOnceKeyboard);
+                setListKeysToggle(mListABCKeys, true);
+                break;
+            case KT_ABC_UPPER_SHIFT_TOGGLE:
+                mKeyboardView.setKeyboard(mABCUpperShiftToggleKeyboard);
+                setListKeysToggle(mListABCKeys, true);
                 break;
             case KT_Symbol:
                 setListKeysToggle(mListSymbolKeys, true);
@@ -285,6 +313,24 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 mListener.onSetKeyboardType(KeyboardType.KT_ABC);
             }
             break;
+            case MY_KEYCODE_SHIFT:
+            {
+                setKeyboard(KeyboardType.KT_ABC_UPPER_SHIFT_ONCE);
+                mListener.onSetKeyboardType(KeyboardType.KT_ABC_UPPER_SHIFT_ONCE);
+            }
+            break;
+            case MY_KEYCODE_SHIFT_ONCE:
+            {
+                setKeyboard(KeyboardType.KT_ABC_UPPER_SHIFT_TOGGLE);
+                mListener.onSetKeyboardType(KeyboardType.KT_ABC_UPPER_SHIFT_TOGGLE);
+            }
+            break;
+            case MY_KEYCODE_SHIFT_TOGGLE:
+            {
+                setKeyboard(KeyboardType.KT_ABC);
+                mListener.onSetKeyboardType(KeyboardType.KT_ABC);
+            }
+            break;
             case MY_KEYCODE_SYMBOL:
             {
                 setKeyboard(KeyboardType.KT_Symbol);
@@ -332,12 +378,6 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             case MY_KEYCODE_RIGHT:
             {
                 keyDownUp(KeyEvent.KEYCODE_DPAD_RIGHT);
-            }
-            break;
-            case Keyboard.KEYCODE_SHIFT:
-            {
-                //Todo: trigger shit or not
-                //keyDownUp(KeyEvent.KEYCODE_SHIFT_LEFT);
             }
             break;
             case Keyboard.KEYCODE_DELETE:
@@ -591,6 +631,10 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             {
                 char [] chars = String.valueOf((char)primaryCode).toCharArray();
                 if (chars.length == 1) {
+                    if(mCurKBType == KeyboardType.KT_ABC_UPPER_SHIFT_ONCE && Character.isUpperCase(chars[0])) {
+                        setKeyboard(KeyboardType.KT_ABC);
+                        mListener.onSetKeyboardType(KeyboardType.KT_ABC);
+                    }
                     // If it's 1 character, we have a chance of being
                     // able to generate normal key events...
                     if (mKeyCharacterMap == null) {
