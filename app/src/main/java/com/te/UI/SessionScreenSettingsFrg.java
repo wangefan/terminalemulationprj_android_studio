@@ -327,6 +327,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
         mChkAutoFullScreenOnConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_auto_full_on_conn_key));
         mSwhShowWFBTOnFullScreen = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_show_wf_batt_key));
+        mSwhShowWFBTOnFullScreen.setSummaryOn(getResources().getStringArray(R.array.show_wf_batt_info_array)[0]);
         mSwhShowWFBTOnFullScreen.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override
             public void onClick() {
