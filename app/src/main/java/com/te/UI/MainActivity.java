@@ -5,12 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -65,9 +63,12 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout mMainRelLayout;
     private CursorView Cursor;
     private ImageView mSessionJumpBtn = null;
+    private ImageView mWiFiStatusIcon = null;
+    private ImageView mBattStatusIcon = null;
     private MenuItem mMenuItemConn;
     private Handler mUpdateWifiAlertHandler = new Handler();
     private Handler mUpdateBaterAlertHandler = new Handler();
+    private Handler mUpdateWiFiAndBaterIconHandler = new Handler();
     private TerminalProcessFrg mTerminalProcessFrg = null;
     // ReaderManager is using to communicate with Barcode Reader Service
     //private com.cipherlab.barcode.ReaderManager mReaderManager;
@@ -207,6 +208,80 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void updateWiFiIcon() {
+        boolean bShow = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
+        mWiFiStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
+        if(bShow) {
+            int wifiStrength = CipherUtility.getWiFiStrength();
+            final int LEVEL_UNIT = 20;
+            int nLevel = wifiStrength / LEVEL_UNIT;
+            switch (nLevel) {
+                case 0:
+                default:
+                    mWiFiStatusIcon.setImageResource(R.drawable.wifi_0);
+                    break;
+                case 1:
+                    mWiFiStatusIcon.setImageResource(R.drawable.wifi_1);
+                    break;
+                case 2:
+                    mWiFiStatusIcon.setImageResource(R.drawable.wifi_2);
+                    break;
+                case 3:
+                    mWiFiStatusIcon.setImageResource(R.drawable.wifi_3);
+                    break;
+                case 4:
+                    mWiFiStatusIcon.setImageResource(R.drawable.wifi_4);
+                    break;
+            }
+        }
+    }
+
+    private void updateBattIcon() {
+        boolean bShow = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
+        mBattStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
+        if(bShow) {
+            int nBatteryStrength = CipherUtility.getBatteryPct();
+            final int LEVEL_UNIT = 20;
+            int nLevel = nBatteryStrength / LEVEL_UNIT;
+            switch (nLevel) {
+                case 0:
+                default:
+                    mBattStatusIcon.setImageResource(R.drawable.batt_0);
+                    break;
+                case 1:
+                    mBattStatusIcon.setImageResource(R.drawable.batt_1);
+                    break;
+                case 2:
+                    mBattStatusIcon.setImageResource(R.drawable.batt_2);
+                    break;
+                case 3:
+                    mBattStatusIcon.setImageResource(R.drawable.batt_3);
+                    break;
+                case 4:
+                    mBattStatusIcon.setImageResource(R.drawable.batt_4);
+                    break;
+            }
+        }
+    }
+
+    private void procUpdateWiFiAndBattIconTimer() {
+        mUpdateWiFiAndBaterIconHandler.removeCallbacksAndMessages(null);
+        updateWiFiIcon();
+        updateBattIcon();
+        boolean bUpdateWiFi_Batt_Icons = TESettingsInfo.getIsUpdateWiFiAndtBatteryByIndex(TESettingsInfo.getSessionIndex());
+        if (bUpdateWiFi_Batt_Icons) {
+            final int nUpdateInterval = TESettingsInfo.getUpdateWiFiAndtBatteryIntervalByIndex(TESettingsInfo.getSessionIndex()) * 60 *1000;
+            mUpdateWiFiAndBaterIconHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateWiFiIcon();
+                    updateBattIcon();
+                    mUpdateWiFiAndBaterIconHandler.postDelayed(this, nUpdateInterval);
+                }
+            }, nUpdateInterval);
+        }
+    }
+
     private void procAlertTimer() {
         boolean bWifiAlert = TESettingsInfo.getHostIsShowWifiAlertByIndex(TESettingsInfo.getSessionIndex());
         boolean bBatAlert = TESettingsInfo.getHostIsShowBatteryAlertByIndex(TESettingsInfo.getSessionIndex());
@@ -238,18 +313,9 @@ public class MainActivity extends AppCompatActivity
             mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
             final int nBatAlert = TESettingsInfo.getHostShowBatteryAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateBaterAlertHandler.postDelayed(new Runnable() {
-                public int getBatteryPct() {
-                    IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-                    Intent batteryStatus = registerReceiver(null, ifilter);
-                    int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-                    int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-                    float batteryPct = level / (float) scale * 100;
-                    return (int) batteryPct;
-                }
-
                 @Override
                 public void run() {
-                    int batStrength = getBatteryPct();
+                    int batStrength = CipherUtility.getBatteryPct();
                     if (batStrength < nBatAlert) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
@@ -286,6 +352,7 @@ public class MainActivity extends AppCompatActivity
         updateRecordButtonVisible();
         setSessionJumpImage(TESettingsInfo.getSessionIndex());
         procAlertTimer();
+        procUpdateWiFiAndBattIconTimer();
         mFragmentLeftdrawer.syncSessionsViewFromSettings();
         mFragmentLeftdrawer.clickSession(TESettingsInfo.getSessionIndex());
     }
@@ -368,6 +435,10 @@ public class MainActivity extends AppCompatActivity
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
         SessionJumpListener sjListener = new SessionJumpListener();
         mSessionJumpBtn.setOnTouchListener(sjListener);
+
+        mWiFiStatusIcon = (ImageView) findViewById(R.id.wifi_icon_id);
+        mBattStatusIcon = (ImageView) findViewById(R.id.batt_icon_id);
+        //Todo:handle onTouch
 
         registerForContextMenu(mMainRelLayout);
 
@@ -467,6 +538,7 @@ public class MainActivity extends AppCompatActivity
                 setSessionStatusView();
                 updateRecordButtonVisible();
                 procAlertTimer();
+                procUpdateWiFiAndBattIconTimer();
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == SessionSettings.RESULT_ADD && SessionSettings.gEditSessionSetting != null) {
@@ -479,6 +551,7 @@ public class MainActivity extends AppCompatActivity
                     mFragmentLeftdrawer.clickSession(nAddedSessionIdx);
                     setSessionJumpImage(TESettingsInfo.getSessionIndex());
                     procAlertTimer();
+                    procUpdateWiFiAndBattIconTimer();
                 }
             }
             break;

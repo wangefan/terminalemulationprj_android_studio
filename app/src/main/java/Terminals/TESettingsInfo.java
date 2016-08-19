@@ -441,6 +441,27 @@ public class TESettingsInfo {
         return Setting.mIsShowStatusbarOnFull;
     }
 
+    public static Boolean getHostShowWiFiIconOnFullScreenByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsShowWifiIconOnFull;
+    }
+
+    public static Boolean getHostShowBattIconOnFullScreenByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsShowBatteryIconOnFull;
+    }
+
+    public static boolean getIsUpdateWiFiAndtBatteryByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsUpdateWiFiIconOnFull;
+    }
+
+    //Miniutes
+    public static int getUpdateWiFiAndtBatteryIntervalByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mWiFiIntervalValue;
+    }
+
     public static Boolean getHostIsAutoSignByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mBAutoSignOn;

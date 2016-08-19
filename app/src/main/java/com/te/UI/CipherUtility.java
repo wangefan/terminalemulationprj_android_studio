@@ -1,11 +1,14 @@
 package com.te.UI;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -59,10 +62,21 @@ public class CipherUtility {
 		}
 	}
 
+	// 0 ~ 100
 	static public int getWiFiStrength() {
 		WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 		int wifiStrength = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
 		return wifiStrength;
+	}
+
+	// 0 ~ 100
+	static public int getBatteryPct() {
+		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+		Intent batteryStatus = mContext.registerReceiver(null, ifilter);
+		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+		int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+		float batteryPct = level / (float) scale * 100;
+		return (int) batteryPct;
 	}
 
 	static public boolean hasNetwork() {

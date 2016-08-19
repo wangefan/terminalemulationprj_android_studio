@@ -62,6 +62,16 @@
 					android:layout_width="50dp"
 					android:layout_height="50dp"
 					android:src="@drawable/s1_64" />
+				<ImageView
+					android:id="@+id/wifi_icon_id"
+					android:layout_width="50dp"
+					android:layout_height="50dp"
+					android:src="@drawable/wifi_0" />
+				<ImageView
+					android:id="@+id/batt_icon_id"
+					android:layout_width="50dp"
+					android:layout_height="50dp"
+					android:src="@drawable/batt_0" />
 				<android.support.design.widget.FloatingActionButton
 					android:id="@+id/fab"
 					android:layout_width="wrap_content"
