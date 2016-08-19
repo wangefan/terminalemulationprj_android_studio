@@ -261,11 +261,23 @@ public class TESettings {
         @SerializedName("isShowBatteryItem")
         public boolean mIsShowBatteryIconOnFull = false;
 
-        @SerializedName("isUpdateWifi")
+        @SerializedName("isUpdateWifi") //Only use this item in Android version
         public boolean mIsUpdateWiFiIconOnFull = false;
+
+        @SerializedName("updateWifiCBIndex") // 0:1 min, 1:3 min, 2:5 min, 3:15 min, 4:30 min, 5:60 min
+        public int mWiFiIntervalIndex = 3;//Only use this item in Android version
+
+        @SerializedName("updateWifiCBValue") // 1 min, 3 min, 5 min, 15 min, 30 min, 60 min
+        public int mWiFiIntervalValue = 15;//Only use this item in Android version
 
         @SerializedName("isUpdateBattery")
         public boolean mIsUpdateBatteryIconOnFull = false;
+
+        @SerializedName("updateBatteryCBIndex") // 0:1 min, 1:3 min, 2:5 min, 3:15 min, 4:30 min, 5:60 min
+        public int mBatteryIntervalIndex = 3;//Only use this item in Android version
+
+        @SerializedName("updateBatteryCBValue") // 1 min, 3 min, 5 min, 15 min, 30 min, 60 min
+        public int mBatteryIntervalValue = 15;//Only use this item in Android version
 
         @SerializedName("bScanControl")
         public boolean mIsScanControl = false;

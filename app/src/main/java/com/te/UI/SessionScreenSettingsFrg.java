@@ -77,6 +77,19 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         }
     }
 
+    private void updateIntervalUIFromSetting() {
+        if(mSetting.mIsUpdateWiFiIconOnFull == false) {
+            mlstUpdateIconInterval.setValueIndex(0);
+        } else {
+            mlstUpdateIconInterval.setValueIndex(mSetting.mWiFiIntervalIndex + 1);
+        }
+        if(mSetting.mIsShowWifiIconOnFull || mSetting.mIsShowBatteryIconOnFull) {
+            mlstUpdateIconInterval.setEnabled(true);
+        } else {
+            mlstUpdateIconInterval.setEnabled(false);
+        }
+    }
+
     @Override
     protected void syncPrefUIFromTESettings() {
         mChkShowSessionNumber.setChecked(mSetting.mIsShowSessionNumber);
@@ -106,6 +119,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         } else {
             mSwhShowWFBTOnFullScreen.setChecked(false);
         }
+        updateIntervalUIFromSetting();
     }
 
     private String getShowWFBTOnFullScreenSummary(boolean isShowTaskbarOnFull, boolean isShowWifiIconOnFull, boolean isShowBatteryIconOnFull) {
@@ -181,6 +195,25 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                     mSetting.mIsShowStatusbarOnFull = false;
                     mSetting.mIsShowWifiIconOnFull = true;
                     mSetting.mIsShowBatteryIconOnFull = true;
+                }
+            }
+            updateIntervalUIFromSetting();
+        } else if(key.compareTo(getResources().getString(R.string.screen_icon_update_interval_key)) == 0) {
+            if(mlstUpdateIconInterval.getValue().compareTo("0") == 0) {
+                mSetting.mIsUpdateWiFiIconOnFull = false;
+                mSetting.mIsShowBatteryIconOnFull = false;
+            } else {
+                mSetting.mIsUpdateWiFiIconOnFull = true;
+                mSetting.mIsUpdateBatteryIconOnFull = true;
+                for(int idxInterval = 0; idxInterval < mlstUpdateIconInterval.getEntryValues().length; ++idxInterval) {
+                    String itrInterval = mlstUpdateIconInterval.getEntryValues()[idxInterval].toString();
+                    if(itrInterval.compareTo(mlstUpdateIconInterval.getValue().toString()) == 0) {
+                        mSetting.mWiFiIntervalIndex = idxInterval - 1;
+                        mSetting.mWiFiIntervalValue = Integer.valueOf(itrInterval);
+                        mSetting.mBatteryIntervalIndex = idxInterval - 1;
+                        mSetting.mBatteryIntervalValue = Integer.valueOf(itrInterval);
+                        break;
+                    }
                 }
             }
         }
@@ -374,6 +407,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                                 }
                                 mSwhShowWFBTOnFullScreen.setSummaryOn(result);
                                 mSwhShowWFBTOnFullScreen.setChecked(true);
+                                updateIntervalUIFromSetting();
                             }
                         });
             }

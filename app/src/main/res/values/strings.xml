@@ -346,6 +346,7 @@
     <string name="screen_icon_update_interval_key">screen_icon_update_interval_key</string>
     <string name="screen_icon_update_interval">Update Wi-Fi/Battery Icon Interval</string>
     <string-array name="icon_update_interval_array">
+        <item>not update</item>
         <item>1 min</item>
         <item>3 min</item>
         <item>5 min</item>
@@ -354,6 +355,7 @@
         <item>60 min</item>
     </string-array>
     <string-array name="icon_update_interval_array_vals">
+        <item>0</item>
         <item>1</item>
         <item>3</item>
         <item>5</item>
