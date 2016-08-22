@@ -740,6 +740,7 @@
             "isAutoFullScreen": false,
             "bIsDetectOutRange": false,
             "isShowScrollBar": true,
+            "isScreenPanning": true,
             "isShowTaskBarOnFullScreen": false,
             "isShowSIP": false,
             "isShowResize": true,

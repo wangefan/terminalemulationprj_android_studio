@@ -24,6 +24,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     //Data members
     private CheckBoxPreference mChkShowSessionNumber = null;
     private CheckBoxPreference mChkShowSessionStatus = null;
+    private CheckBoxPreference mChkScreenPanning = null;
     private TESwitchPreference mSwchShowWiFiAlert = null;
     private TESwitchPreference mSwchShowBattrryAlert = null;
     private CheckBoxPreference mChkAcitvateMacro = null;
@@ -94,6 +95,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     protected void syncPrefUIFromTESettings() {
         mChkShowSessionNumber.setChecked(mSetting.mIsShowSessionNumber);
         mChkShowSessionStatus.setChecked(mSetting.mIsShowSessionStatus);
+        mChkScreenPanning.setChecked(mSetting.mIsScreenPanning);
         mSwchShowWiFiAlert.setChecked(mSetting.mIsShowWifiAlert);
         mSwchShowWiFiAlert.setSummaryOn(String.valueOf(mSetting.mNShowWifiAlertLevel));
         mSwchShowBattrryAlert.setChecked(mSetting.mIsShowBatteryAlert);
@@ -146,6 +148,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             mSetting.mIsShowSessionNumber = mChkShowSessionNumber.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_session_status_key)) == 0) {
             mSetting.mIsShowSessionStatus = mChkShowSessionStatus.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.screen_screen_panning_key)) == 0) {
+            mSetting.mIsScreenPanning = mChkScreenPanning.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_wifi_alert_key)) == 0) {
             mSetting.mIsShowWifiAlert = mSwchShowWiFiAlert.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_battery_alert_key)) == 0) {
@@ -227,6 +231,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         //UI
         mChkShowSessionNumber = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_session_number_key));
         mChkShowSessionStatus = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_session_status_key));
+        mChkScreenPanning = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_screen_panning_key));
         mSwchShowWiFiAlert = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_wifi_alert_key));
         mSwchShowWiFiAlert.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override

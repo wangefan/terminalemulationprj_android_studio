@@ -222,6 +222,8 @@
     <string name="screen_session_number">Show Session Number</string>
     <string name="screen_session_status_key">screen_session_status_key</string>
     <string name="screen_session_status">Show Connecting Host IP</string>
+    <string name="screen_screen_panning_key">screen_screen_panning_key</string>
+    <string name="screen_screen_panning">Screen Panning</string>
     <string name="screen_wifi_alert_key">screen_wifi_alert_key</string>
     <string name="screen_wifi_alert">Choose Wi-Fi Alert Level(%)</string>
     <string name="screen_battery_alert_key">screen_battery_alert_key</string>

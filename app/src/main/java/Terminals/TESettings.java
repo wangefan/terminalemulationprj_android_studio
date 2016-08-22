@@ -195,6 +195,9 @@ public class TESettings {
         @SerializedName("isShowSessionStatus")
         public boolean mIsShowSessionStatus = false;
 
+        @SerializedName("isScreenPanning")
+        public boolean mIsScreenPanning = true;
+
         @SerializedName("isShowWifiAlert")
         public boolean mIsShowWifiAlert = false;
 
