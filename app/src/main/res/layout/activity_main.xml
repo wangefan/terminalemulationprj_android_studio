@@ -66,12 +66,14 @@
 					android:id="@+id/wifi_icon_id"
 					android:layout_width="50dp"
 					android:layout_height="50dp"
-					android:src="@drawable/wifi_0" />
+					android:src="@drawable/wifi_0"
+					android:layout_toEndOf="@id/session_jump_id"/>
 				<ImageView
 					android:id="@+id/batt_icon_id"
 					android:layout_width="50dp"
 					android:layout_height="50dp"
-					android:src="@drawable/batt_0" />
+					android:src="@drawable/batt_0"
+					android:layout_toEndOf="@id/wifi_icon_id"/>
 				<android.support.design.widget.FloatingActionButton
 					android:id="@+id/fab"
 					android:layout_width="wrap_content"
