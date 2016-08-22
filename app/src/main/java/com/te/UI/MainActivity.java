@@ -295,8 +295,8 @@ public class MainActivity extends AppCompatActivity
     private void procAlertTimer() {
         boolean bWifiAlert = TESettingsInfo.getHostIsShowWifiAlertByIndex(TESettingsInfo.getSessionIndex());
         boolean bBatAlert = TESettingsInfo.getHostIsShowBatteryAlertByIndex(TESettingsInfo.getSessionIndex());
+        mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
         if (bWifiAlert) {
-            mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
             final int nWifiAlert = TESettingsInfo.getHostShowWifiAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateWifiAlertHandler.postDelayed(new Runnable() {
                 @Override
@@ -315,12 +315,10 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             }, 2000);
-        } else {
-            mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
         }
 
+        mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
         if (bBatAlert) {
-            mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
             final int nBatAlert = TESettingsInfo.getHostShowBatteryAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateBaterAlertHandler.postDelayed(new Runnable() {
                 @Override
@@ -339,8 +337,6 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             }, 2000);
-        } else {
-            mUpdateBaterAlertHandler.removeCallbacksAndMessages(null);
         }
     }
 
