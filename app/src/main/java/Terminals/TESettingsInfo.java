@@ -710,7 +710,7 @@ public class TESettingsInfo {
     }
 
     public static int getWiFiIconLocLeft() {
-        return mSp.getInt(WIFI_LEFT_MARGIN_KEY, 0);
+        return mSp.getInt(WIFI_LEFT_MARGIN_KEY, 50);
     }
 
     public static int getWiFiIconLocTop() {
@@ -722,7 +722,7 @@ public class TESettingsInfo {
     }
 
     public static int getBattIconLocTop() {
-        return mSp.getInt(BATT_TOP_MARGIN_KEY, 0);
+        return mSp.getInt(BATT_TOP_MARGIN_KEY, 100);
     }
 
     private static boolean showFirstByTag(final String tag) {

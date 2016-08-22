@@ -231,13 +231,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mSwchShowWiFiAlert.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override
             public void onClick() {
-                int nSelItem = 0;
-                String[] alertItems = getResources().getStringArray(R.array.alert_array);
-                for (int idxAlert = 0; idxAlert < alertItems.length; idxAlert++) {
-                    if(alertItems[idxAlert].compareTo(String.valueOf(mSetting.mNShowWifiAlertLevel)) == 0) {
-                        nSelItem = idxAlert;
-                    }
-                }
+                int nSelItem = mSetting.mNShowWifiAlertLevelIndex;
                 UIUtility.listMessageBox(R.string.screen_wifi_alert,
                         R.array.alert_array,
                         nSelItem,
@@ -246,6 +240,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                             @Override
                             public void onSelResult(String result, int nSelIdx) {
                                 mSetting.mNShowWifiAlertLevel = Integer.valueOf(result);
+                                mSetting.mNShowWifiAlertLevelIndex = nSelIdx;
                                 mSwchShowWiFiAlert.setSummaryOn(result);
                                 mSwchShowWiFiAlert.setChecked(true);
                             }
@@ -261,13 +256,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mSwchShowBattrryAlert.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override
             public void onClick() {
-                int nSelItem = 0;
-                String[] alertItems = getResources().getStringArray(R.array.alert_array);
-                for (int idxAlert = 0; idxAlert < alertItems.length; idxAlert++) {
-                    if(alertItems[idxAlert].compareTo(String.valueOf(mSetting.mNShowBatteryAlertLevel)) == 0) {
-                        nSelItem = idxAlert;
-                    }
-                }
+                int nSelItem = mSetting.mNShowBatteryAlertLevelIndex;
                 UIUtility.listMessageBox(R.string.screen_battery_alert,
                         R.array.alert_array,
                         nSelItem,
@@ -275,6 +264,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                         new UIUtility.OnListMessageBoxListener() {
                             @Override
                             public void onSelResult(String result, int nSelIdx) {
+                                mSetting.mNShowBatteryAlertLevelIndex = nSelIdx;
                                 mSetting.mNShowBatteryAlertLevel = Integer.valueOf(result);
                                 mSwchShowBattrryAlert.setSummaryOn(result);
                                 mSwchShowBattrryAlert.setChecked(true);

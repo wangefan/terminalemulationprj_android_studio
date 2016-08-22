@@ -198,14 +198,20 @@ public class TESettings {
         @SerializedName("isShowWifiAlert")
         public boolean mIsShowWifiAlert = false;
 
+        @SerializedName("wifiAlertCBValue")
+        public int mNShowWifiAlertLevel = 10;
+
+        @SerializedName("wifiAlertCBIndex")
+        public int mNShowWifiAlertLevelIndex = 0;
+
         @SerializedName("isShowBatteryAlert")
         public boolean mIsShowBatteryAlert = false;
 
         @SerializedName("batteryAlertCBValue")
         public int mNShowBatteryAlertLevel = 10;
 
-        @SerializedName("wifiAlertCBValue")
-        public int mNShowWifiAlertLevel = 10;
+        @SerializedName("batteryAlertCBIndex")
+        public int mNShowBatteryAlertLevelIndex = 0;
 
         @SerializedName("isShowMacro")
         public boolean mIsActMacro = false;
