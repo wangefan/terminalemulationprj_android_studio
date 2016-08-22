@@ -258,7 +258,12 @@ public class SimpleFileDialog {
             layCreateFile.setVisibility(View.VISIBLE);
             mtvCreateFileTitle.setText(R.string.str_create_file_title);
             if(!curFile.isEmpty()) {
-                medCreateFile.setText(curFile);
+                String curFileName = curFile;
+                int nDotIndex = curFile.length() - mCreateExtension.length();
+                if(curFile.indexOf(mCreateExtension) == nDotIndex) {
+                    curFileName = curFileName.substring(0, curFileName.lastIndexOf('.'));
+                }
+                medCreateFile.setText(curFileName);
             }
             mtvCreateFileExt.setText(mCreateExtension);
         }
