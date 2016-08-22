@@ -77,6 +77,9 @@ public class ContentView extends View {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
+            if(TESettingsInfo.getHostIsScreenPanningByIndex(TESettingsInfo.getSessionIndex()) == false) {
+                return true;
+            }
             mOverScroller.forceFinished(true);
             mOverScroller.fling(mScrollPosX, mScrollPosY, (int) -velocityX, (int) -velocityY, 0, getMaxHorizontal(), 0,
                     getMaxVertical());
@@ -87,6 +90,9 @@ public class ContentView extends View {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2,
                                 float distanceX, float distanceY) {
+            if(TESettingsInfo.getHostIsScreenPanningByIndex(TESettingsInfo.getSessionIndex()) == false) {
+                return true;
+            }
             mOverScroller.forceFinished(true);
             // normalize scrolling distances to not overscroll the image
             int dx = (int) distanceX;

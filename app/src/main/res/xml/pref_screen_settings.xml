@@ -7,6 +7,10 @@
         android:key="@string/screen_session_status_key"
         android:title="@string/screen_session_status"
         android:defaultValue="false"/>
+    <CheckBoxPreference
+        android:key="@string/screen_screen_panning_key"
+        android:title="@string/screen_screen_panning"
+        android:defaultValue="true"/>
     <com.te.UI.TESwitchPreference
         android:key="@string/screen_wifi_alert_key"
         android:title="@string/screen_wifi_alert"

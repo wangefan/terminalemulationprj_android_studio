@@ -476,6 +476,11 @@ public class TESettingsInfo {
         return setting.mIsShowSessionNumber;
     }
 
+    public static boolean getHostIsScreenPanningByIndex(int index) {
+        SessionSetting setting = mTESettings.getSessionSetting(index);
+        return setting.mIsScreenPanning;
+    }
+
     public static boolean getHostIsShowSessionStatus(int index) {
         SessionSetting setting = mTESettings.getSessionSetting(index);
         return setting.mIsShowSessionStatus;
