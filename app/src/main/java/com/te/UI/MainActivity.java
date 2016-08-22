@@ -848,6 +848,8 @@ public class MainActivity extends AppCompatActivity
         mContentView.refresh();
         setSessionJumpImage(idxSession);
         setSessionStatusView();
+        procAlertTimer();
+        procUpdateWiFiAndBattIconTimer();
         updateRecordButtonVisible();
         mKeyboardViewUtility.setKeyboard(nextSession.getKeyboardType());
         if (isCurSessionConnected() == false) {
