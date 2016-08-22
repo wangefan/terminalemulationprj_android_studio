@@ -178,6 +178,7 @@ public class ContentView extends View {
         updateViewGrid();
         if(mTerminalProc != null)
             mTerminalProc.drawAll();
+        invalidate();
     }
 
     public void ClearView() {
