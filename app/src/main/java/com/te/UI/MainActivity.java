@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
         MoveImage sjListener = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
-            public boolean onDoubleTap(MotionEvent event) {
+            public boolean onSingleTapUp(MotionEvent event) {
                 int nSession = TESettingsInfo.getSessionIndex(), nOriSession = TESettingsInfo.getSessionIndex();
                 do {
                     ++nSession;
@@ -471,7 +471,7 @@ public class MainActivity extends AppCompatActivity
         mWiFiStatusIcon = (ImageView) findViewById(R.id.wifi_icon_id);
         MoveImage mvWifI = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
-            public boolean onDoubleTap(MotionEvent event) {
+            public boolean onSingleTapUp(MotionEvent event) {
                 int wifiStrength = CipherUtility.getWiFiStrength();
                 UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), null);
                 return true;
@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity
         mBattStatusIcon = (ImageView) findViewById(R.id.batt_icon_id);
         MoveImage mvBatt = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
-            public boolean onDoubleTap(MotionEvent event) {
+            public boolean onSingleTapUp(MotionEvent event) {
                 int batStrength = CipherUtility.getBatteryPct();
                 UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), null);
                 return true;
@@ -1078,7 +1078,7 @@ public class MainActivity extends AppCompatActivity
 
     private static class MoveImage implements View.OnTouchListener {
         public interface MoveImageBtnListener {
-            boolean onDoubleTap(MotionEvent event);
+            boolean onSingleTapUp(MotionEvent event);
             boolean onTouch(View view, MotionEvent event);
         }
         private float mPrevX = 0;
@@ -1094,8 +1094,8 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public boolean onDoubleTap(MotionEvent event) {
-                return mListener.onDoubleTap(event);
+            public boolean onSingleTapUp(MotionEvent event) {
+                return mListener.onSingleTapUp(event);
             }
 
             @Override
