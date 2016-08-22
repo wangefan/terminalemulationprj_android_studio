@@ -472,7 +472,9 @@ public class MainActivity extends AppCompatActivity
         MoveImage mvWifI = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                return false;
+                int wifiStrength = CipherUtility.getWiFiStrength();
+                UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), null);
+                return true;
             }
 
             @Override
@@ -489,7 +491,9 @@ public class MainActivity extends AppCompatActivity
         MoveImage mvBatt = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                return false;
+                int batStrength = CipherUtility.getBatteryPct();
+                UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), null);
+                return true;
             }
 
             @Override
