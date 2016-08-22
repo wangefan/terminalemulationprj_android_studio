@@ -13,7 +13,8 @@
             android:key="@string/host_ip_key"/>
         <EditTextPreference
             android:title="@string/pref_header_port"
-            android:key="@string/host_port_key"/>
+            android:key="@string/host_port_key"
+            android:inputType="number" />
         <Preference
             android:title="@string/more">
             <intent
