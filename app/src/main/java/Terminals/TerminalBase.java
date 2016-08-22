@@ -260,21 +260,26 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                  * todo:"CHARSET"
                  */
                 case 39:
-                    StringBuilder sb = new StringBuilder();
-                    sb.append((char)USERVAR);
-                    sb.append(IBMRSEED);
-                    sb.append((char)VAR);
-                    sb.append((char)USERVAR);
-                    sb.append(DEVNAME);
-                    sb.append((char)VALUE);
-                    int nDevNameType = TESettingsInfo.getDevNameType(TESettingsInfo.getSessionIndex());
-                    if(nDevNameType == TESettingsInfo.DEVNAME_DEFAULT) {
-                        //do nothing
-                    } else if (nDevNameType == TESettingsInfo.DEVNAME_CUST) {
-                        String custDevName = TESettingsInfo.getCustDevName(TESettingsInfo.getSessionIndex());
-                        sb.append(custDevName);
+                    boolean bIsTn = TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex());
+                    if(bIsTn) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append((char)USERVAR);
+                        sb.append(IBMRSEED);
+                        sb.append((char)VAR);
+                        sb.append((char)USERVAR);
+                        sb.append(DEVNAME);
+                        sb.append((char)VALUE);
+                        int nDevNameType = TESettingsInfo.getDevNameType(TESettingsInfo.getSessionIndex());
+                        if(nDevNameType == TESettingsInfo.DEVNAME_DEFAULT) {
+                            //do nothing
+                        } else if (nDevNameType == TESettingsInfo.DEVNAME_CUST) {
+                            String custDevName = TESettingsInfo.getCustDevName(TESettingsInfo.getSessionIndex());
+                            sb.append(custDevName);
+                        }
+                        NvtSendSubNeg(CurCmd, sb.toString());
+                    } else { //VT
+                        NvtSendWont(CurCmd);
                     }
-                    NvtSendSubNeg(CurCmd, sb.toString());
                     break;
                 default:
                     NvtSendSubNeg(CurCmd, "");
