@@ -268,9 +268,11 @@ public class MainActivity extends AppCompatActivity
         mUpdateWiFiAndBaterIconHandler.removeCallbacksAndMessages(null);
         updateWiFiIcon();
         updateBattIcon();
+        boolean bShowWiFi = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
+        boolean bShowBatt = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         boolean bUpdateWiFi_Batt_Icons = TESettingsInfo.getIsUpdateWiFiAndtBatteryByIndex(TESettingsInfo.getSessionIndex());
-        if (bUpdateWiFi_Batt_Icons) {
-            final int nUpdateInterval = TESettingsInfo.getUpdateWiFiAndtBatteryIntervalByIndex(TESettingsInfo.getSessionIndex()) * 60 *1000;
+        if (bUpdateWiFi_Batt_Icons && (bShowWiFi || bShowBatt)) {
+            final int nUpdateInterval = TESettingsInfo.getUpdateWiFiAndtBatteryIntervalByIndex(TESettingsInfo.getSessionIndex()) * 60 * 1000;
             mUpdateWiFiAndBaterIconHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
