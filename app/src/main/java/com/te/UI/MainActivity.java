@@ -233,6 +233,10 @@ public class MainActivity extends AppCompatActivity
                     mWiFiStatusIcon.setImageResource(R.drawable.wifi_4);
                     break;
             }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mWiFiStatusIcon.getLayoutParams();
+            params.leftMargin = TESettingsInfo.getWiFiIconLocLeft();
+            params.topMargin = TESettingsInfo.getWiFiIconLocTop();
+            mWiFiStatusIcon.setLayoutParams(params);
         }
     }
 
@@ -261,6 +265,10 @@ public class MainActivity extends AppCompatActivity
                     mBattStatusIcon.setImageResource(R.drawable.batt_4);
                     break;
             }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mBattStatusIcon.getLayoutParams();
+            params.leftMargin = TESettingsInfo.getBattIconLocLeft();
+            params.topMargin = TESettingsInfo.getBattIconLocTop();
+            mBattStatusIcon.setLayoutParams(params);
         }
     }
 
@@ -435,12 +443,69 @@ public class MainActivity extends AppCompatActivity
         mKeyboardViewUtility.setListener(this);
 
         mSessionJumpBtn = (ImageView) findViewById(R.id.session_jump_id);
-        SessionJumpListener sjListener = new SessionJumpListener();
+        MoveImage sjListener = new MoveImage(new MoveImage.MoveImageBtnListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                int nSession = TESettingsInfo.getSessionIndex(), nOriSession = TESettingsInfo.getSessionIndex();
+                do {
+                    ++nSession;
+                    if (nSession > TESettingsInfo.getSessionCount() - 1)
+                        nSession = 0;
+                    if (TESettingsInfo.getHostIsShowSessionNumber(nSession) == true)
+                        break;
+                } while (true);
+                if (nSession != nOriSession) {
+                    mFragmentLeftdrawer.clickSession(nSession);
+                    updateConnMenuItem();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                    TESettingsInfo.setSessionNumberLoc(parms.leftMargin, parms.topMargin);
+                }
+                return true;
+            }
+        });
         mSessionJumpBtn.setOnTouchListener(sjListener);
 
         mWiFiStatusIcon = (ImageView) findViewById(R.id.wifi_icon_id);
+        MoveImage mvWifI = new MoveImage(new MoveImage.MoveImageBtnListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                return false;
+            }
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                    TESettingsInfo.setWiFiIconLoc(parms.leftMargin, parms.topMargin);
+                }
+                return true;
+            }
+        });
+        mWiFiStatusIcon.setOnTouchListener(mvWifI);
         mBattStatusIcon = (ImageView) findViewById(R.id.batt_icon_id);
-        //Todo:handle onTouch
+        MoveImage mvBatt = new MoveImage(new MoveImage.MoveImageBtnListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                return false;
+            }
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                    TESettingsInfo.setBattIconLoc(parms.leftMargin, parms.topMargin);
+                }
+                return true;
+            }
+        });
+        mBattStatusIcon.setOnTouchListener(mvBatt);
 
         registerForContextMenu(mMainRelLayout);
 
@@ -1011,11 +1076,16 @@ public class MainActivity extends AppCompatActivity
         Gone
     }
 
-    private class SessionJumpListener implements View.OnTouchListener {
+    private static class MoveImage implements View.OnTouchListener {
+        public interface MoveImageBtnListener {
+            boolean onDoubleTap(MotionEvent event);
+            boolean onTouch(View view, MotionEvent event);
+        }
         private float mPrevX = 0;
         private float mPrevY = 0;
         private View mView;
-        final GestureDetector mDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
+        private MoveImageBtnListener mListener = null;
+        final GestureDetector mDetector = new GestureDetector(stdActivityRef.getCurrActivity(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDown(MotionEvent event) {
                 mPrevX = event.getX();
@@ -1025,20 +1095,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                int nSession = TESettingsInfo.getSessionIndex(), nOriSession = TESettingsInfo.getSessionIndex();
-                do {
-                    ++nSession;
-                    if (nSession > TESettingsInfo.getSessionCount() - 1)
-                        nSession = 0;
-                    if (TESettingsInfo.getHostIsShowSessionNumber(nSession) == true)
-                        break;
-                } while (true);
-                if (nSession != nOriSession) {
-                    mFragmentLeftdrawer.clickSession(nSession);
-                    updateConnMenuItem();
-                }
-
-                return true;
+                return mListener.onDoubleTap(event);
             }
 
             @Override
@@ -1056,16 +1113,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        public SessionJumpListener() {
-
+        public MoveImage(MoveImageBtnListener listener) {
+            mListener = listener;
         }
 
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             mView = view;
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                RelativeLayout.LayoutParams parms = (RelativeLayout.LayoutParams) mSessionJumpBtn.getLayoutParams();
-                TESettingsInfo.setSessionNumberLoc(parms.leftMargin, parms.topMargin);
+            if(mListener != null) {
+                mListener.onTouch(view, event);
             }
             return mDetector.onTouchEvent(event);
         }

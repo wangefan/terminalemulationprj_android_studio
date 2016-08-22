@@ -53,8 +53,12 @@ public class TESettingsInfo {
     private static ArrayList<Long> mListVBTime = new ArrayList<>();
 
     //Persist values, not in jason
-    private static final String LEFT_MARGIN_KEY = "LEFT_MARGIN_KEY";
-    private static final String TOP_MARGIN_KEY = "TOP_MARGIN_KEY";
+    private static final String SNMBER_LEFT_MARGIN_KEY = "SNMBER_LEFT_MARGIN_KEY";
+    private static final String SNMBER_TOP_MARGIN_KEY = "SNMBER_TOP_MARGIN_KEY";
+    private static final String WIFI_LEFT_MARGIN_KEY = "WIFI_LEFT_MARGIN_KEY";
+    private static final String WIFI_TOP_MARGIN_KEY = "WIFI_TOP_MARGIN_KEY";
+    private static final String BATT_LEFT_MARGIN_KEY = "BATT_LEFT_MARGIN_KEY";
+    private static final String BATT_TOP_MARGIN_KEY = "BATT_TOP_MARGIN_KEY";
     private static final String EDIT_PROFILE_SHOWED = "EDIT_PROFILE_SHOWED";
     private static final String ADD_SESSION_SHOWED = "ADD_SESSION_SHOWED";
     private static final String DEL_SESSION_SHOWED = "DEL_SESSION_SHOWED";
@@ -678,17 +682,47 @@ public class TESettingsInfo {
 
     public static void setSessionNumberLoc(int leftMargin, int topMargin) {
         SharedPreferences.Editor editor = mSp.edit();
-        editor.putInt(LEFT_MARGIN_KEY, leftMargin);
-        editor.putInt(TOP_MARGIN_KEY, topMargin);
+        editor.putInt(SNMBER_LEFT_MARGIN_KEY, leftMargin);
+        editor.putInt(SNMBER_TOP_MARGIN_KEY, topMargin);
+        editor.commit();
+    }
+
+    public static void setWiFiIconLoc(int leftMargin, int topMargin) {
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putInt(WIFI_LEFT_MARGIN_KEY, leftMargin);
+        editor.putInt(WIFI_TOP_MARGIN_KEY, topMargin);
+        editor.commit();
+    }
+
+    public static void setBattIconLoc(int leftMargin, int topMargin) {
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putInt(BATT_LEFT_MARGIN_KEY, leftMargin);
+        editor.putInt(BATT_TOP_MARGIN_KEY, topMargin);
         editor.commit();
     }
 
     public static int getSessionNumberLocLeft() {
-        return mSp.getInt(LEFT_MARGIN_KEY, 0);
+        return mSp.getInt(SNMBER_LEFT_MARGIN_KEY, 0);
     }
 
     public static int getSessionNumberLocTop() {
-        return mSp.getInt(TOP_MARGIN_KEY, 0);
+        return mSp.getInt(SNMBER_TOP_MARGIN_KEY, 0);
+    }
+
+    public static int getWiFiIconLocLeft() {
+        return mSp.getInt(WIFI_LEFT_MARGIN_KEY, 0);
+    }
+
+    public static int getWiFiIconLocTop() {
+        return mSp.getInt(WIFI_TOP_MARGIN_KEY, 0);
+    }
+
+    public static int getBattIconLocLeft() {
+        return mSp.getInt(BATT_LEFT_MARGIN_KEY, 0);
+    }
+
+    public static int getBattIconLocTop() {
+        return mSp.getInt(BATT_TOP_MARGIN_KEY, 0);
     }
 
     private static boolean showFirstByTag(final String tag) {
