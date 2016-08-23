@@ -75,6 +75,7 @@
     <PreferenceCategory
         android:title="@string/barcode_setting" >
         <PreferenceScreen
+            android:key="@string/reader_config_key"
             android:title="@string/config">
         </PreferenceScreen>
     </PreferenceCategory>

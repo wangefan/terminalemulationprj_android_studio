@@ -944,12 +944,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void ShowReaderConfig() {
-        Intent intent = getPackageManager().getLaunchIntentForPackage("com.iiordanov.freebVNC");
-        startActivity(intent);
-    }
-
-
     private void procFullScreen() {
         final boolean bShowStatusBarOnFull = TESettingsInfo.getHostShowTaskBarOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         if (mBFullScreen == false) {

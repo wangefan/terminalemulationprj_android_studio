@@ -72,6 +72,7 @@
     <string name="host_auto_sign_term_prom_key">host_auto_sign_term_prom_key</string>
     <string name="keep_alive_key">keep_alive_key</string>
     <string name="out_range_key">out_range_key</string>
+    <string name="reader_config_key">reader_config_key</string>
     <string name="log_key">log_key</string>
     <string name="MSG_clear_setting">Can`t load your setting.</string>
     <string name="str_positive">Reset setting to default</string>

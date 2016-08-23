@@ -23,6 +23,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
     private Preference mSSH = null;
     private CheckBoxPreference mCkNetworkAlive = null;
     private CheckBoxPreference mCkDetectOut = null;
+    private Preference mReaderconfig = null;
     private CheckBoxPreference mCkGenLog = null;
 
     public SessionSettingsFrg() {
@@ -48,6 +49,15 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mSSH = findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
+        mReaderconfig = findPreference(getResources().getString(R.string.reader_config_key));
+        mReaderconfig.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                CipherUtility.showReaderConfig();
+                return true;
+            }
+        });
+        mReaderconfig.setEnabled(CipherUtility.isReaderConfigAvable());
         mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
     }
 

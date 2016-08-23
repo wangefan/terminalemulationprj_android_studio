@@ -3,6 +3,7 @@ package com.te.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.ConnectivityManager;
@@ -26,10 +27,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import Terminals.stdActivityRef;
 
 public class CipherUtility {
+	static final String READER_CONFIG_PKG_NAME = "cipherlab.sw.readerconfig";
 	static Context mContext = null;
 	static WindowManager mWMgr = null;
 	static public void init(Context context) {
@@ -174,6 +177,27 @@ public class CipherUtility {
 			} else if (child instanceof View == true){
 				child.setEnabled(bEnabled);
 			}
+		}
+	}
+
+	public static boolean isReaderConfigAvable() {
+		PackageManager manager = mContext.getPackageManager();
+		Intent intent = manager.getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
+		if (intent == null) {
+			return false;
+		}
+		List activities = manager.queryIntentActivities(intent,
+				PackageManager.MATCH_DEFAULT_ONLY);
+		if (activities == null) {
+			return false;
+		}
+		return true;
+	}
+
+	public static void showReaderConfig() {
+		if(isReaderConfigAvable()) {
+			Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
+			mContext.startActivity(intent);
 		}
 	}
 }
