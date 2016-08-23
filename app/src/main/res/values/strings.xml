@@ -323,6 +323,10 @@
     <string name="str_export">Export Settings</string>
     <string name="str_default_export_name">TE_settings</string>
     <string name="str_import">Import Settings</string>
+    <string name="str_language">Languages</string>
+    <string-array name="Languages">
+        <item>English</item>
+    </string-array>
     <string name="STR_ExtWav">wav</string>
     <string name="STR_ExtMp3">mp3</string>
     <string name="STR_ExtOgg">ogg</string>

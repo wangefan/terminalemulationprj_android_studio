@@ -213,6 +213,18 @@ public class TESettingsInfo {
         return setting;
     }
 
+    public static ArrayList<String> getLanguages() {
+        return mTESettings.Common.mLanguages;
+    }
+
+    public static int getCurLanguageIdx() {
+        return mTESettings.Common.mCurLanIdx;
+    }
+
+    public static void setCurLanguageIdx(int index) {
+        mTESettings.Common.mCurLanIdx = index;
+    }
+
     public static void setSessionIndex(int Index) {
         mCurrentSessionIndex = Index;
     }

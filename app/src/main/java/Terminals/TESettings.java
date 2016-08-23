@@ -15,6 +15,13 @@ public class TESettings {
     }
     public class TECommonSetting {
         private ArrayList<CSsh_Keys> Ssh_Keys = new ArrayList<CSsh_Keys>();
+
+        @SerializedName("Languages")
+        public ArrayList<String> mLanguages = new ArrayList<String>();
+
+        @SerializedName("Current_lan_index")
+        public int mCurLanIdx = -1;
+
         private class CSsh_Keys {
             private String Name;
             private String Path;

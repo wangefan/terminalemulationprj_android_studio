@@ -1,6 +1,10 @@
 {
     "Common": {
-        "Ssh_Keys": []
+        "Ssh_Keys": [],
+        "Languages": [
+            "en-US"
+        ],
+        "Current_lan_index": 0
     },
     "SETTINGS": [
         {

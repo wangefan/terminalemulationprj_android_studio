@@ -794,6 +794,19 @@ public class MainActivity extends AppCompatActivity
 
                 imptDialog.chooseFile_or_Dir(TESettingsInfo.getImportSettingsPath());
                 break;
+            case R.id.language:
+                int nSelLan = TESettingsInfo.getCurLanguageIdx();
+                UIUtility.listMessageBox(R.string.str_language,
+                        R.array.Languages,
+                        nSelLan,
+                        this,
+                        new UIUtility.OnListMessageBoxListener() {
+                            @Override
+                            public void onSelResult(String result, int nSelIdx) {
+                                TESettingsInfo.setCurLanguageIdx(nSelIdx);
+                            }
+                        });
+                break;
             case R.id.about:
                 onAbout();
                 break;
