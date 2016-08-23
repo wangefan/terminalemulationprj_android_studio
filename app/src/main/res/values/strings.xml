@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Terminal Emulation</string>
-    <string name="app_Version">0.0.0.2</string>
+    <string name="app_Version">0.0.0.3</string>
     <string name="action_settings">Settings</string>
     <string name="STR_Save">Save</string>
     <string name="STR_ClearAll">Clear All</string>
@@ -36,7 +36,7 @@
     <string name="STR_Activate">Activate</string>
     <string name="STR_Cancel">Cancel</string>
     <string name="STR_Confirm">Confirm Settings</string>
-    <string name="STR_pass">Pass</string>
+    <string name="STR_pass">OK</string>
     <string name="STR_Choose_Audio">Choose Audio file</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
