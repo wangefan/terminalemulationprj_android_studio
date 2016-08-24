@@ -1,0 +1,11 @@
+Key Store Path
+.\te_key.jks
+
+Key store passwaord 
+2305851823058
+
+Key Alias 
+te_key
+
+Key passwaord 
+2305851823058

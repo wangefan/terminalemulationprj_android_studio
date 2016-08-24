@@ -1,0 +1,1 @@
+C:\Users\yifan.wang\Android\android-sdk\platform-tools\adb.exe uninstall com.example.terminalemulation
