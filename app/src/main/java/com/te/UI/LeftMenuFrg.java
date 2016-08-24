@@ -1,7 +1,5 @@
 package com.te.UI;
 
-import Terminals.TESettingsInfo;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +13,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
+
+import Terminals.TESettingsInfo;
  
 public class LeftMenuFrg extends Fragment {
 

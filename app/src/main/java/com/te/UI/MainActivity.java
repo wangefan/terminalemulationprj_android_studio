@@ -28,8 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cipherlab.barcode.GeneralString;
-import com.example.terminalemulation.BuildConfig;
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.BuildConfig;
+import com.cipherlab.terminalemulation.R;
 import com.te.UI.LeftMenuFrg.LeftMenuListener;
 
 import java.util.ArrayList;

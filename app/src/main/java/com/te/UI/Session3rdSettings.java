@@ -2,8 +2,7 @@ package com.te.UI;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 public class Session3rdSettings extends SessionSettingsBase {
     public static final String ACTION_COLOR = "com.te.UI.Session3rdSettings.ACTION_COLOR";

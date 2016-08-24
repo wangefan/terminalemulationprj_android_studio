@@ -3,12 +3,9 @@ package SessionProcess;
 
 import android.content.Context;
 import android.view.KeyEvent;
-
-import com.example.terminalemulation.R;
 import com.te.UI.TEKeyboardViewUtility;
-
+import com.cipherlab.terminalemulation.R;
 import java.util.ArrayList;
-
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 import Terminals.MacroItem;

@@ -14,11 +14,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
-import com.example.terminalemulation.R;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import com.cipherlab.terminalemulation.R;
 import Terminals.TESettingsInfo;
 
 /**

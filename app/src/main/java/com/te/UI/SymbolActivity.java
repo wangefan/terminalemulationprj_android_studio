@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 public class SymbolActivity extends AppCompatActivity implements OnItemClickListener {
 

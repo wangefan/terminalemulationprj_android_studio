@@ -6,7 +6,7 @@ android {
     buildToolsVersion '24.0.0'
     compileOptions.encoding = 'windows-1251'
     defaultConfig {
-        applicationId "com.example.terminalemulation"
+        applicationId 'com.cipherlab.terminalemulation'
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 2

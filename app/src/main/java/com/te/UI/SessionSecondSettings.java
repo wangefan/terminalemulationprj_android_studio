@@ -3,7 +3,7 @@ package com.te.UI;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettingsInfo;
 

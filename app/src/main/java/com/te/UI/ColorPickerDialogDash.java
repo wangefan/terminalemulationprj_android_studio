@@ -39,7 +39,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import java.util.ArrayList;
 import java.util.List;

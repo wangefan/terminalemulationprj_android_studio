@@ -1,6 +1,6 @@
 package com.te.UI;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

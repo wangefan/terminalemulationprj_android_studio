@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettingsInfo;
 

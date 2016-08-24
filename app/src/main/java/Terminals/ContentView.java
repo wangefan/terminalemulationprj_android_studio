@@ -16,11 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
-
-import com.example.terminalemulation.R;
 import com.te.UI.CipherUtility;
 import com.te.UI.UIUtility;
-
+import com.cipherlab.terminalemulation.R;
 import SessionProcess.TerminalProcess;
 import Terminals.TerminalBaseEnum.Point;
 

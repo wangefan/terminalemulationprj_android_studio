@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
-import android.util.Log;
-
-import com.cipherlab.barcode.BuildConfig;
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
 

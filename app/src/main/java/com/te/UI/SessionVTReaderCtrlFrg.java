@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import java.util.ArrayList;
 import java.util.List;

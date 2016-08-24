@@ -18,7 +18,7 @@
         <Preference
             android:title="@string/more">
             <intent
-                android:targetPackage="com.example.terminalemulation"
+                android:targetPackage="com.cipherlab.terminalemulation"
                 android:targetClass="com.te.UI.SessionSecondSettings"
                 android:action="com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE">
             </intent>
@@ -30,7 +30,7 @@
             android:key="@string/server_setting_key"
             android:title="@string/server_setting">
             <intent
-                android:targetPackage="com.example.terminalemulation"
+                android:targetPackage="com.cipherlab.terminalemulation"
                 android:targetClass="com.te.UI.SessionSecondSettings"
                 android:action="com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING">
             </intent>
@@ -38,7 +38,7 @@
         <Preference
             android:title="@string/screen">
             <intent
-                android:targetPackage="com.example.terminalemulation"
+                android:targetPackage="com.cipherlab.terminalemulation"
                 android:targetClass="com.te.UI.SessionSecondSettings"
                 android:action="com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING">
             </intent>
@@ -46,7 +46,7 @@
         <Preference
             android:title="@string/alarm">
             <intent
-                android:targetPackage="com.example.terminalemulation"
+                android:targetPackage="com.cipherlab.terminalemulation"
                 android:targetClass="com.te.UI.SessionSecondSettings"
                 android:action="com.te.UI.SessionSecondSettings.ACTION_ALARM_SETTING">
             </intent>

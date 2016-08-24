@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.example.terminalemulation.BuildConfig;
+import com.cipherlab.terminalemulation.BuildConfig;
 
 import java.io.File;
 import java.io.FileInputStream;

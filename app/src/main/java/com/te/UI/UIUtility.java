@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import java.io.UnsupportedEncodingException;
 

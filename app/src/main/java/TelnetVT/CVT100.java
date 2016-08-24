@@ -3,7 +3,7 @@ package TelnetVT;
 import android.graphics.Color;
 import android.view.KeyEvent;
 
-import com.example.terminalemulation.BuildConfig;
+import com.cipherlab.terminalemulation.BuildConfig;
 import com.te.UI.CipherUtility;
 import com.te.UI.ServerKeyEvent;
 

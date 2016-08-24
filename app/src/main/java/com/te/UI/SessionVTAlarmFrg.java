@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
-
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 public class SessionVTAlarmFrg extends SessionSettingsFrgBase {
     private int REQ_READER_CONTROL = 0;

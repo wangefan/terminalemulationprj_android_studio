@@ -6,8 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 /**
  * Created by wange on 10/5/2016.

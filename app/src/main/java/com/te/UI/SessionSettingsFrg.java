@@ -5,8 +5,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 public class SessionSettingsFrg extends SessionSettingsFrgBase {
     //Data members

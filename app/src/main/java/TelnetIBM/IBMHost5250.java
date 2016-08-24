@@ -2,7 +2,7 @@ package TelnetIBM;
 
 import android.view.KeyEvent;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 import com.te.UI.CipherUtility;
 import com.te.UI.ServerKeyEvent;
 import com.te.UI.UIUtility;

@@ -10,7 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import java.util.ArrayList;
 import java.util.List;

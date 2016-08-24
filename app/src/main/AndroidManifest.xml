@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.terminalemulation"
+    package="com.cipherlab.terminalemulation"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -45,9 +45,7 @@
         <activity
             android:name="com.te.UI.Session3rdSettings"
             android:parentActivityName="com.te.UI.SessionSecondSettings"/>
-        
-        <activity android:name="com.te.UI.barcodetest" >
-        </activity>
+
         <activity
             android:name="com.te.UI.SymbolActivity"
             android:label="@string/title_activity_symbol"

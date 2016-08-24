@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettings;
 

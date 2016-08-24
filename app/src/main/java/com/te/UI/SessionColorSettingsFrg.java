@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.terminalemulation.R;
+import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettings;
 
