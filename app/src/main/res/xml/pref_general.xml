@@ -51,9 +51,14 @@
                 android:action="com.te.UI.SessionSecondSettings.ACTION_ALARM_SETTING">
             </intent>
         </Preference>
-        <PreferenceScreen
+        <Preference
             android:title="@string/key_mapping">
-        </PreferenceScreen>
+            <intent
+                android:targetPackage="com.cipherlab.terminalemulation"
+                android:targetClass="com.te.UI.SessionSecondSettings"
+                android:action="com.te.UI.SessionSecondSettings.ACTION_KEY_MAPPING">
+            </intent>
+        </Preference>
         <com.te.UI.TESwitchPreference
                 android:key="@string/ssh_key"
                 android:title="@string/ssh"

@@ -38,6 +38,8 @@
     <string name="STR_Confirm">Confirm Settings</string>
     <string name="STR_pass">OK</string>
     <string name="STR_Choose_Audio">Choose Audio file</string>
+    <string name="server_key">Server Key</string>
+    <string name="physical_key">Physical Key</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>

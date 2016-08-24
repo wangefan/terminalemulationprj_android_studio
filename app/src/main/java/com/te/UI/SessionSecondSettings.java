@@ -12,6 +12,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
     public static final String ACTION_SERVER_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SERVER_SETTING";
     public static final String ACTION_SCREEN_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING";
     public static final String ACTION_ALARM_SETTING = "com.te.UI.SessionSecondSettings.ACTION_ALARM_SETTING";
+    public static final String ACTION_KEY_MAPPING = "com.te.UI.SessionSecondSettings.ACTION_KEY_MAPPING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,13 @@ public class SessionSecondSettings extends SessionSettingsBase {
                         .replace(R.id.content_frame, settingsFrg)
                         .commit();
             }
+        } else if(action.compareTo(ACTION_KEY_MAPPING) == 0) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.key_mapping));
+            SessionKeyMappingFrg settingsFrg = new SessionKeyMappingFrg();
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, settingsFrg)
+                    .commit();
         }
     }
 }
