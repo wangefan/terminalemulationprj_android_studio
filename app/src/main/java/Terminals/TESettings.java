@@ -250,6 +250,30 @@ public class TESettings {
         @SerializedName("nCursorLockRow")
         public int mNCursorLockRow = 0;
 
+        @SerializedName("nTN3270KeyConfigCount")
+        public int mNnTN3270KeyConfigCount = 0;
+
+        @SerializedName("TN3270KeyConfig")
+        public TN3270KeyMapList mTN3270KeyConfig = null;
+
+        @SerializedName("nTN5250KeyConfigCount")
+        public int mNTN5250KeyConfigCount = 0;
+
+        @SerializedName("TN5250KeyConfig")
+        public TN5250KeyMapList mTN5250KeyConfig = null;
+
+        @SerializedName("nVT220KeyConfigCount")
+        public int mNVT220KeyConfigCount = 0;
+
+        @SerializedName("VT220KeyConfig")
+        public VT220KeyMapList mVT220KeyConfig = null;
+
+        @SerializedName("nVT100_102KeyConfigCount")
+        public int mNVT100_102KeyConfigCount = 0;
+
+        @SerializedName("VT100_102KeyConfig")
+        public VT100_102KeyMapList mVT100_102KeyConfig = null;
+
         @SerializedName("fontColor")
         public ArrayList<Integer> mFontsColor = new ArrayList<Integer>();
 

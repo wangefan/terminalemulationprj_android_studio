@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.KeyEvent;
 
 import com.cipherlab.terminalemulation.BuildConfig;
+import com.cipherlab.terminalemulation.R;
 import com.te.UI.CipherUtility;
 import com.te.UI.ServerKeyEvent;
 
@@ -68,6 +69,7 @@ public class CVT100 extends CVT100Enum {
     static final int VTKEY_F18 = ServerKeyEvent.FUN_KEYCODE_F18;
     static final int VTKEY_F19 = ServerKeyEvent.FUN_KEYCODE_F19;
     static final int VTKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
+    static java.util.Map<Integer, String> mVTKeyCodeText = new java.util.HashMap<>();
 
     private static java.util.Map<Integer, Integer> mDefaultVTKeyCodeMap = new java.util.HashMap<Integer, Integer>();
     VtParserEvent vtParserEvent = new VtParserEvent();
@@ -122,7 +124,6 @@ public class CVT100 extends CVT100Enum {
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
@@ -136,8 +137,52 @@ public class CVT100 extends CVT100Enum {
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F11, VTKEY_F11);
         mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
+
+        mVTKeyCodeText.put(VTKEY_TAB, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_TAB));
+        mVTKeyCodeText.put(VTKEY_ENTER, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_ENTER));
+        mVTKeyCodeText.put(VTKEY_LEFT, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_LEFT));
+        mVTKeyCodeText.put(VTKEY_RIGHT, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_RIGHT));
+        mVTKeyCodeText.put(VTKEY_UP, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_UP));
+        mVTKeyCodeText.put(VTKEY_DW, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_DW));
+        mVTKeyCodeText.put(VTKEY_BS, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_BS));
+        mVTKeyCodeText.put(VTKEY_PGUP, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_PGUP));
+        mVTKeyCodeText.put(VTKEY_PGDW, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_PGDW));
+        mVTKeyCodeText.put(VTKEY_HOME, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_HOME));
+        mVTKeyCodeText.put(VTKEY_END, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_END));
+        mVTKeyCodeText.put(VTKEY_INS, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_INS));
+        mVTKeyCodeText.put(VTKEY_DEL, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_DEL));
+        mVTKeyCodeText.put(VTKEY_ESC, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_ESC));
+        mVTKeyCodeText.put(VTKEY_LF, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_LF));
+        mVTKeyCodeText.put(VTKEY_FIND, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_FIND));
+        mVTKeyCodeText.put(VTKEY_SELECT, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_SELECT));
+        mVTKeyCodeText.put(VTKEY_REMOVE, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_REMOVE));
+        mVTKeyCodeText.put(VTKEY_PREV, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_PREV));
+        mVTKeyCodeText.put(VTKEY_NEXT, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_NEXT));
+        mVTKeyCodeText.put(VTKEY_F1, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F1));
+        mVTKeyCodeText.put(VTKEY_F2, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F2));
+        mVTKeyCodeText.put(VTKEY_F3, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F3));
+        mVTKeyCodeText.put(VTKEY_F4, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F4));
+        mVTKeyCodeText.put(VTKEY_F5, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F5));
+        mVTKeyCodeText.put(VTKEY_F6, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F6));
+        mVTKeyCodeText.put(VTKEY_F7, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F7));
+        mVTKeyCodeText.put(VTKEY_F8, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F8));
+        mVTKeyCodeText.put(VTKEY_F9, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F9));
+        mVTKeyCodeText.put(VTKEY_F10, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F10));
+        mVTKeyCodeText.put(VTKEY_F11, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F11));
+        mVTKeyCodeText.put(VTKEY_F12, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F12));
+        mVTKeyCodeText.put(VTKEY_F13, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F13));
+        mVTKeyCodeText.put(VTKEY_F14, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F14));
+        mVTKeyCodeText.put(VTKEY_F15, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F15));
+        mVTKeyCodeText.put(VTKEY_F16, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F16));
+        mVTKeyCodeText.put(VTKEY_F17, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F17));
+        mVTKeyCodeText.put(VTKEY_F18, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F18));
+        mVTKeyCodeText.put(VTKEY_F19, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F19));
+        mVTKeyCodeText.put(VTKEY_F20, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_F20));
     }
 
+    public static String getServerKeyText(int nKeyCode) {
+        return mVTKeyCodeText.get(nKeyCode);
+    }
     public static void clearKeyCodeMap() {
         mDefaultVTKeyCodeMap.clear();
     }

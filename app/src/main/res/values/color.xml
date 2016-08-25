@@ -16,4 +16,5 @@
     <color name="key_checked_back_color">#578cd1</color>
     <color name="tooltipsColor">#2980b9</color>
     <color name="tooltipsTextColor">#FFFFFF</color>
+    <color name="key_map_list_item_border">#8EB4E3</color>
 </resources>

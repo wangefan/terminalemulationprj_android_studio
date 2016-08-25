@@ -114,6 +114,7 @@ public class IBMHost5250 extends IBMHostBase {
                     0x7b, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x7d, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, 0x50, 0x51, 0x52, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x24, 0x20, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
             };
     private static java.util.Map<Integer, Integer> mDefaultTNKeyCodeMap = new java.util.HashMap<Integer, Integer>();
+    static java.util.Map<Integer, String> mTNKeyCodeText = new java.util.HashMap<>();
     public static void initKeyCodeMap() {
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
@@ -135,7 +136,14 @@ public class IBMHost5250 extends IBMHostBase {
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F11, IBMKEY_F11);
         mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_F12);
+
+        mTNKeyCodeText.put(IBMKEY_ATTN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ATTN));
     }
+
+    public static String getServerKeyText(int nKeyCode) {
+        return mTNKeyCodeText.get(nKeyCode);
+    }
+
     public static void clearKeyCodeMap() {
         mDefaultTNKeyCodeMap.clear();
     }

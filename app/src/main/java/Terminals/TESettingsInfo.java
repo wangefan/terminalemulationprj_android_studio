@@ -3,6 +3,7 @@ package Terminals;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.cipherlab.terminalemulation.R;
 import com.google.gson.Gson;
 import com.te.UI.CipherUtility;
 
@@ -21,6 +22,13 @@ import Terminals.TESettings.SessionSetting;
  * Created by Franco.Liu on 2015/1/29.
  */
 public class TESettingsInfo {
+    final static String TN5250TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.IBM5250Val);
+    final static String TN3270TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.IBM3270Val);
+    final static String VT220TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.VT220Val);
+    final static String VT100TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.VT100Val);
+    final static String VT102TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.VT102Val);
+    final static String VTANSITYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.ANSIVal);
+
     final public static int MAX_SESSION_COUNT = 5;
     public static final boolean gIsActivation = false;
     public static final String _NAME = "TerminalEmulation";
@@ -677,6 +685,32 @@ public class TESettingsInfo {
         return Setting.mDevName;
     }
 
+    public static KeyMapList getKeyMapListByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        KeyMapList keyMapList = Setting.mVT220KeyConfig;
+        String strHostTypeName = "";
+        if(Setting.mIsTN == 1) {
+            strHostTypeName = Setting.mTermNameTN;
+            if(strHostTypeName.compareTo(TN3270TYPENAME) == 0) {
+                keyMapList = Setting.mTN3270KeyConfig;
+            } else if(strHostTypeName.compareTo(TN5250TYPENAME) == 0) {
+                keyMapList = Setting.mTN5250KeyConfig;
+            }
+        } else {
+            strHostTypeName = Setting.mTermName;
+            if(strHostTypeName.compareTo(VT100TYPENAME) == 0) {
+                keyMapList = Setting.mVT100_102KeyConfig;
+            } else if(strHostTypeName.compareTo(VT102TYPENAME) == 0) {
+                keyMapList = Setting.mVT100_102KeyConfig;
+            } else if(strHostTypeName.compareTo(VT220TYPENAME) == 0) {
+                keyMapList = Setting.mVT220KeyConfig;
+            } else if(strHostTypeName.compareTo(VTANSITYPENAME) == 0) {
+                keyMapList = Setting.mVT220KeyConfig;
+            }
+        }
+        return keyMapList;
+    }
+
     public static void setExportSettingsPath(String path) {
         SharedPreferences.Editor editor = mSp.edit();
         editor.putString(EXPORT_PATH, path);
@@ -771,4 +805,5 @@ public class TESettingsInfo {
     public static String getDefaultIP() {
         return "192.168.1.100";
     }
+
 }
