@@ -76,7 +76,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
                     new AtomicBoolean(false),
                     new AtomicBoolean(false));
             //Todo:Map from Window VT_Code to Android Key Code
-            result = String.format("VT code = %s", String.valueOf(nDecodePhysicalKeyCode));
+            result = String.format("VK code = %s", String.valueOf(nDecodePhysicalKeyCode));
         }
         return result;
     }
