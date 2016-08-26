@@ -4,6 +4,8 @@ package Terminals;
 import com.google.gson.annotations.SerializedName;
 
 public class KeyMapItem {
+    public static final int UNDEFINE_PHY = -1;
+
     @SerializedName(value="VTFunKeyVal", alternate={"TNFunKeyVal"})
     public int mServerKeycode = 0;
 
@@ -11,5 +13,15 @@ public class KeyMapItem {
     public int mPhysicalKeycode = 0;
 
     public KeyMapItem() {
+    }
+
+    public KeyMapItem (KeyMapItem keyItem) {
+        mServerKeycode = keyItem.mServerKeycode;
+        mPhysicalKeycode = keyItem.mPhysicalKeycode;
+    }
+
+    public KeyMapItem (int serverKeycode, int physicalKeycode) {
+        mServerKeycode = serverKeycode;
+        mPhysicalKeycode = physicalKeycode;
     }
 }

@@ -11,10 +11,15 @@ import com.cipherlab.terminalemulation.R;
 
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
+import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
 import Terminals.KeyMapListAdapter;
 import Terminals.TESettings;
 import Terminals.TESettingsInfo;
+import Terminals.TN3270KeyMapList;
+import Terminals.TN5250KeyMapList;
+import Terminals.VT100_102KeyMapList;
+import Terminals.VT220KeyMapList;
 import Terminals.stdActivityRef;
 
 public class SessionKeyMappingFrg extends Fragment {
@@ -148,6 +153,58 @@ public class SessionKeyMappingFrg extends Fragment {
     };
 
     final int [] TN3270SERVER_KEY_SEQUENCE = {
+            IBMHost5250.IBMKEY_ATTN            ,
+            IBMHost5250.IBMKEY_LEFTDELETE      ,
+            IBMHost5250.IBMKEY_PREV        ,
+            IBMHost5250.IBMKEY_CLR           ,
+            IBMHost5250.IBMKEY_CLREOF        ,
+            IBMHost5250.IBMKEY_DEL         ,
+            IBMHost5250.IBMKEY_DUP             ,
+            IBMHost5250.IBMKEY_ENTER           ,
+            IBMHost5250.IBMKEY_ERINPUT      ,
+            IBMHost5250.IBMKEY_FBEGIN      ,
+            IBMHost5250.IBMKEY_FEND        ,
+            IBMHost5250.IBMKEY_FMARK        ,
+            IBMHost5250.IBMKEY_LAST            ,
+            IBMHost5250.IBMKEY_HOME      ,
+            IBMHost5250.IBMKEY_INS          ,
+            IBMHost5250.IBMKEY_NEWLINE        ,
+            IBMHost5250.IBMKEY_RESET           ,
+            IBMHost5250.IBMKEY_ROLUP            ,
+            IBMHost5250.IBMKEY_ROLDN            ,
+            IBMHost5250.IBMKEY_SYSRQ          ,
+            IBMHost5250.IBMKEY_NEXT            ,
+            IBMHost5250.IBMKEY_LEFT            ,
+            IBMHost5250.IBMKEY_RIGHT			,
+            IBMHost5250.IBMKEY_UP            ,
+            IBMHost5250.IBMKEY_DOWN            ,
+            IBMHost5250.IBMKEY_PA1		,
+            IBMHost5250.IBMKEY_PA2		,
+            IBMHost5250.IBMKEY_PA3		,
+            IBMHost5250.IBMKEY_F1             ,
+            IBMHost5250.IBMKEY_F2             ,
+            IBMHost5250.IBMKEY_F3             ,
+            IBMHost5250.IBMKEY_F4             ,
+            IBMHost5250.IBMKEY_F5             ,
+            IBMHost5250.IBMKEY_F6             ,
+            IBMHost5250.IBMKEY_F7             ,
+            IBMHost5250.IBMKEY_F8             ,
+            IBMHost5250.IBMKEY_F9             ,
+            IBMHost5250.IBMKEY_F10            ,
+            IBMHost5250.IBMKEY_F11            ,
+            IBMHost5250.IBMKEY_F12            ,
+            IBMHost5250.IBMKEY_F13            ,
+            IBMHost5250.IBMKEY_F14            ,
+            IBMHost5250.IBMKEY_F15            ,
+            IBMHost5250.IBMKEY_F16            ,
+            IBMHost5250.IBMKEY_F17            ,
+            IBMHost5250.IBMKEY_F18            ,
+            IBMHost5250.IBMKEY_F19            ,
+            IBMHost5250.IBMKEY_F20            ,
+            IBMHost5250.IBMKEY_F21            ,
+            IBMHost5250.IBMKEY_F22            ,
+            IBMHost5250.IBMKEY_F23            ,
+            IBMHost5250.IBMKEY_F24
     };
     //Data members
     protected TESettings.SessionSetting mSetting = null;
@@ -165,8 +222,39 @@ public class SessionKeyMappingFrg extends Fragment {
         View keyMappingView = inflater.inflate(R.layout.pref_key_mapping, container, false);
         mKeyMapListView = (ListView) keyMappingView.findViewById(R.id.key_list);
         KeyMapList curKeyList = TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex());
-        KeyMapListAdapter adapter = new KeyMapListAdapter(stdActivityRef.getCurrActivity(), curKeyList);
-        mKeyMapListView.setAdapter(adapter);
+        KeyMapList sequenceKeyList = null;
+        int [] keySequence = null;
+        if(curKeyList instanceof VT100_102KeyMapList) {
+            sequenceKeyList = new VT100_102KeyMapList();
+            keySequence = VT100_102SERVER_KEY_SEQUENCE;
+        } else if(curKeyList instanceof VT220KeyMapList) {
+            sequenceKeyList = new VT220KeyMapList();
+            keySequence = VT220SERVER_KEY_SEQUENCE;
+        } else if(curKeyList instanceof TN5250KeyMapList) {
+            sequenceKeyList = new TN5250KeyMapList();
+            keySequence = TN5250SERVER_KEY_SEQUENCE;
+        } else if(curKeyList instanceof TN3270KeyMapList) {
+            sequenceKeyList = new VT220KeyMapList();
+            keySequence = TN3270SERVER_KEY_SEQUENCE;
+        }
+
+        //Re sequence list by SEQUENCE_LIST
+        if(keySequence != null && sequenceKeyList != null) {
+            for(int idxKey = 0; idxKey < keySequence.length; ++idxKey) {
+                KeyMapItem newKeyItem = new KeyMapItem(keySequence[idxKey], KeyMapItem.UNDEFINE_PHY);
+                for (int idxCurList = 0; idxCurList < curKeyList.size(); idxCurList++) {
+                    KeyMapItem curKeyItem = curKeyList.get(idxCurList);
+                    if(keySequence[idxKey] == curKeyItem.mServerKeycode) {
+                        newKeyItem.mPhysicalKeycode = curKeyItem.mPhysicalKeycode;
+                        break;
+                    }
+                }
+                sequenceKeyList.add(newKeyItem);
+            }
+            KeyMapListAdapter adapter = new KeyMapListAdapter(stdActivityRef.getCurrActivity(), sequenceKeyList);
+            mKeyMapListView.setAdapter(adapter);
+        }
+
         return keyMappingView;
     }
 

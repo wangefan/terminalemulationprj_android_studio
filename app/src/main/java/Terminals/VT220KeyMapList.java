@@ -5,7 +5,7 @@ import TelnetVT.CVT100;
 
 public class VT220KeyMapList extends KeyMapList {
 
-    private VT220KeyMapList() {
+    public VT220KeyMapList() {
         super();
     }
 

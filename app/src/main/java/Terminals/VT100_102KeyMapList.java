@@ -3,7 +3,7 @@ package Terminals;
 import TelnetVT.CVT100;
 
 public class VT100_102KeyMapList extends KeyMapList {
-    private VT100_102KeyMapList() {
+    public VT100_102KeyMapList() {
         super();
     }
 
