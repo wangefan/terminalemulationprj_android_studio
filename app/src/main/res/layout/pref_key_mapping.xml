@@ -44,6 +44,8 @@
         android:id="@+id/key_list"
         android:layout_below="@id/key_list_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@color/key_map_list_item_border"
+        android:dividerHeight="2px"/>
 
 </RelativeLayout>
