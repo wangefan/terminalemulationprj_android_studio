@@ -13,6 +13,24 @@
 			app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 			app:titleTextAppearance="@style/ToolbarTitleTextAppearance">
+            <RelativeLayout
+                android:id="@+id/second_setting_reset"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/STR_Reset"
+                    style="@style/ToolbarTitleTextAppearance"/>
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     
      <FrameLayout

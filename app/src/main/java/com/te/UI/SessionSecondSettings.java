@@ -2,6 +2,8 @@ package com.te.UI;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.cipherlab.terminalemulation.R;
 
@@ -21,6 +23,8 @@ public class SessionSecondSettings extends SessionSettingsBase {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.sessinsettingtoolbar);
         setSupportActionBar(toolbar);
+        RelativeLayout layReset = (RelativeLayout) toolbar.findViewById(R.id.second_setting_reset);
+        layReset.setVisibility(View.GONE);
 
         //To determine action bar.
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -77,6 +81,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
         } else if(action.compareTo(ACTION_KEY_MAPPING) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.key_mapping));
             SessionKeyMappingFrg settingsFrg = new SessionKeyMappingFrg();
+            layReset.setVisibility(View.VISIBLE);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
