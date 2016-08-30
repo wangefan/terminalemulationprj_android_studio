@@ -131,11 +131,11 @@ public class TerminalProcess {
                     serverTypeName.equals(context.getResources().getString(R.string.VT102Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.VT220Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
-            mTerminal = new CVT100();
+            mTerminal = new CVT100(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
         } else {
             String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
-                mTerminal = new IBMHost5250();
+                mTerminal = new IBMHost5250(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
         }
 
         if(mListener != null) {
