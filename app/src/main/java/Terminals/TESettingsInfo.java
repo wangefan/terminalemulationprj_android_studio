@@ -127,27 +127,6 @@ public class TESettingsInfo {
             SessionSetting setting = mTESettings.SETTINGS.get(idxSession);
             if (setting.mIsSelected)
                 mCurrentSessionIndex = idxSession;
-            if(setting.mTN3270KeyConfig == null) {
-                setting.mTN3270KeyConfig = new TN3270KeyMapList();
-                //Todo: use gDefaultTN_3270KeyCodeMap
-                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
-                setting.mTN3270KeyConfigCount = setting.mTN3270KeyConfig.size();
-            }
-            if(setting.mTN5250KeyConfig == null) {
-                setting.mTN5250KeyConfig = new TN5250KeyMapList();
-                fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
-                setting.mTN5250KeyConfigCount = setting.mTN5250KeyConfig.size();
-            }
-            if(setting.mVT100_102KeyConfig == null) {
-                setting.mVT100_102KeyConfig = new VT100_102KeyMapList();
-                fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
-                setting.mVT100_102KeyConfigCount = setting.mVT100_102KeyConfig.size();
-            }
-            if(setting.mVT220KeyConfig == null) {
-                setting.mVT220KeyConfig = new VT220KeyMapList();
-                fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
-                setting.mVT220KeyConfigCount = setting.mVT220KeyConfig.size();
-            }
         }
         return true;
     }
@@ -220,10 +199,7 @@ public class TESettingsInfo {
             TESettings teSettings = gson.fromJson(reader, TESettings.class);
             for (int idxSetting = 0; idxSetting < teSettings.SETTINGS.size(); idxSetting++) {
                 SessionSetting setting = teSettings.SETTINGS.get(idxSetting);
-                for (int idxMacro = 0; idxMacro < setting.mMacroList.size(); idxMacro++) {
-                    MacroItem item = setting.mMacroList.get(idxMacro);
-                    item.syncFromDeSerialize();
-                }
+                processAfterLoadSetting(setting);
             }
             return teSettings;
 
@@ -231,6 +207,34 @@ public class TESettingsInfo {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void processAfterLoadSetting(SessionSetting setting) {
+        for (int idxMacro = 0; idxMacro < setting.mMacroList.size(); idxMacro++) {
+            MacroItem item = setting.mMacroList.get(idxMacro);
+            item.syncFromDeSerialize();
+        }
+        if(setting.mTN3270KeyConfig == null) {
+            setting.mTN3270KeyConfig = new TN3270KeyMapList();
+            //Todo: use gDefaultTN_3270KeyCodeMap
+            fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+            setting.mTN3270KeyConfigCount = setting.mTN3270KeyConfig.size();
+        }
+        if(setting.mTN5250KeyConfig == null) {
+            setting.mTN5250KeyConfig = new TN5250KeyMapList();
+            fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+            setting.mTN5250KeyConfigCount = setting.mTN5250KeyConfig.size();
+        }
+        if(setting.mVT100_102KeyConfig == null) {
+            setting.mVT100_102KeyConfig = new VT100_102KeyMapList();
+            fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+            setting.mVT100_102KeyConfigCount = setting.mVT100_102KeyConfig.size();
+        }
+        if(setting.mVT220KeyConfig == null) {
+            setting.mVT220KeyConfig = new VT220KeyMapList();
+            fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+            setting.mVT220KeyConfigCount = setting.mVT220KeyConfig.size();
+        }
     }
 
     private static void serialize(File teJsonFile) {
@@ -253,6 +257,7 @@ public class TESettingsInfo {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             Gson gson = new Gson();
             setting = gson.fromJson(reader, SessionSetting.class);
+            processAfterLoadSetting(setting);
         } catch (Exception e) {
 
         }
@@ -726,28 +731,7 @@ public class TESettingsInfo {
 
     public static KeyMapList getKeyMapListByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        KeyMapList keyMapList = Setting.mVT220KeyConfig;
-        String strHostTypeName = "";
-        if(Setting.mIsTN == 1) {
-            strHostTypeName = Setting.mTermNameTN;
-            if(strHostTypeName.compareTo(TN3270TYPENAME) == 0) {
-                keyMapList = Setting.mTN3270KeyConfig;
-            } else if(strHostTypeName.compareTo(TN5250TYPENAME) == 0) {
-                keyMapList = Setting.mTN5250KeyConfig;
-            }
-        } else {
-            strHostTypeName = Setting.mTermName;
-            if(strHostTypeName.compareTo(VT100TYPENAME) == 0) {
-                keyMapList = Setting.mVT100_102KeyConfig;
-            } else if(strHostTypeName.compareTo(VT102TYPENAME) == 0) {
-                keyMapList = Setting.mVT100_102KeyConfig;
-            } else if(strHostTypeName.compareTo(VT220TYPENAME) == 0) {
-                keyMapList = Setting.mVT220KeyConfig;
-            } else if(strHostTypeName.compareTo(VTANSITYPENAME) == 0) {
-                keyMapList = Setting.mVT220KeyConfig;
-            }
-        }
-        return keyMapList;
+        return Setting.getKeyMapList();
     }
 
     public static void setExportSettingsPath(String path) {

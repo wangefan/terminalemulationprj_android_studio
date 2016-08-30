@@ -15,11 +15,6 @@ public class KeyMapItem {
     public KeyMapItem() {
     }
 
-    public KeyMapItem (KeyMapItem keyItem) {
-        mServerKeycode = keyItem.mServerKeycode;
-        mPhysicalKeycode = keyItem.mPhysicalKeycode;
-    }
-
     public KeyMapItem (int serverKeycode, int physicalKeycode) {
         mServerKeycode = serverKeycode;
         mPhysicalKeycode = physicalKeycode;

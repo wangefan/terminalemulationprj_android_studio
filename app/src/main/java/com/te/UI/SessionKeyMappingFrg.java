@@ -15,7 +15,6 @@ import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
 import Terminals.KeyMapListAdapter;
 import Terminals.TESettings;
-import Terminals.TESettingsInfo;
 import Terminals.TN3270KeyMapList;
 import Terminals.TN5250KeyMapList;
 import Terminals.VT100_102KeyMapList;
@@ -221,7 +220,7 @@ public class SessionKeyMappingFrg extends Fragment {
         // Inflating view layout
         View keyMappingView = inflater.inflate(R.layout.pref_key_mapping, container, false);
         mKeyMapListView = (ListView) keyMappingView.findViewById(R.id.key_list);
-        KeyMapList curKeyList = TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex());
+        KeyMapList curKeyList = mSetting.getKeyMapList();
         KeyMapList sequenceKeyList = null;
         int [] keySequence = null;
         if(curKeyList instanceof VT100_102KeyMapList) {

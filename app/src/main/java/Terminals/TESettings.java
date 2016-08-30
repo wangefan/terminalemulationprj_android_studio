@@ -111,6 +111,31 @@ public class TESettings {
             mBGColor.set(2, Color.blue(nColor));
         }
 
+        public KeyMapList getKeyMapList() {
+            KeyMapList keyMapList = mVT220KeyConfig;
+            String strHostTypeName = "";
+            if(mIsTN == 1) {
+                strHostTypeName = mTermNameTN;
+                if(strHostTypeName.compareTo(TESettingsInfo.TN3270TYPENAME) == 0) {
+                    keyMapList = mTN3270KeyConfig;
+                } else if(strHostTypeName.compareTo(TESettingsInfo.TN5250TYPENAME) == 0) {
+                    keyMapList = mTN5250KeyConfig;
+                }
+            } else {
+                strHostTypeName = mTermName;
+                if(strHostTypeName.compareTo(TESettingsInfo.VT100TYPENAME) == 0) {
+                    keyMapList = mVT100_102KeyConfig;
+                } else if(strHostTypeName.compareTo(TESettingsInfo.VT102TYPENAME) == 0) {
+                    keyMapList = mVT100_102KeyConfig;
+                } else if(strHostTypeName.compareTo(TESettingsInfo.VT220TYPENAME) == 0) {
+                    keyMapList = mVT220KeyConfig;
+                } else if(strHostTypeName.compareTo(TESettingsInfo.VTANSITYPENAME) == 0) {
+                    keyMapList = mVT220KeyConfig;
+                }
+            }
+            return keyMapList;
+        }
+
     	//Sync
         @SerializedName("TermNameTN")
         public String mTermNameTN="";
