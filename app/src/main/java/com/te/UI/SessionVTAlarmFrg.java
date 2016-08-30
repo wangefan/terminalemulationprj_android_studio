@@ -46,10 +46,10 @@ public class SessionVTAlarmFrg extends SessionSettingsFrgBase {
         switch (resultCode) {
             case Activity.RESULT_OK:
                 if(requestCode == REQ_READER_CONTROL) {
-                    if(Session3rdSettings.gIsModified)
+                    if(Session3rdSettings.gIsAlarmModified)
                         mSetting.mIsScanControl = true;
                 } else if(requestCode == REQ_FEEDBACK) {
-                    if(Session3rdSettings.gIsModified)
+                    if(Session3rdSettings.gIsAlarmModified)
                         mSetting.mIsFeedbackControlByCmd = true;
                 }
                 //onResume will update UI

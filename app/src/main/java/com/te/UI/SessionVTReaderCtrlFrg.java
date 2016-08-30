@@ -80,7 +80,7 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
                             public void onFilePath(String chosenDir) {
                                 mSetting.g_ReaderParam.mScannerSoundFile = chosenDir;
                                 syncSettingToSoundPref(mSetting.g_ReaderParam.mScannerSoundFile);
-                                ((Session3rdSettings)getActivity()).gIsModified = true;
+                                ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
                             }
 
                             @Override
@@ -110,7 +110,7 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
             String selVBIdx = mLstVBDur.getValue();
             mSetting.g_ReaderParam.mScannerVBIndex = Integer.valueOf(selVBIdx);
         }
-        ((Session3rdSettings)getActivity()).gIsModified = true;
+        ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
                     mSetting.g_ReaderParam.mScannerDisableCmd = bundle.getString("data");
                     syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerDisableCmd), mPrefDisableCmd);
                 }
-                ((Session3rdSettings)getActivity()).gIsModified = true;
+                ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
             break;
             default:
                 break;

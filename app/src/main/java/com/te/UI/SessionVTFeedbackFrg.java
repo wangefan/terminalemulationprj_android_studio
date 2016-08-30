@@ -88,7 +88,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                         public void onResult(String result) {
                             mSetting.g_ReaderParam.mGoodFeedBackText = result;
                             syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
-                            ((Session3rdSettings)getActivity()).gIsModified = true;
+                            ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
                         }
 
                         @Override
@@ -115,7 +115,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                             public void onFilePath(String chosenDir) {
                                 mSetting.g_ReaderParam.mGoodSoundFile = chosenDir;
                                 syncSettingToGoodSoundPref(mSetting.g_ReaderParam.mGoodSoundFile);
-                                ((Session3rdSettings)getActivity()).gIsModified = true;
+                                ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
                             }
 
                             @Override
@@ -143,7 +143,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                         public void onResult(String result) {
                             mSetting.g_ReaderParam.mErrorFeedBackText = result;
                             syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
-                            ((Session3rdSettings)getActivity()).gIsModified = true;
+                            ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
                         }
 
                         @Override
@@ -170,7 +170,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                             public void onFilePath(String chosenDir) {
                                 mSetting.g_ReaderParam.mErrorSoundFile = chosenDir;
                                 syncSettingToErrSoundPref(mSetting.g_ReaderParam.mErrorSoundFile);
-                                ((Session3rdSettings)getActivity()).gIsModified = true;
+                                ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
                             }
 
                             @Override
@@ -215,7 +215,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             String selErrVBIdx = mLstErrVBDur.getValue();
             mSetting.g_ReaderParam.mErrorVBIndex = Integer.valueOf(selErrVBIdx);
         }
-        ((Session3rdSettings)getActivity()).gIsModified = true;
+        ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
     }
 
     @Override
@@ -231,7 +231,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                     mSetting.g_ReaderParam.mErrorFeedBackESC = bundle.getString("data");
                     syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
                 }
-                ((Session3rdSettings)getActivity()).gIsModified = true;
+                ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
             break;
             default:
                 break;
