@@ -456,6 +456,7 @@
     <string name="IBMKEY_PA2">PA2</string>
     <string name="IBMKEY_PA3">PA3</string>
     <string name="IBMKEY_FMARK">Field Mark</string>
+    <string name="undefinedPhy">Undefined</string>
 
     <string-array name="icon_update_interval_array">
         <item>not update</item>

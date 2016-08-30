@@ -5,7 +5,7 @@ import TelnetIBM.IBMHost5250;
 
 public class TN3270KeyMapList extends KeyMapList {
 
-    private TN3270KeyMapList() {
+    TN3270KeyMapList() {
         super();
     }
 

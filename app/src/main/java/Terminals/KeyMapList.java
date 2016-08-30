@@ -1,5 +1,9 @@
 package Terminals;
 
+import android.view.KeyEvent;
+
+import com.cipherlab.terminalemulation.R;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -11,59 +15,69 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     protected KeyMapList() {
     }
 
-    protected int decodeVKCodeRetunHelpKey(int nEncodedVKCode, AtomicBoolean bHasCtrl, AtomicBoolean bHasShift, AtomicBoolean bHasAlt) {
-        int nVKResult = nEncodedVKCode;
-        if(nEncodedVKCode >= (NSHIFTVAL + NCTRLVAL + NALTVAL))
-        {
-            nVKResult =  nEncodedVKCode - (NSHIFTVAL + NCTRLVAL + NALTVAL);
+    public static int decodePhyCodeRetunHelpKey(int nEncodedPhyCode, AtomicBoolean bHasCtrl, AtomicBoolean bHasShift, AtomicBoolean bHasAlt) {
+        int nPhyResult = nEncodedPhyCode;
+        if(nEncodedPhyCode >= (NSHIFTVAL + NCTRLVAL + NALTVAL)) {
+            nPhyResult =  nEncodedPhyCode - (NSHIFTVAL + NCTRLVAL + NALTVAL);
             bHasCtrl.set(true);
             bHasShift.set(true);
             bHasAlt.set(true);
-            return nVKResult;
+            return nPhyResult;
         }
-        if(nEncodedVKCode >= (NCTRLVAL + NALTVAL)) {
-            nVKResult =  nEncodedVKCode - (NCTRLVAL + NALTVAL);
+        if(nEncodedPhyCode >= (NCTRLVAL + NALTVAL)) {
+            nPhyResult =  nEncodedPhyCode - (NCTRLVAL + NALTVAL);
             bHasCtrl.set(true);
             bHasAlt.set(true);
             bHasShift.set(false);
-            return nVKResult;
+            return nPhyResult;
         }
-        if(nEncodedVKCode >= (NSHIFTVAL + NALTVAL)) {
-            nVKResult =  nEncodedVKCode - (NSHIFTVAL + NALTVAL);
+        if(nEncodedPhyCode >= (NSHIFTVAL + NALTVAL)) {
+            nPhyResult =  nEncodedPhyCode - (NSHIFTVAL + NALTVAL);
             bHasShift.set(true);
             bHasAlt.set(true);
             bHasCtrl.set(false);
-            return nVKResult;
+            return nPhyResult;
         }
-        if(nEncodedVKCode >= NALTVAL) {
-            nVKResult =  nEncodedVKCode - NALTVAL;
+        if(nEncodedPhyCode >= NALTVAL) {
+            nPhyResult =  nEncodedPhyCode - NALTVAL;
             bHasAlt.set(true);
             bHasCtrl.set(false);
             bHasShift.set(false);
-            return nVKResult;
+            return nPhyResult;
         }
-        if(nEncodedVKCode >= (NSHIFTVAL + NCTRLVAL)) {
-            nVKResult =  nEncodedVKCode - (NSHIFTVAL + NCTRLVAL);
+        if(nEncodedPhyCode >= (NSHIFTVAL + NCTRLVAL)) {
+            nPhyResult =  nEncodedPhyCode - (NSHIFTVAL + NCTRLVAL);
             bHasCtrl.set(true);
             bHasShift.set(true);
             bHasAlt.set(false);
-            return nVKResult;
+            return nPhyResult;
         }
-        if(nEncodedVKCode >= NCTRLVAL) {
-            nVKResult =  nEncodedVKCode - NCTRLVAL;
+        if(nEncodedPhyCode >= NCTRLVAL) {
+            nPhyResult =  nEncodedPhyCode - NCTRLVAL;
             bHasCtrl.set(true);
             bHasAlt.set(false);
             bHasShift.set(false);
-            return nVKResult;
+            return nPhyResult;
         }
-        if(nEncodedVKCode >= NSHIFTVAL) {
-            nVKResult =  nEncodedVKCode - NSHIFTVAL;
+        if(nEncodedPhyCode >= NSHIFTVAL) {
+            nPhyResult =  nEncodedPhyCode - NSHIFTVAL;
             bHasShift.set(true);
             bHasCtrl.set(false);
             bHasAlt.set(false);
-            return nVKResult;
+            return nPhyResult;
         }
-        return nVKResult;
+        return nPhyResult;
+    }
+
+    public static int encodePhyKeyCode(int nPhyOrgCode, boolean bHasCtrl, boolean bHasShift, boolean bHasAlt) {
+        int nPhyResult = nPhyOrgCode;
+        if(bHasCtrl)
+            nPhyResult += NCTRLVAL;
+        if(bHasShift)
+            nPhyResult += NSHIFTVAL;
+        if(bHasAlt)
+            nPhyResult += NALTVAL;
+        return nPhyResult;
     }
 
     abstract public String getServerKeyText(int position);
@@ -71,12 +85,16 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     public String getPhysicalKeyText(int position) {
         String result = "";
         if(position < this.size()) {
-            int nDecodePhysicalKeyCode = decodeVKCodeRetunHelpKey(get(position).mPhysicalKeycode,
+            int nDecodePhysicalKeyCode = decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
                     new AtomicBoolean(false),
                     new AtomicBoolean(false),
                     new AtomicBoolean(false));
             //Todo:Map from Window VT_Code to Android Key Code
-            result = String.format("VK code = %s", String.valueOf(nDecodePhysicalKeyCode));
+            if(nDecodePhysicalKeyCode == KeyMapItem.UNDEFINE_PHY) {
+                result = stdActivityRef.getCurrActivity().getString(R.string.undefinedPhy);
+            } else {
+                result = KeyEvent.keyCodeToString(nDecodePhysicalKeyCode);
+            }
         }
         return result;
     }
@@ -84,7 +102,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     public boolean hasShift(int position) {
         AtomicBoolean bHasShift = new AtomicBoolean(false);
         if(position < this.size()) {
-            decodeVKCodeRetunHelpKey(get(position).mPhysicalKeycode,
+            decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
                     new AtomicBoolean(false),
                     bHasShift,
                     new AtomicBoolean(false));
@@ -95,7 +113,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     public boolean hasCtrl(int position) {
         AtomicBoolean bHasCtrl = new AtomicBoolean(false);
         if(position < this.size()) {
-            decodeVKCodeRetunHelpKey(get(position).mPhysicalKeycode,
+            decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
                     bHasCtrl,
                     new AtomicBoolean(false),
                     new AtomicBoolean(false));
@@ -106,7 +124,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     public boolean hasAlt(int position) {
         AtomicBoolean bHasAlt = new AtomicBoolean(false);
         if(position < this.size()) {
-            decodeVKCodeRetunHelpKey(get(position).mPhysicalKeycode,
+            decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
                     new AtomicBoolean(false),
                     new AtomicBoolean(false),
                     bHasAlt);

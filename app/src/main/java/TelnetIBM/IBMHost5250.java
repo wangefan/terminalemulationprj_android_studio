@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
+import Terminals.KeyMapItem;
+import Terminals.KeyMapList;
 import Terminals.LanguageTable;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
@@ -113,29 +115,61 @@ public class IBMHost5250 extends IBMHostBase {
                     0x20, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba, 0x20, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0x20, 0x20, 0xca, 0xcb, 0xcc, 0x5b, 0x7e, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0x20, 0xd6, 0xd7, 0xd8, 0xd9, 0x5d, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0xdf,
                     0x7b, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x7d, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, 0x50, 0x51, 0x52, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x24, 0x20, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
             };
-    private static java.util.Map<Integer, Integer> mDefaultTNKeyCodeMap = new java.util.HashMap<Integer, Integer>();
-    static java.util.Map<Integer, String> mTNKeyCodeText = new java.util.HashMap<>();
+    //Key: Physical keycode, Value:Server Keycode
+    public static java.util.Map<Integer, Integer> gDefaultTN_5250KeyCodeMap = new java.util.HashMap<>();
+    private static java.util.Map<Integer, String> mTNKeyCodeText = new java.util.HashMap<>();
     public static void initKeyCodeMap() {
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, IBMKEY_LEFT);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, IBMKEY_UP);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, IBMKEY_DOWN);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F1, IBMKEY_F1);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F2, IBMKEY_F2);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F3, IBMKEY_F3);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F4, IBMKEY_F4);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F5, IBMKEY_F5);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F6, IBMKEY_F6);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F7, IBMKEY_F7);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F11, IBMKEY_F11);
-        mDefaultTNKeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_F12);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_BACKSLASH, IBMKEY_ATTN);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, IBMKEY_CLREOF); //Right BRACKET or Blue + F, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, IBMKEY_DEL);//End or Blue + backspace, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_MINUS, IBMKEY_DUP);   //Hyphen or Blue + N, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, IBMKEY_ERINPUT); //Left BRACKET or Blue + E, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_PERIOD, IBMKEY_PRINT); //Period or Blue + B, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, IBMKEY_FMINUS); //Page down or Blue + *, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ENTER, true, false, false), IBMKEY_FEXIT);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_APOSTROPHE, IBMKEY_HELP); //APOSTROPHE or Blue + C, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_COMMA, IBMKEY_HOME); //Comma or Blue + A, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_SEMICOLON, IBMKEY_INS); //Semicolon or Blue + R, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_GRAVE, IBMKEY_ROLUP); //BackQuote or Blue + J, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F11, IBMKEY_ROLDN); //F11 or Blue + L, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_SYSRQ); //F12 or Blue + K, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, IBMKEY_LEFT);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, IBMKEY_UP);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, IBMKEY_DOWN);
+
+        //Todo: confirm that 9700 has real key from F1~F10
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F1, IBMKEY_F1);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F2, IBMKEY_F2);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F3, IBMKEY_F3);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F4, IBMKEY_F4);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F5, IBMKEY_F5);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F6, IBMKEY_F6);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F7, IBMKEY_F7);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), IBMKEY_F11);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), IBMKEY_F12);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), IBMKEY_F13);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), IBMKEY_F14);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), IBMKEY_F15);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), IBMKEY_F16);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), IBMKEY_F17);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), IBMKEY_F18);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), IBMKEY_F19);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), IBMKEY_F20);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F1, false, true, false), IBMKEY_F21);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F2, false, true, false), IBMKEY_F22);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F3, false, true, false), IBMKEY_F23);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F4, false, true, false), IBMKEY_F24);
 
         mTNKeyCodeText.put(IBMKEY_ATTN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ATTN));
         mTNKeyCodeText.put(IBMKEY_FBEGIN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_FBEGIN));
@@ -203,7 +237,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     public static void clearKeyCodeMap() {
-        mDefaultTNKeyCodeMap.clear();
+        gDefaultTN_5250KeyCodeMap.clear();
     }
     //private char[][] CharGrid = null;
     //private char[][] AttribGrid = null;
@@ -265,7 +299,7 @@ public class IBMHost5250 extends IBMHostBase {
     private java.util.ArrayList<Character> DataList = new java.util.ArrayList<Character>();
     private java.util.ArrayList<Character> ParamList = new java.util.ArrayList<Character>();
     private java.util.ArrayList<Character> ControlCodeList = new java.util.ArrayList<Character>();
-    private java.util.Map<Integer, Integer> mTNKeyCodeMap = null;
+    private java.util.Map<Integer, Integer> mTN5250KeyCodeMap = null;
     // #{{  Char Event List
     private Tn_CharEventInfo[] mTn_CharEvents = {
             //	previous IBMState ,  CharFrom,  CharTo,  Action,             Cur State
@@ -333,9 +367,19 @@ public class IBMHost5250 extends IBMHostBase {
     };
 
     // #{{ constructor & members
-    public IBMHost5250() {
+
+    public IBMHost5250(KeyMapList keyMapList) {
         this.SetSize(25, 80);
-        mTNKeyCodeMap = new HashMap<Integer, Integer>(mDefaultTNKeyCodeMap);
+        if(keyMapList != null) { //Load from settings
+            mTN5250KeyCodeMap = new HashMap<>();
+            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.size(); idxKeyMapList++) {
+                KeyMapItem keyMapItem = keyMapList.get(idxKeyMapList);
+                mTN5250KeyCodeMap.put(keyMapItem.mPhysicalKeycode, keyMapItem.mServerKeycode);
+            }
+        } else {
+            //Todo: break IBMHost5250 into IBMHost5250 and IBMHost3270
+            mTN5250KeyCodeMap = new HashMap<>(gDefaultTN_5250KeyCodeMap);
+        }
     }
     // }}#
 
@@ -394,7 +438,7 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     protected int getServerKeyCode(int keyCode) {
-        Integer nIBMKeyCode = mTNKeyCodeMap.get(keyCode);
+        Integer nIBMKeyCode = mTN5250KeyCodeMap.get(keyCode);
         if(nIBMKeyCode != null) {
             CipherUtility.Log_d("IBMHost5250", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
             return nIBMKeyCode;

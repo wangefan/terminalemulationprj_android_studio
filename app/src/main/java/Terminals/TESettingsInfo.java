@@ -16,7 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
+import TelnetIBM.IBMHost5250;
+import TelnetVT.CVT100;
 import Terminals.TESettings.SessionSetting;
 
 /**
@@ -118,12 +122,44 @@ public class TESettingsInfo {
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return false;
 
-        //Get active session index
+        //Get active session index and process KeyMapList
         for (int idxSession = 0; idxSession < mTESettings.SETTINGS.size(); ++idxSession) {
-            if (mTESettings.SETTINGS.get(idxSession).mIsSelected)
+            SessionSetting setting = mTESettings.SETTINGS.get(idxSession);
+            if (setting.mIsSelected)
                 mCurrentSessionIndex = idxSession;
+            if(setting.mTN3270KeyConfig == null) {
+                setting.mTN3270KeyConfig = new TN3270KeyMapList();
+                //Todo: use gDefaultTN_3270KeyCodeMap
+                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                setting.mTN3270KeyConfigCount = setting.mTN3270KeyConfig.size();
+            }
+            if(setting.mTN5250KeyConfig == null) {
+                setting.mTN5250KeyConfig = new TN5250KeyMapList();
+                fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                setting.mTN5250KeyConfigCount = setting.mTN5250KeyConfig.size();
+            }
+            if(setting.mVT100_102KeyConfig == null) {
+                setting.mVT100_102KeyConfig = new VT100_102KeyMapList();
+                fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+                setting.mVT100_102KeyConfigCount = setting.mVT100_102KeyConfig.size();
+            }
+            if(setting.mVT220KeyConfig == null) {
+                setting.mVT220KeyConfig = new VT220KeyMapList();
+                fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+                setting.mVT220KeyConfigCount = setting.mVT220KeyConfig.size();
+            }
         }
         return true;
+    }
+
+    private static void fillMaps(KeyMapList keyMapListDest, Map<Integer, Integer> keyCodeMapSrc) {
+        Iterator entries = keyCodeMapSrc.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            Integer phyKeyCode = (Integer) entry.getKey();
+            Integer serverKeycode = (Integer) entry.getValue();
+            keyMapListDest.add(new KeyMapItem(serverKeycode, phyKeyCode));
+        }
     }
 
     private static boolean createJsonFile(File file) {

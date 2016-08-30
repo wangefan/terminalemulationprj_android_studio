@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import Terminals.CipherReaderControl;
+import Terminals.KeyMapItem;
+import Terminals.KeyMapList;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 
@@ -71,7 +73,8 @@ public class CVT100 extends CVT100Enum {
     public static final int VTKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
     static java.util.Map<Integer, String> mVTKeyCodeText = new java.util.HashMap<>();
 
-    private static java.util.Map<Integer, Integer> mDefaultVTKeyCodeMap = new java.util.HashMap<Integer, Integer>();
+    public static java.util.Map<Integer, Integer> gDefaultVT220KeyCodeMap = new java.util.HashMap<>();
+    public static java.util.Map<Integer, Integer> gDefaultVT100_102KeyCodeMap = new java.util.HashMap<>();
     VtParserEvent vtParserEvent = new VtParserEvent();
     private uc_Parser Parser = null;
     private int TopMargin;
@@ -96,7 +99,8 @@ public class CVT100 extends CVT100Enum {
     private StringBuilder mCurrentGoodFBText = new StringBuilder();
     private StringBuilder mCurrentErrorFBText = new StringBuilder();
 
-    public CVT100() {
+
+    public CVT100(KeyMapList keyMapList) {
         this.Parser = new uc_Parser();
         this.Parser.UcParserEvent = vtParserEvent;
 
@@ -110,7 +114,17 @@ public class CVT100 extends CVT100Enum {
         this.CharAttribs.GR = this.G2;
 
         this.SetSize(25, 80);
-        mVTKeyCodeMap = new HashMap<Integer, Integer>(mDefaultVTKeyCodeMap);
+        if(keyMapList != null) { //Load from settings
+            mVTKeyCodeMap = new HashMap<>();
+            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.size(); idxKeyMapList++) {
+                KeyMapItem keyMapItem = keyMapList.get(idxKeyMapList);
+                mVTKeyCodeMap.put(keyMapItem.mPhysicalKeycode, keyMapItem.mServerKeycode);
+            }
+        } else {
+            //Todo: break CVT100 into CVT100_102 and CVT220
+            mVTKeyCodeMap = new HashMap<Integer, Integer>(gDefaultVT220KeyCodeMap);
+        }
+
         this.Caret = new uc_Caret();
         this.Modes = new uc_Mode();
         this.TabStops = new uc_TabStops();
@@ -118,25 +132,64 @@ public class CVT100 extends CVT100Enum {
     }
 
     public static void initKeyCodeMap() {
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_TAB);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F11, VTKEY_F11);
-        mDefaultVTKeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, VTKEY_TAB); //Need to confirm
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [APOSTROPHE or Blue + C]
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + C]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + C]
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), VTKEY_F11);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), VTKEY_F12);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), VTKEY_F13);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), VTKEY_F14);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), VTKEY_F15);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), VTKEY_F16);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), VTKEY_F17);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), VTKEY_F18);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), VTKEY_F19);
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), VTKEY_F20);
+
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, VTKEY_TAB); //Need to confirm
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [APOSTROPHE or Blue + C]
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + C]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + C]
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
 
         mVTKeyCodeText.put(VTKEY_TAB, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_TAB));
         mVTKeyCodeText.put(VTKEY_ENTER, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_ENTER));
@@ -184,7 +237,8 @@ public class CVT100 extends CVT100Enum {
         return mVTKeyCodeText.get(nKeyCode);
     }
     public static void clearKeyCodeMap() {
-        mDefaultVTKeyCodeMap.clear();
+        gDefaultVT220KeyCodeMap.clear();
+        gDefaultVT100_102KeyCodeMap.clear();
     }
 
     public String GetLogTitle() {
