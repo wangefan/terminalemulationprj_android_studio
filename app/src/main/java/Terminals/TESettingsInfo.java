@@ -2,6 +2,7 @@ package Terminals;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 
 import com.cipherlab.terminalemulation.R;
 import com.google.gson.Gson;
@@ -51,8 +52,9 @@ public class TESettingsInfo {
     public static final int NET_ANSI = 3;
     public static final int NET_OEM = 4;
 
-    final private static String mSettingFilename = "TE_settings.json";
+    final private static String TE_JASONFILE_NAME = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
+    final private static String TE_JASONFILE_PATH = Environment.getExternalStorageDirectory() + File.separator + "CipherLabSettings" + File.separator  + "TerminalEmulation" + File.separator;
 
     static TESettings mTESettings = null;
     private static Context mContext = null;
@@ -91,10 +93,11 @@ public class TESettingsInfo {
         mListVBTime.add(4500l);
         mListVBTime.add(5000l);
         mListVBTime.add(5500l);
-        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        File teJsonFile = new File(TE_JASONFILE_PATH, TE_JASONFILE_NAME);
         if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
             try {
-                InputStream inputStream = mContext.getAssets().open(mSettingFilename);
+                teJsonFile.getParentFile().mkdirs();
+                InputStream inputStream = mContext.getAssets().open(TE_JASONFILE_NAME);
                 FileOutputStream fileOutputStream = new FileOutputStream(teJsonFile.getAbsolutePath());
                 CipherUtility.copyFile(inputStream, fileOutputStream);
                 inputStream.close();
@@ -146,7 +149,7 @@ public class TESettingsInfo {
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return;
         deleteJsonFile();
-        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        File teJsonFile = new File(TE_JASONFILE_PATH, TE_JASONFILE_NAME);
         createJsonFile(teJsonFile);
     }
 
@@ -167,7 +170,7 @@ public class TESettingsInfo {
     }
 
     public static void deleteJsonFile() {
-        File teJsonFile = new File(mContext.getFilesDir(), mSettingFilename);
+        File teJsonFile = new File(TE_JASONFILE_PATH, TE_JASONFILE_NAME);
         if (teJsonFile.exists()) {
             teJsonFile.delete();
         }
