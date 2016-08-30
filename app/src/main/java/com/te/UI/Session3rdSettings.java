@@ -8,6 +8,7 @@ public class Session3rdSettings extends SessionSettingsBase {
     public static final String ACTION_COLOR = "com.te.UI.Session3rdSettings.ACTION_COLOR";
     public static final String ACTION_READER_CTRL = "com.te.UI.Session3rdSettings.ACTION_READER_CTRL";
     public static final String ACTION_FEEDBACK = "com.te.UI.Session3rdSettings.ACTION_FEEDBACK";
+    public static final String ACTION_KEYMAP_EDIT = "com.te.UI.Session3rdSettings.ACTION_KEYMAP_EDIT";
     public static boolean gIsAlarmModified = false;
 
     @Override
@@ -43,6 +44,13 @@ public class Session3rdSettings extends SessionSettingsBase {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.vt_feedback));
             SessionVTFeedbackFrg settingsFrg = new SessionVTFeedbackFrg();
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, settingsFrg)
+                    .commit();
+        } else if(action.compareTo(ACTION_KEYMAP_EDIT) == 0) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.keymap_edit));
+            SessionKeyMapEditingFrg settingsFrg = new SessionKeyMapEditingFrg();
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)

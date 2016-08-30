@@ -1,10 +1,12 @@
 package com.te.UI;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cipherlab.terminalemulation.R;
@@ -252,6 +254,14 @@ public class SessionKeyMappingFrg extends Fragment {
             }
             KeyMapListAdapter adapter = new KeyMapListAdapter(stdActivityRef.getCurrActivity(), sequenceKeyList);
             mKeyMapListView.setAdapter(adapter);
+            mKeyMapListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getActivity(), Session3rdSettings.class);
+                    intent.setAction(Session3rdSettings.ACTION_KEYMAP_EDIT);
+                    startActivity(intent);
+                }
+            });
         }
 
         return keyMappingView;

@@ -277,6 +277,7 @@
     <string name="vt_feedback_on">On</string>
     <string name="vt_control_reader_key_off">Off</string>
     <string name="vt_control_reader_key_on">On</string>
+    <string name="keymap_edit">Select Physical Key</string>
     <string name="msg_tour_edit_profile_title">Edit your profile here.</string>
     <string name="msg_tour_edit_profile">You should edit your profile setting before connecting to your host.\r\nPress to exit.</string>
     <string name="msg_tour_add_session_title">Add Session</string>

@@ -89,7 +89,6 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
                     new AtomicBoolean(false),
                     new AtomicBoolean(false),
                     new AtomicBoolean(false));
-            //Todo:Map from Window VT_Code to Android Key Code
             if(nDecodePhysicalKeyCode == KeyMapItem.UNDEFINE_PHY) {
                 result = stdActivityRef.getCurrActivity().getString(R.string.undefinedPhy);
             } else {
