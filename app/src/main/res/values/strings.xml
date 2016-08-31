@@ -461,6 +461,11 @@
     <string name="phykey_title">Mapped Physical Key</string>
     <string name="phy_category_title">Category:</string>
     <string name="phy_title">Physical Key:</string>
+    <string name="shift_text">Shift</string>
+    <string name="ctrl_text">Ctrl</string>
+    <string name="alt_text">Alt</string>
+    <string name="clear_key_text">Clear Key</string>
+    <string name="trap_text">Trap</string>
 
     <string-array name="icon_update_interval_array">
         <item>not update</item>
