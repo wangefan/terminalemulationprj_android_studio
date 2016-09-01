@@ -41,8 +41,11 @@ public class SessionKeyMapEditingFrg extends Fragment {
     private TextView mtvServerKeyText = null;
     private Spinner mPhyCategory = null;
     private Spinner mPhyKeys = null;
+    private RelativeLayout mlayShift = null;
     private CheckBox mchkShift = null;
+    private RelativeLayout mlayCtrl = null;
     private CheckBox mchkCtrl = null;
+    private RelativeLayout mlayAlt = null;
     private CheckBox mchkAlt = null;
 
 	public SessionKeyMapEditingFrg() {
@@ -178,8 +181,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
         mPhyKeys = (Spinner) keyMappingEdtView.findViewById(R.id.spinner_phy);
         mchkShift = (CheckBox) keyMappingEdtView.findViewById(R.id.id_shift);
         mchkShift.setClickable(false);
-        RelativeLayout layShift = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_shift);
-        layShift.setOnClickListener(new View.OnClickListener() {
+        mlayShift = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_shift);
+        mlayShift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mchkShift.setChecked(!mchkShift.isChecked());
@@ -187,8 +190,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
         });
         mchkCtrl = (CheckBox) keyMappingEdtView.findViewById(R.id.id_ctrl);
         mchkCtrl.setClickable(false);
-        RelativeLayout layCtrl = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_ctrl);
-        layCtrl.setOnClickListener(new View.OnClickListener() {
+        mlayCtrl = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_ctrl);
+        mlayCtrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mchkCtrl.setChecked(!mchkCtrl.isChecked());
@@ -196,8 +199,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
         });
         mchkAlt = (CheckBox) keyMappingEdtView.findViewById(R.id.id_alt);
         mchkAlt.setClickable(false);
-        RelativeLayout layAlt = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_alt);
-        layAlt.setOnClickListener(new View.OnClickListener() {
+        mlayAlt = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_alt);
+        mlayAlt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mchkAlt.setChecked(!mchkAlt.isChecked());
@@ -219,25 +222,37 @@ public class SessionKeyMapEditingFrg extends Fragment {
         int nDecodePhyCode = KeyMapList.decodePhyCodeRetunHelpKey(nEncodedPhyKeyCode, bCtrl, bShift, bAlt);
         int nPhyCate = mKeyCodeCategryMap.get(nDecodePhyCode);
         mPhyCategory.setSelection(nPhyCate);
-        ArrayList<String> phyKeyInCategory = new ArrayList<>();
-        Iterator entries = mKeyCodeCategryMap.entrySet().iterator();
-        int nCurrentPhyKeyCodeIdx = 0;
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            Integer phyKeycode = (Integer) entry.getKey();
-            Integer phyCate = (Integer) entry.getValue();
-            if(phyCate == nPhyCate) {
-                phyKeyInCategory.add(KeyEvent.keyCodeToString(phyKeycode));
-                if(nDecodePhyCode == phyKeycode) {
-                    nCurrentPhyKeyCodeIdx = phyKeyInCategory.size() - 1;
+        if(nDecodePhyCode == KeyMapItem.UNDEFINE_PHY) {
+            mPhyKeys.setEnabled(false);
+            CipherUtility.enableAllChild(mlayShift, false);
+            CipherUtility.enableAllChild(mlayCtrl, false);
+            CipherUtility.enableAllChild(mlayAlt, false);
+        } else {
+            mPhyKeys.setEnabled(true);
+            CipherUtility.enableAllChild(mlayShift, true);
+            CipherUtility.enableAllChild(mlayCtrl, true);
+            CipherUtility.enableAllChild(mlayAlt, true);
+            ArrayList<String> phyKeyInCategory = new ArrayList<>();
+            Iterator entries = mKeyCodeCategryMap.entrySet().iterator();
+            int nCurrentPhyKeyCodeIdx = 0;
+            while (entries.hasNext()) {
+                Map.Entry entry = (Map.Entry) entries.next();
+                Integer phyKeycode = (Integer) entry.getKey();
+                Integer phyCate = (Integer) entry.getValue();
+                if(phyCate == nPhyCate) {
+                    phyKeyInCategory.add(KeyEvent.keyCodeToString(phyKeycode));
+                    if(nDecodePhyCode == phyKeycode) {
+                        nCurrentPhyKeyCodeIdx = phyKeyInCategory.size() - 1;
+                    }
                 }
             }
+            ArrayAdapter<String> phyKeycodesAdptr = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyKeyInCategory);
+            mPhyKeys.setAdapter(phyKeycodesAdptr);
+            mPhyKeys.setSelection(nCurrentPhyKeyCodeIdx);
+            mchkShift.setChecked(bShift.get());
+            mchkCtrl.setChecked(bCtrl.get());
+            mchkAlt.setChecked(bAlt.get());
         }
-        ArrayAdapter<String> phyKeycodesAdptr = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyKeyInCategory);
-        mPhyKeys.setAdapter(phyKeycodesAdptr);
-        mPhyKeys.setSelection(nCurrentPhyKeyCodeIdx);
-        mchkShift.setChecked(bShift.get());
-        mchkCtrl.setChecked(bCtrl.get());
-        mchkAlt.setChecked(bAlt.get());
+
     }
 }
