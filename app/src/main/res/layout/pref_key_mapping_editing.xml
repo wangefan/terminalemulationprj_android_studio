@@ -25,6 +25,7 @@
             android:layout_height="50dp"
             android:layout_alignParentTop="true">
             <TextView
+                android:id="@+id/server_keycode_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/undefinedPhy"

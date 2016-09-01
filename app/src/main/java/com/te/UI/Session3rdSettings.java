@@ -2,6 +2,7 @@ package com.te.UI;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
 import com.cipherlab.terminalemulation.R;
 
 public class Session3rdSettings extends SessionSettingsBase {
@@ -9,6 +10,7 @@ public class Session3rdSettings extends SessionSettingsBase {
     public static final String ACTION_READER_CTRL = "com.te.UI.Session3rdSettings.ACTION_READER_CTRL";
     public static final String ACTION_FEEDBACK = "com.te.UI.Session3rdSettings.ACTION_FEEDBACK";
     public static final String ACTION_KEYMAP_EDIT = "com.te.UI.Session3rdSettings.ACTION_KEYMAP_EDIT";
+    public static final String ACTION_KEYMAP_EDIT_SERVER_KEYCODE = "com.te.UI.Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE";
     public static boolean gIsAlarmModified = false;
 
     @Override
@@ -49,9 +51,11 @@ public class Session3rdSettings extends SessionSettingsBase {
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();
         } else if(action.compareTo(ACTION_KEYMAP_EDIT) == 0) {
+            int nEditServerKeycode = getIntent().getIntExtra(ACTION_KEYMAP_EDIT_SERVER_KEYCODE, 0);
             getSupportActionBar().setTitle(getResources().getString(R.string.keymap_edit));
             SessionKeyMapEditingFrg settingsFrg = new SessionKeyMapEditingFrg();
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            settingsFrg.setServerKeyCode(nEditServerKeycode);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
                     .commit();

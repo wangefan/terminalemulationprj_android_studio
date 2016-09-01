@@ -10,12 +10,18 @@ public class TN3270KeyMapList extends KeyMapList {
     }
 
     @Override
+    public String getServerKeyTextByKeycode(int nServerKeycode) {
+        //Todo: use 3270
+        return IBMHost5250.getServerKeyText(nServerKeycode);
+    }
+
+    @Override
     public String getServerKeyText(int position) {
         String result = "";
         if(position < this.size()) {
             int nServerKeyCode = get(position).mServerKeycode;
             //Todo: use 3270
-            result = IBMHost5250.getServerKeyText(nServerKeyCode);
+            result = getServerKeyTextByKeycode(nServerKeyCode);
         }
         return result;
     }

@@ -252,13 +252,15 @@ public class SessionKeyMappingFrg extends Fragment {
                 }
                 sequenceKeyList.add(newKeyItem);
             }
-            KeyMapListAdapter adapter = new KeyMapListAdapter(stdActivityRef.getCurrActivity(), sequenceKeyList);
+            final KeyMapListAdapter adapter = new KeyMapListAdapter(stdActivityRef.getCurrActivity(), sequenceKeyList);
             mKeyMapListView.setAdapter(adapter);
             mKeyMapListView.setOnItemClickListener(new ListView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    KeyMapItem keyItem = (KeyMapItem) adapter.getItem(position);
                     Intent intent = new Intent(getActivity(), Session3rdSettings.class);
                     intent.setAction(Session3rdSettings.ACTION_KEYMAP_EDIT);
+                    intent.putExtra(Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE, keyItem.mServerKeycode);
                     startActivity(intent);
                 }
             });

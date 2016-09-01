@@ -8,11 +8,16 @@ public class VT100_102KeyMapList extends KeyMapList {
     }
 
     @Override
+    public String getServerKeyTextByKeycode(int nServerKeycode) {
+        return CVT100.getServerKeyText(nServerKeycode);
+    }
+
+    @Override
     public String getServerKeyText(int position) {
         String result = "";
         if(position < this.size()) {
             int nServerKeyCode = get(position).mServerKeycode;
-            result = CVT100.getServerKeyText(nServerKeyCode);
+            result = getServerKeyTextByKeycode(nServerKeyCode);
         }
         return result;
     }

@@ -81,6 +81,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     }
 
     abstract public String getServerKeyText(int position);
+    abstract public String getServerKeyTextByKeycode(int nServerKeycode);
 
     public String getPhysicalKeyText(int position) {
         String result = "";
