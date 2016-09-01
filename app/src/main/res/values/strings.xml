@@ -475,6 +475,7 @@
     <string name="alt_text">Alt</string>
     <string name="clear_key_text">Clear Key</string>
     <string name="trap_text">Trap</string>
+    <string name="Msg_dup_key_mapped" >"The physical key combination has been mapped to %s. Do you want to replace it?"</string>
 
     <string-array name="icon_update_interval_array">
         <item>not update</item>

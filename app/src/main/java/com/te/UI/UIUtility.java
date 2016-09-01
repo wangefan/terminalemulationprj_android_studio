@@ -138,6 +138,14 @@ public class UIUtility {
 		alert.show();
 	}
 
+	public static void doYesNoDialog(Context context, String strMsg, DialogInterface.OnClickListener dialogClickListener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setMessage(strMsg).setPositiveButton(R.string.STR_OK, dialogClickListener)
+		.setNegativeButton(R.string.STR_Cancel, dialogClickListener);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
 	public static void messageBoxFromWorkerThread(final String message, final DialogInterface.OnClickListener positiveClkListener) {
 		mUIHandler.post(new Runnable() {
 			@Override
