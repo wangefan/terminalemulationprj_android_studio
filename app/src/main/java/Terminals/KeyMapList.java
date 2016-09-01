@@ -19,51 +19,72 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
         int nPhyResult = nEncodedPhyCode;
         if(nEncodedPhyCode >= (NSHIFTVAL + NCTRLVAL + NALTVAL)) {
             nPhyResult =  nEncodedPhyCode - (NSHIFTVAL + NCTRLVAL + NALTVAL);
-            bHasCtrl.set(true);
-            bHasShift.set(true);
-            bHasAlt.set(true);
+            if(bHasCtrl != null)
+                bHasCtrl.set(true);
+            if(bHasShift != null)
+                bHasShift.set(true);
+            if(bHasAlt != null)
+                bHasAlt.set(true);
             return nPhyResult;
         }
         if(nEncodedPhyCode >= (NCTRLVAL + NALTVAL)) {
             nPhyResult =  nEncodedPhyCode - (NCTRLVAL + NALTVAL);
-            bHasCtrl.set(true);
-            bHasAlt.set(true);
-            bHasShift.set(false);
+            if(bHasCtrl != null)
+                bHasCtrl.set(true);
+            if(bHasAlt != null)
+                bHasAlt.set(true);
+            if(bHasShift != null)
+                bHasShift.set(false);
             return nPhyResult;
         }
         if(nEncodedPhyCode >= (NSHIFTVAL + NALTVAL)) {
             nPhyResult =  nEncodedPhyCode - (NSHIFTVAL + NALTVAL);
-            bHasShift.set(true);
-            bHasAlt.set(true);
-            bHasCtrl.set(false);
+            if(bHasShift != null)
+                bHasShift.set(true);
+            if(bHasAlt != null)
+                bHasAlt.set(true);
+            if(bHasCtrl != null)
+                bHasCtrl.set(false);
             return nPhyResult;
         }
         if(nEncodedPhyCode >= NALTVAL) {
             nPhyResult =  nEncodedPhyCode - NALTVAL;
-            bHasAlt.set(true);
-            bHasCtrl.set(false);
-            bHasShift.set(false);
+            if(bHasAlt != null)
+                bHasAlt.set(true);
+            if(bHasCtrl != null)
+                bHasCtrl.set(false);
+            if(bHasShift != null)
+                bHasShift.set(false);
             return nPhyResult;
         }
         if(nEncodedPhyCode >= (NSHIFTVAL + NCTRLVAL)) {
             nPhyResult =  nEncodedPhyCode - (NSHIFTVAL + NCTRLVAL);
-            bHasCtrl.set(true);
-            bHasShift.set(true);
-            bHasAlt.set(false);
+            if(bHasCtrl != null)
+                bHasCtrl.set(true);
+            if(bHasShift != null)
+                bHasShift.set(true);
+            if(bHasAlt != null)
+                bHasAlt.set(false);
             return nPhyResult;
         }
         if(nEncodedPhyCode >= NCTRLVAL) {
             nPhyResult =  nEncodedPhyCode - NCTRLVAL;
-            bHasCtrl.set(true);
-            bHasAlt.set(false);
-            bHasShift.set(false);
+            if(bHasCtrl != null)
+                bHasCtrl.set(true);
+            if(bHasAlt != null)
+                bHasAlt.set(false);
+            if(bHasShift != null)
+                bHasShift.set(false);
             return nPhyResult;
         }
         if(nEncodedPhyCode >= NSHIFTVAL) {
             nPhyResult =  nEncodedPhyCode - NSHIFTVAL;
-            bHasShift.set(true);
-            bHasCtrl.set(false);
-            bHasAlt.set(false);
+            if(bHasShift != null)
+                bHasShift.set(true);
+            if(bHasCtrl != null)
+                bHasCtrl.set(false);
+            if(bHasAlt != null)
+                bHasAlt.set(false);
             return nPhyResult;
         }
         return nPhyResult;
@@ -103,9 +124,9 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
         AtomicBoolean bHasShift = new AtomicBoolean(false);
         if(position < this.size()) {
             decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
-                    new AtomicBoolean(false),
+                    null,
                     bHasShift,
-                    new AtomicBoolean(false));
+                    null);
         }
         return bHasShift.get();
     }
@@ -115,8 +136,8 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
         if(position < this.size()) {
             decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
                     bHasCtrl,
-                    new AtomicBoolean(false),
-                    new AtomicBoolean(false));
+                    null,
+                    null);
         }
         return bHasCtrl.get();
     }
@@ -125,8 +146,8 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
         AtomicBoolean bHasAlt = new AtomicBoolean(false);
         if(position < this.size()) {
             decodePhyCodeRetunHelpKey(get(position).mPhysicalKeycode,
-                    new AtomicBoolean(false),
-                    new AtomicBoolean(false),
+                    null,
+                    null,
                     bHasAlt);
         }
         return bHasAlt.get();

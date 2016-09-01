@@ -470,25 +470,6 @@
         <item>Navigation keys</item>
         <item>Editing Keys</item>
     </string-array>
-    <string-array name="phykey_cate_alpha_array">
-        <item>Undefined</item>
-        <item>Alphabets</item>
-        <item>Numbers</item>
-        <item>Punctuations</item>
-        <item>Function Keys</item>
-        <item>Navigation keys</item>
-        <item>Editing Keys</item>
-    </string-array>
-    <string-array name="phykey_cate_array_vals">
-        <item>-1</item>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
-
     <string name="shift_text">Shift</string>
     <string name="ctrl_text">Ctrl</string>
     <string name="alt_text">Alt</string>

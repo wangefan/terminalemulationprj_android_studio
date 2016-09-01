@@ -7,32 +7,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cipherlab.terminalemulation.R;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import Terminals.KeyMapItem;
+import Terminals.KeyMapList;
 import Terminals.TESettings;
 
 public class SessionKeyMapEditingFrg extends Fragment {
-    final int PHY_CATE_UNDEFINED = -1;
-    final int PHY_CATE_ALPHA = 0;
-    final int PHY_CATE_NUM = 1;
-    final int PHY_CATE_PUN = 2;
-    final int PHY_CATE_FUNC = 3;
-    final int PHY_CATE_NAVG = 4;
-    final int PHY_CATE_EDIT = 5;
+    final int PHY_CATE_UNDEFINED = 0;
+    final int PHY_CATE_ALPHA = 1;
+    final int PHY_CATE_NUM = 2;
+    final int PHY_CATE_PUN = 3;
+    final int PHY_CATE_FUNC = 4;
+    final int PHY_CATE_NAVG = 5;
+    final int PHY_CATE_EDIT = 6;
 
     //Data members
     protected TESettings.SessionSetting mSetting = null;
-    final static private HashMap<Integer, Integer> mKeyCodeCategryMap = new HashMap<>();//Key: Key code   Val: Category
+    final static private LinkedHashMap<Integer, Integer> mKeyCodeCategryMap = new LinkedHashMap<>();//Key: Key code   Val: Category
     private int mEditServerKeyCode = 0;
+    private int mEditEncodedPhyKeyCode = KeyMapItem.UNDEFINE_PHY;
     private TextView mtvServerKeyText = null;
     private Spinner mPhyCategory = null;
     private Spinner mPhyKeys = null;
+    private CheckBox mchkShift = null;
+    private CheckBox mchkCtrl = null;
+    private CheckBox mchkAlt = null;
 
 	public SessionKeyMapEditingFrg() {
         mKeyCodeCategryMap.clear();
@@ -143,6 +154,14 @@ public class SessionKeyMapEditingFrg extends Fragment {
 
     public void setServerKeyCode(int nEditServerKeyCode) {
         mEditServerKeyCode = nEditServerKeyCode;
+        //To find mapped physical key
+        mEditEncodedPhyKeyCode = KeyMapItem.UNDEFINE_PHY;
+        for(KeyMapItem keyItem :  mSetting.getKeyMapList()) {
+            if(mEditServerKeyCode == keyItem.mServerKeycode) {
+                mEditEncodedPhyKeyCode = keyItem.mPhysicalKeycode;
+                break;
+            }
+        }
     }
 
     @Override
@@ -156,8 +175,69 @@ public class SessionKeyMapEditingFrg extends Fragment {
         String [] phyCategory = getResources().getStringArray(R.array.phykey_cate_array);
         ArrayAdapter<String> phyCategoryAdpr  = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyCategory);
         mPhyCategory.setAdapter(phyCategoryAdpr);
-
         mPhyKeys = (Spinner) keyMappingEdtView.findViewById(R.id.spinner_phy);
+        mchkShift = (CheckBox) keyMappingEdtView.findViewById(R.id.id_shift);
+        mchkShift.setClickable(false);
+        RelativeLayout layShift = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_shift);
+        layShift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mchkShift.setChecked(!mchkShift.isChecked());
+            }
+        });
+        mchkCtrl = (CheckBox) keyMappingEdtView.findViewById(R.id.id_ctrl);
+        mchkCtrl.setClickable(false);
+        RelativeLayout layCtrl = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_ctrl);
+        layCtrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mchkCtrl.setChecked(!mchkCtrl.isChecked());
+            }
+        });
+        mchkAlt = (CheckBox) keyMappingEdtView.findViewById(R.id.id_alt);
+        mchkAlt.setClickable(false);
+        RelativeLayout layAlt = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_alt);
+        layAlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mchkAlt.setChecked(!mchkAlt.isChecked());
+            }
+        });
         return keyMappingEdtView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateUIByPhyCode(mEditEncodedPhyKeyCode);
+    }
+
+    private void updateUIByPhyCode(int nEncodedPhyKeyCode) {
+        AtomicBoolean bCtrl = new AtomicBoolean(false);
+        AtomicBoolean bShift = new AtomicBoolean(false);
+        AtomicBoolean bAlt = new AtomicBoolean(false);
+        int nDecodePhyCode = KeyMapList.decodePhyCodeRetunHelpKey(nEncodedPhyKeyCode, bCtrl, bShift, bAlt);
+        int nPhyCate = mKeyCodeCategryMap.get(nDecodePhyCode);
+        mPhyCategory.setSelection(nPhyCate);
+        ArrayList<String> phyKeyInCategory = new ArrayList<>();
+        Iterator entries = mKeyCodeCategryMap.entrySet().iterator();
+        int nCurrentPhyKeyCodeIdx = 0;
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            Integer phyKeycode = (Integer) entry.getKey();
+            Integer phyCate = (Integer) entry.getValue();
+            if(phyCate == nPhyCate) {
+                phyKeyInCategory.add(KeyEvent.keyCodeToString(phyKeycode));
+                if(nDecodePhyCode == phyKeycode) {
+                    nCurrentPhyKeyCodeIdx = phyKeyInCategory.size() - 1;
+                }
+            }
+        }
+        ArrayAdapter<String> phyKeycodesAdptr = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyKeyInCategory);
+        mPhyKeys.setAdapter(phyKeycodesAdptr);
+        mPhyKeys.setSelection(nCurrentPhyKeyCodeIdx);
+        mchkShift.setChecked(bShift.get());
+        mchkCtrl.setChecked(bCtrl.get());
+        mchkAlt.setChecked(bAlt.get());
     }
 }
