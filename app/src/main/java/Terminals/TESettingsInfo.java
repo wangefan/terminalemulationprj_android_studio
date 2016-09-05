@@ -131,7 +131,7 @@ public class TESettingsInfo {
         return true;
     }
 
-    private static void fillMaps(KeyMapList keyMapListDest, Map<Integer, Integer> keyCodeMapSrc) {
+    public static void fillMaps(KeyMapList keyMapListDest, Map<Integer, Integer> keyCodeMapSrc) {
         Iterator entries = keyCodeMapSrc.entrySet().iterator();
         while (entries.hasNext()) {
             Map.Entry entry = (Map.Entry) entries.next();

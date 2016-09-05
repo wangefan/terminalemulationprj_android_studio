@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import TelnetIBM.IBMHost5250;
+import TelnetVT.CVT100;
+
 public class TESettings {
     
     public TECommonSetting Common = new TECommonSetting();
@@ -134,6 +137,42 @@ public class TESettings {
                 }
             }
             return keyMapList;
+        }
+
+        public void resetKeyMapList() {
+            String strHostTypeName = "";
+            if(mIsTN == 1) {
+                strHostTypeName = mTermNameTN;
+                if(strHostTypeName.compareTo(TESettingsInfo.TN3270TYPENAME) == 0) {
+                    //Todo:use 3270 default map
+                    mTN3270KeyConfig.clear();
+                    TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                    mTN3270KeyConfigCount = mTN3270KeyConfig.size();
+                } else if(strHostTypeName.compareTo(TESettingsInfo.TN5250TYPENAME) == 0) {
+                    mTN5250KeyConfig.clear();
+                    TESettingsInfo.fillMaps(mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                    mTN5250KeyConfigCount = mTN5250KeyConfig.size();
+                }
+            } else {
+                strHostTypeName = mTermName;
+                if(strHostTypeName.compareTo(TESettingsInfo.VT100TYPENAME) == 0) {
+                    mVT100_102KeyConfig.clear();
+                    TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+                    mVT100_102KeyConfigCount = mVT100_102KeyConfig.size();
+                } else if(strHostTypeName.compareTo(TESettingsInfo.VT102TYPENAME) == 0) {
+                    mVT100_102KeyConfig.clear();
+                    TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+                    mVT100_102KeyConfigCount = mVT100_102KeyConfig.size();
+                } else if(strHostTypeName.compareTo(TESettingsInfo.VT220TYPENAME) == 0) {
+                    mVT220KeyConfig.clear();
+                    TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+                    mVT220KeyConfigCount = mVT220KeyConfig.size();
+                } else if(strHostTypeName.compareTo(TESettingsInfo.VTANSITYPENAME) == 0) {
+                    mVT220KeyConfig.clear();
+                    TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+                    mVT220KeyConfigCount = mVT220KeyConfig.size();
+                }
+            }
         }
 
     	//Sync

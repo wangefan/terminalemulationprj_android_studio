@@ -241,7 +241,7 @@ public class SessionKeyMappingFrg extends Fragment {
         return keyMappingView;
     }
 
-    private void updateKeyListItems() {
+    public void updateKeyListItems() {
         KeyMapList keyListInSettings = mSetting.getKeyMapList();
         KeyMapList keyListReSeq = null;
         int [] keySequenceBase = null;

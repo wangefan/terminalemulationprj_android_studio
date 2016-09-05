@@ -80,8 +80,15 @@ public class SessionSecondSettings extends SessionSettingsBase {
             }
         } else if(action.compareTo(ACTION_KEY_MAPPING) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.key_mapping));
-            SessionKeyMappingFrg settingsFrg = new SessionKeyMappingFrg();
+            final SessionKeyMappingFrg settingsFrg = new SessionKeyMappingFrg();
             layReset.setVisibility(View.VISIBLE);
+            layReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    gEditSessionSetting.resetKeyMapList();
+                    settingsFrg.updateKeyListItems();
+                }
+            });
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             getFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, settingsFrg)
