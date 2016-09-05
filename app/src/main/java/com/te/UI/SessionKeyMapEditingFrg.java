@@ -253,6 +253,25 @@ public class SessionKeyMapEditingFrg extends Fragment {
                 checkAndProcPhyByUI(nDecodeKeycode);
             }
         });
+        RelativeLayout layClear = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_clear_key);
+        layClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPhyCategory.setSelection(0);
+                mPhyKeys.setSelection(0);
+                mPhyKeys.setSelection(0);
+                mPhyKeys.setTag(0);
+                commitToTESettings(KeyMapList.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
+                updateUIByPhyCode(mEditEncodedPhyKeyCode);
+            }
+        });
+        RelativeLayout layTrap = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_trap);
+        layTrap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return keyMappingEdtView;
     }
 
