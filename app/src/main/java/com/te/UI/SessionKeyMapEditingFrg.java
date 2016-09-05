@@ -28,13 +28,12 @@ import Terminals.KeyMapList;
 import Terminals.TESettings;
 
 public class SessionKeyMapEditingFrg extends Fragment {
-    final int PHY_CATE_UNDEFINED = 0;
-    final int PHY_CATE_ALPHA = 1;
-    final int PHY_CATE_NUM = 2;
-    final int PHY_CATE_PUN = 3;
-    final int PHY_CATE_FUNC = 4;
-    final int PHY_CATE_NAVG = 5;
-    final int PHY_CATE_EDIT = 6;
+    final int PHY_CATE_ALPHA = 0;
+    final int PHY_CATE_NUM = 1;
+    final int PHY_CATE_PUN = 2;
+    final int PHY_CATE_FUNC = 3;
+    final int PHY_CATE_NAVG = 4;
+    final int PHY_CATE_EDIT = 5;
 
     //Data members
     protected TESettings.SessionSetting mSetting = null;
@@ -53,7 +52,6 @@ public class SessionKeyMapEditingFrg extends Fragment {
 
     public SessionKeyMapEditingFrg() {
         mKeyCodeCategryMap.clear();
-        mKeyCodeCategryMap.put(KeyMapItem.UNDEFINE_PHY, PHY_CATE_UNDEFINED);
         //Alphabets
         mKeyCodeCategryMap.put(KeyEvent.KEYCODE_A, PHY_CATE_ALPHA);
         mKeyCodeCategryMap.put(KeyEvent.KEYCODE_B, PHY_CATE_ALPHA);
@@ -189,58 +187,10 @@ public class SessionKeyMapEditingFrg extends Fragment {
                 if(pos == null || pos == position)
                     return;
 
-                int nDecodedPhyCode = KeyMapItem.UNDEFINE_PHY;
-                if(position != PHY_CATE_UNDEFINED) {
-                    switch (position) {
-                        case  PHY_CATE_ALPHA:
-                            nDecodedPhyCode = KeyEvent.KEYCODE_A;
-                            break;
-                        case  PHY_CATE_NUM:
-                            nDecodedPhyCode = KeyEvent.KEYCODE_0;
-                            break;
-                        case  PHY_CATE_PUN:
-                            nDecodedPhyCode = KeyEvent.KEYCODE_NUMPAD_ADD;
-                            break;
-                        case  PHY_CATE_FUNC:
-                            nDecodedPhyCode = KeyEvent.KEYCODE_F1;
-                            break;
-                        case  PHY_CATE_NAVG:
-                            nDecodedPhyCode = KeyEvent.KEYCODE_DPAD_LEFT;
-                            break;
-                        case  PHY_CATE_EDIT:
-                            nDecodedPhyCode = KeyEvent.KEYCODE_TAB;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                final AtomicInteger mappedServerKeyCode = new AtomicInteger(0);
-                if(encodePhyKeyAndCheckIfMapped(nDecodedPhyCode, mappedServerKeyCode)) {
-                    String serverKeyText = mSetting.getKeyMapList().getServerKeyTextByKeycode(mappedServerKeyCode.get());
-                    String strMsg = String.format(getResources().getString(R.string.Msg_dup_key_mapped), serverKeyText);
-                    final int nDecodedPhyCodeTemp = nDecodedPhyCode;
-                    UIUtility.doYesNoDialog(getActivity(), strMsg, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    mEditEncodedPhyKeyCode = KeyMapList.encodePhyKeyCode(nDecodedPhyCodeTemp, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked());
-                                    replaceMappedPhyKeycode(mappedServerKeyCode.get(), KeyMapItem.UNDEFINE_PHY);
-                                    replaceMappedPhyKeycode(mEditServerKeyCode, mEditEncodedPhyKeyCode);
-                                    updateUIByPhyCode(mEditEncodedPhyKeyCode);
-                                    break;
-
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    updateUIByPhyCode(mEditEncodedPhyKeyCode);
-                                    break;
-                            }
-                        }
-                    });
-                } else {
-                    mEditEncodedPhyKeyCode = KeyMapList.encodePhyKeyCode(nDecodedPhyCode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked());
-                    replaceMappedPhyKeycode(mEditServerKeyCode, mEditEncodedPhyKeyCode);
-                    updateUIByPhyCode(mEditEncodedPhyKeyCode);
-                }
+                mPhyKeys.setSelection(0);
+                mPhyKeys.setTag(0);
+                commitToTESettings(KeyMapList.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
+                updateUIByPhyCode(mEditEncodedPhyKeyCode);
             }
 
             @Override
@@ -249,6 +199,27 @@ public class SessionKeyMapEditingFrg extends Fragment {
             }
         });
         mPhyKeys = (Spinner) keyMappingEdtView.findViewById(R.id.spinner_phy);
+        mPhyKeys.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Integer pos = (Integer) mPhyKeys.getTag();
+                if(pos == null || pos == position)
+                    return;
+                PhyKeyItem phyKeyItem = (PhyKeyItem) mPhyKeys.getItemAtPosition(position);
+                final int nDecodedPhyCode = phyKeyItem.mPhyKeycode;
+                if(nDecodedPhyCode == KeyMapItem.UNDEFINE_PHY) {
+                    commitToTESettings(KeyMapList.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
+                    updateUIByPhyCode(mEditEncodedPhyKeyCode);
+                } else {
+                    checkAndProcPhyByUI(nDecodedPhyCode);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mchkShift = (CheckBox) keyMappingEdtView.findViewById(R.id.id_shift);
         mchkShift.setClickable(false);
         mlayShift = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_shift);
@@ -256,6 +227,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
             @Override
             public void onClick(View v) {
                 mchkShift.setChecked(!mchkShift.isChecked());
+                int nDecodeKeycode = KeyMapList.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
+                checkAndProcPhyByUI(nDecodeKeycode);
             }
         });
         mchkCtrl = (CheckBox) keyMappingEdtView.findViewById(R.id.id_ctrl);
@@ -265,6 +238,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
             @Override
             public void onClick(View v) {
                 mchkCtrl.setChecked(!mchkCtrl.isChecked());
+                int nDecodeKeycode = KeyMapList.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
+                checkAndProcPhyByUI(nDecodeKeycode);
             }
         });
         mchkAlt = (CheckBox) keyMappingEdtView.findViewById(R.id.id_alt);
@@ -274,9 +249,43 @@ public class SessionKeyMapEditingFrg extends Fragment {
             @Override
             public void onClick(View v) {
                 mchkAlt.setChecked(!mchkAlt.isChecked());
+                int nDecodeKeycode = KeyMapList.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
+                checkAndProcPhyByUI(nDecodeKeycode);
             }
         });
         return keyMappingEdtView;
+    }
+
+    private void checkAndProcPhyByUI(final int nDecodedPhyCode) {
+        final AtomicInteger mappedServerKeyCode = new AtomicInteger(0);
+        if(encodePhyKeyAndCheckIfMapped(nDecodedPhyCode, mappedServerKeyCode)) {
+            String serverKeyText = mSetting.getKeyMapList().getServerKeyTextByKeycode(mappedServerKeyCode.get());
+            String strMsg = String.format(getResources().getString(R.string.Msg_dup_key_mapped), serverKeyText);
+            UIUtility.doYesNoDialog(getActivity(), strMsg, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            replaceMappedPhyKeycode(mappedServerKeyCode.get(), KeyMapItem.UNDEFINE_PHY);
+                            commitToTESettings(KeyMapList.encodePhyKeyCode(nDecodedPhyCode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
+                            updateUIByPhyCode(mEditEncodedPhyKeyCode);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            updateUIByPhyCode(mEditEncodedPhyKeyCode);
+                            break;
+                    }
+                }
+            });
+        } else {
+            commitToTESettings(KeyMapList.encodePhyKeyCode(nDecodedPhyCode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
+            updateUIByPhyCode(mEditEncodedPhyKeyCode);
+        }
+    }
+
+    private void commitToTESettings(int nEncodedPhyCode) {
+        mEditEncodedPhyKeyCode = nEncodedPhyCode;
+        replaceMappedPhyKeycode(mEditServerKeyCode, mEditEncodedPhyKeyCode);
     }
 
     private void replaceMappedPhyKeycode(int nServerKeyCode, int nEncodedPhyKeyCode) {
@@ -312,39 +321,76 @@ public class SessionKeyMapEditingFrg extends Fragment {
         AtomicBoolean bShift = new AtomicBoolean(false);
         AtomicBoolean bAlt = new AtomicBoolean(false);
         int nDecodePhyCode = KeyMapList.decodePhyCodeRetunHelpKey(nEncodedPhyKeyCode, bCtrl, bShift, bAlt);
-        int nPhyCate = mKeyCodeCategryMap.get(nDecodePhyCode);
-        mPhyCategory.setSelection(nPhyCate);
-        mPhyCategory.setTag(nPhyCate);
-        if(nDecodePhyCode == KeyMapItem.UNDEFINE_PHY) {
-            mPhyKeys.setEnabled(false);
-            CipherUtility.enableAllChild(mlayShift, false);
-            CipherUtility.enableAllChild(mlayCtrl, false);
-            CipherUtility.enableAllChild(mlayAlt, false);
-        } else {
-            mPhyKeys.setEnabled(true);
-            CipherUtility.enableAllChild(mlayShift, true);
-            CipherUtility.enableAllChild(mlayCtrl, true);
-            CipherUtility.enableAllChild(mlayAlt, true);
-            ArrayList<String> phyKeyInCategory = new ArrayList<>();
-            Iterator entries = mKeyCodeCategryMap.entrySet().iterator();
-            int nCurrentPhyKeyCodeIdx = 0;
-            while (entries.hasNext()) {
-                Map.Entry entry = (Map.Entry) entries.next();
-                Integer phyKeycode = (Integer) entry.getKey();
-                Integer phyCate = (Integer) entry.getValue();
-                if(phyCate == nPhyCate) {
-                    phyKeyInCategory.add(KeyEvent.keyCodeToString(phyKeycode));
-                    if(nDecodePhyCode == phyKeycode) {
-                        nCurrentPhyKeyCodeIdx = phyKeyInCategory.size() - 1;
-                    }
-                }
-            }
-            ArrayAdapter<String> phyKeycodesAdptr = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyKeyInCategory);
+        if(nDecodePhyCode != KeyMapItem.UNDEFINE_PHY) {
+            int nPhyCate = mKeyCodeCategryMap.get(nDecodePhyCode);
+            mPhyCategory.setSelection(nPhyCate);
+            mPhyCategory.setTag(nPhyCate);
+            ArrayList<PhyKeyItem> phyKeyInCategory = new ArrayList<>();
+            phyKeyInCategory.add(new PhyKeyItem(KeyMapItem.UNDEFINE_PHY));
+            int nCurrentPhyKeyCodeIdx = getPhyKeycodesByCategory(nDecodePhyCode, nPhyCate, phyKeyInCategory);
+            ArrayAdapter<PhyKeyItem> phyKeycodesAdptr = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyKeyInCategory);
+            phyKeycodesAdptr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mPhyKeys.setAdapter(phyKeycodesAdptr);
             mPhyKeys.setSelection(nCurrentPhyKeyCodeIdx);
+            mPhyKeys.setTag(nCurrentPhyKeyCodeIdx);
             mchkShift.setChecked(bShift.get());
             mchkCtrl.setChecked(bCtrl.get());
             mchkAlt.setChecked(bAlt.get());
+            CipherUtility.enableAllChild(mlayShift, true);
+            CipherUtility.enableAllChild(mlayCtrl, true);
+            CipherUtility.enableAllChild(mlayAlt, true);
+        } else {
+            int nPhyCate = mPhyCategory.getSelectedItemPosition();
+            mPhyCategory.setSelection(nPhyCate);
+            mPhyCategory.setTag(nPhyCate);
+            ArrayList<PhyKeyItem> phyKeyInCategory = new ArrayList<>();
+            phyKeyInCategory.add(new PhyKeyItem(KeyMapItem.UNDEFINE_PHY));
+            getPhyKeycodesByCategory(nDecodePhyCode, nPhyCate, phyKeyInCategory);
+            ArrayAdapter<PhyKeyItem> phyKeycodesAdptr = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, phyKeyInCategory);
+            phyKeycodesAdptr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mPhyKeys.setAdapter(phyKeycodesAdptr);
+            mPhyKeys.setSelection(0);
+            mPhyKeys.setTag(0);
+            mchkShift.setChecked(false);
+            mchkCtrl.setChecked(false);
+            mchkAlt.setChecked(false);
+            CipherUtility.enableAllChild(mlayShift, false);
+            CipherUtility.enableAllChild(mlayCtrl, false);
+            CipherUtility.enableAllChild(mlayAlt, false);
+        }
+    }
+
+    private int getPhyKeycodesByCategory(int nCurDecodePhyCode, int nPhyCate, ArrayList<PhyKeyItem> phyKeyInCategory) {
+        Iterator entries = mKeyCodeCategryMap.entrySet().iterator();
+        int nCurrentPhyKeyCodeIdx = 0;
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            Integer phyKeycode = (Integer) entry.getKey();
+            Integer phyCate = (Integer) entry.getValue();
+            if(phyCate == nPhyCate) {
+                phyKeyInCategory.add(new PhyKeyItem(phyKeycode));
+                if(nCurDecodePhyCode == phyKeycode) {
+                    nCurrentPhyKeyCodeIdx = phyKeyInCategory.size() - 1;
+                }
+            }
+        }
+        return nCurrentPhyKeyCodeIdx;
+    }
+
+    class PhyKeyItem {
+        int mPhyKeycode = KeyMapItem.UNDEFINE_PHY;
+        String mPhyKeyText = getResources().getString(R.string.undefinedPhy);
+
+        @Override
+        public String toString() {
+            return mPhyKeyText;
+        }
+
+        PhyKeyItem(int nPhyKeycode) {
+            mPhyKeycode = nPhyKeycode;
+            if(mPhyKeycode != KeyMapItem.UNDEFINE_PHY) {
+                mPhyKeyText = KeyEvent.keyCodeToString(mPhyKeycode);
+            }
         }
     }
 }

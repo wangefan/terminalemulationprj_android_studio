@@ -126,7 +126,7 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, IBMKEY_CLREOF); //Right BRACKET or Blue + F, need confirm
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, IBMKEY_DEL);//End or Blue + backspace, need confirm
-        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_MINUS, IBMKEY_DUP);   //Hyphen or Blue + N, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_NUMPAD_SUBTRACT, IBMKEY_DUP);   //Hyphen or Blue + N, need confirm
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, IBMKEY_ERINPUT); //Left BRACKET or Blue + E, need confirm
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_PERIOD, IBMKEY_PRINT); //Period or Blue + B, need confirm

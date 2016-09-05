@@ -462,7 +462,6 @@
     <string name="phy_category_title">Category:</string>
     <string name="phy_title">Physical Key:</string>
     <string-array name="phykey_cate_array">
-        <item>Undefined</item>
         <item>Alphabets</item>
         <item>Numbers</item>
         <item>Punctuations</item>
