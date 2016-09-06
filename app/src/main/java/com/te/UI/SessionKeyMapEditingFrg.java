@@ -1,7 +1,9 @@
 package com.te.UI;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -269,10 +271,25 @@ public class SessionKeyMapEditingFrg extends Fragment {
         layTrap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), Session4thSettings.class);
+                intent.setAction(Session4thSettings.ACTION_KEY_TRAP);
+                startActivityForResult(intent, 0);
             }
         });
         return keyMappingEdtView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                Bundle bundle = data.getExtras();
+                int nKeyCombiResult = bundle.getInt(SessionKeyMappingTrapFrg.KEY_COMBI_RESULT);
+                break;
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void checkAndProcPhyByUI(final int nDecodedPhyCode) {

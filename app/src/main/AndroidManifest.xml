@@ -47,6 +47,10 @@
             android:parentActivityName="com.te.UI.SessionSecondSettings"/>
 
         <activity
+            android:name="com.te.UI.Session4thSettings"
+            android:parentActivityName="com.te.UI.Session3rdSettings"/>
+
+        <activity
             android:name="com.te.UI.SymbolActivity"
             android:label="@string/title_activity_symbol"
             android:parentActivityName="com.te.UI.SessionSecondSettings">

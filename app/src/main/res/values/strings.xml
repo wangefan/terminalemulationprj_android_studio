@@ -42,6 +42,7 @@
     <string name="physical_key">Physical Key</string>
     <string name="server_key_defalut">Server Key Name</string>
     <string name="physical_key_defalut">Physical Key Name</string>
+    <string name="detect_key_title">Detect Keys</string>
     <string name="shift">&#060;Shift&#062;</string>
     <string name="ctrl">&#060;Ctrl&#062;</string>
     <string name="Alt">&#060;Alt&#062;</string>
