@@ -475,6 +475,8 @@
     <string name="clear_key_text">Clear Key</string>
     <string name="trap_text">Trap</string>
     <string name="Msg_dup_key_mapped" >"The physical key combination has been mapped to %s. Do you want to replace it?"</string>
+    <string name="screen_autopop_sip_conn_key">screen_autopop_sip_conn_key</string>
+    <string name="screen_autopop_sip_conn">Auto Popup SIP On Connection</string>
 
     <string-array name="icon_update_interval_array">
         <item>not update</item>

@@ -123,13 +123,17 @@ public class MainActivity extends AppCompatActivity
             updateRecordButtonVisible();
             UpdateRecordButton();
             updateConnMenuItem();
-            updateFABStatus(FABStatus.Gone);
             if (TESettingsInfo.getHostIsAutoFullScreenOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 procFullScreen();
             }
             UIUtility.showProgressDlg(false, 0);
             mKeyboardViewUtility.setKeyboard(TEKeyboardViewUtility.KeyboardType.KT_ABC);
-            mKeyboardViewUtility.showTEKeyboard();
+            if (TESettingsInfo.getHostIsAutoPopSIPOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
+                updateFABStatus(FABStatus.Gone);
+                mKeyboardViewUtility.showTEKeyboard();
+            } else {
+                updateFABStatus(FABStatus.Keyboard);
+            }
         }
 
         @Override

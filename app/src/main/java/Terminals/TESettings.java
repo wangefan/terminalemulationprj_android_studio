@@ -356,6 +356,9 @@ public class TESettings {
         @SerializedName("isAutoFullScreen")
         public boolean mIsAutoFullscreenOnConn = false;
 
+        @SerializedName("isAutoPopSIPOnConn")
+        public boolean mIsAutoPopSIPOnConn = false;
+
         @SerializedName("isShowTaskBarOnFullScreen")
         public boolean mIsShowStatusbarOnFull = false;
 

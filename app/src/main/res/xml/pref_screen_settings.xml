@@ -11,6 +11,10 @@
         android:key="@string/screen_screen_panning_key"
         android:title="@string/screen_screen_panning"
         android:defaultValue="true"/>
+    <CheckBoxPreference
+        android:key="@string/screen_autopop_sip_conn_key"
+        android:title="@string/screen_autopop_sip_conn"
+        android:defaultValue="false"/>
     <com.te.UI.TESwitchPreference
         android:key="@string/screen_wifi_alert_key"
         android:title="@string/screen_wifi_alert"

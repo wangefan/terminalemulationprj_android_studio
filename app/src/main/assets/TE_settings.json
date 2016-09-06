@@ -106,6 +106,7 @@
             "bDataUnConvert": false,
             "isFullScreen": false,
             "isAutoFullScreen": false,
+            "isAutoPopSIPOnConn": false,
             "bIsDetectOutRange": false,
             "isShowScrollBar": true,
             "isScreenPanning": true,
