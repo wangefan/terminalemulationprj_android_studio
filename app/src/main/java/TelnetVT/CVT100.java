@@ -135,7 +135,7 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, VTKEY_TAB); //Need to confirm
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_PAGE_DOWN, VTKEY_TAB);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
@@ -143,7 +143,7 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [APOSTROPHE or Blue + C]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_GRAVE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_GRAVE or Blue + C]
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + C]
@@ -172,7 +172,7 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, VTKEY_TAB); //Need to confirm
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_PAGE_DOWN, VTKEY_TAB);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
@@ -180,7 +180,7 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [APOSTROPHE or Blue + C]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_GRAVE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_GRAVE or Blue + C]
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + C]

@@ -130,10 +130,10 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, IBMKEY_ERINPUT); //Left BRACKET or Blue + E, need confirm
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_PERIOD, IBMKEY_PRINT); //Period or Blue + B, need confirm
-        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, IBMKEY_FMINUS); //Page down or Blue + *, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_PAGE_DOWN, IBMKEY_FMINUS); //Page down or Blue + *
         gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ENTER, true, false, false), IBMKEY_FEXIT);
-        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_APOSTROPHE, IBMKEY_HELP); //APOSTROPHE or Blue + C, need confirm
-        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_COMMA, IBMKEY_HOME); //Comma or Blue + A, need confirm
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_GRAVE, IBMKEY_HELP); //KEYCODE_GRAVE or Blue + C
+        gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_COMMA, IBMKEY_HOME); //Comma or Blue + A
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_SEMICOLON, IBMKEY_INS); //Semicolon or Blue + R, need confirm
         gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
