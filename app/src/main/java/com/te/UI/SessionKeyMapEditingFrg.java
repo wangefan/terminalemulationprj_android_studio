@@ -39,7 +39,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
 
     //Data members
     protected TESettings.SessionSetting mSetting = null;
-    final static private LinkedHashMap<Integer, Integer> mKeyCodeCategryMap = new LinkedHashMap<>();//Key: Key code   Val: Category
+    final static public LinkedHashMap<Integer, Integer> gKeyCodeCategryMap = new LinkedHashMap<>();//Key: Key code   Val: Category
     private int mEditServerKeyCode = 0;
     private int mEditEncodedPhyKeyCode = KeyMapItem.UNDEFINE_PHY;
     private TextView mtvServerKeyText = null;
@@ -53,105 +53,105 @@ public class SessionKeyMapEditingFrg extends Fragment {
     private CheckBox mchkAlt = null;
 
     public SessionKeyMapEditingFrg() {
-        mKeyCodeCategryMap.clear();
+        gKeyCodeCategryMap.clear();
         //Alphabets
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_A, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_B, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_C, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_D, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_E, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_G, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_H, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_I, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_J, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_K, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_L, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_M, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_N, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_O, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_P, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_Q, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_R, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_S, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_T, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_U, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_V, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_W, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_X, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_Y, PHY_CATE_ALPHA);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_Z, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_A, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_B, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_C, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_D, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_E, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_G, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_H, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_I, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_J, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_K, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_L, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_M, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_N, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_O, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_P, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_Q, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_R, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_S, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_T, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_U, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_V, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_W, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_X, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_Y, PHY_CATE_ALPHA);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_Z, PHY_CATE_ALPHA);
         //Numbers
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_0, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_1, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_2, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_3, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_4, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_5, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_6, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_7, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_8, PHY_CATE_NUM);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_9, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_0, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_1, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_2, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_3, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_4, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_5, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_6, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_7, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_8, PHY_CATE_NUM);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_9, PHY_CATE_NUM);
         //Punctuations
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_ADD, PHY_CATE_PUN);	// ( + )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_SUBTRACT, PHY_CATE_PUN);	// ( -  )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_MULTIPLY, PHY_CATE_PUN);	// ( * )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_SLASH, PHY_CATE_PUN);	// ( / )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKSLASH, PHY_CATE_PUN);	// ( \ )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_EQUALS, PHY_CATE_PUN);	// ( = )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEMICOLON, PHY_CATE_PUN);	// ( ; )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_COMMA, PHY_CATE_PUN);	// ( , )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, PHY_CATE_PUN);	// ( } )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, PHY_CATE_PUN);	// ( { )
-        //mKeyCodeCategryMap.put(KeyEvent.KEYCODE_HYPHEN, PHY_CATE_PUN);	// ( _)
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_PERIOD, PHY_CATE_PUN);	// ( . )
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_APOSTROPHE, PHY_CATE_PUN);	// ( ' )
-        //mKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN);
-        //mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DECIDECIMAL, PHY_CATE_PUN);
-        //mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DIVIDE, PHY_CATE_PUN);
-        //mKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKQUOTE, PHY_CATE_PUN);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_ADD, PHY_CATE_PUN);	// ( + )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_SUBTRACT, PHY_CATE_PUN);	// ( -  )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_MULTIPLY, PHY_CATE_PUN);	// ( * )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SLASH, PHY_CATE_PUN);	// ( / )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKSLASH, PHY_CATE_PUN);	// ( \ )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_EQUALS, PHY_CATE_PUN);	// ( = )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEMICOLON, PHY_CATE_PUN);	// ( ; )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_COMMA, PHY_CATE_PUN);	// ( , )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, PHY_CATE_PUN);	// ( } )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, PHY_CATE_PUN);	// ( { )
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_HYPHEN, PHY_CATE_PUN);	// ( _)
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PERIOD, PHY_CATE_PUN);	// ( . )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_APOSTROPHE, PHY_CATE_PUN);	// ( ' )
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DECIDECIMAL, PHY_CATE_PUN);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DIVIDE, PHY_CATE_PUN);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKQUOTE, PHY_CATE_PUN);
         //Function Keys
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F1, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F2, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F3, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F4, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F5, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F6, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F7, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F8, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F9, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F10, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F11, PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F12, PHY_CATE_FUNC);
-        /*mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F13,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F14,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F15,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F16,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F17,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F18,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F19,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F20,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F21,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F22,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F23,PHY_CATE_FUNC);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_F24,PHY_CATE_FUNC);*/
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F1, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F2, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F3, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F4, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F5, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F6, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F7, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F8, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F9, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F10, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F11, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F12, PHY_CATE_FUNC);
+        /*gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F13,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F14,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F15,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F16,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F17,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F18,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F19,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F20,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F21,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F22,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F23,PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F24,PHY_CATE_FUNC);*/
         //Navigation keys
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_LEFT, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_UP, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_DOWN, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_HOME, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_END, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_NAVIGATE_PREVIOUS, PHY_CATE_NAVG);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_LEFT, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_UP, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_DOWN, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_HOME, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_END, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NAVIGATE_PREVIOUS, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NAVIGATE_NEXT, PHY_CATE_NAVG);
         //Editing Keys
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_TAB, PHY_CATE_EDIT);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACK, PHY_CATE_EDIT);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_SPACE, PHY_CATE_EDIT);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_INSERT, PHY_CATE_EDIT);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_DEL, PHY_CATE_EDIT);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_ENTER, PHY_CATE_EDIT);
-        mKeyCodeCategryMap.put(KeyEvent.KEYCODE_ESCAPE, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_TAB, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACK, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SPACE, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_INSERT, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DEL, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ENTER, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ESCAPE, PHY_CATE_EDIT);
     }
 
     public void setSessionSetting(TESettings.SessionSetting setting) {
@@ -283,8 +283,12 @@ public class SessionKeyMapEditingFrg extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Activity.RESULT_OK:
-                Bundle bundle = data.getExtras();
-                int nKeyCombiResult = bundle.getInt(SessionKeyMappingTrapFrg.KEY_COMBI_RESULT);
+                if(data != null) {
+                    Bundle bundle = data.getExtras();
+                    int nKeyCombiResult = bundle.getInt(SessionKeyMappingTrapFrg.KEY_COMBI_RESULT);
+                    commitToTESettings(nKeyCombiResult);
+                    updateUIByPhyCode(mEditEncodedPhyKeyCode);
+                }
                 break;
             default:
                 break;
@@ -358,7 +362,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
         AtomicBoolean bAlt = new AtomicBoolean(false);
         int nDecodePhyCode = KeyMapList.decodePhyCodeRetunHelpKey(nEncodedPhyKeyCode, bCtrl, bShift, bAlt);
         if(nDecodePhyCode != KeyMapItem.UNDEFINE_PHY) {
-            int nPhyCate = mKeyCodeCategryMap.get(nDecodePhyCode);
+            int nPhyCate = gKeyCodeCategryMap.get(nDecodePhyCode);
             mPhyCategory.setSelection(nPhyCate);
             mPhyCategory.setTag(nPhyCate);
             ArrayList<PhyKeyItem> phyKeyInCategory = new ArrayList<>();
@@ -397,7 +401,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
     }
 
     private int getPhyKeycodesByCategory(int nCurDecodePhyCode, int nPhyCate, ArrayList<PhyKeyItem> phyKeyInCategory) {
-        Iterator entries = mKeyCodeCategryMap.entrySet().iterator();
+        Iterator entries = gKeyCodeCategryMap.entrySet().iterator();
         int nCurrentPhyKeyCodeIdx = 0;
         while (entries.hasNext()) {
             Map.Entry entry = (Map.Entry) entries.next();
