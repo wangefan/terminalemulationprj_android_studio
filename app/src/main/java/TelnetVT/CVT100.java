@@ -143,11 +143,11 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_GRAVE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_GRAVE or Blue + C]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
         gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + C]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + C]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
+        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
@@ -180,11 +180,11 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_GRAVE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_GRAVE or Blue + C]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
         gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + C]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + C]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
+        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
         gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
