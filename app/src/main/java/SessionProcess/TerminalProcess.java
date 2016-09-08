@@ -8,6 +8,7 @@ import com.cipherlab.terminalemulation.R;
 import java.util.ArrayList;
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
+import Terminals.KeyMapList;
 import Terminals.MacroItem;
 import Terminals.MacroMgr;
 import Terminals.TESettingsInfo;
@@ -131,13 +132,13 @@ public class TerminalProcess {
                     serverTypeName.equals(context.getResources().getString(R.string.VT102Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.VT220Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
-            mTerminal = new CVT100(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
+            mTerminal = new CVT100();
         } else {
             String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
             if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
-                mTerminal = new IBMHost5250(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
+                mTerminal = new IBMHost5250();
         }
-
+        mTerminal.setKeyMapList(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
         if(mListener != null) {
             mListener.onNotify(TerminalBase.NOTF_ACT_UPDATE_GRID);
         }
@@ -200,6 +201,12 @@ public class TerminalProcess {
     public void drawAll() {
         if(mTerminal != null)
             mTerminal.drawAll();
+    }
+
+    public void setKeyMapList(KeyMapList keyMapList) {
+        if(mTerminal != null) {
+            mTerminal.setKeyMapList(keyMapList);
+        }
     }
 
     public interface OnTerminalProcessListener {

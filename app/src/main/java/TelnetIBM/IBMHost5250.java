@@ -368,17 +368,20 @@ public class IBMHost5250 extends IBMHostBase {
 
     // #{{ constructor & members
 
-    public IBMHost5250(KeyMapList keyMapList) {
+    public IBMHost5250() {
         this.SetSize(25, 80);
+        //Todo: break IBMHost5250 into IBMHost5250 and IBMHost3270
+        mTN5250KeyCodeMap = new HashMap<>(gDefaultTN_5250KeyCodeMap);
+    }
+
+    @Override
+    public void setKeyMapList(KeyMapList keyMapList) {
         if(keyMapList != null) { //Load from settings
             mTN5250KeyCodeMap = new HashMap<>();
             for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.size(); idxKeyMapList++) {
                 KeyMapItem keyMapItem = keyMapList.get(idxKeyMapList);
                 mTN5250KeyCodeMap.put(keyMapItem.mPhysicalKeycode, keyMapItem.mServerKeycode);
             }
-        } else {
-            //Todo: break IBMHost5250 into IBMHost5250 and IBMHost3270
-            mTN5250KeyCodeMap = new HashMap<>(gDefaultTN_5250KeyCodeMap);
         }
     }
     // }}#

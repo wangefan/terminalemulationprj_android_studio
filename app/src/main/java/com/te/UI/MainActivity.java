@@ -610,6 +610,9 @@ public class MainActivity extends AppCompatActivity
                 updateRecordButtonVisible();
                 procAlertTimer();
                 procUpdateWiFiAndBattIconTimer();
+                if(isCurSessionConnected()) {
+                    mTerminalProcessFrg.resetCurSessionKeyList();
+                }
                 break;
             case SessionSettings.REQ_ADD: {
                 if (resultCode == SessionSettings.RESULT_ADD && SessionSettings.gEditSessionSetting != null) {

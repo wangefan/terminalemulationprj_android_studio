@@ -56,4 +56,9 @@ public class TerminalProcessFrg extends Fragment {
     public void removeTerminalProc(int position) {
         mCollSessions.remove(position);
     }
+
+    public void resetCurSessionKeyList() {
+        TerminalProcess terminal = mCollSessions.get(TESettingsInfo.getSessionIndex());
+        terminal.setKeyMapList(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
+    }
 }

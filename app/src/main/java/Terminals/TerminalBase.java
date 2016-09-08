@@ -112,6 +112,8 @@ public abstract class TerminalBase extends TerminalBaseEnum {
 
     abstract public void processChar(char ch);
 
+    abstract public void setKeyMapList(KeyMapList keyMapList);
+
     public char GetCharFromCurrentIndex(int index) {
         return mTelnetParser.GetCharFromCurrent(index);
     }

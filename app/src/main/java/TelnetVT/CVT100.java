@@ -100,7 +100,7 @@ public class CVT100 extends CVT100Enum {
     private StringBuilder mCurrentErrorFBText = new StringBuilder();
 
 
-    public CVT100(KeyMapList keyMapList) {
+    public CVT100() {
         this.Parser = new uc_Parser();
         this.Parser.UcParserEvent = vtParserEvent;
 
@@ -114,21 +114,24 @@ public class CVT100 extends CVT100Enum {
         this.CharAttribs.GR = this.G2;
 
         this.SetSize(25, 80);
+
+        //Todo: break CVT100 into CVT100_102 and CVT220
+        mVTKeyCodeMap = new HashMap<Integer, Integer>(gDefaultVT220KeyCodeMap);
+        this.Caret = new uc_Caret();
+        this.Modes = new uc_Mode();
+        this.TabStops = new uc_TabStops();
+        this.LineBufferList.clear();
+    }
+
+    @Override
+    public void setKeyMapList(KeyMapList keyMapList) {
         if(keyMapList != null) { //Load from settings
             mVTKeyCodeMap = new HashMap<>();
             for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.size(); idxKeyMapList++) {
                 KeyMapItem keyMapItem = keyMapList.get(idxKeyMapList);
                 mVTKeyCodeMap.put(keyMapItem.mPhysicalKeycode, keyMapItem.mServerKeycode);
             }
-        } else {
-            //Todo: break CVT100 into CVT100_102 and CVT220
-            mVTKeyCodeMap = new HashMap<Integer, Integer>(gDefaultVT220KeyCodeMap);
         }
-
-        this.Caret = new uc_Caret();
-        this.Modes = new uc_Mode();
-        this.TabStops = new uc_TabStops();
-        this.LineBufferList.clear();
     }
 
     public static void initKeyCodeMap() {
