@@ -56,7 +56,19 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_SHIFT_TOGGLE = -3;
     //ABC end
 
-    //F13~F24, F1~F12 no need because pc virtual key board has handled
+    //F1~F24
+    private final int MY_KEYCODE_F1 = -88;
+    private final int MY_KEYCODE_F2 = -89;
+    private final int MY_KEYCODE_F3 = -90;
+    private final int MY_KEYCODE_F4 = -91;
+    private final int MY_KEYCODE_F5 = -92;
+    private final int MY_KEYCODE_F6 = -93;
+    private final int MY_KEYCODE_F7 = -94;
+    private final int MY_KEYCODE_F8 = -95;
+    private final int MY_KEYCODE_F9 = -96;
+    private final int MY_KEYCODE_F10 = -97;
+    private final int MY_KEYCODE_F11 = -98;
+    private final int MY_KEYCODE_F12 = -99;
     private final int MY_KEYCODE_F13 = -100;
     private final int MY_KEYCODE_F14 = -101;
     private final int MY_KEYCODE_F15 = -102;
@@ -385,22 +397,42 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 keyDownUp(KeyEvent.KEYCODE_DEL);
             }
             break;
-            case KeyEvent.KEYCODE_F1:
-            case KeyEvent.KEYCODE_F2:
-            case KeyEvent.KEYCODE_F3:
-            case KeyEvent.KEYCODE_F4:
-            case KeyEvent.KEYCODE_F5:
-            case KeyEvent.KEYCODE_F6:
-            case KeyEvent.KEYCODE_F7:
-            case KeyEvent.KEYCODE_F8:
-            case KeyEvent.KEYCODE_F9:
-            case KeyEvent.KEYCODE_F10:
-            case KeyEvent.KEYCODE_F11:
-            case KeyEvent.KEYCODE_F12:
-            {
-                keyDownUp(primaryCode);
-            }
-            break;
+            case MY_KEYCODE_F1:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F1);
+                break;
+            case MY_KEYCODE_F2:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F2);
+                break;
+            case MY_KEYCODE_F3:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F3);
+                break;
+            case MY_KEYCODE_F4:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F4);
+                break;
+            case MY_KEYCODE_F5:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F5);
+                break;
+            case MY_KEYCODE_F6:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F6);
+                break;
+            case MY_KEYCODE_F7:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F7);
+                break;
+            case MY_KEYCODE_F8:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F8);
+                break;
+            case MY_KEYCODE_F9:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F9);
+                break;
+            case MY_KEYCODE_F10:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F10);
+                break;
+            case MY_KEYCODE_F11:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F11);
+                break;
+            case MY_KEYCODE_F12:
+                serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F12);
+                break;
             case MY_KEYCODE_F13:
                 serverKeyDownUp(ServerKeyEvent.FUN_KEYCODE_F13);
                 break;
