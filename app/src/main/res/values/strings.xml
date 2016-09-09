@@ -24,6 +24,7 @@
     <string name="MSG_Import_ok">Import settings success.</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
+    <string name="Format_phy_key_text">[%1$s or &#060;B&#062; %2$s]</string>
     <string name="ip_title">IP:</string>
     <string name="hostname_title">Host Name:</string>
     <string name="dot">.</string>

@@ -427,7 +427,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
         PhyKeyItem(int nPhyKeycode) {
             mPhyKeycode = nPhyKeycode;
             if(mPhyKeycode != KeyMapItem.UNDEFINE_PHY) {
-                mPhyKeyText = KeyEvent.keyCodeToString(mPhyKeycode);
+                mPhyKeyText = KeyMapList.getPhyKeycodeTextByKeycode(mPhyKeycode);
             }
         }
     }

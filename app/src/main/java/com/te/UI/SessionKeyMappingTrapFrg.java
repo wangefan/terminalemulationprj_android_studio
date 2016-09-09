@@ -17,18 +17,6 @@ public class SessionKeyMappingTrapFrg extends Fragment {
     public static final String KEY_COMBI_RESULT = "KEY_COMBI_RESULT";
     private View mContentView = null;
 
-    private boolean isCtrlPressed(KeyEvent event) {
-        return (event.getMetaState() & KeyEvent.META_CTRL_MASK) != 0;
-    }
-
-    private boolean isShiftPressed(KeyEvent event) {
-        return (event.getMetaState() & KeyEvent.META_SHIFT_MASK) != 0;
-    }
-
-    private boolean isAltPressed(KeyEvent event) {
-        return (event.getMetaState() & KeyEvent.META_ALT_MASK) != 0;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,7 +33,7 @@ public class SessionKeyMappingTrapFrg extends Fragment {
         if(SessionKeyMapEditingFrg.gKeyCodeCategryMap.containsKey(keyCode) == false) {
             return;
         }
-        int nEncodedKeycode = KeyMapList.encodePhyKeyCode(keyCode, isCtrlPressed(event), isShiftPressed(event), isAltPressed(event));
+        int nEncodedKeycode = KeyMapList.getEncodePhyKeyCode(event);
         Intent intentResult = new Intent();
         Bundle b = new Bundle();
         b.putInt(KEY_COMBI_RESULT, nEncodedKeycode);

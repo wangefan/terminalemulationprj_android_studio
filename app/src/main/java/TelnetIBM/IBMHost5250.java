@@ -443,10 +443,10 @@ public class IBMHost5250 extends IBMHostBase {
     protected int getServerKeyCode(int keyCode) {
         Integer nIBMKeyCode = mTN5250KeyCodeMap.get(keyCode);
         if(nIBMKeyCode != null) {
-            CipherUtility.Log_d("IBMHost5250", String.format("Keycode mapped, Keyevent = %d, IBM Keycode = %d", keyCode, nIBMKeyCode));
+            CipherUtility.Log_d("IBMHost5250", String.format("Keycode mapped, Keyevent = %d[%s], IBM Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nIBMKeyCode, getServerKeyText(nIBMKeyCode)));
             return nIBMKeyCode;
         }
-        CipherUtility.Log_d("IBMHost5250", String.format("No Keycode mapped!"));
+        CipherUtility.Log_d("IBMHost5250", String.format("No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode)));
         return IBMKEY_NONE;
     }
 
@@ -2252,8 +2252,10 @@ public class IBMHost5250 extends IBMHostBase {
         int nIBMKeyCode = IBMKEY_NONE;
         if(event instanceof ServerKeyEvent) {
             nIBMKeyCode = keyCode;
+            CipherUtility.Log_d("IBMHost5250", String.format("IBM Keycode = %d[%s]", nIBMKeyCode, getServerKeyText(nIBMKeyCode)));
         } else {
-            nIBMKeyCode = getServerKeyCode(keyCode);
+            int nEncodePhyKeycode = KeyMapList.getEncodePhyKeyCode(event);
+            nIBMKeyCode = getServerKeyCode(nEncodePhyKeycode);
         }
 
         if(isKeyLocked()) {
