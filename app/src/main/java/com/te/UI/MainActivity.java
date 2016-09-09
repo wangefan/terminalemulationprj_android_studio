@@ -968,9 +968,9 @@ public class MainActivity extends AppCompatActivity
         final boolean bShowStatusBarOnFull = TESettingsInfo.getHostShowTaskBarOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         if (mBFullScreen == false) {
             getSupportActionBar().hide();
-            int uiFullScreenOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE;
+
+            int uiFullScreenOptions =  View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 
             if(bShowStatusBarOnFull == false) {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //Handle status bar for API level <=16
@@ -1000,13 +1000,15 @@ public class MainActivity extends AppCompatActivity
                             }
                         });
             } else {
+                int newUIOption = mDecorView.getSystemUiVisibility();
                 if(bShowStatusBarOnFull == false) {
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    newUIOption ^= View.SYSTEM_UI_FLAG_FULLSCREEN; //Handle status bar for API level >16
                 }
                 getSupportActionBar().show();
-                mDecorView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                newUIOption ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                newUIOption ^=  View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+                mDecorView.setSystemUiVisibility(newUIOption);
                 mBFullScreen = false;
             }
         }
