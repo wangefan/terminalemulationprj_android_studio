@@ -27,10 +27,8 @@ public class Session4thSettings extends SessionSettingsBase {
         String action = getIntent().getAction();
         if(action.compareTo(ACTION_KEY_TRAP) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.detect_key_title));
-            mKeyMappingTrapFrg = new SessionKeyMappingTrapFrg();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, mKeyMappingTrapFrg)
-                    .commit();
+            mKeyMappingTrapFrg = getFragment(SessionKeyMappingTrapFrg.class);
+            commitFrgToActivity(mKeyMappingTrapFrg);
         }
     }
 

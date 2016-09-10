@@ -55,10 +55,8 @@ public class SessionSettings extends SessionSettingsBase {
             });
         }
          // Display the fragment as the main content.
-        SessionSettingsFrg settingsFrg = new SessionSettingsFrg();
+        SessionSettingsFrg settingsFrg = getFragment(SessionSettingsFrg.class);
         settingsFrg.setSessionSetting(gEditSessionSetting);
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, settingsFrg)
-                .commit();
+        commitFrgToActivity(settingsFrg);
     }
 }

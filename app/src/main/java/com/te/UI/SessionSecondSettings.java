@@ -34,53 +34,41 @@ public class SessionSecondSettings extends SessionSettingsBase {
         String action = getIntent().getAction();
         if(action.compareTo(ACTION_HOST_PROFILE) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
-            SessionHostProfileFrg settingsFrg = new SessionHostProfileFrg();
+            SessionHostProfileFrg settingsFrg = getFragment(SessionHostProfileFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_SERVER_SETTING) == 0) {
             if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
-                SessionTNSettingsFrg settingsFrg = new SessionTNSettingsFrg();
+                SessionTNSettingsFrg settingsFrg = getFragment(SessionTNSettingsFrg.class);
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, settingsFrg)
-                        .commit();
+                commitFrgToActivity(settingsFrg);
             } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_setting));
-                SessionVTSettingsFrg settingsFrg = new SessionVTSettingsFrg();
+                SessionVTSettingsFrg settingsFrg = getFragment(SessionVTSettingsFrg.class);
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, settingsFrg)
-                        .commit();
+                commitFrgToActivity(settingsFrg);
             }
         } else if(action.compareTo(ACTION_SCREEN_SETTING) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.screen_setting));
-            SessionScreenSettingsFrg settingsFrg = new SessionScreenSettingsFrg();
+            SessionScreenSettingsFrg settingsFrg = getFragment(SessionScreenSettingsFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_ALARM_SETTING) == 0) {
             if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_alarm));
-                SessionTNAlarmFrg settingsFrg = new SessionTNAlarmFrg();
+                SessionTNAlarmFrg settingsFrg = getFragment(SessionTNAlarmFrg.class);
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, settingsFrg)
-                        .commit();
+                commitFrgToActivity(settingsFrg);
             } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_alarm));
-                SessionVTAlarmFrg settingsFrg = new SessionVTAlarmFrg();
+                SessionVTAlarmFrg settingsFrg = getFragment(SessionVTAlarmFrg.class);
                 settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, settingsFrg)
-                        .commit();
+                commitFrgToActivity(settingsFrg);
             }
         } else if(action.compareTo(ACTION_KEY_MAPPING) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.key_mapping));
-            final SessionKeyMappingFrg settingsFrg = new SessionKeyMappingFrg();
+            final SessionKeyMappingFrg settingsFrg = getFragment(SessionKeyMappingFrg.class);
             layReset.setVisibility(View.VISIBLE);
             layReset.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,9 +78,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
                 }
             });
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         }
     }
 }

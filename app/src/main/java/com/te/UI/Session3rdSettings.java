@@ -29,36 +29,28 @@ public class Session3rdSettings extends SessionSettingsBase {
         String action = getIntent().getAction();
         if(action.compareTo(ACTION_COLOR) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.screen_color));
-            SessionColorSettingsFrg settingsFrg = new SessionColorSettingsFrg();
+            SessionColorSettingsFrg settingsFrg = getFragment(SessionColorSettingsFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_READER_CTRL) == 0) {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.vt_control_reader));
-            SessionVTReaderCtrlFrg settingsFrg = new SessionVTReaderCtrlFrg();
+            SessionVTReaderCtrlFrg settingsFrg = getFragment(SessionVTReaderCtrlFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_FEEDBACK) == 0) {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.vt_feedback));
-            SessionVTFeedbackFrg settingsFrg = new SessionVTFeedbackFrg();
+            SessionVTFeedbackFrg settingsFrg = getFragment(SessionVTFeedbackFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_KEYMAP_EDIT) == 0) {
             int nEditServerKeycode = getIntent().getIntExtra(ACTION_KEYMAP_EDIT_SERVER_KEYCODE, 0);
             getSupportActionBar().setTitle(getResources().getString(R.string.keymap_edit));
-            SessionKeyMapEditingFrg settingsFrg = new SessionKeyMapEditingFrg();
+            SessionKeyMapEditingFrg settingsFrg = getFragment(SessionKeyMapEditingFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             settingsFrg.setServerKeyCode(nEditServerKeycode);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, settingsFrg)
-                    .commit();
+            commitFrgToActivity(settingsFrg);
         }
     }
 }
