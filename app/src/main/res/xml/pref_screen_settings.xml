@@ -74,6 +74,10 @@
             android:key="@string/screen_auto_full_on_conn_key"
             android:title="@string/screen_auto_full_on_conn"
             android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="@string/screen_show_navi_bar_key"
+            android:title="@string/screen_show_navi_bar"
+            android:defaultValue="false"/>
         <com.te.UI.TESwitchPreference
             android:key="@string/screen_show_wf_batt_key"
             android:title="@string/screen_show_wf_bt_status"

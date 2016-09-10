@@ -356,6 +356,9 @@ public class TESettings {
         @SerializedName("isAutoFullScreen")
         public boolean mIsAutoFullscreenOnConn = false;
 
+        @SerializedName("isShowNavigationBarOnFull")//Only for Android version
+        public boolean mIsShowNavibarOnFullScreen = false;
+
         @SerializedName("isAutoPopSIPOnConn")
         public boolean mIsAutoPopSIPOnConn = false;
 

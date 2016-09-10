@@ -58,7 +58,6 @@
     <string name="str_ip">IP Address</string>
     <string name="str_upperCase">Data input uppercase</string>
     <string name="str_network">Network</string>
-    <string name="str_autofullscreen">Auto full screen on connection</string>
     <string name="str_detectoutofrange">Detect out of range</string>
     <string name="str_autoconnect">Auto connect</string>
     <string name="str_autosignon">Auto sign on</string>
@@ -256,6 +255,8 @@
     <string name="screen_color">Color Settings</string>
     <string name="screen_auto_full_on_conn_key">screen_auto_full_on_conn_key</string>
     <string name="screen_auto_full_on_conn">Auto Full Screen On Connection</string>
+    <string name="screen_show_navi_bar_key">screen_show_navi_bar_key</string>
+    <string name="screen_show_navi_bar">Show Navigation Bar</string>
     <string name="screen_show_wf_batt_key">screen_show_wf_batt_key</string>
     <string name="screen_show_wf_bt_status">Show Wi-Fi/Battery Info On Full Screen</string>
     <string name="screen_show_wf_bt_status_off">None</string>

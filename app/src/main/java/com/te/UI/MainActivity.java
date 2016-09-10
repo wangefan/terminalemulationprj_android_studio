@@ -964,17 +964,18 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void procFullScreen() {
-        final boolean bShowStatusBarOnFull = TESettingsInfo.getHostShowTaskBarOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
-        if (mBFullScreen == false) {
+    private void doFullScreen(boolean bFull) {
+        if(bFull) {
+            boolean bShowStatusBarOnFull = TESettingsInfo.getHostShowTaskBarOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
+            boolean bShowNavibarOnFullScreen = TESettingsInfo.getHostIsShowNavibarOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
             getSupportActionBar().hide();
-
-            int uiFullScreenOptions =  View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-
+            int uiFullScreenOptions =  View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             if(bShowStatusBarOnFull == false) {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //Handle status bar for API level <=16
                 uiFullScreenOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN; //Handle status bar for API level >16
+            }
+            if(bShowNavibarOnFullScreen == false) {
+                uiFullScreenOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
             }
             mDecorView.setFitsSystemWindows(false);
             mDecorView.setSystemUiVisibility(uiFullScreenOptions);
@@ -983,36 +984,46 @@ public class MainActivity extends AppCompatActivity
                 UIUtility.showResetFullScreen(mLogoView.findViewById(R.id.ImgLogoView));
             }
         } else {
+            getSupportActionBar().show();
+            int oriUIOption = mDecorView.getSystemUiVisibility();
+            int newUIOption = oriUIOption;
+            newUIOption ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+            //Handle status bar for API level <=16
+            if((getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) ==
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            }
+
+            if((oriUIOption & View.SYSTEM_UI_FLAG_FULLSCREEN) == View.SYSTEM_UI_FLAG_FULLSCREEN) {
+                newUIOption ^= View.SYSTEM_UI_FLAG_FULLSCREEN; //Handle status bar for API level >16
+            }
+
+            if((oriUIOption & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) {
+                newUIOption ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION; //Handle navigation bar
+            }
+            mDecorView.setSystemUiVisibility(newUIOption);
+            mBFullScreen = false;
+        }
+        setSessionStatusView();
+    }
+
+    private void procFullScreen() {
+        if (mBFullScreen == false) {
+            doFullScreen(true);
+        } else {
             if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitFullScreenProtect()) {
                 UIUtility.doCheckAccessCtrlDialog(
                         new UIUtility.OnAccessCtrlChkListener() {
                             @Override
                             public void onValid() {
-                                if(bShowStatusBarOnFull == false) {
-                                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                                }
-                                getSupportActionBar().show();
-                                mDecorView.setSystemUiVisibility(
-                                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                                mBFullScreen = false;
-                                setSessionStatusView();
+                                doFullScreen(false);
                             }
                         });
             } else {
-                int newUIOption = mDecorView.getSystemUiVisibility();
-                if(bShowStatusBarOnFull == false) {
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    newUIOption ^= View.SYSTEM_UI_FLAG_FULLSCREEN; //Handle status bar for API level >16
-                }
-                getSupportActionBar().show();
-                newUIOption ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-                newUIOption ^=  View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-                mDecorView.setSystemUiVisibility(newUIOption);
-                mBFullScreen = false;
+                doFullScreen(false);
             }
         }
-        setSessionStatusView();
     }
 
     private void HideKeyboard() {

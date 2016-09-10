@@ -35,6 +35,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     private ListPreference mlstFont = null;
     private ListPreference mlstFontSize = null;
     private CheckBoxPreference mChkAutoFullScreenOnConn = null;
+    private CheckBoxPreference mChkShowNavibarOnFullScreen = null;
     private TESwitchPreference mSwhShowWFBTOnFullScreen = null;
     private ListPreference mlstUpdateIconInterval = null;
 
@@ -176,6 +177,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             }
         } else if(key.compareTo(getResources().getString(R.string.screen_auto_full_on_conn_key)) == 0) {
             mSetting.mIsAutoFullscreenOnConn = mChkAutoFullScreenOnConn.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.screen_show_navi_bar_key)) == 0) {
+            mSetting.mIsShowNavibarOnFullScreen = mChkShowNavibarOnFullScreen.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_show_wf_batt_key)) == 0) {
             if(mSwhShowWFBTOnFullScreen.isChecked() == false) {
                 mSetting.mIsShowStatusbarOnFull = false;
@@ -359,6 +362,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
         mChkAutoFullScreenOnConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_auto_full_on_conn_key));
+        mChkShowNavibarOnFullScreen = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_show_navi_bar_key));
         mSwhShowWFBTOnFullScreen = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_show_wf_batt_key));
         mSwhShowWFBTOnFullScreen.setSummaryOn(getResources().getStringArray(R.array.show_wf_batt_info_array)[0]);
         mSwhShowWFBTOnFullScreen.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {

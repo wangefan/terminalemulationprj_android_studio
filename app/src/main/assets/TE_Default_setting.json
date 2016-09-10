@@ -96,6 +96,7 @@
   "bRS232Recv": false,
   "bDataUnConvert": false,
   "isFullScreen": false,
+  "isShowNavigationBarOnFull":false,
   "isAutoFullScreen": false,
   "isAutoPopSIPOnConn": false,
   "bIsDetectOutRange": false,

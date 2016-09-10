@@ -504,6 +504,11 @@ public class TESettingsInfo {
         return Setting.mIsAutoFullscreenOnConn;
     }
 
+    public static Boolean getHostIsShowNavibarOnFullScreenByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsShowNavibarOnFullScreen;
+    }
+
     public static Boolean getHostIsAutoPopSIPOnConnByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mIsAutoPopSIPOnConn;
