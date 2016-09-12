@@ -210,9 +210,8 @@ public class SimpleFileDialog {
                             int idxExt = fileName.lastIndexOf(ext);
                             if(idxExt >=0) {
                                 dirs.add(file.getName());
+                                break;
                             }
-                        } else {
-                            dirs.add(file.getName());
                         }
                     }
                 }
@@ -321,7 +320,7 @@ public class SimpleFileDialog {
     }
 
     private ArrayAdapter<String> createListAdapter(List<String> items) {
-        return new ArrayAdapter<String>(m_context, android.R.layout.select_dialog_item, android.R.id.text1, items) {
+        return new ArrayAdapter<String>(m_context, R.layout.simple_file_dialog_list_item, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
