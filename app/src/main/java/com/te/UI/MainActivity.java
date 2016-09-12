@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateWiFiIcon() {
-        boolean bShow = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
+        boolean bShow = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex()) && mBFullScreen;
         mWiFiStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
         if(bShow) {
             int wifiStrength = CipherUtility.getWiFiStrength();
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateBattIcon() {
-        boolean bShow = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
+        boolean bShow = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex()) && mBFullScreen;
         mBattStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
         if(bShow) {
             int nBatteryStrength = CipherUtility.getBatteryPct();
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity
         boolean bShowWiFi = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         boolean bShowBatt = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         boolean bUpdateWiFi_Batt_Icons = TESettingsInfo.getIsUpdateWiFiAndtBatteryByIndex(TESettingsInfo.getSessionIndex());
-        if (bUpdateWiFi_Batt_Icons && (bShowWiFi || bShowBatt)) {
+        if (bUpdateWiFi_Batt_Icons && mBFullScreen && (bShowWiFi || bShowBatt)) {
             final int nUpdateInterval = TESettingsInfo.getUpdateWiFiAndtBatteryIntervalByIndex(TESettingsInfo.getSessionIndex()) * 60 * 1000;
             mUpdateWiFiAndBaterIconHandler.postDelayed(new Runnable() {
                 @Override
@@ -1024,6 +1024,7 @@ public class MainActivity extends AppCompatActivity
                 doFullScreen(false);
             }
         }
+        procUpdateWiFiAndBattIconTimer();
     }
 
     private void HideKeyboard() {
