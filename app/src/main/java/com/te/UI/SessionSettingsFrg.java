@@ -2,9 +2,9 @@ package com.te.UI;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+
 import com.cipherlab.terminalemulation.R;
 
 public class SessionSettingsFrg extends SessionSettingsFrgBase {
@@ -17,7 +17,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
     private String mVTAnsiHostTypeName = "";
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
-    private EditTextPreference mPrefPort = null;
+    private NumberPickerPreference mPrefPort = null;
     private Preference mServerSetting = null;
     private Preference mSSH = null;
     private CheckBoxPreference mCkNetworkAlive = null;
@@ -43,7 +43,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         //Server type UI
         mLstServerType = (ListPreference) findPreference(getResources().getString(R.string.host_type_key));
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
-        mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
+        mPrefPort = (NumberPickerPreference) findPreference(getResources().getString(R.string.host_port_key));
         mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
         mSSH = findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
@@ -72,7 +72,8 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
             mSSH.setEnabled(false);
         }
         mLstServerIp.setAddress(mSetting.mHostIP);
-        mPrefPort.setText(mSetting.getHostPort());
+        mPrefPort.setPort(mSetting.getHostPort());
+        mPrefPort.setSummary(mPrefPort.getPort());
         mCkNetworkAlive.setChecked(mSetting.mNetKeepAlive);
         mCkDetectOut.setChecked(mSetting.mIsDetectOutRange);
         mCkGenLog.setChecked(mSetting.mIsSaveLog);
@@ -104,7 +105,8 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
             mSetting.mHostIP = mLstServerIp.getAddress();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
-            mSetting.setHostPort(mPrefPort.getText());
+            mSetting.setHostPort(String.valueOf(mPrefPort.getPort()));
+            mPrefPort.setSummary(mPrefPort.getPort());
         } else if(key.compareTo(getResources().getString(R.string.keep_alive_key)) == 0) {
             mSetting.mNetKeepAlive = mCkNetworkAlive.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.out_range_key)) == 0) {

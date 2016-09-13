@@ -18,7 +18,7 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
     private String mVTAnsiHostTypeName = "";
     private ListPreference mLstServerType = null;
     private MyIPPreference mLstServerIp = null;
-    private EditTextPreference mPrefPort = null;
+    private NumberPickerPreference mPrefPort = null;
     private CheckBoxPreference mChkAutoConn = null;
     private CheckBoxPreference mChkAutoSign = null;
     private EditTextPreference mPrefLoginName = null;
@@ -72,7 +72,7 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
         //UI
         mLstServerType = (ListPreference) findPreference(getResources().getString(R.string.host_type_key));
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
-        mPrefPort = (EditTextPreference) findPreference(getResources().getString(R.string.host_port_key));
+        mPrefPort = (NumberPickerPreference) findPreference(getResources().getString(R.string.host_port_key));
         mChkAutoConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.host_auto_conn_key));
         mChkAutoSign = (CheckBoxPreference) findPreference(getResources().getString(R.string.host_auto_sign_key));
         mPrefLoginName = (EditTextPreference) findPreference(getResources().getString(R.string.host_auto_sign_name_key));
@@ -91,7 +91,8 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
             mLstServerType.setValue(mSetting.mTermNameTN);
         }
         mLstServerIp.setAddress(mSetting.mHostIP);
-        mPrefPort.setText(mSetting.getHostPort());
+        mPrefPort.setPort(mSetting.getHostPort());
+        mPrefPort.setSummary(mPrefPort.getPort());
         mChkAutoConn.setChecked(mSetting.mBAutoConnect);
         mChkAutoSign.setChecked(mSetting.mBAutoSignOn);
         mPrefLoginName.setText(mSetting.mLoginName);
@@ -125,7 +126,8 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
             mSetting.mHostIP = mLstServerIp.getAddress();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
-            mSetting.setHostPort(mPrefPort.getText());
+            mSetting.setHostPort(String.valueOf(mPrefPort.getPort()));
+            mPrefPort.setSummary(mPrefPort.getPort());
         } else if(key.compareTo(getResources().getString(R.string.host_auto_conn_key)) == 0) {
             mSetting.mBAutoConnect = mChkAutoConn.isChecked();
             updatePreferenceForVT();

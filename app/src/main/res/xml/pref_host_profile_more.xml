@@ -9,7 +9,7 @@
     <com.te.UI.MyIPPreference
         android:title="@string/pref_header_ip"
         android:key="@string/host_ip_key"/>
-    <EditTextPreference
+    <com.te.UI.NumberPickerPreference
         android:title="@string/pref_header_port"
         android:key="@string/host_port_key"/>
     <CheckBoxPreference

@@ -56,7 +56,7 @@ public class SessionColorSettingsFrg extends Fragment {
             public void onClick(View v) {
                 ColorPickerDialogDash colordashfragment = ColorPickerDialogDash
                         .newInstance(R.string.color_picker_fonts_title, mColorChoices, mSelectedFontsColor, 5);
-                // Implement listener to get selected color value
+                // Implement listener to get selected color mStrValue
                 colordashfragment.setOnColorSelectedListener(new ColorPickerDialogDash.OnColorSelectedListener() {
                     @Override
                     public void onColorSelected(int color) {
@@ -75,7 +75,7 @@ public class SessionColorSettingsFrg extends Fragment {
             public void onClick(View v) {
                 ColorPickerDialogDash colordashfragment = ColorPickerDialogDash
                         .newInstance(R.string.color_picker_bg_title, mColorChoices, mSelectedBgColor, 5);
-                // Implement listener to get selected color value
+                // Implement listener to get selected color mStrValue
                 colordashfragment.setOnColorSelectedListener(new ColorPickerDialogDash.OnColorSelectedListener() {
                     @Override
                     public void onColorSelected(int color) {
