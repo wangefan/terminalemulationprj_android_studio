@@ -39,6 +39,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cipherlab.terminalemulation.R;
@@ -235,7 +236,7 @@ public class SimpleFileDialog {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(m_context);
 
         // Create custom view for AlertDialog curPath
-        LinearLayout dialogLayout = (LinearLayout) LayoutInflater.from(m_context).inflate(R.layout.simple_file_chooser, null);
+        RelativeLayout dialogLayout = (RelativeLayout) LayoutInflater.from(m_context).inflate(R.layout.simple_file_chooser, null);
         LinearLayout layChooseFile = (LinearLayout) dialogLayout.findViewById(R.id.lay_choose_file);
         LinearLayout layCreateFile = (LinearLayout) dialogLayout.findViewById(R.id.lay_create_file);
         m_tvCurrentPath = (TextView) dialogLayout.findViewById(R.id.dialog_cur_path);

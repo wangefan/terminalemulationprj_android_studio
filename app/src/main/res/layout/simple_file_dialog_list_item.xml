@@ -7,6 +7,6 @@
     android:textColor="?android:attr/textColorAlertDialogListItem"
     android:paddingLeft="?dialogPreferredPadding"
     android:paddingStart="?dialogPreferredPadding"
-    android:minHeight="35dp"
+    android:minHeight="?attr/listPreferredItemHeightSmall"
     android:allowUndo="false"
     android:gravity="center_vertical" />

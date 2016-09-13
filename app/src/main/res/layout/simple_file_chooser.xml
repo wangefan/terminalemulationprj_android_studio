@@ -1,74 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
     <TextView
+        android:id="@+id/dialog_title"
         android:paddingLeft="?dialogPreferredPadding"
         android:paddingStart="?dialogPreferredPadding"
-        android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cur_path"/>
     <TextView
+        android:id="@+id/dialog_cur_path"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault"
         android:paddingLeft="?dialogPreferredPadding"
         android:paddingStart="?dialogPreferredPadding"
-        android:id="@+id/dialog_cur_path"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_title"/>
     <View
         android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/material_grey_600"/>
-    <ListView
-        android:id="@+id/dialoglist"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"/>
+        android:background="@color/material_grey_600"
+        android:layout_below="@id/dialog_cur_path"/>
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:id="@+id/lay_choose_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="?dialogPreferredPadding"
+                android:paddingStart="?dialogPreferredPadding"
+                android:id="@+id/chosen_file_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                android:id="@+id/chosen_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay_create_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/create_file_title"
+                android:paddingLeft="?dialogPreferredPadding"
+                android:paddingStart="?dialogPreferredPadding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/create_file"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:selectAllOnFocus="true"/>
+            <TextView
+                android:id="@+id/create_file_ext"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/material_grey_600"/>
-    <LinearLayout
-        android:id="@+id/lay_choose_file"
+        android:background="@color/material_grey_600"
+        android:layout_above="@id/bottom_layout"/>
+    <ListView
+        android:id="@+id/dialoglist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:paddingLeft="?dialogPreferredPadding"
-            android:paddingStart="?dialogPreferredPadding"
-            android:id="@+id/chosen_file_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-            android:id="@+id/chosen_file"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/lay_create_file"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/create_file_title"
-            android:paddingLeft="?dialogPreferredPadding"
-            android:paddingStart="?dialogPreferredPadding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/create_file"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:selectAllOnFocus="true"/>
-        <TextView
-            android:id="@+id/create_file_ext"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</LinearLayout>
+        android:layout_below="@id/line1"
+        android:layout_above="@id/line2"/>
+
+</RelativeLayout>
