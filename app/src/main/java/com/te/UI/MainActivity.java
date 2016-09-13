@@ -32,6 +32,7 @@ import com.cipherlab.terminalemulation.BuildConfig;
 import com.cipherlab.terminalemulation.R;
 import com.te.UI.LeftMenuFrg.LeftMenuListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -759,13 +760,36 @@ public class MainActivity extends AppCompatActivity
 
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
-                            public void onFilePath(String chosenDir) {
-                                if (TESettingsInfo.exportSessionSettings(chosenDir) == false) {
-                                    Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
+                            public void onFilePath(final String chosenDir) {
+                                final File file = new File(chosenDir);
+                                if(file.exists() == true) {
+                                    String strMsg = getResources().getString(R.string.Msg_file_exist);
+                                    UIUtility.doYesNoDialog(MainActivity.this, strMsg, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            switch (which){
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    file.delete();
+                                                    if (TESettingsInfo.exportSessionSettings(chosenDir) == false) {
+                                                        Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    TESettingsInfo.setExportSettingsPath(chosenDir);
+                                                    break;
+                                                case DialogInterface.BUTTON_NEGATIVE:
+                                                    break;
+                                            }
+                                        }
+                                    });
                                 } else {
-                                    Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
+                                    if (TESettingsInfo.exportSessionSettings(chosenDir) == false) {
+                                        Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
+                                    }
+                                    TESettingsInfo.setExportSettingsPath(chosenDir);
                                 }
-                                TESettingsInfo.setExportSettingsPath(chosenDir);
                             }
 
                             @Override

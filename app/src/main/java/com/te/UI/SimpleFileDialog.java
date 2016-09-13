@@ -340,7 +340,7 @@ public class SimpleFileDialog {
     // Callback interface for selected directory
     //////////////////////////////////////////////////////
     public interface SimpleFileDialogListener {
-        void onFilePath(String path);
-        void onFileSel(String path);
+        void onFilePath(final String path);
+        void onFileSel(final String path);
     }
 } 
