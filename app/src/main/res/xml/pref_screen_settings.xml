@@ -63,7 +63,7 @@
         android:key="@string/screen_color_key"
         android:title="@string/screen_color">
         <intent
-            android:targetPackage="com.cipherlab.terminalemulation"
+            android:targetPackage="@string/application_Id"
             android:targetClass="com.te.UI.Session3rdSettings"
             android:action="com.te.UI.Session3rdSettings.ACTION_COLOR">
         </intent>

@@ -9,8 +9,8 @@ android {
         applicationId 'com.cipherlab.terminalemulation'
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 2
-        versionName '0.0.0.3'
+        versionCode 1
+        versionName '0.0.0.4'
     }
     buildTypes {
         debug {
@@ -23,6 +23,24 @@ android {
         }
     }
     productFlavors {
+        cipherlab {
+            applicationId = "com.cipherlab.terminalemulation"
+            resValue "string", "application_Id", "com.cipherlab.terminalemulation"
+            resValue "string", "STR_CopyRight", "Copyright © CipherLab Co. Ltd."
+            minSdkVersion 15
+            targetSdkVersion 22
+            versionCode 1
+            versionName '0.0.0.4'
+        }
+        densowave {
+            applicationId = "com.densowave.terminalemulation"
+            resValue "string", "application_Id", "com.densowave.terminalemulation"
+            resValue "string", "STR_CopyRight", "Copyright © Supplier of DENSO WAVE INCORPORATED"
+            minSdkVersion 15
+            targetSdkVersion 22
+            versionName '0.0.0.4'
+            versionCode 1
+        }
     }
 }
 
