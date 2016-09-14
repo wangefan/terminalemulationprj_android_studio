@@ -351,7 +351,7 @@
     <string name="protect_item_exit_full_screen">Exit Full Screen</string>
     <string name="check_pwd">Password (maximum 8 characters)</string>
     <string name="STR_Reset">Reset</string>
-    <string name="msg_pwd_not_match">¡° Passwords do not match</string>
+    <string name="msg_pwd_not_match">â€»Passwords do not match</string>
     <string name="show_wf_batt_info_title">Wi-Fi/Battery Status</string>
     <string-array name="show_wf_batt_info_array">
         <item>Show Status Bar</item>
@@ -479,7 +479,7 @@
     <string name="Msg_dup_key_mapped" >"The physical key combination has been mapped to %s. Do you want to replace it?"</string>
     <string name="screen_autopop_sip_conn_key">screen_autopop_sip_conn_key</string>
     <string name="screen_autopop_sip_conn">Auto Popup SIP On Connection</string>
-    <string name="MSG_detect_key">\nPlease press a physical key¡K\n\nWhen the key is unavailable, the screen would not be responding.\n\nPress ¡§ESC\" Key or ¡§Back¡¨ to exit the dialog.</string>
+    <string name="MSG_detect_key">\nPlease press a physical keyâ€¦\n\nWhen the key is unavailable, the screen would not be responding.\n\nPress \"ESC\" Key or \"Back\" to exit the dialog.</string>
     <string name="Msg_file_exist">This file already exists. Replace existing file?</string>
 
     <string-array name="icon_update_interval_array">
