@@ -852,18 +852,10 @@ public class MainActivity extends AppCompatActivity
         View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
         TextView AppVer = (TextView) messageView.findViewById(R.id.txt_app_ver);
         TextView ServiceVer = (TextView) messageView.findViewById(R.id.txt_service_ver);
-        PackageManager manager = this.getPackageManager();
-        try {
-            PackageInfo info = manager.getPackageInfo(
-                    this.getPackageName(), 0);
-            AppVer.setText(R.string.app_Version);
-
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-            AppVer.setText(BuildConfig.VERSION_NAME);
-        }
+        AppVer.setText(BuildConfig.VERSION_NAME);
 
         try {
+            PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo("com.cipherlab.clbarcodeservice", 0);
             ServiceVer.setText(info.versionName);
         } catch (NameNotFoundException e) {
