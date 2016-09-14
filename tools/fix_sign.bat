@@ -1,1 +1,2 @@
-C:\Users\yifan.wang\Android\android-sdk\platform-tools\adb.exe uninstall com.example.terminalemulation
+C:\Users\yifan.wang\Android\android-sdk\platform-tools\adb.exe uninstall com.cipherlab.terminalemulation
+C:\Users\yifan.wang\Android\android-sdk\platform-tools\adb.exe uninstall com.densowave.terminalemulation
