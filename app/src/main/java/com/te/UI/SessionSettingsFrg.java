@@ -30,6 +30,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        CipherUtility.Log_d("SessionSettingsFrg.onCreate", "call CipherUtility.isReaderConfigAvable()");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
         
@@ -52,11 +53,11 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mReaderconfig.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                CipherUtility.showReaderConfig();
+                CipherUtility.showReaderConfig(getActivity());
                 return true;
             }
         });
-        mReaderconfig.setEnabled(CipherUtility.isReaderConfigAvable());
+        mReaderconfig.setEnabled(CipherUtility.isReaderConfigAvable(getActivity()));
         mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
     }
 

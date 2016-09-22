@@ -43,7 +43,7 @@ public class SessionSettings extends SessionSettingsBase {
         } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
             String strTitle = getResources().getString(R.string.new_session);
             getSupportActionBar().setTitle(strTitle);
-            gEditSessionSetting = TESettingsInfo.createNewDefaultSessionSetting();
+            gEditSessionSetting = TESettingsInfo.createNewDefaultSessionSetting(getApplicationContext());
             toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
             layOK.setVisibility(View.VISIBLE);
             layOK.setOnClickListener(new View.OnClickListener() {

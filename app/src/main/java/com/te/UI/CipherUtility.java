@@ -33,12 +33,6 @@ import Terminals.stdActivityRef;
 
 public class CipherUtility {
 	static final String READER_CONFIG_PKG_NAME = "cipherlab.sw.readerconfig";
-	static Context mContext = null;
-	static WindowManager mWMgr = null;
-	static public void init(Context context) {
-		mContext = context;
-		mWMgr = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-	}
 
 	static public void Log_d(String tag, String msg) {
 		if (BuildConfig.DEBUG_MODE)
@@ -66,25 +60,25 @@ public class CipherUtility {
 	}
 
 	// 0 ~ 100
-	static public int getWiFiStrength() {
-		WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+	static public int getWiFiStrength(Context context) {
+		WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		int wifiStrength = wifi.calculateSignalLevel(wifi.getConnectionInfo().getRssi(), 100);
 		return wifiStrength;
 	}
 
 	// 0 ~ 100
-	static public int getBatteryPct() {
+	static public int getBatteryPct(Context context) {
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-		Intent batteryStatus = mContext.registerReceiver(null, ifilter);
+		Intent batteryStatus = context.registerReceiver(null, ifilter);
 		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 		int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 		float batteryPct = level / (float) scale * 100;
 		return (int) batteryPct;
 	}
 
-	static public boolean hasNetwork() {
+	static public boolean hasNetwork(Context context) {
 		ConnectivityManager connectivityManager
-				= (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+				= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
@@ -124,15 +118,16 @@ public class CipherUtility {
 		}
 	}
 
-	public static int getScreenWidth() {
+	public static int getScreenWidth(Context context) {
+		WindowManager wmgr = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		final DisplayMetrics metrics = new DisplayMetrics();
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			mWMgr.getDefaultDisplay().getRealMetrics(metrics);
+			wmgr.getDefaultDisplay().getRealMetrics(metrics);
 			return metrics.widthPixels;
 		} else {
 			try {
 				Method GetRawW = Display.class.getMethod("getRawWidth");
-				return (Integer) GetRawW.invoke(mWMgr.getDefaultDisplay());
+				return (Integer) GetRawW.invoke(wmgr.getDefaultDisplay());
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
 				return 0;
@@ -146,15 +141,16 @@ public class CipherUtility {
 		}
 	}
 
-	public static int getScreenHeight() {
+	public static int getScreenHeight(Context context) {
+		WindowManager wmgr = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		final DisplayMetrics metrics = new DisplayMetrics();
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			mWMgr.getDefaultDisplay().getRealMetrics(metrics);
+			wmgr.getDefaultDisplay().getRealMetrics(metrics);
 			return metrics.heightPixels;
 		} else {
 			try {
 				Method GetRawW = Display.class.getMethod("getRawHeight");
-				return (Integer) GetRawW.invoke(mWMgr.getDefaultDisplay());
+				return (Integer) GetRawW.invoke(wmgr.getDefaultDisplay());
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
 				return 0;
@@ -180,8 +176,8 @@ public class CipherUtility {
 		}
 	}
 
-	public static boolean isReaderConfigAvable() {
-		PackageManager manager = mContext.getPackageManager();
+	public static boolean isReaderConfigAvable(Context context) {
+		PackageManager manager = context.getPackageManager();
 		Intent intent = manager.getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
 		if (intent == null) {
 			return false;
@@ -194,10 +190,10 @@ public class CipherUtility {
 		return true;
 	}
 
-	public static void showReaderConfig() {
-		if(isReaderConfigAvable()) {
-			Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
-			mContext.startActivity(intent);
+	public static void showReaderConfig(Context context) {
+		if(isReaderConfigAvable(context)) {
+			Intent intent = context.getPackageManager().getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
+			context.startActivity(intent);
 		}
 	}
 }

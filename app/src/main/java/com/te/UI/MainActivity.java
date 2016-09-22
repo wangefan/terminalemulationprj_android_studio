@@ -213,11 +213,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateWiFiIcon() {
+    private void updateWiFiIcon(Context context) {
         boolean bShow = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex()) && mBFullScreen;
         mWiFiStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
         if(bShow) {
-            int wifiStrength = CipherUtility.getWiFiStrength();
+            int wifiStrength = CipherUtility.getWiFiStrength(context);
             final int LEVEL_UNIT = 20;
             int nLevel = wifiStrength / LEVEL_UNIT;
             switch (nLevel) {
@@ -245,11 +245,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateBattIcon() {
+    private void updateBattIcon(Context context) {
         boolean bShow = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex()) && mBFullScreen;
         mBattStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
         if(bShow) {
-            int nBatteryStrength = CipherUtility.getBatteryPct();
+            int nBatteryStrength = CipherUtility.getBatteryPct(context);
             final int LEVEL_UNIT = 20;
             int nLevel = nBatteryStrength / LEVEL_UNIT;
             switch (nLevel) {
@@ -279,8 +279,8 @@ public class MainActivity extends AppCompatActivity
 
     private void procUpdateWiFiAndBattIconTimer() {
         mUpdateWiFiAndBaterIconHandler.removeCallbacksAndMessages(null);
-        updateWiFiIcon();
-        updateBattIcon();
+        updateWiFiIcon(this);
+        updateBattIcon(this);
         boolean bShowWiFi = TESettingsInfo.getHostShowWiFiIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         boolean bShowBatt = TESettingsInfo.getHostShowBattIconOnFullScreenByIndex(TESettingsInfo.getSessionIndex());
         boolean bUpdateWiFi_Batt_Icons = TESettingsInfo.getIsUpdateWiFiAndtBatteryByIndex(TESettingsInfo.getSessionIndex());
@@ -289,8 +289,8 @@ public class MainActivity extends AppCompatActivity
             mUpdateWiFiAndBaterIconHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    updateWiFiIcon();
-                    updateBattIcon();
+                    updateWiFiIcon(MainActivity.this);
+                    updateBattIcon(MainActivity.this);
                     mUpdateWiFiAndBaterIconHandler.postDelayed(this, nUpdateInterval);
                 }
             }, nUpdateInterval);
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity
             mUpdateWifiAlertHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    int wifiStrength = CipherUtility.getWiFiStrength();
+                    int wifiStrength = CipherUtility.getWiFiStrength(MainActivity.this);
                     if (wifiStrength < nWifiAlert) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity
             mUpdateBaterAlertHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    int batStrength = CipherUtility.getBatteryPct();
+                    int batStrength = CipherUtility.getBatteryPct(MainActivity.this);
                     if (batStrength < nBatAlert) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
@@ -477,7 +477,7 @@ public class MainActivity extends AppCompatActivity
         MoveImage mvWifI = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
-                int wifiStrength = CipherUtility.getWiFiStrength();
+                int wifiStrength = CipherUtility.getWiFiStrength(MainActivity.this);
                 UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), null);
                 return true;
             }
@@ -496,7 +496,7 @@ public class MainActivity extends AppCompatActivity
         MoveImage mvBatt = new MoveImage(new MoveImage.MoveImageBtnListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
-                int batStrength = CipherUtility.getBatteryPct();
+                int batStrength = CipherUtility.getBatteryPct(MainActivity.this);
                 UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), null);
                 return true;
             }

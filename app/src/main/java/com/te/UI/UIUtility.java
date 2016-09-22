@@ -516,7 +516,7 @@ public class UIUtility {
 	}
 
 	public static void detectNetworkOutRange(final OnDetectOFRListener listener) {
-		if(CipherUtility.hasNetwork() == true) {
+		if(CipherUtility.hasNetwork(mContext) == true) {
 			listener.onResult(true);
 			return;
 		}
@@ -524,7 +524,7 @@ public class UIUtility {
 		final Runnable checkNetwork = new Runnable() {
 			@Override
 			public void run() {
-				if(CipherUtility.hasNetwork() == true) {
+				if(CipherUtility.hasNetwork(mContext) == true) {
 					mProgNetwork.dismiss();
 					listener.onResult(true);
 				} else {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 
-import com.cipherlab.terminalemulation.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.te.UI.CipherUtility;
@@ -28,12 +27,12 @@ import Terminals.TESettings.SessionSetting;
  * Created by Franco.Liu on 2015/1/29.
  */
 public class TESettingsInfo {
-    final static String TN5250TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.IBM5250Val);
-    final static String TN3270TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.IBM3270Val);
-    final static String VT220TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.VT220Val);
-    final static String VT100TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.VT100Val);
-    final static String VT102TYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.VT102Val);
-    final static String VTANSITYPENAME = stdActivityRef.getCurrActivity().getResources().getString(R.string.ANSIVal);
+    final static String TN5250TYPENAME = "ibm5250";//stdActivityRef.getCurrActivity().getResources().getString(R.string.IB5250Val);
+    final static String TN3270TYPENAME = "ibm3270";//stdActivityRef.getCurrActivity().getResources().getString(R.string.IBM3270Val);
+    final static String VT220TYPENAME = "vt220";//stdActivityRef.getCurrActivity().getResources().getString(R.string.VT220Val);
+    final static String VT100TYPENAME = "vt100";//stdActivityRef.getCurrActivity().getResources().getString(R.string.VT100Val);
+    final static String VT102TYPENAME = "vt102";//stdActivityRef.getCurrActivity().getResources().getString(R.string.VT102Val);
+    final static String VTANSITYPENAME = "ansi";//stdActivityRef.getCurrActivity().getResources().getString(R.string.ANSIVal);
 
     final public static int MAX_SESSION_COUNT = 5;
     public static final boolean gIsActivation = false;
@@ -62,7 +61,6 @@ public class TESettingsInfo {
     final private static String TE_JASONFILE_PATH = Environment.getExternalStorageDirectory() + File.separator + "CipherLabSettings" + File.separator  + "TerminalEmulation" + File.separator;
 
     static TESettings mTESettings = null;
-    private static Context mContext = null;
     private static SharedPreferences mSp = null;
     private static int mCurrentSessionIndex;
     private static ArrayList<Long> mListVBTime = new ArrayList<>();
@@ -82,7 +80,6 @@ public class TESettingsInfo {
     private static final String IMPORT_PATH = "IMPORT_PATH";
 
     public static boolean loadSessionSettings(Context context) {
-        mContext = context;
         if (mSp == null) {
             mSp = context.getSharedPreferences(_NAME, Context.MODE_PRIVATE);
         }
@@ -102,7 +99,7 @@ public class TESettingsInfo {
         if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
             try {
                 teJsonFile.getParentFile().mkdirs();
-                InputStream inputStream = mContext.getAssets().open(TE_JASONFILE_NAME);
+                InputStream inputStream = context.getAssets().open(TE_JASONFILE_NAME);
                 FileOutputStream fileOutputStream = new FileOutputStream(teJsonFile.getAbsolutePath());
                 CipherUtility.copyFile(inputStream, fileOutputStream);
                 inputStream.close();
@@ -251,10 +248,10 @@ public class TESettingsInfo {
         }
     }
 
-    public static SessionSetting createNewDefaultSessionSetting() {
+    public static SessionSetting createNewDefaultSessionSetting(Context context) {
         SessionSetting setting = null;
         try {
-            InputStream inputStream = mContext.getAssets().open(mDefaultSettingFilename);
+            InputStream inputStream = context.getAssets().open(mDefaultSettingFilename);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             setting = gson.fromJson(reader, SessionSetting.class);
