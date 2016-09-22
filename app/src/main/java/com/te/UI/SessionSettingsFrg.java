@@ -69,7 +69,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         if(mSetting.mIsTN == 0) {
             mLstServerType.setValue(mSetting.mTermName);
             mServerSetting.setTitle(R.string.vt_setting);
-            mSSH.setEnabled(true);
+            mSSH.setEnabled(stdActivityRef.gIsActivate);
         } else {
             mLstServerType.setValue(mSetting.mTermNameTN);
             mServerSetting.setTitle(R.string.tn_setting);
@@ -98,7 +98,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
                     selHostTypeName.compareToIgnoreCase(mVTAnsiHostTypeName) == 0){
                 mSetting.mIsTN = 0;
                 mServerSetting.setTitle(R.string.vt_setting);
-                mSSH.setEnabled(true);
+                mSSH.setEnabled(stdActivityRef.gIsActivate);
             }
 
             if(mSetting.mIsTN == 0) {
