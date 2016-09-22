@@ -385,8 +385,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         stdActivityRef.setCurrActivity(this);
+        //Must before setContentView
+        if (ActivateKeyUtility.verifyKeyFromDefaultFile(this) == true) {
+            stdActivityRef.gIsActivate = true;
+        }
+        setContentView(R.layout.activity_main);
 
         //Initialize Views
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -517,10 +521,6 @@ public class MainActivity extends AppCompatActivity
         CipherReaderControl.InitReader(this, myDataReceiver);
         TerminalProcess.initKeyCodeMap();
         UIUtility.init(this);
-        CipherUtility.init(this);
-        if (ActivateKeyUtility.verifyKeyFromDefaultFile() == true) {
-            stdActivityRef.gIsActivate = true;
-        }
 
         mTerminalProcessFrg = (TerminalProcessFrg) getSupportFragmentManager().findFragmentByTag(TAG_TERPROC_FRAGMENT);
         // If the Fragment is null, then it is first create.
@@ -572,7 +572,7 @@ public class MainActivity extends AppCompatActivity
 
         TerminalProcess.clearKeyCodeMap();
 
-        TESettingsInfo.saveSessionSettings();
+        TESettingsInfo.saveSessionSettings(this);
         // ***************************************************//
         // Unregister Broadcast Receiver before app close
         // ***************************************************//
@@ -746,7 +746,7 @@ public class MainActivity extends AppCompatActivity
                         if (bActivate == false) {
                             Toast.makeText(MainActivity.this, R.string.MSG_Activate_Warn, Toast.LENGTH_SHORT).show();
                         } else {
-                            ActivateKeyUtility.getInstance().genKeyFile();
+                            ActivateKeyUtility.getInstance().genKeyFile(MainActivity.this);
                             Toast.makeText(MainActivity.this, R.string.MSG_Activate_Succ, Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -16,7 +16,8 @@ import android.widget.Toast;
 import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettingsInfo;
- 
+import Terminals.stdActivityRef;
+
 public class LeftMenuFrg extends Fragment {
 
     public interface LeftMenuListener {
@@ -52,7 +53,7 @@ public class LeftMenuFrg extends Fragment {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getActivity().invalidateOptionsMenu();
-                if(TESettingsInfo.showAddSession() == true) {
+                if(TESettingsInfo.showAddSession() == true && stdActivityRef.gIsActivate) {
                     UIUtility.showAddSession(mAddSession);
                 } else {
                     final int SHOWDELETESN_COUNT = 2;
@@ -104,6 +105,9 @@ public class LeftMenuFrg extends Fragment {
                             Integer.toString(idxSession + 1),
                             TESettingsInfo.getHostAddrByIndex(idxSession));
             mSessionsView.addSession(strTitle);
+            if(stdActivityRef.gIsActivate == false) {
+                break;
+            }
         }
         mSessionsView.refresh();
     }
@@ -126,6 +130,11 @@ public class LeftMenuFrg extends Fragment {
                 mLeftMenuListener.onAddSession();
             }
         });
+        if(stdActivityRef.gIsActivate) {
+            mAddSession.setVisibility(View.VISIBLE);
+        } else {
+            mAddSession.setVisibility(View.GONE);
+        }
 
         mSessionsView = (SessionsView) leftMenuView.findViewById(R.id.drawerList);
         mSessionsView.setOnItemClickListener(new ListView.OnItemClickListener() {

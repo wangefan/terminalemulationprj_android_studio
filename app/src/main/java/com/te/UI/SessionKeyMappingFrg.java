@@ -21,7 +21,6 @@ import Terminals.TN3270KeyMapList;
 import Terminals.TN5250KeyMapList;
 import Terminals.VT100_102KeyMapList;
 import Terminals.VT220KeyMapList;
-import Terminals.stdActivityRef;
 
 public class SessionKeyMappingFrg extends Fragment {
     final int [] VT220SERVER_KEY_SEQUENCE = {
@@ -272,7 +271,7 @@ public class SessionKeyMappingFrg extends Fragment {
                 }
                 keyListReSeq.add(newKeyItem);
             }
-            final KeyMapListAdapter adapter = new KeyMapListAdapter(stdActivityRef.getCurrActivity(), keyListReSeq);
+            final KeyMapListAdapter adapter = new KeyMapListAdapter(getActivity(), keyListReSeq);
             mKeyMapListView.setAdapter(adapter);
         }
     }

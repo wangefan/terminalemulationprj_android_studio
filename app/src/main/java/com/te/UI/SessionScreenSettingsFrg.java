@@ -13,6 +13,7 @@ import android.widget.NumberPicker;
 import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettings;
+import Terminals.stdActivityRef;
 
 public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
 
@@ -34,6 +35,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     private Preference mPrefLockedLoc = null;
     private ListPreference mlstFont = null;
     private ListPreference mlstFontSize = null;
+    private Preference mPrefColorSettings = null;
     private CheckBoxPreference mChkAutoFullScreenOnConn = null;
     private CheckBoxPreference mChkShowNavibarOnFullScreen = null;
     private TESwitchPreference mSwhShowWFBTOnFullScreen = null;
@@ -237,6 +239,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
 
         //UI
         mChkShowSessionNumber = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_session_number_key));
+        mChkShowSessionNumber.setEnabled(stdActivityRef.gIsActivate);
         mChkShowSessionStatus = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_session_status_key));
         mChkScreenPanning = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_screen_panning_key));
         mChkAutoPopSIPOnConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_autopop_sip_conn_key));
@@ -292,6 +295,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         });
 
         mChkAcitvateMacro = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_act_macro_key));
+        mChkAcitvateMacro.setEnabled(stdActivityRef.gIsActivate);
         mlstCursorType = (ListPreference) findPreference(getResources().getString(R.string.screen_cursor_type_key));
         mSwchAutoTracking = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_auto_scroll_key));
         mSwchAutoTracking.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
@@ -361,6 +365,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         });
         mlstFont = (ListPreference) findPreference(getResources().getString(R.string.screen_font_key));
         mlstFontSize = (ListPreference) findPreference(getResources().getString(R.string.screen_font_size_key));
+        mPrefColorSettings = findPreference(getResources().getString(R.string.screen_color_key));
+        mPrefColorSettings.setEnabled(stdActivityRef.gIsActivate);
         mChkAutoFullScreenOnConn = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_auto_full_on_conn_key));
         mChkShowNavibarOnFullScreen = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_show_navi_bar_key));
         mSwhShowWFBTOnFullScreen = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_show_wf_batt_key));

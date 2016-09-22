@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.cipherlab.terminalemulation.BuildConfig;
+import com.cipherlab.terminalemulation.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -162,6 +164,11 @@ public class CipherUtility {
 				return 0;
 			}
 		}
+	}
+
+	public static String getTESettingsPath(Context context) {
+		String strSettingsPath = context.getString(R.string.STR_Settings_path);
+		return Environment.getExternalStorageDirectory() + File.separator + strSettingsPath + File.separator  + "TerminalEmulation" + File.separator;
 	}
 
 	public static void enableAllChild(ViewGroup layout, boolean bEnabled) {

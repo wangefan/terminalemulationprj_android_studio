@@ -1,6 +1,8 @@
 package com.te.UI;
 
 
+import android.content.Context;
+
 import com.cipherlab.terminalemulation.BuildConfig;
 
 import java.io.BufferedReader;
@@ -10,8 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-
-import Terminals.stdActivityRef;
 
 public class ActivateKeyUtility {
     private static final String DEFAULT_KEY_NAME = "A905RSEKEY";
@@ -68,15 +68,16 @@ public class ActivateKeyUtility {
     }
 
     private static String genKeyFileName(int nIndex) {
-        return String.format("%s%3d.txt", DEFAULT_KEY_NAME, nIndex);
+        String str = String.format("%s%03d.txt", DEFAULT_KEY_NAME, nIndex);
+        return str;
     }
 
-    private static File getKeyFile() {
-        File keyFile = new File(stdActivityRef.getCurrActivity().getFilesDir(), genKeyFileName(0));
+    private static File getKeyFile(Context context) {
+        File keyFile = new File(CipherUtility.getTESettingsPath(context), genKeyFileName(0));
         if(keyFile.exists() == false) {//means can`t find A905RSEKEY000.txt
             for(int idx = 1; idx < 1000; ++idx) {
                 //Todo:should find directory from external storage.
-                keyFile = new File(stdActivityRef.getCurrActivity().getFilesDir(), genKeyFileName(idx));
+                keyFile = new File(CipherUtility.getTESettingsPath(context), genKeyFileName(idx));
                 if(keyFile.exists()) {
                     break;
                 }
@@ -112,10 +113,10 @@ public class ActivateKeyUtility {
         return key;
     }
 
-    public static boolean verifyKeyFromDefaultFile() {
+    public static boolean verifyKeyFromDefaultFile(Context context) {
         if (mSerialNo.isEmpty() || mSoftwareNo.isEmpty())
             return false;
-        String strKey = getKeyFromFile(getKeyFile());
+        String strKey = getKeyFromFile(getKeyFile(context));
         String strValidKey = getValidKey();
         return (strKey.compareTo(strValidKey) == 0);
     }
@@ -127,8 +128,8 @@ public class ActivateKeyUtility {
         return (key.compareTo(strValidKey) == 0);
     }
 
-    public static void genKeyFile() {
-        File keyFile = new File(stdActivityRef.getCurrActivity().getFilesDir(), genKeyFileName(0));
+    public static void genKeyFile(Context context) {
+        File keyFile = new File(CipherUtility.getTESettingsPath(context), genKeyFileName(0));
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(keyFile, "UTF-8");

@@ -53,7 +53,7 @@ public class SessionSettingsBase extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         CipherUtility.Log_d("SessionSettingsBase", String.format("onSaveInstanceState"));
         // Save the user's current game state
-        TESettingsInfo.saveSessionSettings();
+        TESettingsInfo.saveSessionSettings(this);
         savedInstanceState.putBoolean(TE_SETTINGS, true);
 
         // Always call the superclass so it can save the view hierarchy state

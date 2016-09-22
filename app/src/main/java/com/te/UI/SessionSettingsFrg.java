@@ -7,6 +7,8 @@ import android.preference.Preference;
 
 import com.cipherlab.terminalemulation.R;
 
+import Terminals.stdActivityRef;
+
 public class SessionSettingsFrg extends SessionSettingsFrgBase {
     //Data members
     private String mTN5250HostTypeName = "";
@@ -49,6 +51,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mSSH = findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
+        mCkDetectOut.setEnabled(stdActivityRef.gIsActivate);
         mReaderconfig = findPreference(getResources().getString(R.string.reader_config_key));
         mReaderconfig.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

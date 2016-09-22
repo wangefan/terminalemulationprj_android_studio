@@ -562,7 +562,7 @@ public class UIUtility {
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which) {
 						case DialogInterface.BUTTON_POSITIVE:
-							TESettingsInfo.deleteJsonFile();
+							TESettingsInfo.deleteJsonFile(context);
 							listener.onLoadResult(TESettingsInfo.loadSessionSettings(context));
 							break;
 						case DialogInterface.BUTTON_NEGATIVE:

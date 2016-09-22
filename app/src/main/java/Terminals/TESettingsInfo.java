@@ -2,7 +2,6 @@ package Terminals;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -58,7 +57,6 @@ public class TESettingsInfo {
 
     final private static String TE_JASONFILE_NAME = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
-    final private static String TE_JASONFILE_PATH = Environment.getExternalStorageDirectory() + File.separator + "CipherLabSettings" + File.separator  + "TerminalEmulation" + File.separator;
 
     static TESettings mTESettings = null;
     private static SharedPreferences mSp = null;
@@ -95,7 +93,7 @@ public class TESettingsInfo {
         mListVBTime.add(4500l);
         mListVBTime.add(5000l);
         mListVBTime.add(5500l);
-        File teJsonFile = new File(TE_JASONFILE_PATH, TE_JASONFILE_NAME);
+        File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
         if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
             try {
                 teJsonFile.getParentFile().mkdirs();
@@ -158,11 +156,11 @@ public class TESettingsInfo {
         return true;
     }
 
-    public static void saveSessionSettings() {
+    public static void saveSessionSettings(Context context) {
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return;
-        deleteJsonFile();
-        File teJsonFile = new File(TE_JASONFILE_PATH, TE_JASONFILE_NAME);
+        deleteJsonFile(context);
+        File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
         createJsonFile(teJsonFile);
     }
 
@@ -182,8 +180,8 @@ public class TESettingsInfo {
         return importSettings(teJsonFile);
     }
 
-    public static void deleteJsonFile() {
-        File teJsonFile = new File(TE_JASONFILE_PATH, TE_JASONFILE_NAME);
+    public static void deleteJsonFile(Context context) {
+        File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
         if (teJsonFile.exists()) {
             teJsonFile.delete();
         }
@@ -458,6 +456,9 @@ public class TESettingsInfo {
     }
 
     public static Boolean getHostIsShowMacroByIndex(int index) {
+        if(stdActivityRef.gIsActivate == false) {
+            return false;
+        }
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mIsActMacro;
     }
@@ -544,6 +545,9 @@ public class TESettingsInfo {
     }
 
     public static boolean getHostIsShowSessionNumber(int index) {
+        if(stdActivityRef.gIsActivate == false) {
+            return false;
+        }
         SessionSetting setting = mTESettings.getSessionSetting(index);
         return setting.mIsShowSessionNumber;
     }
