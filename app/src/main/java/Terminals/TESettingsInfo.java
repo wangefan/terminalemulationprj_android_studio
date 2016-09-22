@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import com.cipherlab.terminalemulation.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.te.UI.CipherUtility;
 
 import java.io.BufferedReader;
@@ -195,7 +196,7 @@ public class TESettingsInfo {
         try {
             FileInputStream inStream = new FileInputStream(teJsonFile);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             TESettings teSettings = gson.fromJson(reader, TESettings.class);
             for (int idxSetting = 0; idxSetting < teSettings.SETTINGS.size(); idxSetting++) {
                 SessionSetting setting = teSettings.SETTINGS.get(idxSetting);
@@ -241,7 +242,7 @@ public class TESettingsInfo {
         FileOutputStream outputStream;
         try {
             outputStream = new FileOutputStream(teJsonFile, true);
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String Sjson = gson.toJson(mTESettings);
             outputStream.write(Sjson.getBytes());
             outputStream.close();
@@ -255,7 +256,7 @@ public class TESettingsInfo {
         try {
             InputStream inputStream = mContext.getAssets().open(mDefaultSettingFilename);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             setting = gson.fromJson(reader, SessionSetting.class);
             processAfterLoadSetting(setting);
         } catch (Exception e) {
