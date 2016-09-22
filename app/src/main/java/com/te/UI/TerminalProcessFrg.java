@@ -15,12 +15,18 @@ public class TerminalProcessFrg extends Fragment {
     List<TerminalProcess> mCollSessions = new ArrayList<TerminalProcess>();
 
     public void syncSessionsFromSettings() {
+        CipherUtility.Log_d("TerminalProcessFrg.syncSessionsFromSettings", "call mCollSessions.clear()");
         mCollSessions.clear();
         for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); ++idxSession) {
             TerminalProcess Process = new TerminalProcess();
             Process.setMacroList(TESettingsInfo.getHostMacroListByIndex(idxSession));
             mCollSessions.add(Process);
         }
+    }
+
+    public TerminalProcessFrg() {
+        super();
+        CipherUtility.Log_d("TerminalProcessFrg.TerminalProcessFrg", "constructor called");
     }
 
     @Override
