@@ -1,5 +1,8 @@
 package com.te.UI;
 
+
+import com.cipherlab.terminalemulation.BuildConfig;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,18 +19,20 @@ public class ActivateKeyUtility {
     private static final String PAT2 = "SMBUVE6DQ5J7W4RKLNPA9TF83CHX2ZGY";
     private static final String PDF = "27V3MSJQ5238F6C";
 
+    private static String mSerialNo = "";
+    private final static String mSoftwareNo = "5800082";
+
     private static ActivateKeyUtility ourInstance = new ActivateKeyUtility();
-
-    private static String mSerialNo = "9711460PP0067";
-    private static String mSoftwareNo = "4001081";
-
     public static ActivateKeyUtility getInstance() {
         return ourInstance;
     }
 
     private ActivateKeyUtility() {
-        mSerialNo = "";/*todo:get from Agent*/
-        mSoftwareNo = "";/*todo:replace to valid one*/
+        if(BuildConfig.DEBUG_MODE) {
+            mSerialNo = "2305851823058";
+        } else {
+            mSerialNo = "";/*todo:get from Agent*/
+        }
     }
 
     private static String getValidKey() {
