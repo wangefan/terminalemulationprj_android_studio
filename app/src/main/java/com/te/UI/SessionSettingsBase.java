@@ -1,6 +1,7 @@
 package com.te.UI;
 
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -10,6 +11,7 @@ import Terminals.TESettings;
 import Terminals.TESettingsInfo;
 
 public class SessionSettingsBase extends AppCompatActivity {
+    private static final String TE_SETTINGS = "TE_SETTINGS";
     protected static TESettings.SessionSetting gEditSessionSetting = null;
 
     protected <TypeName extends Fragment> TypeName getFragment(Class<TypeName> classObj) {
@@ -33,9 +35,29 @@ public class SessionSettingsBase extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onCreate(Bundle savedInstanceState) {
+        CipherUtility.Log_d("SessionSettingsBase", String.format("onCreate"));
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            // Restore state members from saved instance
+            boolean bRestore = false;
+            bRestore = savedInstanceState.getBoolean(TE_SETTINGS);
+            if(bRestore) {
+                CipherUtility.Log_d("SessionSettingsBase", String.format("onCreate, Restore state to restore TE settings"));
+                TESettingsInfo.loadSessionSettings(getApplication());
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        CipherUtility.Log_d("SessionSettingsBase", String.format("onSaveInstanceState"));
+        // Save the user's current game state
         TESettingsInfo.saveSessionSettings();
+        savedInstanceState.putBoolean(TE_SETTINGS, true);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
