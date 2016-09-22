@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettingsInfo;
+import Terminals.stdActivityRef;
 
 public class SessionSecondSettings extends SessionSettingsBase {
     public static final String ACTION_HOST_PROFILE = "com.te.UI.SessionSecondSettings.ACTION_HOST_PROFILE";
@@ -73,8 +75,12 @@ public class SessionSecondSettings extends SessionSettingsBase {
             layReset.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    gEditSessionSetting.resetKeyMapList();
-                    settingsFrg.updateKeyListItems();
+                    if(stdActivityRef.gIsActivate) {
+                        gEditSessionSetting.resetKeyMapList();
+                        settingsFrg.updateKeyListItems();
+                    } else {
+                        Toast.makeText(SessionSecondSettings.this, getString(R.string.MSG_KeyMappingItem_not_accept), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);

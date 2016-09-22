@@ -14,7 +14,6 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     private static final int NCTRLVAL = 2000;
     private static final int NALTVAL = 4000;
     final static public LinkedHashMap<Integer, Integer> mKeyCodeWithCombinMap = new LinkedHashMap<>();//Key: original Key code, Val: Keycode with Blue key
-    private static boolean mBIs9700 = true;//Todo: set the flag by current device
 
     protected KeyMapList() {
         mKeyCodeWithCombinMap.clear();
@@ -186,7 +185,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     }
 
     public static String getPhyKeycodeTextByKeycode(int nDecodedKeyCode) {
-        if(mBIs9700) {
+        if(stdActivityRef.gDeviceHasKeys) {
             AtomicInteger combinKey = new AtomicInteger(KeyEvent.KEYCODE_UNKNOWN);
             if(isBlueKeyCombin(nDecodedKeyCode, combinKey) && combinKey.get() != KeyEvent.KEYCODE_UNKNOWN) {
                 String format = stdActivityRef.getCurrActivity().getResources().getString(R.string.Format_phy_key_text);

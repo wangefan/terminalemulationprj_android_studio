@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cipherlab.terminalemulation.R;
 
@@ -21,6 +22,7 @@ import Terminals.TN3270KeyMapList;
 import Terminals.TN5250KeyMapList;
 import Terminals.VT100_102KeyMapList;
 import Terminals.VT220KeyMapList;
+import Terminals.stdActivityRef;
 
 public class SessionKeyMappingFrg extends Fragment {
     final int [] VT220SERVER_KEY_SEQUENCE = {
@@ -230,11 +232,15 @@ public class SessionKeyMappingFrg extends Fragment {
         mKeyMapListView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                KeyMapItem keyItem = (KeyMapItem) mKeyMapListView.getItemAtPosition(position);
-                Intent intent = new Intent(getActivity(), Session3rdSettings.class);
-                intent.setAction(Session3rdSettings.ACTION_KEYMAP_EDIT);
-                intent.putExtra(Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE, keyItem.mServerKeycode);
-                startActivity(intent);
+                if(stdActivityRef.gIsActivate) {
+                    KeyMapItem keyItem = (KeyMapItem) mKeyMapListView.getItemAtPosition(position);
+                    Intent intent = new Intent(getActivity(), Session3rdSettings.class);
+                    intent.setAction(Session3rdSettings.ACTION_KEYMAP_EDIT);
+                    intent.putExtra(Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE, keyItem.mServerKeycode);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.MSG_KeyMappingItem_not_accept), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return keyMappingView;

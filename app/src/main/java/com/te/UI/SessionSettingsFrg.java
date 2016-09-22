@@ -21,6 +21,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
     private MyIPPreference mLstServerIp = null;
     private NumberPickerPreference mPrefPort = null;
     private Preference mServerSetting = null;
+    private Preference mKeyMapping = null;
     private Preference mSSH = null;
     private CheckBoxPreference mCkNetworkAlive = null;
     private CheckBoxPreference mCkDetectOut = null;
@@ -48,6 +49,8 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mLstServerIp = (MyIPPreference) findPreference(getResources().getString(R.string.host_ip_key));
         mPrefPort = (NumberPickerPreference) findPreference(getResources().getString(R.string.host_port_key));
         mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
+        mKeyMapping = findPreference(getResources().getString(R.string.key_mapping_key));
+        mKeyMapping.setEnabled(stdActivityRef.gDeviceHasKeys);
         mSSH = findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));

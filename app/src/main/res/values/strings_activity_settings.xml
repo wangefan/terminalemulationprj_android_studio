@@ -53,6 +53,7 @@
     <string name="error_message">Error Message</string>
     <string name="screen">Screen</string>
     <string name="alarm">Alarm</string>
+    <string name="key_mapping_key">key_mapping_key</string>
     <string name="key_mapping">Key Mapping</string>
     <string name="ssh">SSH</string>
     <string name="ssh_key">ssh_key</string>

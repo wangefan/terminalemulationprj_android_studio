@@ -52,6 +52,7 @@
             </intent>
         </Preference>
         <Preference
+            android:key="@string/key_mapping_key"
             android:title="@string/key_mapping">
             <intent
                 android:targetPackage="@string/application_Id"

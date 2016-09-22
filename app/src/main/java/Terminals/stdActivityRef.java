@@ -1,6 +1,7 @@
 package Terminals;
 
 import android.app.Service;
+import android.os.Build;
 import android.os.Vibrator;
 
 import com.te.UI.MainActivity;
@@ -8,11 +9,18 @@ import com.te.UI.MainActivity;
 public class stdActivityRef {
 
     public static MainActivity activity = null;
-    public static boolean gIsActivate = false;
+    public static boolean gIsActivate = false;//Todo: handle saveInstace and restore
+    public static boolean gDeviceHasKeys = false;//Todo: set the flag by current device
 
     public static void setCurrActivity(MainActivity act) {
         activity = act;
-        // Now here you can get getApplication()
+        //Todo:get device key type
+        String buildNumber = Build.FINGERPRINT;
+        if(buildNumber.compareTo("alps/full_magc6755_66t_m/magc6755_66t_m:6.0/MRA58K/1472198318:user/test-keys") == 0) {
+            gDeviceHasKeys = true;
+        } else {
+            gDeviceHasKeys = false;
+        }
     }
 
     public static MainActivity getCurrActivity() {
