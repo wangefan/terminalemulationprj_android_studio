@@ -213,22 +213,22 @@ public class TESettingsInfo {
         if(setting.mTN3270KeyConfig == null) {
             setting.mTN3270KeyConfig = new TN3270KeyMapList();
             //Todo: use gDefaultTN_3270KeyCodeMap
-            fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+            fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus);
             setting.mTN3270KeyConfigCount = setting.mTN3270KeyConfig.size();
         }
         if(setting.mTN5250KeyConfig == null) {
             setting.mTN5250KeyConfig = new TN5250KeyMapList();
-            fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+            fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus);
             setting.mTN5250KeyConfigCount = setting.mTN5250KeyConfig.size();
         }
         if(setting.mVT100_102KeyConfig == null) {
             setting.mVT100_102KeyConfig = new VT100_102KeyMapList();
-            fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+            fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus);
             setting.mVT100_102KeyConfigCount = setting.mVT100_102KeyConfig.size();
         }
         if(setting.mVT220KeyConfig == null) {
             setting.mVT220KeyConfig = new VT220KeyMapList();
-            fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+            fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus);
             setting.mVT220KeyConfigCount = setting.mVT220KeyConfig.size();
         }
     }

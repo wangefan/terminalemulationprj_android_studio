@@ -146,30 +146,30 @@ public class TESettings {
                 if(strHostTypeName.compareTo(TESettingsInfo.TN3270TYPENAME) == 0) {
                     //Todo:use 3270 default map
                     mTN3270KeyConfig.clear();
-                    TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                    TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus);
                     mTN3270KeyConfigCount = mTN3270KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.TN5250TYPENAME) == 0) {
                     mTN5250KeyConfig.clear();
-                    TESettingsInfo.fillMaps(mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                    TESettingsInfo.fillMaps(mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus);
                     mTN5250KeyConfigCount = mTN5250KeyConfig.size();
                 }
             } else {
                 strHostTypeName = mTermName;
                 if(strHostTypeName.compareTo(TESettingsInfo.VT100TYPENAME) == 0) {
                     mVT100_102KeyConfig.clear();
-                    TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+                    TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus);
                     mVT100_102KeyConfigCount = mVT100_102KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.VT102TYPENAME) == 0) {
                     mVT100_102KeyConfig.clear();
-                    TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+                    TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus);
                     mVT100_102KeyConfigCount = mVT100_102KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.VT220TYPENAME) == 0) {
                     mVT220KeyConfig.clear();
-                    TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+                    TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus);
                     mVT220KeyConfigCount = mVT220KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.VTANSITYPENAME) == 0) {
                     mVT220KeyConfig.clear();
-                    TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+                    TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus);
                     mVT220KeyConfigCount = mVT220KeyConfig.size();
                 }
             }

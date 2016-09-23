@@ -73,8 +73,8 @@ public class CVT100 extends CVT100Enum {
     public static final int VTKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
     static java.util.Map<Integer, String> mVTKeyCodeText = new java.util.HashMap<>();
 
-    public static java.util.Map<Integer, Integer> gDefaultVT220KeyCodeMap = new java.util.HashMap<>();
-    public static java.util.Map<Integer, Integer> gDefaultVT100_102KeyCodeMap = new java.util.HashMap<>();
+    public static java.util.Map<Integer, Integer> gDefaultVT220KeyCodeMap_Taurus = new java.util.HashMap<>();
+    public static java.util.Map<Integer, Integer> gDefaultVT100_102KeyCodeMap_Taurus = new java.util.HashMap<>();
     VtParserEvent vtParserEvent = new VtParserEvent();
     private uc_Parser Parser = null;
     private int TopMargin;
@@ -116,7 +116,7 @@ public class CVT100 extends CVT100Enum {
         this.SetSize(25, 80);
 
         //Todo: break CVT100 into CVT100_102 and CVT220
-        mVTKeyCodeMap = new HashMap<Integer, Integer>(gDefaultVT220KeyCodeMap);
+        mVTKeyCodeMap = new HashMap<Integer, Integer>(gDefaultVT220KeyCodeMap_Taurus);
         this.Caret = new uc_Caret();
         this.Modes = new uc_Mode();
         this.TabStops = new uc_TabStops();
@@ -135,64 +135,64 @@ public class CVT100 extends CVT100Enum {
     }
 
     public static void initKeyCodeMap() {
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_PAGE_DOWN, VTKEY_TAB);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
-        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), VTKEY_F11);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), VTKEY_F12);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), VTKEY_F13);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), VTKEY_F14);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), VTKEY_F15);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), VTKEY_F16);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), VTKEY_F17);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), VTKEY_F18);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), VTKEY_F19);
-        gDefaultVT220KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), VTKEY_F20);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PAGE_DOWN, VTKEY_TAB);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), VTKEY_F11);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), VTKEY_F12);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), VTKEY_F13);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), VTKEY_F14);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), VTKEY_F15);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), VTKEY_F16);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), VTKEY_F17);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), VTKEY_F18);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), VTKEY_F19);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), VTKEY_F20);
 
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_PAGE_DOWN, VTKEY_TAB);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
-        gDefaultVT100_102KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
-        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PAGE_DOWN, VTKEY_TAB);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
 
         mVTKeyCodeText.put(VTKEY_TAB, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_TAB));
         mVTKeyCodeText.put(VTKEY_ENTER, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_ENTER));
@@ -240,8 +240,8 @@ public class CVT100 extends CVT100Enum {
         return mVTKeyCodeText.get(nKeyCode);
     }
     public static void clearKeyCodeMap() {
-        gDefaultVT220KeyCodeMap.clear();
-        gDefaultVT100_102KeyCodeMap.clear();
+        gDefaultVT220KeyCodeMap_Taurus.clear();
+        gDefaultVT100_102KeyCodeMap_Taurus.clear();
     }
 
     public String GetLogTitle() {
