@@ -107,10 +107,10 @@ public class SessionKeyMapEditingFrg extends Fragment {
         //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_HYPHEN, PHY_CATE_PUN);	// ( _)
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PERIOD, PHY_CATE_PUN);	// ( . )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_GRAVE, PHY_CATE_PUN);	// ( ' )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_APOSTROPHE, PHY_CATE_PUN);
         //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN);
         //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DECIDECIMAL, PHY_CATE_PUN);
         //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DIVIDE, PHY_CATE_PUN);
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKQUOTE, PHY_CATE_PUN);
         //Function Keys
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F1, PHY_CATE_FUNC);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F2, PHY_CATE_FUNC);
