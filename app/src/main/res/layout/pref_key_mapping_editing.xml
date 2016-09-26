@@ -83,29 +83,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinner_phy" />
         <RelativeLayout
-            android:id="@+id/id_lay_shift"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/shift_text"
-                android:paddingLeft="30dp"
-                android:paddingStart="30dp"
-                android:layout_centerVertical="true" />
-            <CheckBox
-                android:id="@+id/id_shift"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="30dp" />
-        </RelativeLayout>
-        <RelativeLayout
             android:id="@+id/id_lay_ctrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,6 +99,29 @@
                 android:layout_centerVertical="true" />
             <CheckBox
                 android:id="@+id/id_ctrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/id_lay_shift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/shift_text"
+                android:paddingLeft="30dp"
+                android:paddingStart="30dp"
+                android:layout_centerVertical="true" />
+            <CheckBox
+                android:id="@+id/id_shift"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
