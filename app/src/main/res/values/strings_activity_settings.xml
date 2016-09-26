@@ -17,6 +17,7 @@
 	<string name="ANSIVal">ansi</string>
     <string-array name="sertype_array">
         <item>IBM 5250</item>
+        <item>IBM 3270</item>
         <item>VT 100</item>
         <item>VT 102</item>
         <item>VT 220</item>
@@ -24,6 +25,7 @@
     </string-array>
     <string-array name="sertype_array_vals">
         <item>@string/IBM5250Val</item>
+        <item>@string/IBM3270Val</item>
         <item>@string/VT100Val</item>
         <item>@string/VT102Val</item>
         <item>@string/VT220Val</item>

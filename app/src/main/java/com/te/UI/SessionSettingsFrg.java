@@ -50,7 +50,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mPrefPort = (NumberPickerPreference) findPreference(getResources().getString(R.string.host_port_key));
         mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
         mKeyMapping = findPreference(getResources().getString(R.string.key_mapping_key));
-        mKeyMapping.setEnabled(stdActivityRef.gDeviceHasKeys);
+        mKeyMapping.setEnabled(stdActivityRef.gIs53Keys);
         mSSH = findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));

@@ -260,7 +260,7 @@ public class SessionKeyMappingFrg extends Fragment {
             keyListReSeq = new TN5250KeyMapList();
             keySequenceBase = TN5250SERVER_KEY_SEQUENCE;
         } else if(keyListInSettings instanceof TN3270KeyMapList) {
-            keyListReSeq = new VT220KeyMapList();
+            keyListReSeq = new TN3270KeyMapList();
             keySequenceBase = TN3270SERVER_KEY_SEQUENCE;
         }
 

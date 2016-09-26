@@ -75,6 +75,8 @@ public class CVT100 extends CVT100Enum {
 
     public static java.util.Map<Integer, Integer> gDefaultVT220KeyCodeMap_Taurus = new java.util.HashMap<>();
     public static java.util.Map<Integer, Integer> gDefaultVT100_102KeyCodeMap_Taurus = new java.util.HashMap<>();
+    public static java.util.Map<Integer, Integer> gDefaultVT220KeyCodeMap = new java.util.HashMap<>();
+    public static java.util.Map<Integer, Integer> gDefaultVT100_102KeyCodeMap = new java.util.HashMap<>();
     VtParserEvent vtParserEvent = new VtParserEvent();
     private uc_Parser Parser = null;
     private int TopMargin;
@@ -172,6 +174,28 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), VTKEY_F19);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), VTKEY_F20);
 
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        //gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_TAB);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F6, VTKEY_F6);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F7, VTKEY_F7);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F11, VTKEY_F11);
+        gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_F12, VTKEY_F12);
+
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.
@@ -193,6 +217,21 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
+
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
+        //gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_TAB, VTKEY_TAB);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, VTKEY_UP);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, VTKEY_DW);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F4, VTKEY_F4);
+        gDefaultVT100_102KeyCodeMap.put(KeyEvent.KEYCODE_F5, VTKEY_F5);
 
         mVTKeyCodeText.put(VTKEY_TAB, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_TAB));
         mVTKeyCodeText.put(VTKEY_ENTER, stdActivityRef.getCurrActivity().getResources().getString(R.string.VTKEY_ENTER));
@@ -242,6 +281,8 @@ public class CVT100 extends CVT100Enum {
     public static void clearKeyCodeMap() {
         gDefaultVT220KeyCodeMap_Taurus.clear();
         gDefaultVT100_102KeyCodeMap_Taurus.clear();
+        gDefaultVT220KeyCodeMap.clear();
+        gDefaultVT100_102KeyCodeMap.clear();
     }
 
     public String GetLogTitle() {
