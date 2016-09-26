@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
-        versionName '0.0.0.4'
+        versionName '0.0.0.5'
     }
     buildTypes {
         debug {
@@ -31,7 +31,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 22
             versionCode 1
-            versionName '0.0.0.4'
+            versionName '0.0.0.5'
         }
         densowave {
             applicationId = "com.densowave.terminalemulation"
@@ -40,7 +40,7 @@ android {
             resValue "string", "STR_Settings_path", "DensoWaveSettings"
             minSdkVersion 15
             targetSdkVersion 22
-            versionName '0.0.0.4'
+            versionName '0.0.0.5'
             versionCode 1
         }
     }
