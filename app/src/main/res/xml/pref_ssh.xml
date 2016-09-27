@@ -1,32 +1,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    
-     <CheckBoxPreference
-        android:key="is_ssh_enable"
-        android:title="@string/pref_Title_ssh_enable"
-        android:defaultValue="false" />
-     
-     
-       
-       <EditTextPreference
-            android:title="@string/pref_Title_User"
-            android:key="prefsshUserNamePrompt"
-            android:dependency="is_ssh_enable"
-            />
-         
-       
-       <EditTextPreference
-            android:title="@string/pref_Title_Password"
-            android:key="prefsshPasswordPrompt"
-            android:dependency="is_ssh_enable"
-            />
-       
-       
-      
-     
-     
-
+    <com.te.UI.TESwitchPreference
+        android:key="@string/ssh_key"
+        android:title="@string/ssh"
+        android:summaryOn="@string/ssh_on"
+        android:summaryOff="@string/ssh_off"
+        android:widgetLayout="@layout/te_switch"/>
+    <CheckBoxPreference
+        android:key="@string/ssh_log_key"
+        android:title="@string/ssh_log"
+        android:summary="@string/ssh_log_sum"/>
+    <PreferenceCategory
+        android:title="@string/ssh_auth_cate">
+        <ListPreference
+            android:key="@string/ssh_auth_type_key"
+            android:title="@string/ssh_auth_type"
+            android:entries="@array/ssh_auth_type_array"
+            android:entryValues="@array/ssh_auth_type_array_vals"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
+        <Preference
+            android:key="@string/ssh_auth_setting_key" />
+    </PreferenceCategory>
 </PreferenceScreen>

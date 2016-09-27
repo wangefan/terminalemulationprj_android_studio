@@ -61,6 +61,21 @@
     <string name="ssh_key">ssh_key</string>
     <string name="ssh_on">Use SSH</string>
     <string name="ssh_off">Not use</string>
+    <string name="ssh_log">SSH Log</string>
+    <string name="ssh_log_sum">Generate SSH Log</string>
+    <string name="ssh_log_key">ssh_log_key</string>
+    <string name="ssh_auth_cate">Authentication</string>
+    <string name="ssh_auth_type_key">ssh_auth_type_key</string>
+    <string name="ssh_auth_type">Authentication Type</string>
+    <string-array name="ssh_auth_type_array">
+        <item>Name/Pwd</item>
+        <item>Key File</item>
+    </string-array>
+    <string-array name="ssh_auth_type_array_vals">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="ssh_auth_setting_key">ssh_auth_setting_key</string>
     <string name="network">Network</string>
     <string name="keep_alive">Network Keep Alive</string>
     <string name="out_range">Detect Out Of Range</string>
@@ -118,13 +133,7 @@
      <string-array name="pref_vt_SignTermList">
         <item>Enter</item>
         <item>Tab</item>
-        </string-array>
-        
-     <!-- ssh -->
-      <string name="pref_Title_Security">Security(SSH)</string>
-       <string name="pref_Title_ssh_enable">SSH Enable</string>
-        <string name="pref_Title_User">SSH User</string>
-         <string name="pref_Title_Password">SSH Password</string>
+     </string-array>
     
     <!-- feedback command -->
     <string name="pref_Title_FeedBack">Costom Command</string>  

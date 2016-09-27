@@ -65,7 +65,13 @@
                 android:title="@string/ssh"
                 android:summaryOff="@string/ssh_off"
                 android:summaryOn="@string/ssh_on"
-                android:widgetLayout="@layout/te_switch"/>
+                android:widgetLayout="@layout/te_switch">
+            <intent
+                android:targetPackage="@string/application_Id"
+                android:targetClass="com.te.UI.SessionSecondSettings"
+                android:action="com.te.UI.SessionSecondSettings.ACTION_SSH">
+            </intent>
+        </com.te.UI.TESwitchPreference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/network" >

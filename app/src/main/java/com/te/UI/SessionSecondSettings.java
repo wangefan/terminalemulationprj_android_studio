@@ -17,6 +17,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
     public static final String ACTION_SCREEN_SETTING = "com.te.UI.SessionSecondSettings.ACTION_SCREEN_SETTING";
     public static final String ACTION_ALARM_SETTING = "com.te.UI.SessionSecondSettings.ACTION_ALARM_SETTING";
     public static final String ACTION_KEY_MAPPING = "com.te.UI.SessionSecondSettings.ACTION_KEY_MAPPING";
+    public static final String ACTION_SSH = "com.te.UI.SessionSecondSettings.ACTION_SSH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,11 @@ public class SessionSecondSettings extends SessionSettingsBase {
                     }
                 }
             });
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            commitFrgToActivity(settingsFrg);
+        } else if(action.compareTo(ACTION_SSH) == 0) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.ssh));
+            final SessionSSHFrg settingsFrg = getFragment(SessionSSHFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             commitFrgToActivity(settingsFrg);
         }
