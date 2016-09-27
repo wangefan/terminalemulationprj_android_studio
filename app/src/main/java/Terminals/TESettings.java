@@ -238,6 +238,15 @@ public class TESettings {
         @SerializedName("isSelected")
         public boolean mIsSelected = false;
 
+        @SerializedName("SSH")
+        public boolean mUseSSH = false;
+
+        @SerializedName("SSHName")
+        public String mSSHName = "";
+
+        @SerializedName("SSHPassword")
+        public String mSSHPassword = "";
+
         @SerializedName("bNetKeepAlive")
         public boolean mNetKeepAlive = false;
 
@@ -433,9 +442,6 @@ public class TESettings {
         @SerializedName("isProtectExitFullScreen")
         public boolean mIsProtectedExitFullScreen = false;
 
-        public boolean SSH = false;
-        public String SSHName = "";
-        public String SSHPassword="";
         public ReaderParam g_ReaderParam = new ReaderParam();
 
         //Not sync

@@ -22,7 +22,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
     private NumberPickerPreference mPrefPort = null;
     private Preference mServerSetting = null;
     private Preference mKeyMapping = null;
-    private Preference mSSH = null;
+    private TESwitchPreference mSSH = null;
     private CheckBoxPreference mCkNetworkAlive = null;
     private CheckBoxPreference mCkDetectOut = null;
     private Preference mReaderconfig = null;
@@ -51,7 +51,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
         mKeyMapping = findPreference(getResources().getString(R.string.key_mapping_key));
         mKeyMapping.setEnabled(stdActivityRef.gIs53Keys);
-        mSSH = findPreference(getResources().getString(R.string.ssh_key));
+        mSSH = (TESwitchPreference) findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
         mCkDetectOut.setEnabled(stdActivityRef.gIsActivate);
@@ -81,6 +81,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mLstServerIp.setAddress(mSetting.mHostIP);
         mPrefPort.setPort(mSetting.getHostPort());
         mPrefPort.setSummary(mPrefPort.getPort());
+        mSSH.setChecked(mSetting.mUseSSH);
         mCkNetworkAlive.setChecked(mSetting.mNetKeepAlive);
         mCkDetectOut.setChecked(mSetting.mIsDetectOutRange);
         mCkGenLog.setChecked(mSetting.mIsSaveLog);
@@ -114,6 +115,8 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
             mSetting.setHostPort(String.valueOf(mPrefPort.getPort()));
             mPrefPort.setSummary(mPrefPort.getPort());
+        } else if(key.compareTo(getResources().getString(R.string.ssh_key)) == 0) {
+            mSetting.mUseSSH = mSSH.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.keep_alive_key)) == 0) {
             mSetting.mNetKeepAlive = mCkNetworkAlive.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.out_range_key)) == 0) {

@@ -610,19 +610,17 @@ public class TESettingsInfo {
 
     public static boolean getHostIsSshEnableByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.SSH;
+        return Setting.mUseSSH;
     }
 
     public static String getHostSshUserByIndex(int index) {
-        //
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.SSHName;
+        return Setting.mSSHName;
     }
 
     public static String getHostSshPasswordByIndex(int index) {
-        //
         SessionSetting Setting = mTESettings.getSessionSetting(index);
-        return Setting.SSHPassword;
+        return Setting.mSSHPassword;
     }
 
     public static int getHostCousorTypeByIndex(int index) {
