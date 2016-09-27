@@ -1,5 +1,6 @@
 package com.te.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -8,14 +9,25 @@ import android.preference.PreferenceCategory;
 
 import com.cipherlab.terminalemulation.R;
 
+import Terminals.TESettingsInfo;
+
 public class SessionSSHFrg extends SessionSettingsFrgBase {
     private TESwitchPreference mSSH = null;
     private PreferenceCategory mAuthCate = null;
     private CheckBoxPreference mSSHLog = null;
-    private Preference mAuthSettings = null;
     private ListPreference mAuthType = null;
+    private Preference mAuthSettings = null;
 
     public SessionSSHFrg() {
+    }
+
+    private String getNamePwd() {
+        String namePwdFormat = getResources().getString(R.string.ssh_auth_setting_format_name_pwd);
+        StringBuilder sb = new StringBuilder();
+        for (int idx = 0; idx < mSetting.mSSHPassword.length(); idx++) {
+            sb.append('*');
+        }
+        return String.format(namePwdFormat, mSetting.mSSHName, sb.toString());
     }
 
     @Override
@@ -28,6 +40,19 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
         mAuthCate = (PreferenceCategory) findPreference(getResources().getString(R.string.ssh_auth_cate_key));
         mAuthType = (ListPreference) findPreference(getResources().getString(R.string.ssh_auth_type_key));
         mAuthSettings = findPreference(getResources().getString(R.string.ssh_auth_setting_key));
+        mAuthSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if(mAuthType.getValue() == String.valueOf(0)) { //File
+
+                } else { //Name/pwd
+                    Intent intent = new Intent(getActivity(), Session3rdSettings.class);
+                    intent.setAction(Session3rdSettings.ACTION_SSH_NAME_PWD);
+                    startActivityForResult(intent, 0);
+                }
+                return true;
+            }
+        });
         mSSHLog.setEnabled(mSetting.mUseSSH);
         mAuthCate.setEnabled(mSetting.mUseSSH);
     }
@@ -36,10 +61,12 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
     protected void syncPrefUIFromTESettings() {
         mSSH.setChecked(mSetting.mUseSSH);
         mSSHLog.setChecked(mSetting.mSaveSSHLog);
-        if(mSetting.mAuType) {
+        if(mSetting.mAuType) { //Name/pwd
             mAuthType.setValue(String.valueOf(1));
-        } else {
+            mAuthSettings.setSummary(getNamePwd());
+        } else {    //File
             mAuthType.setValue(String.valueOf(0));
+            mAuthSettings.setSummary(mSetting.mSSHKeyPath);
         }
     }
 
@@ -55,8 +82,10 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
             int nAuthType = Integer.valueOf(mAuthType.getValue());
             if(nAuthType == 0) { //File
                 mSetting.mAuType = false;
+                mAuthSettings.setSummary(mSetting.mSSHKeyPath);
             } else {
                 mSetting.mAuType = true;
+                mAuthSettings.setSummary(getNamePwd());
             }
         }
     }

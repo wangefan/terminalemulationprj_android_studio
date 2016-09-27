@@ -76,7 +76,10 @@
         <item>1</item>
         <item>0</item>
     </string-array>
+    <string name="ssh_auth_setting_title">Information</string>
+    <string name="ssh_auth_setting_format_name_pwd">Name:%1$s\nPwd:%2$s</string>
     <string name="ssh_auth_setting_key">ssh_auth_setting_key</string>
+    <string name="ssh_set_name_pwd">SSH Name/Pwd</string>
     <string name="network">Network</string>
     <string name="keep_alive">Network Keep Alive</string>
     <string name="out_range">Detect Out Of Range</string>

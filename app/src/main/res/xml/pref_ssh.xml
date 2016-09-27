@@ -20,6 +20,7 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null" />
         <Preference
-            android:key="@string/ssh_auth_setting_key" />
+            android:key="@string/ssh_auth_setting_key"
+            android:title="@string/ssh_auth_setting_title"/>
     </PreferenceCategory>
 </PreferenceScreen>
