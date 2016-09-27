@@ -13,11 +13,14 @@ public class SessionSSHNamePwdFrg extends SessionSettingsFrgBase {
     }
 
     private String getNumStar(String password) {
-        StringBuilder sb = new StringBuilder();
-        for (int idx = 0; idx < password.length(); idx++) {
-            sb.append('*');
+        if(password != null) {
+            StringBuilder sb = new StringBuilder();
+            for (int idx = 0; idx < password.length(); idx++) {
+                sb.append('*');
+            }
+            return sb.toString();
         }
-        return sb.toString();
+        return "";
     }
 
     @Override
