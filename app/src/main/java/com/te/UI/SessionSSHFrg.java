@@ -9,8 +9,6 @@ import android.preference.PreferenceCategory;
 
 import com.cipherlab.terminalemulation.R;
 
-import Terminals.TESettingsInfo;
-
 public class SessionSSHFrg extends SessionSettingsFrgBase {
     private TESwitchPreference mSSH = null;
     private PreferenceCategory mAuthCate = null;
@@ -43,7 +41,8 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
         mAuthSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if(mAuthType.getValue() == String.valueOf(0)) { //File
+                String str = mAuthType.getValue();
+                if(str.compareTo(String.valueOf(0)) == 0) { //File
 
                 } else { //Name/pwd
                     Intent intent = new Intent(getActivity(), Session3rdSettings.class);
