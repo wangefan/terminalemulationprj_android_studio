@@ -241,6 +241,9 @@ public class TESettings {
         @SerializedName("SSH")
         public boolean mUseSSH = false;
 
+        @SerializedName("isSaveSSHLog")
+        public boolean mSaveSSHLog = false;
+
         @SerializedName("SSHName")
         public String mSSHName = "";
 

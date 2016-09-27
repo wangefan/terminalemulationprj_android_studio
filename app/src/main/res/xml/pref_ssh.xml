@@ -10,7 +10,8 @@
         android:title="@string/ssh_log"
         android:summary="@string/ssh_log_sum"/>
     <PreferenceCategory
-        android:title="@string/ssh_auth_cate">
+        android:title="@string/ssh_auth_cate"
+        android:key="@string/ssh_auth_cate_key">
         <ListPreference
             android:key="@string/ssh_auth_type_key"
             android:title="@string/ssh_auth_type"

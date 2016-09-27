@@ -64,6 +64,7 @@
     <string name="ssh_log">SSH Log</string>
     <string name="ssh_log_sum">Generate SSH Log</string>
     <string name="ssh_log_key">ssh_log_key</string>
+    <string name="ssh_auth_cate_key">ssh_auth_cate_key</string>
     <string name="ssh_auth_cate">Authentication</string>
     <string name="ssh_auth_type_key">ssh_auth_type_key</string>
     <string name="ssh_auth_type">Authentication Type</string>
