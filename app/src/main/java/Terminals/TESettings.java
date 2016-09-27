@@ -250,6 +250,9 @@ public class TESettings {
         @SerializedName("SSHPassword")
         public String mSSHPassword = "";
 
+        @SerializedName("Authtype")
+        public boolean mAuType = false; //false:File  true:Name/Pwd
+
         @SerializedName("bNetKeepAlive")
         public boolean mNetKeepAlive = false;
 
