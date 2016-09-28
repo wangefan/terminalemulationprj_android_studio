@@ -12,6 +12,7 @@ public class Session3rdSettings extends SessionSettingsBase {
     public static final String ACTION_KEYMAP_EDIT = "com.te.UI.Session3rdSettings.ACTION_KEYMAP_EDIT";
     public static final String ACTION_KEYMAP_EDIT_SERVER_KEYCODE = "com.te.UI.Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE";
     public static final String ACTION_SSH_NAME_PWD = "com.te.UI.Session3rdSettings.ACTION_SSH_NAME_PWD";
+    public static final String ACTION_SSH_KEY_FILE = "com.te.UI.Session3rdSettings.ACTION_SSH_KEY_FILE";
     public static boolean gIsAlarmModified = false;
 
     @Override
@@ -56,6 +57,12 @@ public class Session3rdSettings extends SessionSettingsBase {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.ssh_set_name_pwd));
             SessionSSHNamePwdFrg settingsFrg = getFragment(SessionSSHNamePwdFrg.class);
+            settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            commitFrgToActivity(settingsFrg);
+        } else if(action.compareTo(ACTION_SSH_KEY_FILE) == 0) {
+            gIsAlarmModified = false;
+            getSupportActionBar().setTitle(getResources().getString(R.string.ssh_set_key_file));
+            SessionSSHKeyFileFrg settingsFrg = getFragment(SessionSSHKeyFileFrg.class);
             settingsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
             commitFrgToActivity(settingsFrg);
         }

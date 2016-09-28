@@ -43,11 +43,13 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
             public boolean onPreferenceClick(Preference preference) {
                 String str = mAuthType.getValue();
                 if(str.compareTo(String.valueOf(0)) == 0) { //File
-
+                    Intent intent = new Intent(getActivity(), Session3rdSettings.class);
+                    intent.setAction(Session3rdSettings.ACTION_SSH_KEY_FILE);
+                    startActivityForResult(intent, 0);
                 } else { //Name/pwd
                     Intent intent = new Intent(getActivity(), Session3rdSettings.class);
                     intent.setAction(Session3rdSettings.ACTION_SSH_NAME_PWD);
-                    startActivityForResult(intent, 0);
+                    startActivity(intent);
                 }
                 return true;
             }
