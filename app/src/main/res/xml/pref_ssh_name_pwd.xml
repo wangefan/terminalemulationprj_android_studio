@@ -5,5 +5,6 @@
         android:title="@string/ssh_name"/>
     <EditTextPreference
         android:key="@string/ssh_pwd_key"
-        android:title="@string/ssh_pwd"/>
+        android:title="@string/ssh_pwd"
+        android:inputType="textPassword"/>
 </PreferenceScreen>
