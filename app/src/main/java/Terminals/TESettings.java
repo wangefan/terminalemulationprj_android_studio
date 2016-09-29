@@ -274,6 +274,30 @@ public class TESettings {
         @SerializedName("Ssh_LogOverwrite")
         public boolean mSSHLogOverwrite = false;
 
+        @SerializedName("Ssh_ServerEnv")
+        public String mSSHServerEnv = "";
+
+        @SerializedName("Ssh_ServerCommand")
+        public String mSSHServerCommand = "";
+
+        @SerializedName("Ssh_ServerTTY")
+        public String mSSHServerTTY = "";
+
+        @SerializedName("Ssh_ProxyType")
+        public String mSSHProxyType = "";
+
+        @SerializedName("Ssh_ProxyHost")
+        public String mSSHProxyHost = "";
+
+        @SerializedName("Ssh_ProxyPort")
+        public String mSSHProxyPort = "";
+
+        @SerializedName("Ssh_ProxyUser")
+        public String mSSHProxyUser = "";
+
+        @SerializedName("Ssh_ProxyPassword")
+        public String mSSHProxyPassword = "";
+
         @SerializedName("bNetKeepAlive")
         public boolean mNetKeepAlive = false;
 

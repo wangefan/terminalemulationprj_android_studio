@@ -14,6 +14,14 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
     private CheckBoxPreference mchkSSHReKey60 = null;
     private CheckBoxPreference mchkSSHReKey1G = null;
     private CheckBoxPreference mchkSSHOverwriteLog = null;
+    private EditTextPreference medtServerEnvir = null;
+    private EditTextPreference medtServerCmds = null;
+    private EditTextPreference medtServerTTY = null;
+    private EditTextPreference medtProxyType = null;
+    private EditTextPreference medtProxyHost = null;
+    private EditTextPreference medtProxyPort = null;
+    private EditTextPreference medtProxyUser = null;
+    private EditTextPreference medtProxyPwd = null;
 
     public SessionSSHKeyFileFrg() {
     }
@@ -30,17 +38,34 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
         mchkSSHReKey60 = (CheckBoxPreference) findPreference(getResources().getString(R.string.ssh_re_key_60_key));
         mchkSSHReKey1G = (CheckBoxPreference) findPreference(getResources().getString(R.string.ssh_re_key_1g_key));
         mchkSSHOverwriteLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.ssh_write_log_key));
+
+        medtServerEnvir = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_envir_key));
+        medtServerCmds = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_cmd_key));
+        medtServerTTY = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_tty_key));
+        medtProxyType = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_type_key));
+        medtProxyHost = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_host_key));
+        medtProxyPort = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_port_key));
+        medtProxyUser = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_user_key));
+        medtProxyPwd = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_pwd_key));
     }
 
     @Override
     protected void syncPrefUIFromTESettings() {
-        medtSSHName.setSummary(mSetting.mSSHName);
+        medtSSHName.setText(mSetting.mSSHName);
         mchkSSHTcpNoDelay.setChecked(mSetting.mSSHTcpNoDelay);
         mchkSSHTcpNoPseudoKey.setChecked(mSetting.mSSHNoPseudoTer);
         mchkSSHTcpNoHostShellKey.setChecked(mSetting.mSSHNoHostShell);
         mchkSSHReKey60.setChecked(mSetting.mSSHReKey60min);
         mchkSSHReKey1G.setChecked(mSetting.mSSHReKey1G);
         mchkSSHOverwriteLog.setChecked(mSetting.mSSHLogOverwrite);
+        medtServerEnvir.setText(mSetting.mSSHServerEnv);
+        medtServerCmds.setText(mSetting.mSSHServerCommand);
+        medtServerTTY.setText(mSetting.mSSHServerTTY);
+        medtProxyType.setText(mSetting.mSSHProxyType);
+        medtProxyHost.setText(mSetting.mSSHProxyHost);
+        medtProxyPort.setText(mSetting.mSSHProxyPort);
+        medtProxyUser.setText(mSetting.mSSHProxyUser);
+        medtProxyPwd.setText(mSetting.mSSHProxyPassword);
     }
 
     @Override
@@ -59,6 +84,22 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
             mSetting.mSSHReKey1G = mchkSSHReKey1G.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.ssh_write_log_key)) == 0) {
             mSetting.mSSHLogOverwrite = mchkSSHOverwriteLog.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_envir_key)) == 0) {
+            mSetting.mSSHServerEnv = medtServerEnvir.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_cmd_key)) == 0) {
+            mSetting.mSSHServerCommand = medtServerCmds.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_tty_key)) == 0) {
+            mSetting.mSSHServerTTY = medtServerTTY.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_type_key)) == 0) {
+            mSetting.mSSHProxyType = medtProxyType.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_host_key)) == 0) {
+            mSetting.mSSHProxyHost = medtProxyHost.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_port_key)) == 0) {
+            mSetting.mSSHProxyPort = medtProxyPort.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_user_key)) == 0) {
+            mSetting.mSSHProxyUser = medtProxyUser.getText();
+        } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_pwd_key)) == 0) {
+            mSetting.mSSHProxyPassword = medtProxyPwd.getText();
         }
     }
 }
