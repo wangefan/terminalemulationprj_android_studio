@@ -19,13 +19,18 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
     public SessionSSHFrg() {
     }
 
-    private String getNamePwd() {
+    private String getNamePwdFormatSum() {
         String namePwdFormat = getResources().getString(R.string.ssh_auth_setting_format_name_pwd);
         StringBuilder sb = new StringBuilder();
         for (int idx = 0; idx < mSetting.mSSHPassword.length(); idx++) {
             sb.append('*');
         }
         return String.format(namePwdFormat, mSetting.mSSHName, sb.toString());
+    }
+
+    private String getKeyFileFormatSum() {
+        String keyFileFormat = getResources().getString(R.string.ssh_auth_setting_format_key);
+        return String.format(keyFileFormat, mSetting.mSSHName, mSetting.mSSHKeyPath);
     }
 
     @Override
@@ -64,10 +69,10 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
         mSSHLog.setChecked(mSetting.mSaveSSHLog);
         if(mSetting.mAuType) { //Name/pwd
             mAuthType.setValue(String.valueOf(1));
-            mAuthSettings.setSummary(getNamePwd());
+            mAuthSettings.setSummary(getNamePwdFormatSum());
         } else {    //File
             mAuthType.setValue(String.valueOf(0));
-            mAuthSettings.setSummary(mSetting.mSSHKeyPath);
+            mAuthSettings.setSummary(getKeyFileFormatSum());
         }
     }
 
@@ -83,10 +88,10 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
             int nAuthType = Integer.valueOf(mAuthType.getValue());
             if(nAuthType == 0) { //File
                 mSetting.mAuType = false;
-                mAuthSettings.setSummary(mSetting.mSSHKeyPath);
+                mAuthSettings.setSummary(getKeyFileFormatSum());
             } else {
                 mSetting.mAuType = true;
-                mAuthSettings.setSummary(getNamePwd());
+                mAuthSettings.setSummary(getNamePwdFormatSum());
             }
         }
     }

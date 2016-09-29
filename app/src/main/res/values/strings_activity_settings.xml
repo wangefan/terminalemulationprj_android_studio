@@ -76,8 +76,9 @@
         <item>1</item>
         <item>0</item>
     </string-array>
-    <string name="ssh_auth_setting_title">Information</string>
+    <string name="ssh_auth_setting_title">Advance</string>
     <string name="ssh_auth_setting_format_name_pwd">Name:%1$s\nPwd:%2$s</string>
+    <string name="ssh_auth_setting_format_key">Name:%1$s\nKey File:%2$s</string>
     <string name="ssh_auth_setting_key">ssh_auth_setting_key</string>
     <string name="ssh_set_name_pwd">SSH Name/Pwd</string>
     <string name="ssh_set_key_file">SSH Key File</string>
@@ -87,8 +88,6 @@
     <string name="ssh_pwd">Password</string>
     <string name="ssh_key_file_key">ssh_key_file_key</string>
     <string name="ssh_key_file">Key File</string>
-    <string name="ssh_key_mgr_key_file_key">ssh_key_mgr_key_file_key</string>
-    <string name="ssh_key_mgr_key_file">Manage Key Files</string>
     <string name="ssh_general_cate">General Options</string>
     <string name="ssh_use_tcp_delay_key">ssh_use_tcp_delay_key</string>
     <string name="ssh_use_tcp_delay">Use TCP No-Delay</string>

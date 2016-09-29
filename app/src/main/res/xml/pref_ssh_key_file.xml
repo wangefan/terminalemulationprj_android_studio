@@ -6,9 +6,6 @@
     <ListPreference
         android:key="@string/ssh_key_file_key"
         android:title="@string/ssh_key_file" />
-    <Preference
-        android:key="@string/ssh_key_mgr_key_file_key"
-        android:title="@string/ssh_key_mgr_key_file" />
     <PreferenceCategory
         android:title="@string/ssh_general_cate">
         <CheckBoxPreference
