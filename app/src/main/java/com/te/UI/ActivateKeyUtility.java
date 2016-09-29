@@ -2,8 +2,7 @@ package com.te.UI;
 
 
 import android.content.Context;
-
-import com.cipherlab.terminalemulation.BuildConfig;
+import android.os.Build;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,14 +27,10 @@ public class ActivateKeyUtility {
     }
 
     private ActivateKeyUtility() {
-        if(BuildConfig.DEBUG_MODE) {
-            mSerialNo = "2305851823058";
-        } else {
-            mSerialNo = "";/*todo:get from Agent*/
-        }
+            mSerialNo = Build.SERIAL;
     }
 
-    private static String getValidKey() {
+    public static String getValidKey() {
         if (mSerialNo.isEmpty() || mSoftwareNo.isEmpty())
             return "";
         String sn = mSerialNo + mSoftwareNo;
