@@ -2,6 +2,8 @@ package com.te.UI;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -843,6 +845,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.exit:
                 onExit();
+                break;
+            //Todo:Will remove
+            case R.id.key_gen:
+                ClipboardManager clipboard = (ClipboardManager)
+                        getSystemService(Context.CLIPBOARD_SERVICE);
+                // Creates a new text clip to put on the clipboard
+                String key = ActivateKeyUtility.getValidKey();
+                ClipData clip = ClipData.newPlainText("simple text", key);
+                // Set the clipboard's primary clip.
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(MainActivity.this, String.format("%s\nSerial number copied!", key), Toast.LENGTH_LONG).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
