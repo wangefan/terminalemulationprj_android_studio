@@ -256,6 +256,24 @@ public class TESettings {
         @SerializedName("Authtype")
         public boolean mAuType = false; //false:File  true:Name/Pwd
 
+        @SerializedName("Ssh_TcpNoDelay")
+        public boolean mSSHTcpNoDelay = false;
+
+        @SerializedName("Ssh_NoPseudoTer")
+        public boolean mSSHNoPseudoTer = false;
+
+        @SerializedName("Ssh_NoHostShell")
+        public boolean mSSHNoHostShell = false;
+
+        @SerializedName("Ssh_ReKey60min")
+        public boolean mSSHReKey60min = false;
+
+        @SerializedName("Ssh_ReKey1G")
+        public boolean mSSHReKey1G = false;
+
+        @SerializedName("Ssh_LogOverwrite")
+        public boolean mSSHLogOverwrite = false;
+
         @SerializedName("bNetKeepAlive")
         public boolean mNetKeepAlive = false;
 
