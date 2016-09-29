@@ -3,9 +3,15 @@
     <EditTextPreference
         android:key="@string/ssh_name_key"
         android:title="@string/ssh_name"/>
-    <ListPreference
+    <Preference
         android:key="@string/ssh_key_file_key"
-        android:title="@string/ssh_key_file" />
+        android:title="@string/ssh_key_file">
+        <intent
+            android:targetPackage="@string/application_Id"
+            android:targetClass="com.te.UI.Session4thSettings"
+            android:action="com.te.UI.Session4thSettings.ACTION_MGR_KEYFILES">
+        </intent>
+    </Preference>
     <PreferenceCategory
         android:title="@string/ssh_general_cate">
         <CheckBoxPreference

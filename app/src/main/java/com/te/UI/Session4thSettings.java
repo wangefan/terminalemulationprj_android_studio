@@ -8,6 +8,7 @@ import com.cipherlab.terminalemulation.R;
 
 public class Session4thSettings extends SessionSettingsBase {
     public static final String ACTION_KEY_TRAP = "com.te.UI.Session4thSettings.ACTION_KEY_TRAP";
+    public static final String ACTION_MGR_KEYFILES = "com.te.UI.Session4thSettings.ACTION_MGR_KEYFILES";
 
     private SessionKeyMappingTrapFrg mKeyMappingTrapFrg = null;
 
@@ -29,6 +30,11 @@ public class Session4thSettings extends SessionSettingsBase {
             getSupportActionBar().setTitle(getResources().getString(R.string.detect_key_title));
             mKeyMappingTrapFrg = getFragment(SessionKeyMappingTrapFrg.class);
             commitFrgToActivity(mKeyMappingTrapFrg);
+        } else if(action.compareTo(ACTION_MGR_KEYFILES) == 0) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.ssh_mgr_key_files));
+            SessionSSHMgrKeyFilesFrg mgrKeyFilsFrg = getFragment(SessionSSHMgrKeyFilesFrg.class);
+            mgrKeyFilsFrg.setSessionSetting(SessionSettings.gEditSessionSetting);
+            commitFrgToActivity(mgrKeyFilsFrg);
         }
     }
 
