@@ -17,7 +17,8 @@ public class TESettings {
         return SETTINGS.get(idxSession);
     }
     public class TECommonSetting {
-        private ArrayList<CSsh_Keys> Ssh_Keys = new ArrayList<CSsh_Keys>();
+        @SerializedName("Ssh_Keys")
+        public ArrayList<CSsh_Keys> mSSHKeyFiles = null;
 
         @SerializedName("Languages")
         public ArrayList<String> mLanguages = new ArrayList<String>();
@@ -25,13 +26,20 @@ public class TESettings {
         @SerializedName("Current_lan_index")
         public int mCurLanIdx = -1;
 
-        private class CSsh_Keys {
-            private String Name;
-            private String Path;
-            private String Password;
-            private int Keyform;
+        public class CSsh_Keys {
+            @SerializedName("Name")
+            public String mName;
+
+            @SerializedName("Path")
+            public String mPath;
+
+            @SerializedName("Password")
+            public String mPassword;
+
+            @SerializedName("Keyform")
+            public int mKeyform;
+
             public CSsh_Keys() {
-                
             }
         }
     }
