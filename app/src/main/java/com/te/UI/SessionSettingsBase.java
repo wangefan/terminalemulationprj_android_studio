@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.cipherlab.terminalemulation.R;
 
+import Terminals.TESettings;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 
@@ -14,7 +15,7 @@ public class SessionSettingsBase extends AppCompatActivity {
     private static final String TE_APP_STATUS_SETTINGS = "TE_APP_STATUS_SETTINGS";
     private static final String TE_APP_STATUS_LICENSE = "TE_APP_STATUS_LICENSE";
     private static final String TE_APP_STATUS_IS_53Key = "TE_APP_STATUS_IS_53Key";
-
+    protected static TESettings.SessionSetting gEditSessionSetting = null;
     protected <TypeName extends Fragment> TypeName getFragment(Class<TypeName> classObj) {
         TypeName settingsFrg = (TypeName) getFragmentManager().findFragmentByTag(classObj.getName());
         if(settingsFrg == null) {
