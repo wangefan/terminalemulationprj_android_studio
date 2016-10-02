@@ -7,12 +7,13 @@ import android.view.MenuItem;
 
 import com.cipherlab.terminalemulation.R;
 
-import Terminals.TESettings;
 import Terminals.TESettingsInfo;
+import Terminals.stdActivityRef;
 
 public class SessionSettingsBase extends AppCompatActivity {
-    private static final String TE_SETTINGS = "TE_SETTINGS";
-    protected static TESettings.SessionSetting gEditSessionSetting = null;
+    private static final String TE_APP_STATUS_SETTINGS = "TE_APP_STATUS_SETTINGS";
+    private static final String TE_APP_STATUS_LICENSE = "TE_APP_STATUS_LICENSE";
+    private static final String TE_APP_STATUS_IS_53Key = "TE_APP_STATUS_IS_53Key";
 
     protected <TypeName extends Fragment> TypeName getFragment(Class<TypeName> classObj) {
         TypeName settingsFrg = (TypeName) getFragmentManager().findFragmentByTag(classObj.getName());
@@ -41,11 +42,13 @@ public class SessionSettingsBase extends AppCompatActivity {
         if(savedInstanceState != null) {
             // Restore state members from saved instance
             boolean bRestore = false;
-            bRestore = savedInstanceState.getBoolean(TE_SETTINGS);
+            bRestore = savedInstanceState.getBoolean(TE_APP_STATUS_SETTINGS);
             if(bRestore) {
                 CipherUtility.Log_d("SessionSettingsBase", String.format("onCreate, Restore state to restore TE settings"));
                 TESettingsInfo.loadSessionSettings(getApplication());
             }
+            stdActivityRef.gIsActivate = savedInstanceState.getBoolean(TE_APP_STATUS_LICENSE);
+            stdActivityRef.gIs53Keys = savedInstanceState.getBoolean(TE_APP_STATUS_IS_53Key);
         }
     }
 
@@ -54,7 +57,9 @@ public class SessionSettingsBase extends AppCompatActivity {
         CipherUtility.Log_d("SessionSettingsBase", String.format("onSaveInstanceState"));
         // Save the user's current game state
         TESettingsInfo.saveSessionSettings(this);
-        savedInstanceState.putBoolean(TE_SETTINGS, true);
+        savedInstanceState.putBoolean(TE_APP_STATUS_SETTINGS, true);
+        savedInstanceState.putBoolean(TE_APP_STATUS_LICENSE, stdActivityRef.gIsActivate);
+        savedInstanceState.putBoolean(TE_APP_STATUS_IS_53Key, stdActivityRef.gIs53Keys);
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
