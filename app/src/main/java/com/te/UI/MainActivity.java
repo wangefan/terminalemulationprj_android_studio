@@ -618,8 +618,8 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case SessionSettings.REQ_ADD: {
-                if (resultCode == SessionSettings.RESULT_ADD && SessionSettings.gEditSessionSetting != null) {
-                    TESettingsInfo.addSession(SessionSettings.gEditSessionSetting);
+                if (resultCode == SessionSettings.RESULT_ADD && SessionSettingsBase.gEditSessionSetting != null) {
+                    TESettingsInfo.addSession(SessionSettingsBase.gEditSessionSetting);
                     int nAddedSessionIdx = TESettingsInfo.getSessionCount() - 1;
                     TerminalProcess process = new TerminalProcess();
                     process.setMacroList(TESettingsInfo.getHostMacroListByIndex(nAddedSessionIdx));
