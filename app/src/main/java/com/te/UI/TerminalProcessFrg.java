@@ -12,6 +12,7 @@ import Terminals.TESettingsInfo;
 
 public class TerminalProcessFrg extends Fragment {
     private static final String TAG = TerminalProcessFrg.class.getSimpleName();
+    private static final String TE_SETTINGS = "TE_SETTINGS";
     List<TerminalProcess> mCollSessions = new ArrayList<TerminalProcess>();
 
     public void syncSessionsFromSettings() {
@@ -43,12 +44,34 @@ public class TerminalProcessFrg extends Fragment {
         CipherUtility.Log_d(TAG, "onCreate(Bundle savedInstanceState)");
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        if(savedInstanceState != null) {
+            CipherUtility.Log_d(TAG, "savedInstanceState != null");
+            // Restore state members from saved instance
+            boolean bRestore = false;
+            bRestore = savedInstanceState.getBoolean(TE_SETTINGS);
+            if(bRestore) {
+                CipherUtility.Log_d(TAG, String.format("Restore TE settings"));
+                TESettingsInfo.loadSessionSettings(getContext());
+                syncSessionsFromSettings();
+            }
+        }
     }
 
     @Override
     public void onDestroy() {
         CipherUtility.Log_d(TAG, "onDestroy");
         super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        CipherUtility.Log_d(TAG, String.format("onSaveInstanceState"));
+        // Save the user's current game state
+        TESettingsInfo.saveSessionSettings(getContext());
+        savedInstanceState.putBoolean(TE_SETTINGS, true);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public TerminalProcess getTerminalProc(int sessionIndex) {
