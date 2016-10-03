@@ -57,6 +57,21 @@ public class KeyFilesListAdapter extends BaseAdapter {
     }
 
     @Override
+    public boolean isEnabled(int position){
+        if(getItemViewType(position) == ITEM_TYPE_ADD) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean areAllItemsEnabled(){
+        return false;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if(convertView == null){
