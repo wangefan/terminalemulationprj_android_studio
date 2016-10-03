@@ -12,6 +12,7 @@
     <string name="MSG_Export_ok">Export settings success.</string>
     <string name="MSG_Import_Warn">Import settings fail.</string>
     <string name="MSG_Import_ok">Import settings success.</string>
+    <string name="MSG_Import_ssh_ok">Import Key file success.</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
     <string name="app_name">Terminal Emulation</string>

@@ -48,6 +48,9 @@ public class UIUtility {
 	public interface OnActivationListener {
 		void onResult(boolean bActivate);
 	}
+	public interface OnSSHEditPassphraseListener {
+		void onDone(final String pass1, final String pass2);
+	}
 	static private ProgressDialog mPDialog = null;
 	static private ProgressDialog mProgNetwork = null;
 	static private Context mContext;
@@ -244,6 +247,29 @@ public class UIUtility {
 			}
 		}
 		mBtnPositive.setEnabled(bEnable);
+	}
+
+	public static void doSSHConfirmPassphrase(Context context, final OnSSHEditPassphraseListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(context);
+		final View sshPassphraseDialog = inflater.inflate(R.layout.ssh_edit_key_passphrase_, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(R.string.ssh_add_key_files_edit_pha_title);
+		builder.setView(sshPassphraseDialog);
+		final EditText txPass1 = (EditText) sshPassphraseDialog.findViewById(R.id.id_ssh_add_key_files_edit_pha_1);
+		final EditText txPass2 = (EditText) sshPassphraseDialog.findViewById(R.id.id_ssh_add_key_files_edit_pha_2);
+		builder.setPositiveButton(R.string.ssh_add_key_files_done, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				listener.onDone(txPass1.getText().toString(), txPass2.getText().toString());
+			}
+		});
+		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 	public static void doAccessCtrlDialog() {

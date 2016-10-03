@@ -218,9 +218,7 @@ public class SimpleFileDialog {
                     dirs.add(file.getName() + "/");
                 } else if (mSelectType == Type.FILE_CREATE) {
                     if(mCreateExtension.length() > 0) {
-                        String fileName = file.getName();
-                        int idxExt = fileName.lastIndexOf(mCreateExtension);
-                        if(idxExt >=0) {
+                        if(CipherUtility.isFileByExt(file, mCreateExtension)) {
                             dirs.add(file.getName());
                         }
                     } else {
@@ -228,13 +226,9 @@ public class SimpleFileDialog {
                     }
                 } else if (mSelectType == Type.FILE_CHOOSE || mSelectType == Type.FILE_WIZAERD) {
                     for (String ext: mChooseExtensions) {
-                        if(ext.length() > 0) {
-                            String fileName = file.getName();
-                            int idxExt = fileName.lastIndexOf(ext);
-                            if(idxExt >=0) {
-                                dirs.add(file.getName());
-                                break;
-                            }
+                        if(CipherUtility.isFileByExt(file, ext)){
+                            dirs.add(file.getName());
+                            break;
                         }
                     }
                 }

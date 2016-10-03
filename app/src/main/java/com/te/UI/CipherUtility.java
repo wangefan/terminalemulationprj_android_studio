@@ -171,6 +171,11 @@ public class CipherUtility {
 		return Environment.getExternalStorageDirectory() + File.separator + strSettingsPath + File.separator  + "TerminalEmulation" + File.separator;
 	}
 
+	public static String getTESSHPath(Context context) {
+		String path = getTESettingsPath(context) + "ssh" + File.separator;
+		return path;
+	}
+
 	public static void enableAllChild(ViewGroup layout, boolean bEnabled) {
 		layout.setEnabled(bEnabled);
 		for (int i = 0; i < layout.getChildCount(); i++) {
@@ -202,5 +207,16 @@ public class CipherUtility {
 			Intent intent = context.getPackageManager().getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
 			context.startActivity(intent);
 		}
+	}
+
+	public static boolean isFileByExt(File file, String ext) {
+		if(ext.length() > 0) {
+			String fileName = file.getName();
+			int idxExt = fileName.lastIndexOf(ext);
+			if(idxExt >=0) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

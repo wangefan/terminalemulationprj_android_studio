@@ -16,7 +16,30 @@ public class TESettings {
     public SessionSetting getSessionSetting(int idxSession) {
         return SETTINGS.get(idxSession);
     }
-    public class TECommonSetting {
+    static public class CSsh_Keys {
+        @SerializedName("Name")
+        public String mName;
+
+        @SerializedName("Path")
+        public String mPath;
+
+        @SerializedName("Password")
+        public String mPassword;
+
+        @SerializedName("Keyform") //0: open(pem) 1:putty(ppk)
+        public int mKeyform;
+
+        public CSsh_Keys() {
+        }
+
+        public CSsh_Keys(String name, String path, String passphrase, int nKeyFrom) {
+            mName = name;
+            mPath = path;
+            mPassword = passphrase;
+            mKeyform = nKeyFrom;
+        }
+    }
+    public static class TECommonSetting {
         @SerializedName("Ssh_Keys")
         public ArrayList<CSsh_Keys> mSSHKeyFiles = null;
 
@@ -25,23 +48,6 @@ public class TESettings {
 
         @SerializedName("Current_lan_index")
         public int mCurLanIdx = -1;
-
-        public class CSsh_Keys {
-            @SerializedName("Name")
-            public String mName;
-
-            @SerializedName("Path")
-            public String mPath;
-
-            @SerializedName("Password")
-            public String mPassword;
-
-            @SerializedName("Keyform")
-            public int mKeyform;
-
-            public CSsh_Keys() {
-            }
-        }
     }
 
     public static class SessionSetting {

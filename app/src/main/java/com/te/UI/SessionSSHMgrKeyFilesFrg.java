@@ -1,6 +1,7 @@
 package com.te.UI;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cipherlab.terminalemulation.R;
 
@@ -26,11 +28,31 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
     private ArrayList<String> mlstKeyFiles = new ArrayList<>();
 
     public SessionSSHMgrKeyFilesFrg() {
-
     }
 
     public void setSessionSetting(TESettings.SessionSetting setting) {
         mSetting = setting;
+    }
+
+    private void procImportSSH(File srcSSH, File destSSH, String passphrase) {
+        CipherUtility.copyFile(srcSSH, destSSH);
+        mlstKeyFiles.add(0, destSSH.getAbsolutePath());
+        ((KeyFilesListAdapter)(mlstKeyFilesView.getAdapter())).notifyDataSetChanged();
+        //commit to setting
+        ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
+        String extPpk = String.format(".%s", getActivity().getResources().getString(R.string.STR_ExtPpk));
+        String extPem = String.format(".%s", getActivity().getResources().getString(R.string.STR_ExtPem));
+        int nKeyFrom = 0;//0: open(pem) 1:putty(ppk)
+        if(CipherUtility.isFileByExt(destSSH, extPem)) {
+            nKeyFrom = 0;
+        } else if(CipherUtility.isFileByExt(destSSH, extPpk)) {
+            nKeyFrom = 1;
+        }
+
+        sshList.add(new TESettings.CSsh_Keys(destSSH.getName(), destSSH.getAbsolutePath(), passphrase, nKeyFrom));
+        TESettingsInfo.setCommonSSHKeys(sshList);
+        Toast.makeText(getActivity(), R.string.MSG_Import_ssh_ok, Toast.LENGTH_LONG).show();
+        TESettingsInfo.setSSHKeyPath(srcSSH.getAbsolutePath());
     }
 
     @Override
@@ -46,8 +68,8 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
             }
         });
         //Fill Key Files
-        ArrayList<TESettings.TECommonSetting.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
-        for (TESettings.TECommonSetting.CSsh_Keys ssh : sshList) {
+        ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
+        for (TESettings.CSsh_Keys ssh : sshList) {
             mlstKeyFiles.add(ssh.mPath);
         }
         mlstKeyFiles.add("add");//dummy item for "add" icon
@@ -73,10 +95,54 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
 
                             @Override
                             public void onFileSelNext(String path) {
-                                File f = new File(path);
-                                if(f.isFile() && f.exists()) {
-                                    TESettingsInfo.setSSHKeyPath(path);
-                                }
+                                final String pathTemp = path;
+                                UIUtility.doSSHConfirmPassphrase(getActivity(), new UIUtility.OnSSHEditPassphraseListener() {
+                                    @Override
+                                    public void onDone(String pass1, String pass2) {
+                                        final File sshFile = new File(pathTemp);
+                                        if(sshFile.exists() == false || sshFile.isFile() == false) {
+                                            return;
+                                        }
+                                        if(pass1.compareTo(pass2) != 0) {
+                                            //Todo: popup msg
+                                            return;
+                                        }
+                                        final String pass = pass1;
+                                        //Todo: use lib to import ssh
+                                        boolean bValidSSH = true;
+                                        if(bValidSSH == false) {
+                                            //Todo: popup msg
+                                            return;
+                                        }
+                                        String sshPathRoot = CipherUtility.getTESSHPath(getActivity());
+                                        File f = new File(sshPathRoot);
+                                        if(f.exists() == false) {
+                                            f.mkdirs();
+                                        }
+                                        final String dstSshPath = sshPathRoot + sshFile.getName();
+                                        final File destSSH = new File(dstSshPath);
+                                        if(destSSH.exists()) {
+                                            String strMsg = getResources().getString(R.string.Msg_file_exist);
+                                            UIUtility.doYesNoDialog(getActivity(), strMsg, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    switch (which){
+                                                        case DialogInterface.BUTTON_POSITIVE:
+                                                            destSSH.delete();
+                                                            procImportSSH(sshFile, destSSH, pass);
+                                                            break;
+                                                        case DialogInterface.BUTTON_NEGATIVE:
+                                                            break;
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            procImportSSH(sshFile, destSSH, pass);
+                                        }
+
+                                        TESettingsInfo.setSSHKeyPath(pathTemp);
+                                    }
+                                });
                             }
                         });
 
