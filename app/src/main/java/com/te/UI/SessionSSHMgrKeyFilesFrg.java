@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.chilkatsoft.CkSshKey;
 import com.cipherlab.terminalemulation.R;
 
 import java.io.File;
@@ -34,25 +35,58 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         mSetting = setting;
     }
 
+    private boolean checkSSHKey(String keyPah, String passphrase) {
+        System.loadLibrary("chilkat");
+        CkSshKey key = new CkSshKey();
+        String keyConent = key.loadText(keyPah);
+        if(keyConent == null) {
+            String str = key.lastErrorText();
+            Toast.makeText(getActivity(), str, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(passphrase.length() > 0) {
+            key.put_Password(passphrase);
+        }
+
+        //0: open(pem) 1:putty(ppk)
+        int nKeyFrom = getKeyType(new File(keyPah));
+        boolean bResult = false;
+        if(nKeyFrom == 0) {
+            bResult = key.FromOpenSshPrivateKey(keyConent);
+        } else if(nKeyFrom == 1) {
+            bResult = key.FromPuttyPrivateKey(keyConent);
+        }
+        if(!bResult) {
+            String str = key.lastErrorText();
+            Toast.makeText(getActivity(), str, Toast.LENGTH_LONG).show();
+        }
+        return bResult;
+    }
+
     private void procImportSSH(File srcSSH, File destSSH, String passphrase) {
         CipherUtility.copyFile(srcSSH, destSSH);
         mlstKeyFiles.add(0, destSSH.getAbsolutePath());
         ((KeyFilesListAdapter)(mlstKeyFilesView.getAdapter())).notifyDataSetChanged();
         //commit to setting
         ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
-        String extPpk = String.format(".%s", getActivity().getResources().getString(R.string.STR_ExtPpk));
-        String extPem = String.format(".%s", getActivity().getResources().getString(R.string.STR_ExtPem));
-        int nKeyFrom = 0;//0: open(pem) 1:putty(ppk)
-        if(CipherUtility.isFileByExt(destSSH, extPem)) {
-            nKeyFrom = 0;
-        } else if(CipherUtility.isFileByExt(destSSH, extPpk)) {
-            nKeyFrom = 1;
-        }
-
+        int nKeyFrom = getKeyType(destSSH);//0: open(pem) 1:putty(ppk)
         sshList.add(new TESettings.CSsh_Keys(destSSH.getName(), destSSH.getAbsolutePath(), passphrase, nKeyFrom));
         TESettingsInfo.setCommonSSHKeys(sshList);
         Toast.makeText(getActivity(), R.string.MSG_Import_ssh_ok, Toast.LENGTH_LONG).show();
         TESettingsInfo.setSSHKeyPath(srcSSH.getAbsolutePath());
+    }
+
+    //0: open(pem) 1:putty(ppk)
+    private int getKeyType(File sshFile) {
+        String extPpk = String.format(".%s", getActivity().getResources().getString(R.string.STR_ExtPpk));
+        String extPem = String.format(".%s", getActivity().getResources().getString(R.string.STR_ExtPem));
+        int nKeyFrom = 0;//0: open(pem) 1:putty(ppk)
+        if(CipherUtility.isFileByExt(sshFile, extPem)) {
+            nKeyFrom = 0;
+        } else if(CipherUtility.isFileByExt(sshFile, extPpk)) {
+            nKeyFrom = 1;
+        }
+        return nKeyFrom;
     }
 
     @Override
@@ -108,8 +142,7 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
                                             return;
                                         }
                                         final String pass = pass1;
-                                        //Todo: use lib to import ssh
-                                        boolean bValidSSH = true;
+                                        boolean bValidSSH = checkSSHKey(pathTemp, pass);
                                         if(bValidSSH == false) {
                                             //Todo: popup msg
                                             return;
