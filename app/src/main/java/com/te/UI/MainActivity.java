@@ -797,6 +797,10 @@ public class MainActivity extends AppCompatActivity
                             @Override
                             public void onFileSel(String path) {
                             }
+
+                            @Override
+                            public void onFileSelNext(String path) {
+                            }
                         });
 
                 exptDialog.chooseFile_or_Dir(TESettingsInfo.getExportSettingsPath());
@@ -822,6 +826,10 @@ public class MainActivity extends AppCompatActivity
 
                             @Override
                             public void onFileSel(String path) {
+                            }
+
+                            @Override
+                            public void onFileSelNext(String path) {
                             }
                         });
 

@@ -122,6 +122,10 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                             public void onFileSel(String path) {
                                 CipherUtility.playSound(path);
                             }
+
+                            @Override
+                            public void onFileSelNext(String path) {
+                            }
                         });
 
                 FileOpenDialog.chooseFile_or_Dir(mSetting.g_ReaderParam.mGoodSoundFile);
@@ -176,6 +180,10 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                             @Override
                             public void onFileSel(String path) {
                                 CipherUtility.playSound(path);
+                            }
+
+                            @Override
+                            public void onFileSelNext(String path) {
                             }
                         });
 

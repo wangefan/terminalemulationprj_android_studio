@@ -336,6 +336,8 @@
     <string name="STR_ExtWav">wav</string>
     <string name="STR_ExtMp3">mp3</string>
     <string name="STR_ExtOgg">ogg</string>
+    <string name="STR_ExtPpk">ppk</string>
+    <string name="STR_ExtPem">pem</string>
     <string name="STR_expot_setting">Export Settings</string>
     <string name="STR_ExtJson">json</string>
     <string name="set_pwd">Set Password</string>

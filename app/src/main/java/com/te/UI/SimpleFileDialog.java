@@ -27,7 +27,6 @@ package com.te.UI;// SimpleFileDialog.java
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +35,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -54,7 +54,8 @@ import java.util.List;
 public class SimpleFileDialog {
     public enum Type {
         FILE_CHOOSE,
-        FILE_CREATE
+        FILE_CREATE,
+        FILE_WIZAERD
     }
 
     private Type mSelectType = Type.FILE_CREATE;
@@ -63,6 +64,7 @@ public class SimpleFileDialog {
     private String mCreateExtension = "";
     private ArrayList<String> mChooseExtensions = new ArrayList<>(); //could choose multi kind files.
     private Context m_context;
+    private Button mbtnNext = null; //for Wizard
     private TextView m_tvCurrentPath;
     private TextView mtvChosenFileTitle;
     private TextView mtvChosenFile;
@@ -103,6 +105,7 @@ public class SimpleFileDialog {
     // input 'dir' directory
     ////////////////////////////////////////////////////////////////////////////////
     public void chooseFile_or_Dir(String dir) {
+        String dirTemp = dir;
         File dirFile = new File(dir);
         String curFile = "";
         if (!dirFile.exists()) {
@@ -145,31 +148,50 @@ public class SimpleFileDialog {
                             m_SimpleFileDialogListener.onFileSel(m_dir);
                             m_dir = m_dir_old;
                             mtvChosenFile.setText(sel);
+                            if(mbtnNext != null && mSelectType == Type.FILE_WIZAERD) {
+                                mbtnNext.setEnabled(true);
+                            }
                         }
 
                         updateDirectory();
                     }
                 });
-
-        dialogBuilder.setPositiveButton(R.string.STR_OK, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Current directory chosen
-                // Call registered listener supplied with the chosen directory
-                if (m_SimpleFileDialogListener != null) {
-                    if(mSelectType == Type.FILE_CREATE) {
-                        m_SimpleFileDialogListener.onFilePath(m_dir + "/" + medCreateFile.getText() + mCreateExtension);
-                    } else if(mSelectType == Type.FILE_CHOOSE) {
-                        m_SimpleFileDialogListener.onFilePath(m_dir + "/" + mtvChosenFile.getText());
+        if(mSelectType == Type.FILE_WIZAERD) {
+            dialogBuilder.setPositiveButton(R.string.ssh_add_key_files_next, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    m_SimpleFileDialogListener.onFileSelNext(m_dir + "/" + mtvChosenFile.getText());
+                }
+            }).setNegativeButton(R.string.STR_Cancel, null);
+        } else {
+            dialogBuilder.setPositiveButton(R.string.STR_OK, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Current directory chosen
+                    // Call registered listener supplied with the chosen directory
+                    if (m_SimpleFileDialogListener != null) {
+                        if(mSelectType == Type.FILE_CREATE) {
+                            m_SimpleFileDialogListener.onFilePath(m_dir + "/" + medCreateFile.getText() + mCreateExtension);
+                        } else if(mSelectType == Type.FILE_CHOOSE) {
+                            m_SimpleFileDialogListener.onFilePath(m_dir + "/" + mtvChosenFile.getText());
+                        }
                     }
                 }
-            }
-        }).setNegativeButton(R.string.STR_Cancel, null);
+            }).setNegativeButton(R.string.STR_Cancel, null);
+        }
 
         final AlertDialog dirsDialog = dialogBuilder.create();
 
         // Show directory chooser dialog
         dirsDialog.show();
+        if(mSelectType == Type.FILE_WIZAERD) {
+            mbtnNext = dirsDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            mbtnNext.setEnabled(false);
+            File f = new File(dirTemp);
+            if(f.isFile() && f.exists()) {
+                mbtnNext.setEnabled(true);
+            }
+        }
     }
 
     private boolean createSubDir(String newDir) {
@@ -204,7 +226,7 @@ public class SimpleFileDialog {
                     } else {
                         dirs.add(file.getName());
                     }
-                } else if (mSelectType == Type.FILE_CHOOSE) {
+                } else if (mSelectType == Type.FILE_CHOOSE || mSelectType == Type.FILE_WIZAERD) {
                     for (String ext: mChooseExtensions) {
                         if(ext.length() > 0) {
                             String fileName = file.getName();
@@ -253,6 +275,11 @@ public class SimpleFileDialog {
             layCreateFile.setVisibility(View.GONE);
             mtvChosenFileTitle.setText(R.string.str_choose_file_title);
             mtvChosenFile.setText(curFile);
+        } else if(mSelectType == Type.FILE_WIZAERD) {
+            layChooseFile.setVisibility(View.VISIBLE);
+            layCreateFile.setVisibility(View.GONE);
+            mtvChosenFileTitle.setText(R.string.str_choose_file_title);
+            mtvChosenFile.setText(curFile);
         } else if(mSelectType == Type.FILE_CREATE) {
             layChooseFile.setVisibility(View.GONE);
             layCreateFile.setVisibility(View.VISIBLE);
@@ -267,41 +294,6 @@ public class SimpleFileDialog {
             }
             mtvCreateFileExt.setText(mCreateExtension);
         }
-        /*if (mSelectType == Type.FILE_CREATE) {
-            ///////////////////////////////
-            // Create New Folder Button  //
-            ///////////////////////////////
-            Button newDirButton = new Button(m_context);
-            newDirButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            newDirButton.setText("New Folder");
-            newDirButton.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    final EditText input = new EditText(m_context);
-
-                                                    // Show new folder name input dialog
-                                                    new AlertDialog.Builder(m_context).
-                                                            setTitle("New Folder Name").
-                                                            setView(input).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                                            Editable newDir = input.getText();
-                                                            String newDirName = newDir.toString();
-                                                            // Create new directory
-                                                            if (createSubDir(m_dir + "/" + newDirName)) {
-                                                                // Navigate into the new directory
-                                                                m_dir += "/" + newDirName;
-                                                                updateDirectory();
-                                                            } else {
-                                                                Toast.makeText(m_context, "Failed to create '"
-                                                                        + newDirName + "' folder", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    }).setNegativeButton("Cancel", null).show();
-                                                }
-                                            }
-            );
-            dialogLayout.addView(newDirButton);
-        }*/
 
         dialogBuilder.setTitle(mTitle);
         dialogBuilder.setView(dialogLayout);
@@ -342,5 +334,6 @@ public class SimpleFileDialog {
     public interface SimpleFileDialogListener {
         void onFilePath(final String path);
         void onFileSel(final String path);
+        void onFileSelNext(final String path);//for Wizard
     }
 } 

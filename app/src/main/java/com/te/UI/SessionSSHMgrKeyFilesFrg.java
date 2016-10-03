@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cipherlab.terminalemulation.R;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Terminals.TESettings;
 import Terminals.TESettingsInfo;
@@ -49,6 +53,36 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         mlstKeyFiles.add("add");//dummy item for "add" icon
         mlstKeyFilesView = (ListView) mgrKeyFilesView.findViewById(R.id.id_key_files_list);
         mlstKeyFilesView.setAdapter(new KeyFilesListAdapter(getActivity(), mlstKeyFiles));
+        mlstKeyFilesView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
+                        getResources().getString(R.string.ssh_add_key_files_title),
+                        new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtPpk),
+                                getResources().getString(R.string.STR_ExtPem))),
+                        SimpleFileDialog.Type.FILE_WIZAERD,
+                        new SimpleFileDialog.SimpleFileDialogListener() {
+                            @Override
+                            public void onFilePath(String chosenDir) {
+                            }
+
+                            @Override
+                            public void onFileSel(String path) {
+
+                            }
+
+                            @Override
+                            public void onFileSelNext(String path) {
+                                File f = new File(path);
+                                if(f.isFile() && f.exists()) {
+                                    TESettingsInfo.setSSHKeyPath(path);
+                                }
+                            }
+                        });
+
+                FileOpenDialog.chooseFile_or_Dir(TESettingsInfo.getSSHKeyPath());
+            }
+        });
         return mgrKeyFilesView;
     }
 }

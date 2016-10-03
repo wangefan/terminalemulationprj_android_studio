@@ -76,6 +76,7 @@ public class TESettingsInfo {
     private static final String DEL_RESET_FULL_SHOWED = "DEL_RESET_FULL_SHOWED";
     private static final String EXPORT_PATH = "EXPORT_PATH";
     private static final String IMPORT_PATH = "IMPORT_PATH";
+    private static final String SSH_KEY_PATH = "SSH_KEY_PATH";
 
     public static boolean loadSessionSettings(Context context) {
         if (mSp == null) {
@@ -771,6 +772,16 @@ public class TESettingsInfo {
     public static void setExportSettingsPath(String path) {
         SharedPreferences.Editor editor = mSp.edit();
         editor.putString(EXPORT_PATH, path);
+        editor.commit();
+    }
+
+    public static String getSSHKeyPath() {
+        return mSp.getString(SSH_KEY_PATH, "");
+    }
+
+    public static void setSSHKeyPath(String path) {
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putString(SSH_KEY_PATH, path);
         editor.commit();
     }
 
