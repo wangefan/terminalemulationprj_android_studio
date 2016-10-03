@@ -43,10 +43,10 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         });
         //Fill Key Files
         ArrayList<TESettings.TECommonSetting.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
-        mlstKeyFiles.add("add");//dummy item for "add" icon
         for (TESettings.TECommonSetting.CSsh_Keys ssh : sshList) {
             mlstKeyFiles.add(ssh.mPath);
         }
+        mlstKeyFiles.add("add");//dummy item for "add" icon
         mlstKeyFilesView = (ListView) mgrKeyFilesView.findViewById(R.id.id_key_files_list);
         mlstKeyFilesView.setAdapter(new KeyFilesListAdapter(getActivity(), mlstKeyFiles));
         return mgrKeyFilesView;

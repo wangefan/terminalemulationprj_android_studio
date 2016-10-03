@@ -1,59 +1,57 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/id_lay_select_key_file"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentTop="true"
-            android:background="@color/key_back_color">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ssh_select_key_file_title"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                style="@style/ToolbarTitleTextAppearance"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/id_lay_select_key"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground">
-            <TextView
-                android:id="@+id/ssh_select_key_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentTop="true"
-            android:background="@color/key_back_color">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ssh_add_delete_key_title"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                style="@style/ToolbarTitleTextAppearance"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
-        <ListView
-            android:id="@+id/id_key_files_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/key_back_color">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ssh_select_key_file_title"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            style="@style/ToolbarTitleTextAppearance"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
-</ScrollView>
+    <LinearLayout
+        android:id="@+id/id_lay_select_key"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/id_lay_select_key_file"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+        <TextView
+            android:id="@+id/ssh_select_key_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/id_lay_ssh_add_delete_key_title"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/id_lay_select_key"
+        android:background="@color/key_back_color">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ssh_add_delete_key_title"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            style="@style/ToolbarTitleTextAppearance"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/id_key_files_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_lay_ssh_add_delete_key_title"
+        android:layout_alignParentBottom="true">
+    </ListView>
+</RelativeLayout>
