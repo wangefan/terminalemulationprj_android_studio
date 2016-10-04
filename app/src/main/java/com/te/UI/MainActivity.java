@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity
         implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewListener
 
 {
+    static {
+        System.loadLibrary("chilkat");
+    }
     private static final String TAG_TERPROC_FRAGMENT = "TAG_TERPROC_FRAGMENT";
     private static final String KEY_FULL_SCREEEN = "KEY_FULL_SCREEEN";
     private final long UPDATE_ALERT_INTERVAL = 300000; //300 sec, 5 min

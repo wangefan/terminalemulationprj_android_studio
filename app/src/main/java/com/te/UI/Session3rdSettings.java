@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import com.cipherlab.terminalemulation.R;
 
 public class Session3rdSettings extends SessionSettingsBase {
+    static {
+        System.loadLibrary("chilkat");
+    }
     public static final String ACTION_COLOR = "com.te.UI.Session3rdSettings.ACTION_COLOR";
     public static final String ACTION_READER_CTRL = "com.te.UI.Session3rdSettings.ACTION_READER_CTRL";
     public static final String ACTION_FEEDBACK = "com.te.UI.Session3rdSettings.ACTION_FEEDBACK";

@@ -35,8 +35,7 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         mSetting = setting;
     }
 
-    private boolean checkSSHKey(String keyPah, String passphrase) {
-        System.loadLibrary("chilkat");
+    private boolean checkSSHKey(String keyPah, String passphrase, StringBuilder sbMsg) {
         CkSshKey key = new CkSshKey();
         String keyConent = key.loadText(keyPah);
         if(keyConent == null) {
@@ -58,7 +57,7 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         }
         if(!bResult) {
             String str = key.lastErrorText();
-            Toast.makeText(getActivity(), str, Toast.LENGTH_LONG).show();
+            sbMsg.append(str);
         }
         return bResult;
     }
@@ -138,13 +137,14 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
                                             return;
                                         }
                                         if(pass1.compareTo(pass2) != 0) {
-                                            //Todo: popup msg
+                                            UIUtility.messageBox(getActivity(), R.string.msg_pwd_not_match, null);
                                             return;
                                         }
                                         final String pass = pass1;
-                                        boolean bValidSSH = checkSSHKey(pathTemp, pass);
+                                        StringBuilder sbMsg = new StringBuilder();
+                                        boolean bValidSSH = checkSSHKey(pathTemp, pass, sbMsg);
                                         if(bValidSSH == false) {
-                                            //Todo: popup msg
+                                            UIUtility.messageBox(getActivity(), sbMsg.toString(), null);
                                             return;
                                         }
                                         String sshPathRoot = CipherUtility.getTESSHPath(getActivity());
