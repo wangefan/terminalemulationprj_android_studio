@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
             if (TESettingsInfo.getHostIsAutoFullScreenOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 procFullScreen();
             }
-            UIUtility.showProgressDlg(false, 0);
+            UIUtility.showProgressDlg(MainActivity.this, false, 0);
             mKeyboardViewUtility.setKeyboard(TEKeyboardViewUtility.KeyboardType.KT_ABC);
             if (TESettingsInfo.getHostIsAutoPopSIPOnConnByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 updateFABStatus(FABStatus.Gone);
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity
             updateConnMenuItem();
             updateFABStatus(FABStatus.Connect);
             UIUtility.cancelDetectNetworkOutRange();
-            UIUtility.showProgressDlg(false, 0);
+            UIUtility.showProgressDlg(MainActivity.this, false, 0);
             mKeyboardViewUtility.hideTEKeyboard();
             Toast.makeText(MainActivity.this, getString(R.string.MSG_Disonnected), Toast.LENGTH_SHORT).show();
         }
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity
                     int wifiStrength = CipherUtility.getWiFiStrength(MainActivity.this);
                     if (wifiStrength < nWifiAlert) {
                         final Runnable tempRun = this;
-                        UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
+                        UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mUpdateWifiAlertHandler.postDelayed(tempRun, UPDATE_ALERT_INTERVAL);
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity
                     int batStrength = CipherUtility.getBatteryPct(MainActivity.this);
                     if (batStrength < nBatAlert) {
                         final Runnable tempRun = this;
-                        UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
+                        UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mUpdateBaterAlertHandler.postDelayed(tempRun, UPDATE_ALERT_INTERVAL);
@@ -484,7 +484,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
                 int wifiStrength = CipherUtility.getWiFiStrength(MainActivity.this);
-                UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), null);
+                UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), null);
                 return true;
             }
 
@@ -503,7 +503,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
                 int batStrength = CipherUtility.getBatteryPct(MainActivity.this);
-                UIUtility.messageBox(String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), null);
+                UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), null);
                 return true;
             }
 
@@ -522,12 +522,12 @@ public class MainActivity extends AppCompatActivity
 
         CipherReaderControl.InitReader(this, myDataReceiver);
         TerminalProcess.initKeyCodeMap();
-        UIUtility.init(this);
+        UIUtility.init();
 
         mTerminalProcessFrg = (TerminalProcessFrg) getSupportFragmentManager().findFragmentByTag(TAG_TERPROC_FRAGMENT);
         // If the Fragment is null, then it is first create.
         if (mTerminalProcessFrg == null) {
-            UIUtility.doLoadSettingProc(getApplicationContext(), new UIUtility.OnLoadSettingProcListener() {
+            UIUtility.doLoadSettingProc(MainActivity.this, new UIUtility.OnLoadSettingProcListener() {
                 @Override
                 public void onLoadResult(boolean bSuccess) {
                     if (bSuccess) {
@@ -699,7 +699,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     final View menuItemView = findViewById(R.id.sessionSettings);
-                    UIUtility.showTourEditProfile(menuItemView);
+                    UIUtility.showTourEditProfile(MainActivity.this, menuItemView);
                 }
             });
         }
@@ -730,19 +730,19 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.access_ctrl:
                 if (TESettingsInfo.getIsAccessCtrlProtected()) {
-                    UIUtility.doCheckAccessCtrlDialog(
+                    UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
                             new UIUtility.OnAccessCtrlChkListener() {
                                 @Override
                                 public void onValid() {
-                                    UIUtility.doAccessCtrlDialog();
+                                    UIUtility.doAccessCtrlDialog(MainActivity.this);
                                 }
                             });
                 } else {
-                    UIUtility.doAccessCtrlDialog();
+                    UIUtility.doAccessCtrlDialog(MainActivity.this);
                 }
                 break;
             case R.id.activation_key:
-                UIUtility.doActivationDialog(new UIUtility.OnActivationListener() {
+                UIUtility.doActivationDialog(MainActivity.this, new UIUtility.OnActivationListener() {
                     @Override
                     public void onResult(boolean bActivate) {
                         if (bActivate == false) {
@@ -901,7 +901,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onExit() {
         if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitProtect()) {
-            UIUtility.doCheckAccessCtrlDialog(
+            UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
                     new UIUtility.OnAccessCtrlChkListener() {
                         @Override
                         public void onValid() {
@@ -1018,7 +1018,7 @@ public class MainActivity extends AppCompatActivity
             mDecorView.setSystemUiVisibility(uiFullScreenOptions);
             mBFullScreen = true;
             if (TESettingsInfo.showResetFullScreen() == true) {
-                UIUtility.showResetFullScreen(mLogoView.findViewById(R.id.ImgLogoView));
+                UIUtility.showResetFullScreen(MainActivity.this, mLogoView.findViewById(R.id.ImgLogoView));
             }
         } else {
             getSupportActionBar().show();
@@ -1050,7 +1050,7 @@ public class MainActivity extends AppCompatActivity
             doFullScreen(true);
         } else {
             if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitFullScreenProtect()) {
-                UIUtility.doCheckAccessCtrlDialog(
+                UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
                         new UIUtility.OnAccessCtrlChkListener() {
                             @Override
                             public void onValid() {
@@ -1074,7 +1074,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void SessionConnect() {
-        UIUtility.showProgressDlg(true, R.string.MSG_Connecting);
+        UIUtility.showProgressDlg(MainActivity.this, true, R.string.MSG_Connecting);
         TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         termProc.processConnect();
     }
@@ -1088,7 +1088,7 @@ public class MainActivity extends AppCompatActivity
 
     private void SessionSetting(final int nSessionIdx) {
         if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsSettingsProtect()) {
-            UIUtility.doCheckAccessCtrlDialog(
+            UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
                     new UIUtility.OnAccessCtrlChkListener() {
                         @Override
                         public void onValid() {

@@ -307,7 +307,7 @@ public class ContentView extends View {
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (mTerminalProc != null) {
             if(TESettingsInfo.getHostIsDetectOFRByIndex(TESettingsInfo.getSessionIndex()) == true) {
-                UIUtility.detectNetworkOutRange(new UIUtility.OnDetectOFRListener() {
+                UIUtility.detectNetworkOutRange(getContext(), new UIUtility.OnDetectOFRListener() {
                     @Override
                     public void onResult(boolean bHasNetwork) {
                         if(bHasNetwork == false) {

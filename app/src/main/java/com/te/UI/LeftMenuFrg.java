@@ -54,12 +54,12 @@ public class LeftMenuFrg extends Fragment {
                 super.onDrawerOpened(drawerView);
                 getActivity().invalidateOptionsMenu();
                 if(TESettingsInfo.showAddSession() == true && stdActivityRef.gIsActivate) {
-                    UIUtility.showAddSession(mAddSession);
+                    UIUtility.showAddSession(getActivity(), mAddSession);
                 } else {
                     final int SHOWDELETESN_COUNT = 2;
                     if(TESettingsInfo.getSessionCount() >= SHOWDELETESN_COUNT) {
                         if(TESettingsInfo.showDelSession() == true) {
-                            UIUtility.showDelSession(mSessionsView);
+                            UIUtility.showDelSession(getActivity(), mSessionsView);
                         }
                     }
                 }

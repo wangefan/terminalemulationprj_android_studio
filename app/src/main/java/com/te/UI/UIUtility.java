@@ -53,7 +53,6 @@ public class UIUtility {
 	}
 	static private ProgressDialog mPDialog = null;
 	static private ProgressDialog mProgNetwork = null;
-	static private Context mContext;
 	static private Point mPrgDlgSize = new Point();
 	static private boolean mBShow = false;
 	static private Handler mUIHandler = null;
@@ -75,8 +74,7 @@ public class UIUtility {
 	//Access control dialog end
 	
 	//member functions
-	static public void init(Context context) {
-		mContext = context;
+	static public void init() {
 		mUIHandler = new Handler();
 	}
 
@@ -95,13 +93,13 @@ public class UIUtility {
 		}
 	}
 
-	static public void showProgressDlg(boolean bShow, int messageID)
+	static public void showProgressDlg(Context context, boolean bShow, int messageID)
     {
     	if(bShow && mBShow == false)
     	{
-    		mPDialog = new ProgressDialog(mContext, R.style.MyProgressDlg);
+    		mPDialog = new ProgressDialog(context, R.style.MyProgressDlg);
     		mPDialog.setCancelable(false); 
-    		mPDialog.setMessage(mContext.getText(messageID));
+    		mPDialog.setMessage(context.getText(messageID));
     		mPDialog.show();
     		mBShow = true;
     		
@@ -127,15 +125,15 @@ public class UIUtility {
     	}
     }
 
-	public static void messageBox(int nStringID, DialogInterface.OnClickListener positiveClkListener) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+	public static void messageBox(Context context, int nStringID, DialogInterface.OnClickListener positiveClkListener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(nStringID).setPositiveButton(R.string.STR_OK, positiveClkListener);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
 
-	public static void messageBox(String message, DialogInterface.OnClickListener positiveClkListener) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+	public static void messageBox(Context context, String message, DialogInterface.OnClickListener positiveClkListener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(message).setPositiveButton(R.string.STR_OK, positiveClkListener);
 		AlertDialog alert = builder.create();
 		alert.show();
@@ -149,11 +147,11 @@ public class UIUtility {
 		alert.show();
 	}
 
-	public static void messageBoxFromWorkerThread(final String message, final DialogInterface.OnClickListener positiveClkListener) {
+	public static void messageBoxFromWorkerThread(final Context context, final String message, final DialogInterface.OnClickListener positiveClkListener) {
 		mUIHandler.post(new Runnable() {
 			@Override
 			public void run() {
-				messageBox(message, positiveClkListener);
+				messageBox(context, message, positiveClkListener);
 			}
 		});
 	}
@@ -199,10 +197,10 @@ public class UIUtility {
 		builder.create().show();
 	}
 
-	public static void doActivationDialog(final OnActivationListener listener) {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
+	public static void doActivationDialog(Context context, final OnActivationListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(context);
 		final View activationView = inflater.inflate(R.layout.activation, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.str_activation_key);
 		builder.setView(activationView);
 		builder.setPositiveButton(R.string.STR_Activate, new DialogInterface.OnClickListener() {
@@ -272,8 +270,8 @@ public class UIUtility {
 		dialog.show();
 	}
 
-	public static void doAccessCtrlDialog() {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
+	public static void doAccessCtrlDialog(Context context) {
+		LayoutInflater inflater = LayoutInflater.from(context);
 		mAccessCtrlDialog = inflater.inflate(R.layout.access_control, null);
 		mLayPassword = (LinearLayout) (mAccessCtrlDialog.findViewById(R.id.password_lay));
 		mSwSetPwd = (Switch) (mAccessCtrlDialog.findViewById(R.id.mod_pwd_switch));
@@ -367,7 +365,7 @@ public class UIUtility {
 				updatePostiveBtn();
 			}
 		});
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.str_access_ctrl);
 		builder.setView(mAccessCtrlDialog);
 		builder.setPositiveButton(R.string.STR_Confirm, new DialogInterface.OnClickListener() {
@@ -423,10 +421,10 @@ public class UIUtility {
 		updatePostiveBtn();
 	}
 
-	public static void doCheckAccessCtrlDialog(final OnAccessCtrlChkListener listener) {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
+	public static void doCheckAccessCtrlDialog(Context context, final OnAccessCtrlChkListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(context);
 		final View accessChkCtrlDialog = inflater.inflate(R.layout.access_control_check, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.str_access_ctrl_check);
 		builder.setView(accessChkCtrlDialog);
 		builder.setPositiveButton(R.string.STR_pass, new DialogInterface.OnClickListener() {
@@ -465,12 +463,12 @@ public class UIUtility {
 		});
 	}
 
-	public static void showTourEditProfile(View targetView) {
+	public static void showTourEditProfile(Context context, View targetView) {
 		ToolTip toolTip = new ToolTip().
-				setTitle(mContext.getString(R.string.msg_tour_edit_profile_title)).
-				setDescription(mContext.getString(R.string.msg_tour_edit_profile)).
-				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
-				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTitle(context.getString(R.string.msg_tour_edit_profile_title)).
+				setDescription(context.getString(R.string.msg_tour_edit_profile)).
+				setBackgroundColor(context.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(context.getResources().getColor(R.color.tooltipsColor)).
 				setShadow(true).
 				setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -478,18 +476,18 @@ public class UIUtility {
 						mTourGuideHandler.cleanUp();
 					}
 				});
-		mTourGuideHandler = TourGuide.init((Activity) mContext)
+		mTourGuideHandler = TourGuide.init((Activity) context)
 				.setToolTip(toolTip)
 				.setOverlay(new Overlay().disableClickThroughHole(true))
 				.playOn(targetView);
 	}
 
-	public static void showAddSession(View targetView) {
+	public static void showAddSession(Context context, View targetView) {
 		ToolTip toolTip = new ToolTip().
-				setTitle(mContext.getString(R.string.msg_tour_add_session_title)).
-				setDescription(mContext.getString(R.string.msg_tour_add_session)).
-				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
-				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTitle(context.getString(R.string.msg_tour_add_session_title)).
+				setDescription(context.getString(R.string.msg_tour_add_session)).
+				setBackgroundColor(context.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(context.getResources().getColor(R.color.tooltipsColor)).
 				setShadow(true).
 				setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -497,18 +495,18 @@ public class UIUtility {
 						mTourGuideHandler.cleanUp();
 					}
 				});
-		mTourGuideHandler = TourGuide.init((Activity) mContext)
+		mTourGuideHandler = TourGuide.init((Activity) context)
 				.setToolTip(toolTip)
 				.setOverlay(new Overlay().disableClickThroughHole(true))
 				.playOn(targetView);
 	}
 
-	public static void showDelSession(View targetView) {
+	public static void showDelSession(Context context, View targetView) {
 		ToolTip toolTip = new ToolTip().
-				setTitle(mContext.getString(R.string.msg_tour_del_session_title)).
-				setDescription(mContext.getString(R.string.msg_tour_del_session)).
-				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
-				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTitle(context.getString(R.string.msg_tour_del_session_title)).
+				setDescription(context.getString(R.string.msg_tour_del_session)).
+				setBackgroundColor(context.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(context.getResources().getColor(R.color.tooltipsColor)).
 				setShadow(true).
 				setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -516,18 +514,18 @@ public class UIUtility {
 						mTourGuideHandler.cleanUp();
 					}
 				});
-		mTourGuideHandler = TourGuide.init((Activity) mContext)
+		mTourGuideHandler = TourGuide.init((Activity) context)
 				.setToolTip(toolTip)
 				.setOverlay(new Overlay().disableClickThroughHole(true))
 				.playOn(targetView);
 	}
 
-	public static void showResetFullScreen(View targetView) {
+	public static void showResetFullScreen(Context context, View targetView) {
 		ToolTip toolTip = new ToolTip().
-				setTitle(mContext.getString(R.string.msg_tour_screen_title)).
-				setDescription(mContext.getString(R.string.msg_tour_screen)).
-				setBackgroundColor(mContext.getResources().getColor(R.color.tooltipsColor)).
-				setTextColor(mContext.getResources().getColor(R.color.tooltipsColor)).
+				setTitle(context.getString(R.string.msg_tour_screen_title)).
+				setDescription(context.getString(R.string.msg_tour_screen)).
+				setBackgroundColor(context.getResources().getColor(R.color.tooltipsColor)).
+				setTextColor(context.getResources().getColor(R.color.tooltipsColor)).
 				setShadow(true).
 				setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -535,14 +533,14 @@ public class UIUtility {
 						mTourGuideHandler.cleanUp();
 					}
 				});
-		mTourGuideHandler = TourGuide.init((Activity) mContext)
+		mTourGuideHandler = TourGuide.init((Activity) context)
 				.setToolTip(toolTip)
 				.setOverlay(new Overlay().disableClickThroughHole(true))
 				.playOn(targetView);
 	}
 
-	public static void detectNetworkOutRange(final OnDetectOFRListener listener) {
-		if(CipherUtility.hasNetwork(mContext) == true) {
+	public static void detectNetworkOutRange(final Context context, final OnDetectOFRListener listener) {
+		if(CipherUtility.hasNetwork(context) == true) {
 			listener.onResult(true);
 			return;
 		}
@@ -550,7 +548,7 @@ public class UIUtility {
 		final Runnable checkNetwork = new Runnable() {
 			@Override
 			public void run() {
-				if(CipherUtility.hasNetwork(mContext) == true) {
+				if(CipherUtility.hasNetwork(context) == true) {
 					mProgNetwork.dismiss();
 					listener.onResult(true);
 				} else {
@@ -558,10 +556,10 @@ public class UIUtility {
 				}
 			}
 		};
-		mProgNetwork = new ProgressDialog(mContext);
-		mProgNetwork.setMessage(mContext.getResources().getString(R.string.str_detect_out_title));
+		mProgNetwork = new ProgressDialog(context);
+		mProgNetwork.setMessage(context.getResources().getString(R.string.str_detect_out_title));
 		mProgNetwork.setCancelable(false);
-		mProgNetwork.setButton(DialogInterface.BUTTON_NEGATIVE, mContext.getResources().getString(R.string.STR_Cancel), new DialogInterface.OnClickListener() {
+		mProgNetwork.setButton(DialogInterface.BUTTON_NEGATIVE, context.getResources().getString(R.string.STR_Cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -597,7 +595,7 @@ public class UIUtility {
 					}
 				}
 			};
-			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setMessage(R.string.MSG_clear_setting).setPositiveButton(R.string.str_positive, dialogClickListener)
 					.setNegativeButton(R.string.str_negative, dialogClickListener);
 			AlertDialog alert = builder.create();
