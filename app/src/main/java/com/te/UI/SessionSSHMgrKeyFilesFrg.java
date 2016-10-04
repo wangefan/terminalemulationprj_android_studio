@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chilkatsoft.CkSshKey;
@@ -23,6 +24,7 @@ import Terminals.TESettingsInfo;
 public class SessionSSHMgrKeyFilesFrg extends Fragment {
     //Data members
     protected TESettings.SessionSetting mSetting = null;
+    private TextView mtvSelectKey = null;
     private ListView mlstKeyFilesView = null;
     private ArrayList<String> mlstKeyFiles = new ArrayList<>();
 
@@ -65,12 +67,27 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         mlstKeyFiles.add(0, destSSH.getAbsolutePath());
         ((KeyFilesListAdapter)(mlstKeyFilesView.getAdapter())).notifyDataSetChanged();
         //commit to setting
-        ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
+        ArrayList<TESettings.CSsh_Key> sshList = TESettingsInfo.getCommonSSHKeys();
         int nKeyFrom = getKeyType(destSSH);//0: open(pem) 1:putty(ppk)
-        sshList.add(new TESettings.CSsh_Keys(destSSH.getName(), destSSH.getAbsolutePath(), passphrase, nKeyFrom));
+        sshList.add(new TESettings.CSsh_Key(destSSH.getName(), destSSH.getAbsolutePath(), passphrase, nKeyFrom));
         TESettingsInfo.setCommonSSHKeys(sshList);
         Toast.makeText(getActivity(), R.string.MSG_Import_ssh_ok, Toast.LENGTH_LONG).show();
         TESettingsInfo.setSSHKeyPath(srcSSH.getAbsolutePath());
+    }
+
+    private void setSelectKeyText(String keyPath) {
+        String selPath = getActivity().getResources().getString(R.string.screen_show_wf_bt_status_off); //default none
+        if(keyPath.length() > 0) {
+            ArrayList<TESettings.CSsh_Key> sshList = TESettingsInfo.getCommonSSHKeys();
+            for (int idxSSHList = 0; idxSSHList < sshList.size(); idxSSHList++) {
+                String sshPath = sshList.get(idxSSHList).mSSHPath;
+                if (sshPath.compareTo(keyPath) == 0) {
+                    selPath = keyPath;
+                    break;
+                }
+            }
+        }
+        mtvSelectKey.setText(selPath);
     }
 
     //0: open(pem) 1:putty(ppk)
@@ -92,16 +109,44 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
 
         View mgrKeyFilesView = inflater.inflate(R.layout.ssh_mgr_key_files, container, false);
         LinearLayout laySelectKey = (LinearLayout) mgrKeyFilesView.findViewById(R.id.id_lay_select_key);
+        mtvSelectKey = (TextView) mgrKeyFilesView.findViewById(R.id.ssh_select_key_file);
+        setSelectKeyText(mSetting.mSSHKeyPath);
         laySelectKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo:select key from list
+                //Fill key files to chosen list
+                int nCheckedIdx = 0; //default "none"
+                final int nDefaultCount = 1; //for "none"
+                final String noneSel = getActivity().getResources().getString(R.string.screen_show_wf_bt_status_off);
+                ArrayList<TESettings.CSsh_Key> sshList = TESettingsInfo.getCommonSSHKeys();
+                final String [] keyFiles = new String [nDefaultCount + sshList.size()];
+                keyFiles[0] = noneSel;
+                for (int idxSSHList = 0; idxSSHList < sshList.size(); idxSSHList++) {
+                    TESettings.CSsh_Key itrSSHKey = sshList.get(idxSSHList);
+                    keyFiles[idxSSHList + nDefaultCount] = itrSSHKey.mSSHFileName;
+                    if (mSetting.mSSHKeyPath.compareTo(itrSSHKey.mSSHPath) == 0) {
+                        nCheckedIdx = idxSSHList + nDefaultCount;
+                    }
+                }
+                UIUtility.listMessageBox(R.string.ssh_select_key_file_title, keyFiles, nCheckedIdx, getActivity(), new UIUtility.OnListMessageBoxListener() {
+                    @Override
+                    public void onSelResult(String result, int selIndex) {
+                        if(selIndex == 0) {//select "none"
+                            mSetting.mSSHKeyPath = "";
+                            setSelectKeyText("");
+                            return;
+                        }
+                        TESettings.CSsh_Key selKey = TESettingsInfo.getCommonSSHKeys().get(selIndex - 1);   //"none" is the first item so selIndex need - 1
+                        mSetting.mSSHKeyPath = selKey.mSSHPath;
+                        setSelectKeyText(mSetting.mSSHKeyPath);
+                    }
+                });
             }
         });
         //Fill Key Files
-        ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
-        for (TESettings.CSsh_Keys ssh : sshList) {
-            mlstKeyFiles.add(ssh.mPath);
+        ArrayList<TESettings.CSsh_Key> sshList = TESettingsInfo.getCommonSSHKeys();
+        for (TESettings.CSsh_Key ssh : sshList) {
+            mlstKeyFiles.add(ssh.mSSHPath);
         }
         mlstKeyFiles.add("add");//dummy item for "add" icon
         mlstKeyFilesView = (ListView) mgrKeyFilesView.findViewById(R.id.id_key_files_list);
@@ -191,7 +236,7 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
                 mlstKeyFiles.remove(position);
                 ((KeyFilesListAdapter)(mlstKeyFilesView.getAdapter())).notifyDataSetChanged();
                 //commit to setting
-                ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
+                ArrayList<TESettings.CSsh_Key> sshList = TESettingsInfo.getCommonSSHKeys();
                 sshList.remove(position);
                 TESettingsInfo.setCommonSSHKeys(sshList);
             }

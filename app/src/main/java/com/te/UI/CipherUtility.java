@@ -219,4 +219,12 @@ public class CipherUtility {
 		}
 		return false;
 	}
+
+	public static String getFileName(String path) {
+		File f = new File(path);
+		if(f.isFile() == false) {
+			return "";
+		}
+		return f.getName();
+	}
 }

@@ -180,6 +180,22 @@ public class UIUtility {
 		builder.create().show();
 	}
 
+	public static void listMessageBox(int nTitleStringID, final String [] items, int nCheckedItem, final Context context, final OnListMessageBoxListener listener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(nTitleStringID);
+		builder.setSingleChoiceItems(items, nCheckedItem, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(items != null) {
+					String result = items[which];
+					listener.onSelResult(result, which);
+					dialog.dismiss();
+				}
+			}
+		});
+		builder.create().show();
+	}
+
 	public static void listMessageBox(int nTitleStringID, final int nStingArrayID, int nCheckedItem, final Context context, final OnListMessageBoxListener listener) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(nTitleStringID);

@@ -16,12 +16,12 @@ public class TESettings {
     public SessionSetting getSessionSetting(int idxSession) {
         return SETTINGS.get(idxSession);
     }
-    static public class CSsh_Keys {
+    static public class CSsh_Key {
         @SerializedName("Name")
-        public String mName;
+        public String mSSHFileName;
 
         @SerializedName("Path")
-        public String mPath;
+        public String mSSHPath;
 
         @SerializedName("Password")
         public String mPassword;
@@ -29,19 +29,19 @@ public class TESettings {
         @SerializedName("Keyform") //0: open(pem) 1:putty(ppk)
         public int mKeyform;
 
-        public CSsh_Keys() {
+        public CSsh_Key() {
         }
 
-        public CSsh_Keys(String name, String path, String passphrase, int nKeyFrom) {
-            mName = name;
-            mPath = path;
+        public CSsh_Key(String name, String path, String passphrase, int nKeyFrom) {
+            mSSHFileName = name;
+            mSSHPath = path;
             mPassword = passphrase;
             mKeyform = nKeyFrom;
         }
     }
     public static class TECommonSetting {
         @SerializedName("Ssh_Keys")
-        public ArrayList<CSsh_Keys> mSSHKeyFiles = null;
+        public ArrayList<CSsh_Key> mSSHKeyFiles = null;
 
         @SerializedName("Languages")
         public ArrayList<String> mLanguages = new ArrayList<String>();

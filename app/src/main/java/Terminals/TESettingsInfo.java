@@ -278,11 +278,11 @@ public class TESettingsInfo {
         return setting;
     }
 
-    public static ArrayList<TESettings.CSsh_Keys> getCommonSSHKeys() {
+    public static ArrayList<TESettings.CSsh_Key> getCommonSSHKeys() {
         return mTESettings.Common.mSSHKeyFiles;
     }
 
-    public static void setCommonSSHKeys(ArrayList<TESettings.CSsh_Keys> sshKeys) {
+    public static void setCommonSSHKeys(ArrayList<TESettings.CSsh_Key> sshKeys) {
         mTESettings.Common.mSSHKeyFiles = sshKeys;
     }
 
