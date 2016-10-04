@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -107,10 +105,10 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
         }
         mlstKeyFiles.add("add");//dummy item for "add" icon
         mlstKeyFilesView = (ListView) mgrKeyFilesView.findViewById(R.id.id_key_files_list);
-        mlstKeyFilesView.setAdapter(new KeyFilesListAdapter(getActivity(), mlstKeyFiles));
-        mlstKeyFilesView.setOnItemClickListener(new OnItemClickListener() {
+        KeyFilesListAdapter adapter = new KeyFilesListAdapter(getActivity(), mlstKeyFiles);
+        adapter.setClickAddListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
                         getResources().getString(R.string.ssh_add_key_files_title),
                         new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtPpk),
@@ -182,6 +180,7 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
                 FileOpenDialog.chooseFile_or_Dir(TESettingsInfo.getSSHKeyPath());
             }
         });
+        mlstKeyFilesView.setAdapter(adapter);
         return mgrKeyFilesView;
     }
 }

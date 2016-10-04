@@ -1,6 +1,7 @@
 package com.te.UI;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,15 @@ public class KeyFilesListAdapter extends BaseAdapter {
     final int ITEM_TYPE_ADD = 1;
     private LayoutInflater mInflater = null;
     private List<String> mFileList = null;
+    public View.OnClickListener mAddListener = null;
 
     public KeyFilesListAdapter(Context context, List<String> fileList) {
         mInflater = LayoutInflater.from(context);
         mFileList = fileList;
+    }
+
+    public void setClickAddListener(@Nullable View.OnClickListener l) {
+        mAddListener = l;
     }
 
     @Override
@@ -52,26 +58,6 @@ public class KeyFilesListAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2;//ITEM_TYPE_KEY_FILE, ITEM_TYPE_ADD, ITEM_TYPE_EXIT
-    }
-
-    @Override
-    public boolean isEnabled(int position){
-        if(getItemViewType(position) == ITEM_TYPE_ADD) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean areAllItemsEnabled(){
-        return false;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if(convertView == null){
@@ -83,11 +69,17 @@ public class KeyFilesListAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+
         int nViewType = getItemViewType(position);
         if(nViewType == ITEM_TYPE_ADD) {
+            convertView.setEnabled(true);
+            convertView.setOnClickListener(mAddListener);
             holder.mAddKeyFile.setVisibility(View.VISIBLE);
             holder.mKeyPath.setVisibility(View.GONE);
+
         } else if(nViewType == ITEM_TYPE_KEY_FILE) {
+            convertView.setEnabled(false);
+            convertView.setOnClickListener(null);
             holder.mAddKeyFile.setVisibility(View.GONE);
             holder.mKeyPath.setVisibility(View.VISIBLE);
             holder.mKeyPath.setText(mFileList.get(position));
