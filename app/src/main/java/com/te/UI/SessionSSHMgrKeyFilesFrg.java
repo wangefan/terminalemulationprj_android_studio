@@ -180,6 +180,22 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
                 FileOpenDialog.chooseFile_or_Dir(TESettingsInfo.getSSHKeyPath());
             }
         });
+        adapter.setClickDelListener(new KeyFilesListAdapter.OnDelKeyListener() {
+            @Override
+            public void onDelKey(int position) {
+                String keyPath = mlstKeyFiles.get(position);
+                File keyFile = new File(keyPath);
+                if(keyFile.exists()) {
+                    keyFile.delete();
+                }
+                mlstKeyFiles.remove(position);
+                ((KeyFilesListAdapter)(mlstKeyFilesView.getAdapter())).notifyDataSetChanged();
+                //commit to setting
+                ArrayList<TESettings.CSsh_Keys> sshList = TESettingsInfo.getCommonSSHKeys();
+                sshList.remove(position);
+                TESettingsInfo.setCommonSSHKeys(sshList);
+            }
+        });
         mlstKeyFilesView.setAdapter(adapter);
         return mgrKeyFilesView;
     }

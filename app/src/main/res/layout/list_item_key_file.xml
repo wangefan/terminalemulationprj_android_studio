@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Bottom View Begin-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
     android:minHeight="?attr/listPreferredItemHeightSmall">
-    <TextView
-        android:id="@+id/id_key_file_path"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:id="@+id/id_lay_key_file"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true" >
+            <TextView
+                android:id="@+id/id_key_file_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/id_del_key"
+            android:layout_width="?attr/listPreferredItemHeightSmall"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_delete_black_24dp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/id_add_key"
@@ -20,4 +47,3 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_add_black_24dp"/>
 </RelativeLayout>
-<!-- Bottom View End-->
