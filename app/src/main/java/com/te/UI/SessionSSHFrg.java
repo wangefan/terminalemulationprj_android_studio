@@ -30,7 +30,7 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
 
     private String getKeyFileFormatSum() {
         String keyFileFormat = getResources().getString(R.string.ssh_auth_setting_format_key);
-        return String.format(keyFileFormat, mSetting.mSSHName, mSetting.mSSHKeyPath);
+        return String.format(keyFileFormat, mSetting.mSSHName, CipherUtility.getFileName(mSetting.mSSHKeyPath));
     }
 
     @Override
