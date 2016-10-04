@@ -52,6 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_lay_ssh_add_delete_key_title"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:divider="@color/key_map_list_item_border"
+        android:dividerHeight="1px">
     </ListView>
 </RelativeLayout>

@@ -4,6 +4,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
     android:minHeight="?attr/listPreferredItemHeightSmall">
     <TextView
         android:id="@+id/id_key_file_path"
@@ -16,6 +18,6 @@
         android:layout_height="20dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_add_white_24dp"/>
+        android:src="@drawable/ic_add_black_24dp"/>
 </RelativeLayout>
 <!-- Bottom View End-->
