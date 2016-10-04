@@ -3,11 +3,13 @@ package com.te.UI;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.Preference;
 
 import com.cipherlab.terminalemulation.R;
 
 public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
     private EditTextPreference medtSSHName = null;
+    private Preference mSelectedKey = null;
     private CheckBoxPreference mchkSSHTcpNoDelay = null;
     private CheckBoxPreference mchkSSHTcpNoPseudoKey = null;
     private CheckBoxPreference mchkSSHTcpNoHostShellKey = null;
@@ -32,6 +34,7 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
         addPreferencesFromResource(R.xml.pref_ssh_key_file);
 
         medtSSHName = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_name_key));
+        mSelectedKey = findPreference(getResources().getString(R.string.ssh_key_file_key));
         mchkSSHTcpNoDelay = (CheckBoxPreference) findPreference(getResources().getString(R.string.ssh_use_tcp_delay_key));
         mchkSSHTcpNoPseudoKey = (CheckBoxPreference) findPreference(getResources().getString(R.string.ssh_no_pseudo_key));
         mchkSSHTcpNoHostShellKey = (CheckBoxPreference) findPreference(getResources().getString(R.string.ssh_no_host_shell_key));
@@ -52,6 +55,7 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
     @Override
     protected void syncPrefUIFromTESettings() {
         medtSSHName.setText(mSetting.mSSHName);
+        mSelectedKey.setSummary(CipherUtility.getFileName(mSetting.mSSHKeyPath));
         mchkSSHTcpNoDelay.setChecked(mSetting.mSSHTcpNoDelay);
         mchkSSHTcpNoPseudoKey.setChecked(mSetting.mSSHNoPseudoTer);
         mchkSSHTcpNoHostShellKey.setChecked(mSetting.mSSHNoHostShell);
