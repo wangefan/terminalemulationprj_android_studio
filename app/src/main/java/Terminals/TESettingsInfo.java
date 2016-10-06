@@ -632,6 +632,31 @@ public class TESettingsInfo {
         return Setting.mSSHPassword;
     }
 
+    public static String getHostSshKeyPathByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHKeyPath;
+    }
+
+    public static boolean getSshNoPseudoTerByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHNoPseudoTer;
+    }
+
+    public static boolean getSshNoHostShellByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHNoHostShell;
+    }
+
+    public static boolean getSshTcpNoDelayByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHTcpNoDelay;
+    }
+
+    public static String getSshProxyTypeByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHProxyType;
+    }
+
     public static int getHostCousorTypeByIndex(int index) {
         //
         SessionSetting Setting = mTESettings.getSessionSetting(index);
@@ -872,5 +897,31 @@ public class TESettingsInfo {
 
     public static String getDefaultIP() {
         return "192.168.1.100";
+    }
+
+    public static String getSshProxyHostByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHProxyHost;
+    }
+
+    public static String getSshProxyPasswordByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHProxyPassword;
+    }
+
+    public static String getSshProxyPortByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHProxyPort;
+    }
+
+    public static String getSshProxyUserByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHProxyUser;
+    }
+
+    //false:File  true:Name/Pwd
+    public static boolean getAuthTypeByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mAuType;
     }
 }
