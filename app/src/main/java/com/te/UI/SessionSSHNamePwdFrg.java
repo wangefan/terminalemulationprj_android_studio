@@ -47,8 +47,8 @@ public class SessionSSHNamePwdFrg extends SessionSettingsFrgBase {
 
     @Override
     protected void syncPrefUIFromTESettings() {
-        medtSSHName.setSummary(mSetting.mSSHName);
-        medtSSHPwd.setSummary(mSetting.mSSHPassword);
+        medtSSHName.setText(mSetting.mSSHName);
+        medtSSHPwd.setText(mSetting.mSSHPassword);
     }
 
     @Override
