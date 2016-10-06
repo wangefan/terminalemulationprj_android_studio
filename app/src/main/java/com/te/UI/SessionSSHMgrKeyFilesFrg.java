@@ -239,6 +239,14 @@ public class SessionSSHMgrKeyFilesFrg extends Fragment {
                 ArrayList<TESettings.CSsh_Key> sshList = TESettingsInfo.getCommonSSHKeys();
                 sshList.remove(position);
                 TESettingsInfo.setCommonSSHKeys(sshList);
+                //Remove all used in each session
+                for (int idxSession = 0; idxSession < TESettingsInfo.getSessionCount(); idxSession++) {
+                    TESettings.SessionSetting setting = TESettingsInfo.getSessionSetting(idxSession);
+                    if(setting.mSSHKeyPath.compareTo(keyPath) == 0) {
+                        setting.mSSHKeyPath = "";
+                    }
+                }
+                setSelectKeyText(mSetting.mSSHKeyPath);
             }
         });
         mlstKeyFilesView.setAdapter(adapter);
