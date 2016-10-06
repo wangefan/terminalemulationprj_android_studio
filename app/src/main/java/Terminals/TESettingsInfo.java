@@ -632,6 +632,11 @@ public class TESettingsInfo {
         return Setting.mSSHPassword;
     }
 
+    public static boolean getHostIsSaveSSHLogByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSaveSSHLog;
+    }
+
     public static String getHostSshKeyPathByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mSSHKeyPath;

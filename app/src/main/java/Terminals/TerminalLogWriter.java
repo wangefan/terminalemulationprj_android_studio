@@ -19,10 +19,7 @@ public class TerminalLogWriter {
     private void openFile() {
         try {
             int nCurSession = TESettingsInfo.getSessionIndex();
-            String fileName = String.format("TE.S%d.", nCurSession + 1);
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 'at' HH-mm-ss");
-            fileName += df.format(Calendar.getInstance().getTime());
-            fileName += ".log";
+            String fileName = CipherUtility.getLogFileName(nCurSession);
             File file = new File(CipherUtility.getTESettingsPath(stdActivityRef.getCurrActivity()) + fileName);
             if (!file.exists()) {
                 file.getParentFile().mkdirs();

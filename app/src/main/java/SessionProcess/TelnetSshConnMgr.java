@@ -15,11 +15,13 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 	private final String SSH_PROXY_TYPE_SOCKET4 = "SOCKS4";
 	private final String SSH_PROXY_TYPE_SOCKET5 = "SOCKS5";
 	private int mSshChanel;
+	private boolean mSSHLog = false;
 	private CkSsh mSshConn = null;
 
 	public TelnetSshConnMgr(String address, int port, TerminalBase terminal) {
 		super(address,port, terminal);
 		mSshConn = new CkSsh();
+		mSSHLog = false;
 	}
 
 	private boolean setupHostProxySock() {
@@ -43,6 +45,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 	}
 
 	private void doDisconnect() {
+		mSSHLog = false;
 		mIsConnected = false;
 		mSshConn = null;
 		mUIHandler.post(new Runnable() {
@@ -53,6 +56,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 	}
 
 	private void doConnectError(final String message) {
+		mSSHLog = false;
 		mIsConnected = false;
 		mSshConn = null;
 		mUIHandler.post(new Runnable() {
@@ -70,10 +74,15 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 	@Override
 	public void run() {
 		CipherUtility.Log_d("TelnetSshConnMgr", "prepare to connect to SSH");
+		mSSHLog = TESettingsInfo.getHostIsSaveSSHLogByIndex(TESettingsInfo.getSessionIndex());
 		try {
 			mSshConn.UnlockComponent("tnwverSSH_bJkOyWEOMDnU");
 			CipherUtility.Log_d("TelnetSshConnMgr", "after mSshConn.UnlockComponent");
 			mSshConn.put_TcpNoDelay(TESettingsInfo.getSshTcpNoDelayByIndex(TESettingsInfo.getSessionIndex()));
+			mSshConn.put_KeepSessionLog(mSSHLog);
+			if(mSSHLog) {
+				mSshConn.put_DebugLogFilePath(CipherUtility.getTESettingsPath(stdActivityRef.getCurrActivity()) + CipherUtility.getSSHLogFileName(TESettingsInfo.getSessionIndex()));
+			}
 
 			//Set up http proxy
 			String sshProxyType = TESettingsInfo.getSshProxyTypeByIndex(TESettingsInfo.getSessionIndex());

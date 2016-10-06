@@ -29,6 +29,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import Terminals.stdActivityRef;
@@ -226,5 +228,20 @@ public class CipherUtility {
 			return "";
 		}
 		return f.getName();
+	}
+
+	private static String getDateTime() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 'at' HH-mm-ss");
+		return df.format(Calendar.getInstance().getTime());
+	}
+
+	public static String getLogFileName(int nSession) {
+		String fileName = String.format("TE.S%d.%s.log", nSession + 1, getDateTime());
+		return fileName;
+	}
+
+	public static String getSSHLogFileName(int nSession) {
+		String fileName = String.format("TE_SSH.S%d.%s.log", nSession + 1, getDateTime());
+		return fileName;
 	}
 }
