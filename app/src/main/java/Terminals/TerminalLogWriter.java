@@ -1,7 +1,8 @@
 package Terminals;
 
 import android.media.MediaScannerConnection;
-import android.os.Environment;
+
+import com.te.UI.CipherUtility;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,9 +18,12 @@ public class TerminalLogWriter {
 
     private void openFile() {
         try {
-            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy 'at' HH-mm-ss");
-            String fileName = df.format(Calendar.getInstance().getTime());
-            File file = new File(Environment.getExternalStorageDirectory() + File.separator + "TE" + File.separator  + fileName + ".log");
+            int nCurSession = TESettingsInfo.getSessionIndex();
+            String fileName = String.format("TE.S%d.", nCurSession + 1);
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 'at' HH-mm-ss");
+            fileName += df.format(Calendar.getInstance().getTime());
+            fileName += ".log";
+            File file = new File(CipherUtility.getTESettingsPath(stdActivityRef.getCurrActivity()) + fileName);
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
