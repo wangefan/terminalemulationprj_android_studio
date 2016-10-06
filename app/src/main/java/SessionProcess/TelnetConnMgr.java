@@ -52,6 +52,7 @@ public class TelnetConnMgr implements Runnable {
             }
     }
 
+    @Override
     public void run() {
         try {
             if (mSocket == null)
