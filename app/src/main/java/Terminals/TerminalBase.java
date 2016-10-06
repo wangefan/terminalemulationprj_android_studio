@@ -94,6 +94,12 @@ public abstract class TerminalBase extends TerminalBaseEnum {
         }
     }
 
+    public void OnConnectError(String message) {
+        if (mTerminalListener != null) {
+            mTerminalListener.OnConnectError(message);
+        }
+    }
+
     abstract public Point getCursorGridPos();
 
     abstract protected int getServerKeyCode(int keyCode);
@@ -335,6 +341,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public interface OnTerminalListener {
         void onConnected();
         void onDisconnected();
+        void OnConnectError(String message);
         void onNotify(String action, Object ... params);
     }
 

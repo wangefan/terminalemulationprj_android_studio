@@ -155,6 +155,18 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
+        public void OnConnectError(String message) {
+            showConnectionView(false);
+            updateRecordButtonVisible();
+            updateConnMenuItem();
+            updateFABStatus(FABStatus.Connect);
+            UIUtility.cancelDetectNetworkOutRange();
+            UIUtility.showProgressDlg(MainActivity.this, false, 0);
+            mKeyboardViewUtility.hideTEKeyboard();
+            UIUtility.messageBox(MainActivity.this, message, null);
+        }
+
+        @Override
         public void onNotify(String action, Object... params) {
             if (action.compareToIgnoreCase(TerminalBase.NOTF_ACT_INVALIDATE) == 0) {
                 mContentView.postInvalidate();

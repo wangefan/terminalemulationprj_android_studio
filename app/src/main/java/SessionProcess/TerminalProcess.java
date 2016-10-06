@@ -160,6 +160,12 @@ public class TerminalProcess {
             }
 
             @Override
+            public void OnConnectError(String message) {
+                if (mListener != null)
+                    mListener.OnConnectError(message);
+            }
+
+            @Override
             public void onNotify(String action, Object... params) {
                 if (mListener != null)
                     mListener.onNotify(action, params);
@@ -213,6 +219,8 @@ public class TerminalProcess {
         void onConnected();
 
         void onDisConnected();
+
+        void OnConnectError(String message);
 
         void onNotify(String action, Object... params);
     }

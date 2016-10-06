@@ -83,6 +83,7 @@
     <string name="MSG_Connecting">Connecting to host...</string>
     <string name="MSG_Disonnected">Disconnected</string>
     <string name="MSG_Disonnected_error">Cannot establish connection! Please check network.</string>
+    <string name="MSG_SSH_connect_error">Cannot establish connection, error cause:\n%1$s</string>
     <string name="MSG_KeyMappingItem_not_accept">No License</string>
     <string name="tn_setting">TN Settings</string>
     <string name="vt_setting">VT Settings</string>
