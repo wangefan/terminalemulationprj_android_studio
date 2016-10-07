@@ -2,9 +2,13 @@ package SessionProcess;
 
 import com.chilkatsoft.CkByteData;
 import com.chilkatsoft.CkSsh;
+import com.chilkatsoft.CkSshKey;
 import com.cipherlab.terminalemulation.R;
 import com.te.UI.CipherUtility;
 
+import java.util.ArrayList;
+
+import Terminals.TESettings;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
@@ -126,7 +130,43 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 				}
 			} else {// File
 				String sshKeyPath = TESettingsInfo.getHostSshKeyPathByIndex(TESettingsInfo.getSessionIndex());
-				//Todo:finish
+				ArrayList<TESettings.CSsh_Key> keysList = TESettingsInfo.getCommonSSHKeys();
+				TESettings.CSsh_Key usedKey = null;
+				for (int idxKey = 0; idxKey < keysList.size(); idxKey++) {
+					TESettings.CSsh_Key itrkey = keysList.get(idxKey);
+					if(itrkey.mSSHPath.compareTo(sshKeyPath) == 0) {
+						usedKey = itrkey;
+						break;
+					}
+				}
+				if(usedKey == null) {
+					throw new SSHConnException(SSHConnException.EXCEP_AUTH_KEY_FAIL, "Can`t find key information.");
+				}
+				CkSshKey sshKey = new CkSshKey();
+				String privKeyContent = sshKey.loadText(usedKey.mSSHPath);
+				if(usedKey.mPassword.length() > 0) {
+					sshKey.put_Password(usedKey.mPassword);
+				}
+				boolean success = false;
+				switch (usedKey.mKeyform) {
+					case 0:	//0: open(pem)
+						success = sshKey.FromOpenSshPrivateKey(privKeyContent);
+						break;
+					case 1: //1: putty(ppk)
+						success = sshKey.FromPuttyPrivateKey(privKeyContent);
+						break;
+					default:
+						break;
+				}
+				if(!success) {
+					String msg = sshKey.lastErrorText();
+					throw new SSHConnException(SSHConnException.EXCEP_AUTH_KEY_FAIL, msg);
+				}
+				success = mSshConn.AuthenticatePk(sshLoginName, sshKey);
+				if(!success) {
+					String msg = mSshConn.lastErrorText();
+					throw new SSHConnException(SSHConnException.EXCEP_AUTH_KEY_FAIL, msg);
+				}
 			}
 
 			mSshChanel = mSshConn.OpenSessionChannel();
@@ -196,6 +236,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 			switch (e.getExcepType()) {
 				case SSHConnException.EXCEP_CONN_FAIL:
 				case SSHConnException.EXCEP_AUTH_NAME_PWD_FAIL:
+				case SSHConnException.EXCEP_AUTH_KEY_FAIL:
 				case SSHConnException.EXCEP_OPEN_CHANN_FAIL:
 				case SSHConnException.EXCEP_PSEDO_TER_FAIL:
 				case SSHConnException.EXCEP_HOST_SHELL_FAIL:
@@ -235,10 +276,11 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 		private static final long serialVersionUID = 5548848902595353181L;
 		public static final int EXCEP_CONN_FAIL = 0;
 		public static final int EXCEP_AUTH_NAME_PWD_FAIL = 1;
-		public static final int EXCEP_OPEN_CHANN_FAIL = 2;
-		public static final int EXCEP_PSEDO_TER_FAIL = 3;
-		public static final int EXCEP_HOST_SHELL_FAIL = 4;
-		public static final int EXCEP_DISCONNECTED = 5;
+		public static final int EXCEP_AUTH_KEY_FAIL = 2;
+		public static final int EXCEP_OPEN_CHANN_FAIL = 3;
+		public static final int EXCEP_PSEDO_TER_FAIL = 4;
+		public static final int EXCEP_HOST_SHELL_FAIL = 5;
+		public static final int EXCEP_DISCONNECTED = 6;
 
 		private int mExcepType = -1;
 		private String mErrTextFromAPI = "";
