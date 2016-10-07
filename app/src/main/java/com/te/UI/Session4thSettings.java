@@ -27,6 +27,7 @@ public class Session4thSettings extends SessionSettingsBase {
          // Display the fragment as the main content.
         String action = getIntent().getAction();
         if(action.compareTo(ACTION_KEY_TRAP) == 0) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setTitle(getResources().getString(R.string.detect_key_title));
             mKeyMappingTrapFrg = getFragment(SessionKeyMappingTrapFrg.class);
             commitFrgToActivity(mKeyMappingTrapFrg);
