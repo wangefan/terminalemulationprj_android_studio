@@ -989,6 +989,10 @@ public class MainActivity extends AppCompatActivity
         setSessionStatusView();
         procAlertTimer();
         procUpdateWiFiAndBattIconTimer();
+        if(mBFullScreen == true) {
+            doFullScreen(false);
+            doFullScreen(true);
+        }
         updateRecordButtonVisible();
         mKeyboardViewUtility.setKeyboard(nextSession.getKeyboardType());
         if (isCurSessionConnected() == false) {
