@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -404,9 +405,19 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         stdActivityRef.setCurrActivity(this);
         //Must before setContentView
-        if (ActivateKeyUtility.verifyKeyFromDefaultFile(this) == true) {
-            stdActivityRef.gIsActivate = true;
+        if(getResources().getBoolean(R.bool.bSpecialHandleLicense)) {
+            String appId = getResources().getString(R.string.application_Id);
+            if(appId.compareTo("com.densowave.terminalemulation") == 0) {
+                if(Build.DEVICE.compareTo("BHT1600") == 0) {
+                    stdActivityRef.gIsActivate = true;
+                }
+            }
+        } else {
+            if (ActivateKeyUtility.verifyKeyFromDefaultFile(this) == true) {
+                stdActivityRef.gIsActivate = true;
+            }
         }
+
         setContentView(R.layout.activity_main);
 
         //Initialize Views

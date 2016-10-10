@@ -11,6 +11,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName '0.0.0.5'
+        resValue "bool", "bSpecialHandleLicense", "false"
     }
     buildTypes {
         debug {
@@ -38,6 +39,7 @@ android {
             resValue "string", "application_Id", "com.densowave.terminalemulation"
             resValue "string", "STR_CopyRight", "Copyright © Supplier of DENSO WAVE INCORPORATED"
             resValue "string", "STR_Settings_path", "DensoWaveSettings"
+            resValue "bool", "bSpecialHandleLicense", "true"
             minSdkVersion 15
             targetSdkVersion 22
             versionName '0.0.0.5'
