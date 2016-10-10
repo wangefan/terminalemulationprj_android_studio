@@ -133,10 +133,14 @@ public class TerminalProcess {
                     serverTypeName.equals(context.getResources().getString(R.string.VT220Val)) ||
                     serverTypeName.equals(context.getResources().getString(R.string.ANSIVal)));
             mTerminal = new CVT100();
+            mTerminal.setSsh(SSh);
         } else {
             String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
-            if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0)
+            if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0||
+                    serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM3270Val)) == 0) {
                 mTerminal = new IBMHost5250();
+                mTerminal.setSsh(false);
+            }
         }
         mTerminal.setKeyMapList(TESettingsInfo.getKeyMapListByIndex(TESettingsInfo.getSessionIndex()));
         if(mListener != null) {
@@ -145,7 +149,6 @@ public class TerminalProcess {
 
         mTerminal.setIP(Ip);
         mTerminal.setPort(Port);
-        mTerminal.setSsh(SSh);
         mTerminal.setOnTerminalListener(new TerminalBase.OnTerminalListener() {
             @Override
             public void onConnected() {
