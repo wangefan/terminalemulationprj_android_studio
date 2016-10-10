@@ -575,7 +575,17 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     public String GetTerminalTypeName() {
-        return "IBM-5292-2";
+        int nTELan = TESettingsInfo.getTELanguage(TESettingsInfo.getSessionIndex());
+        //0: single byte char, 1:TC, 2:SC, 3:Kor, 4:Jap, 5:Gre, 6:Fre
+        switch (nTELan) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                return "IBM-5555-B01";
+            default:
+                return "IBM-3179-2";
+        }
     }
 
     public void drawAll() {

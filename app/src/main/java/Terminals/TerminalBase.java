@@ -1,5 +1,6 @@
 package Terminals;
 
+import android.os.Build;
 import android.view.KeyEvent;
 
 import com.te.UI.CipherUtility;
@@ -188,6 +189,16 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     private final byte VAR = 0x00;
     private final String IBMRSEED = "IBMRSEED";
     private final String DEVNAME = "DEVNAME";
+    private final String CODEPAGE = "CODEPAGE";
+    private final String CHARSET = "CHARSET";
+    private final String KBDTYPE = "KBDTYPE";
+    private void buildUserVar(final String name, final String val, StringBuilder sb) {
+        sb.append((char)USERVAR);
+        sb.append(name);
+        sb.append((char)VALUE);
+        sb.append(val);
+    }
+
     private void terminalInterpret(Object Sender, ParserEventArgs parserArgs) {
         switch (parserArgs.Action) {
             case SendUp:
@@ -264,8 +275,8 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                 /* NEW-ENVIRON, 39 (0X27), include
                  * "IBMRSEED" + (value) + VAR(0x00)
                  * "DEVNAME" + (value)
-                 * todo:"CODEPAGE"
-                 * todo:"CHARSET"
+                 * "CODEPAGE" + (value)  : Only for T_Chinese, S_Chinese, Korean and Japanese
+                 * "CHARSET" + (value)   : Only for T_Chinese, S_Chinese, Korean and Japanese
                  */
                 case 39:
                     boolean bIsTn = TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex());
@@ -274,15 +285,36 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                         sb.append((char)USERVAR);
                         sb.append(IBMRSEED);
                         sb.append((char)VAR);
-                        sb.append((char)USERVAR);
-                        sb.append(DEVNAME);
-                        sb.append((char)VALUE);
+                        String devName = "";
                         int nDevNameType = TESettingsInfo.getDevNameType(TESettingsInfo.getSessionIndex());
                         if(nDevNameType == TESettingsInfo.DEVNAME_DEFAULT) {
-                            //do nothing
+                            devName = Build.PRODUCT;
                         } else if (nDevNameType == TESettingsInfo.DEVNAME_CUST) {
                             String custDevName = TESettingsInfo.getCustDevName(TESettingsInfo.getSessionIndex());
-                            sb.append(custDevName);
+                            devName = custDevName;
+                        }
+                        buildUserVar(DEVNAME, devName, sb);
+                        //TE Language
+                        int nTELan = TESettingsInfo.getTELanguage(TESettingsInfo.getSessionIndex());
+                        //0: single byte char, 1:TC, 2:SC, 3:Kor, 4:Jap, 5:Gre, 6:Fre
+                        switch (nTELan) {
+                            case 1://TC
+                                buildUserVar(CODEPAGE, "937", sb);
+                                buildUserVar(CHARSET, "1175", sb);
+                                break;
+                            case 2://SC
+                                buildUserVar(CODEPAGE, "935", sb);
+                                buildUserVar(CHARSET, "1174", sb);
+                                break;
+                            case 3://Kor
+                                buildUserVar(CODEPAGE, "933", sb);
+                                buildUserVar(CHARSET, "1173", sb);
+                                break;
+                            case 4:// Japanese
+                                buildUserVar(KBDTYPE, "JKB", sb);
+                                buildUserVar(CODEPAGE, "930", sb);
+                                buildUserVar(CHARSET, "1172", sb);
+                                break;
                         }
                         NvtSendSubNeg(CurCmd, sb.toString());
                     } else { //VT
