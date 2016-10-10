@@ -932,6 +932,16 @@ public class TESettingsInfo {
         return Setting.mSSHProxyUser;
     }
 
+    public static boolean getSshReKey60minByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHReKey60min;
+    }
+
+    public static boolean getSshReKey1GminByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mSSHReKey1G;
+    }
+
     //false:File  true:Name/Pwd
     public static boolean getAuthTypeByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);

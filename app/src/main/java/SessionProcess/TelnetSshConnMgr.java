@@ -209,7 +209,8 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 				}
 			});
 			Thread.sleep(100);
-
+			long tStart = System.currentTimeMillis();
+			long TotoalRec = 0;
 			while (true) {
 				if (!mSshConn.get_IsConnected()) {
 					throw new SSHConnException(SSHConnException.EXCEP_DISCONNECTED, "");
@@ -225,6 +226,27 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 					mSshConn.GetReceivedData(mSshChanel, recvData);
 					final byte[] bytesData = recvData.toByteArray();
 					mTerminal.handleBufferReceived(bytesData, 0, bytesData.length);
+					TotoalRec += nNumDataToBeGot;
+				}
+
+				if(TESettingsInfo.getSshReKey60minByIndex(TESettingsInfo.getSessionIndex())) {
+					long tEnd = System.currentTimeMillis();
+					long tDelta = tEnd - tStart;
+					double elapsedSeconds = tDelta / 1000.0;
+					if(elapsedSeconds > 60 * 60) {
+						mSshConn.ReKey();
+						tStart = tEnd;
+					}
+				}
+
+				if(TESettingsInfo.getSshReKey1GminByIndex(TESettingsInfo.getSessionIndex())) {
+					long tEnd = System.currentTimeMillis();
+					long tDelta = tEnd - tStart;
+					double elapsedSeconds = tDelta / 1000.0;
+					if(TotoalRec > 1024 * 1024 * 1024) {
+						mSshConn.ReKey();
+						TotoalRec = 0;
+					}
 				}
 			}
 		} catch (InterruptedException e) {
