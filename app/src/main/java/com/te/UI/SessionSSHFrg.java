@@ -59,6 +59,11 @@ public class SessionSSHFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mSSHLog.setEnabled(mSetting.mUseSSH);
         mAuthCate.setEnabled(mSetting.mUseSSH);
     }

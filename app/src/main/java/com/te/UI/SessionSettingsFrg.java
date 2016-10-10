@@ -50,11 +50,9 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
         mPrefPort = (NumberPickerPreference) findPreference(getResources().getString(R.string.host_port_key));
         mServerSetting = findPreference(getResources().getString(R.string.server_setting_key));
         mKeyMapping = findPreference(getResources().getString(R.string.key_mapping_key));
-        mKeyMapping.setEnabled(stdActivityRef.gIs53Keys);
         mSSH = (TESwitchPreference) findPreference(getResources().getString(R.string.ssh_key));
         mCkNetworkAlive = (CheckBoxPreference) findPreference(getResources().getString(R.string.keep_alive_key));
         mCkDetectOut = (CheckBoxPreference) findPreference(getResources().getString(R.string.out_range_key));
-        mCkDetectOut.setEnabled(stdActivityRef.gIsActivate);
         mReaderconfig = findPreference(getResources().getString(R.string.reader_config_key));
         mReaderconfig.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -63,8 +61,15 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
-        mReaderconfig.setEnabled(CipherUtility.isReaderConfigAvable(getActivity()));
         mCkGenLog = (CheckBoxPreference) findPreference(getResources().getString(R.string.log_key));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mKeyMapping.setEnabled(stdActivityRef.gIs53Keys);
+        mCkDetectOut.setEnabled(stdActivityRef.gIsActivate);
+        mReaderconfig.setEnabled(CipherUtility.isReaderConfigAvable(getActivity()));
     }
 
     @Override
