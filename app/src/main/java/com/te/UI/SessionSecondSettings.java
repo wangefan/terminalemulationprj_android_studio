@@ -38,35 +38,35 @@ public class SessionSecondSettings extends SessionSettingsBase {
         if(action.compareTo(ACTION_HOST_PROFILE) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.host_profile));
             SessionHostProfileFrg settingsFrg = getFragment(SessionHostProfileFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_SERVER_SETTING) == 0) {
             if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
                 SessionTNSettingsFrg settingsFrg = getFragment(SessionTNSettingsFrg.class);
-                settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+                settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
                 commitFrgToActivity(settingsFrg);
             } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_setting));
                 SessionVTSettingsFrg settingsFrg = getFragment(SessionVTSettingsFrg.class);
-                settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+                settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
                 commitFrgToActivity(settingsFrg);
             }
         } else if(action.compareTo(ACTION_SCREEN_SETTING) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.screen_setting));
             SessionScreenSettingsFrg settingsFrg = getFragment(SessionScreenSettingsFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_ALARM_SETTING) == 0) {
             if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_alarm));
                 SessionTNAlarmFrg settingsFrg = getFragment(SessionTNAlarmFrg.class);
-                settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+                settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
                 commitFrgToActivity(settingsFrg);
             } else {//VT settings
                 getSupportActionBar().setTitle(getResources().getString(R.string.vt_alarm));
                 SessionVTAlarmFrg settingsFrg = getFragment(SessionVTAlarmFrg.class);
-                settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+                settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
                 commitFrgToActivity(settingsFrg);
             }
         } else if(action.compareTo(ACTION_KEY_MAPPING) == 0) {
@@ -77,19 +77,19 @@ public class SessionSecondSettings extends SessionSettingsBase {
                 @Override
                 public void onClick(View v) {
                     if(stdActivityRef.gIsActivate) {
-                        gEditSessionSetting.resetKeyMapList();
+                        getCurrentEditSession().resetKeyMapList();
                         settingsFrg.updateKeyListItems();
                     } else {
                         Toast.makeText(SessionSecondSettings.this, getString(R.string.MSG_KeyMappingItem_not_accept), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_SSH) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.ssh));
             final SessionSSHFrg settingsFrg = getFragment(SessionSSHFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         }
     }

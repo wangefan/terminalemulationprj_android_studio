@@ -9,15 +9,12 @@ import android.widget.RelativeLayout;
 import com.cipherlab.terminalemulation.R;
 
 import Terminals.TESettingsInfo;
+import Terminals.stdActivityRef;
 
 public class SessionSettings extends SessionSettingsBase {
     public static final int REQ_EDIT = 1;
     public static final int REQ_ADD = 2;
     public static final int RESULT_ADD = 3;
-    public static final String ACT_SETTING = "ACT_SETTING";
-    public static final String ACT_SETTING_EDIT = "ACT_SETTING_EDIT";
-    public static final String ACT_SETTING_EDIT_GET_SESSION_IDX = "ACT_SETTING_EDIT_GET_SESSION_IDX";
-    public static final String ACT_SETTING_ADD = "ACT_SETTING_ADD";
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +29,14 @@ public class SessionSettings extends SessionSettingsBase {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        String act = intent.getStringExtra(ACT_SETTING);
-        if(act.compareToIgnoreCase(ACT_SETTING_EDIT) == 0) {
-            int nEditSessionIdx = intent.getIntExtra(ACT_SETTING_EDIT_GET_SESSION_IDX, 0);
+        if(stdActivityRef.gCurrentEditSessionIndex >= 0) {  //edit session
+            int nEditSessionIdx = stdActivityRef.gCurrentEditSessionIndex;
             String strTitle = String.format(getResources().getString(R.string.setting_title), nEditSessionIdx + 1);
             getSupportActionBar().setTitle(strTitle);
-            gEditSessionSetting = TESettingsInfo.getSessionSetting(nEditSessionIdx);
             layOK.setVisibility(View.GONE);
-        } else if(act.compareToIgnoreCase(ACT_SETTING_ADD) == 0) {
+        } else if(stdActivityRef.gCurrentEditSessionIndex == -1) {  //add session
             String strTitle = getResources().getString(R.string.new_session);
             getSupportActionBar().setTitle(strTitle);
-            gEditSessionSetting = TESettingsInfo.createNewDefaultSessionSetting(getApplicationContext());
             toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
             layOK.setVisibility(View.VISIBLE);
             layOK.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +49,7 @@ public class SessionSettings extends SessionSettingsBase {
         }
          // Display the fragment as the main content.
         SessionSettingsFrg settingsFrg = getFragment(SessionSettingsFrg.class);
-        settingsFrg.setSessionSetting(gEditSessionSetting);
+        settingsFrg.setSessionSetting(getCurrentEditSession());
         commitFrgToActivity(settingsFrg);
     }
 }

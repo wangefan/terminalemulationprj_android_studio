@@ -633,8 +633,8 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case SessionSettings.REQ_ADD: {
-                if (resultCode == SessionSettings.RESULT_ADD && SessionSettingsBase.gEditSessionSetting != null) {
-                    TESettingsInfo.addSession(SessionSettingsBase.gEditSessionSetting);
+                if (resultCode == SessionSettings.RESULT_ADD) {
+                    TESettingsInfo.addSession(SessionSettingsBase.getAddedSession());
                     int nAddedSessionIdx = TESettingsInfo.getSessionCount() - 1;
                     TerminalProcess process = new TerminalProcess();
                     process.setMacroList(TESettingsInfo.getHostMacroListByIndex(nAddedSessionIdx));
@@ -680,8 +680,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onAddSession() {
         if (TESettingsInfo.getSessionCount() < TESettingsInfo.MAX_SESSION_COUNT) {
+            stdActivityRef.gCurrentEditSessionIndex = -1;
             Intent intent = new Intent(this, SessionSettings.class);
-            intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_ADD);
             startActivityForResult(intent, SessionSettings.REQ_ADD);
         }
     }
@@ -1111,16 +1111,14 @@ public class MainActivity extends AppCompatActivity
                     new UIUtility.OnAccessCtrlChkListener() {
                         @Override
                         public void onValid() {
+                            stdActivityRef.gCurrentEditSessionIndex = nSessionIdx;
                             Intent intent = new Intent(MainActivity.this, SessionSettings.class);
-                            intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
-                            intent.putExtra(SessionSettings.ACT_SETTING_EDIT_GET_SESSION_IDX, nSessionIdx);
                             startActivityForResult(intent, SessionSettings.REQ_EDIT);
                         }
                     });
         } else {
+            stdActivityRef.gCurrentEditSessionIndex = nSessionIdx;
             Intent intent = new Intent(this, SessionSettings.class);
-            intent.putExtra(SessionSettings.ACT_SETTING, SessionSettings.ACT_SETTING_EDIT);
-            intent.putExtra(SessionSettings.ACT_SETTING_EDIT_GET_SESSION_IDX, nSessionIdx);
             startActivityForResult(intent, SessionSettings.REQ_EDIT);
         }
     }

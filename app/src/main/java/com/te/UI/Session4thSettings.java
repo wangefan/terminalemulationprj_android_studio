@@ -34,7 +34,7 @@ public class Session4thSettings extends SessionSettingsBase {
         } else if(action.compareTo(ACTION_MGR_KEYFILES) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.ssh_mgr_key_files));
             SessionSSHMgrKeyFilesFrg mgrKeyFilsFrg = getFragment(SessionSSHMgrKeyFilesFrg.class);
-            mgrKeyFilsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            mgrKeyFilsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(mgrKeyFilsFrg);
         }
     }

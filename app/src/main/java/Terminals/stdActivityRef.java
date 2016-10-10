@@ -7,9 +7,9 @@ import android.os.Vibrator;
 import com.te.UI.MainActivity;
 
 public class stdActivityRef {
-
     public static MainActivity activity = null;
-    public static boolean gIsActivate = false;//Todo: handle saveInstace and restore
+    public static boolean gIsActivate = false;
+    public static int gCurrentEditSessionIndex = 0; // -1: means Add setting, or possible index from 0 ~ 4
     public static boolean gIs53Keys = false;//Todo: set the flag by current device
 
     public static void setCurrActivity(MainActivity act) {
@@ -21,6 +21,7 @@ public class stdActivityRef {
         } else {
             gIs53Keys = false;
         }
+        gCurrentEditSessionIndex = 0;
     }
 
     public static MainActivity getCurrActivity() {

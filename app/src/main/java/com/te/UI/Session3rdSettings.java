@@ -35,38 +35,38 @@ public class Session3rdSettings extends SessionSettingsBase {
         if(action.compareTo(ACTION_COLOR) == 0) {
             getSupportActionBar().setTitle(getResources().getString(R.string.screen_color));
             SessionColorSettingsFrg settingsFrg = getFragment(SessionColorSettingsFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_READER_CTRL) == 0) {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.vt_control_reader));
             SessionVTReaderCtrlFrg settingsFrg = getFragment(SessionVTReaderCtrlFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_FEEDBACK) == 0) {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.vt_feedback));
             SessionVTFeedbackFrg settingsFrg = getFragment(SessionVTFeedbackFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_KEYMAP_EDIT) == 0) {
             int nEditServerKeycode = getIntent().getIntExtra(ACTION_KEYMAP_EDIT_SERVER_KEYCODE, 0);
             getSupportActionBar().setTitle(getResources().getString(R.string.keymap_edit));
             SessionKeyMapEditingFrg settingsFrg = getFragment(SessionKeyMapEditingFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             settingsFrg.setServerKeyCode(nEditServerKeycode);
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_SSH_NAME_PWD) == 0) {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.ssh_set_name_pwd));
             SessionSSHNamePwdFrg settingsFrg = getFragment(SessionSSHNamePwdFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_SSH_KEY_FILE) == 0) {
             gIsAlarmModified = false;
             getSupportActionBar().setTitle(getResources().getString(R.string.ssh_set_key_file));
             SessionSSHKeyFileFrg settingsFrg = getFragment(SessionSSHKeyFileFrg.class);
-            settingsFrg.setSessionSetting(SessionSettingsBase.gEditSessionSetting);
+            settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         }
     }

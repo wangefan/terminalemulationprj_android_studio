@@ -13,6 +13,8 @@ public abstract class SessionSettingsFrgBase extends PreferenceFragment implemen
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     //Data members
+
+    //Notice that could not use in onCreate because may not ready
     protected TESettings.SessionSetting mSetting = null;
     public SessionSettingsFrgBase() {
     }

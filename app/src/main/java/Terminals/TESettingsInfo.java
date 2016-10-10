@@ -157,6 +157,14 @@ public class TESettingsInfo {
         return true;
     }
 
+    public static void restoreAddedSetting(SessionSetting setting) {
+
+    }
+
+    public static void saveAddedSetting(SessionSetting setting) {
+
+    }
+
     public static void saveSessionSettings(Context context) {
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return;
@@ -263,21 +271,6 @@ public class TESettingsInfo {
         }
     }
 
-    public static SessionSetting createNewDefaultSessionSetting(Context context) {
-        SessionSetting setting = null;
-        try {
-            InputStream inputStream = context.getAssets().open(mDefaultSettingFilename);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            setting = gson.fromJson(reader, SessionSetting.class);
-            processAfterLoadSetting(setting);
-        } catch (Exception e) {
-
-        }
-
-        return setting;
-    }
-
     public static ArrayList<TESettings.CSsh_Key> getCommonSSHKeys() {
         return mTESettings.Common.mSSHKeyFiles;
     }
@@ -362,6 +355,21 @@ public class TESettingsInfo {
 
     public static SessionSetting getSessionSetting(int index) {
         return mTESettings.getSessionSetting(index);
+    }
+
+    public static SessionSetting createNewDefaultSessionSetting(Context context) {
+        SessionSetting setting = null;
+        try {
+            InputStream inputStream = context.getAssets().open(mDefaultSettingFilename);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            setting = gson.fromJson(reader, SessionSetting.class);
+            processAfterLoadSetting(setting);
+        } catch (Exception e) {
+
+        }
+
+        return setting;
     }
 
     public static void addSession(SessionSetting snSetting) {
