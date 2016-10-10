@@ -240,9 +240,6 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 				}
 
 				if(TESettingsInfo.getSshReKey1GminByIndex(TESettingsInfo.getSessionIndex())) {
-					long tEnd = System.currentTimeMillis();
-					long tDelta = tEnd - tStart;
-					double elapsedSeconds = tDelta / 1000.0;
 					if(TotoalRec > 1024 * 1024 * 1024) {
 						mSshConn.ReKey();
 						TotoalRec = 0;
