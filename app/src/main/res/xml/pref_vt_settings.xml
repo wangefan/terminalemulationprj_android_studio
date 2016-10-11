@@ -22,4 +22,9 @@
         android:entryValues="@array/char_set_array_vals"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
+    <com.te.UI.TESwitchPreference
+        android:key="@string/vt_replace_if_unconvert_key"
+        android:title="@string/vt_replace_if_unconvert"
+        android:summaryOff="@string/vt_replace_if_unconvert_sum_off"
+        android:widgetLayout="@layout/te_switch"/>
 </PreferenceScreen>

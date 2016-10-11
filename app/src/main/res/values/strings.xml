@@ -112,6 +112,9 @@
     <string name="vt_send_string">Send String</string>
     <string name="vt_char_set_key">vt_char_set_key</string>
     <string name="vt_char_set">Remote Character Set</string>
+    <string name="vt_replace_if_unconvert_key">vt_replace_if_unconvert_key</string>
+    <string name="vt_replace_if_unconvert">Replace Char if Unconvertable</string>
+    <string name="vt_replace_if_unconvert_sum_off">Not Replace</string>
     <string name="auto_track_visible">Visible</string>
     <string name="auto_track_center">Center</string>
     <string name="auto_track_locked">Locked Location</string>
@@ -300,6 +303,16 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="replace_char_arr">
+        <item>&#032;</item>
+        <item>X</item>
+        <item>&#037;</item>
+        <item>&#038;</item>
+        <item>&#042;</item>
+        <item>&#045;</item>
+        <item>&#095;</item>
+    </string-array>
+
     <string name="fb_content_command">Command</string>
     <string name="fb_content_text">Text</string>
     <string name="fb_good_fb_text_title">Good Feedback Text</string>

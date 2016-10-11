@@ -433,6 +433,16 @@ public class TESettingsInfo {
         return Setting.mNCharSet;
     }
 
+    public static boolean getIsReplaceCharIfUnconvertByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mBReplaceIfUnconvert;
+    }
+
+    public static String getReplaceCharIfUnconvertByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mReplaceChar;
+    }
+
     public static Boolean getHostIsLineBufferByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return (Setting.mLineBuffer == 1);

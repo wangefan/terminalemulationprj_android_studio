@@ -479,8 +479,9 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                 try {
                     strResult = new String(utfBytes, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
-                    // TODO Auto-generated catch block
-                    return null;
+                    if(TESettingsInfo.getIsReplaceCharIfUnconvertByIndex(TESettingsInfo.getSessionIndex())) {
+                        strResult = TESettingsInfo.getReplaceCharIfUnconvertByIndex(TESettingsInfo.getSessionIndex());
+                    }
                 }
 
             } else

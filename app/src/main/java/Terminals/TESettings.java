@@ -354,6 +354,12 @@ public class TESettings {
         @SerializedName("nCharSet")
         public int mNCharSet = 0;	//0:Ansi, 1:UTF8
 
+        @SerializedName("bDataUnConvert")
+        public boolean mBReplaceIfUnconvert = false;
+
+        @SerializedName("RepaceChar")
+        public String mReplaceChar = " "; // " ", "X", "%", "&", "*", "-", "_"
+
         @SerializedName("sendStringOnConnect")
         public String mVTSendtoHost = "";
 

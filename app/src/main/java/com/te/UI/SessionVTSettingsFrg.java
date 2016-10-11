@@ -16,6 +16,7 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
     private CheckBoxPreference mChkEcho = null;
     private Preference mPrefSendString = null;
     private ListPreference mlstPrefCharSet = null;
+    private TESwitchPreference mReplaceCharIfUnconvert = null;
 
     public SessionVTSettingsFrg() {
     }
@@ -30,7 +31,9 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
         mChkLineBuffer.setChecked(mSetting.mLineBuffer == 1);
         mChkEcho.setChecked(mSetting.mBEcho);
         mlstPrefCharSet.setValue(String.valueOf(mSetting.mNCharSet));
-
+        mReplaceCharIfUnconvert.setEnabled(mSetting.mNCharSet == 1);
+        mReplaceCharIfUnconvert.setChecked(mSetting.mBReplaceIfUnconvert);
+        mReplaceCharIfUnconvert.setSummaryOn(String.valueOf(mSetting.mReplaceChar));
         syncSettingToSendingStringPref();
     }
 
@@ -44,6 +47,9 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
             mSetting.mBEcho = mChkEcho.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.vt_char_set_key)) == 0) {
             mSetting.mNCharSet = Integer.valueOf(mlstPrefCharSet.getValue());
+            mReplaceCharIfUnconvert.setEnabled(mSetting.mNCharSet == 1);
+        } else if(key.compareTo(getResources().getString(R.string.vt_replace_if_unconvert_key)) == 0) {
+            mSetting.mBReplaceIfUnconvert = mReplaceCharIfUnconvert.isChecked();
         }
     }
 
@@ -72,6 +78,37 @@ public class SessionVTSettingsFrg extends SessionSettingsFrgBase {
             }
         });
         mlstPrefCharSet = (ListPreference) findPreference(getResources().getString(R.string.vt_char_set_key));
+        mReplaceCharIfUnconvert = (TESwitchPreference) findPreference(getResources().getString(R.string.vt_replace_if_unconvert_key));
+        mReplaceCharIfUnconvert.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
+            @Override
+            public void onClick() {
+                int nSelItem = 0;
+                String[] items = getResources().getStringArray(R.array.replace_char_arr);
+                for (int idxChar = 0; idxChar < items.length; idxChar++) {
+                    if(items[idxChar].compareTo(mSetting.mReplaceChar) == 0) {
+                        nSelItem = idxChar;
+                    }
+                }
+                UIUtility.listMessageBox(R.string.vt_replace_if_unconvert,
+                        R.array.replace_char_arr,
+                        nSelItem,
+                        getActivity(),
+                        new UIUtility.OnListMessageBoxListener() {
+                            @Override
+                            public void onSelResult(String result, int nSelIdx) {
+                                mSetting.mReplaceChar = result;
+                                mSetting.mBReplaceIfUnconvert = true;
+                                mReplaceCharIfUnconvert.setSummaryOn(result);
+                                mReplaceCharIfUnconvert.setChecked(true);
+                            }
+                        });
+            }
+
+            @Override
+            public void onChecked(boolean isChecked) {
+                mSetting.mBReplaceIfUnconvert = isChecked;
+            }
+        });
     }
 
     @Override
