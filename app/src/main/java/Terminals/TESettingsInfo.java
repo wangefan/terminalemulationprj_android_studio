@@ -57,6 +57,7 @@ public class TESettingsInfo {
 
     final private static String TE_JASONFILE_NAME = "TE_settings.json";
     final private static String mDefaultSettingFilename = "TE_Default_setting.json";
+    final private static String TE_JASONFILE_ADDEDFILE = "TE_setting_added.json";
 
     static TESettings mTESettings = null;
     private static SharedPreferences mSp = null;
@@ -157,12 +158,40 @@ public class TESettingsInfo {
         return true;
     }
 
-    public static void restoreAddedSetting(SessionSetting setting) {
-
+    public static SessionSetting restoreAddedSetting(Context context) {
+        SessionSetting setting = null;
+        try {
+            File teAddedJsonFile = new File(context.getFilesDir(), TE_JASONFILE_ADDEDFILE);
+            if(teAddedJsonFile.exists()) {
+                FileInputStream inStream = new FileInputStream(teAddedJsonFile);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                setting = gson.fromJson(reader, SessionSetting.class);
+                return setting;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static void saveAddedSetting(SessionSetting setting) {
-
+    public static void saveAddedSetting(SessionSetting setting, Context context) {
+        try {
+            //delete old cache if exist
+            File teAddedJsonFile = new File(context.getFilesDir(), TE_JASONFILE_ADDEDFILE);
+            if (teAddedJsonFile.exists()) {
+                teAddedJsonFile.delete();
+            }
+            if (teAddedJsonFile.createNewFile()) {
+                FileOutputStream outputStream;
+                outputStream = new FileOutputStream(teAddedJsonFile, true);
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                outputStream.write(gson.toJson(setting).getBytes());
+                outputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void saveSessionSettings(Context context) {
