@@ -74,7 +74,7 @@ public class NumberPickerPreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
             mPort = String.valueOf(mNumPicker.getValue());
-            persistString(mPort);
+            persistBoolean(!getPersistedBoolean(true));//here to trigger SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
