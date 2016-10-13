@@ -803,12 +803,14 @@ public class IBMHost5250 extends IBMHostBase {
                     mBDBCS = true;
                     this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                     this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
+                    putDataInFiledIfNeed(BufferAddr.Pos, c);
                     movePosToNext(BufferAddr.Pos);
                     break;
                 case DBCS_ENDING:
                     mBDBCS = false;
                     this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                     this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
+                    putDataInFiledIfNeed(BufferAddr.Pos, c);
                     movePosToNext(BufferAddr.Pos);
                     break;
                 default://data
@@ -820,15 +822,24 @@ public class IBMHost5250 extends IBMHostBase {
                         } else {
                             this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                             this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
+                            putDataInFiledIfNeed(BufferAddr.Pos, c);
                         }
                         movePosToNext(BufferAddr.Pos);
                     } else { //Double byte
                         this.AttribGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = CurAttrib;
                         this.CharGrid[BufferAddr.Pos.Y][BufferAddr.Pos.X] = c;
+                        putDataInFiledIfNeed(BufferAddr.Pos, c);
                         movePosToNext(BufferAddr.Pos);
                     }
                     break;
             }
+        }
+    }
+
+    private void putDataInFiledIfNeed(Point curPos, char data) {
+        IBM_FIELD field = FieldList.isInField(curPos.X, curPos.Y);
+        if(field != null) {
+            field.Data[curPos.X - field.CaretAddr.Pos.X] = data;
         }
     }
 
@@ -2955,19 +2966,32 @@ public class IBMHost5250 extends IBMHostBase {
         public char Attrib;
         public IBM_FIELD() {
         }
+
+        public boolean isInField(int X, int Y) {
+            return (Y == CaretAddr.Pos.Y && X >= CaretAddr.Pos.X && X < CaretAddr.Pos.X + Lenth);
+        }
     }
 
     private class FieldArray extends java.util.ArrayList<IBM_FIELD> {
         boolean isNeedLine(int X, int Y) {
             for (int idxFiled = 0; idxFiled < this.size(); idxFiled++) {
                 IBM_FIELD field = get(idxFiled);
-                if(isScreenAttributeVisible((byte) field.Attrib) &&
-                        Y == field.CaretAddr.Pos.Y &&
-                        X >= field.CaretAddr.Pos.X && X < field.CaretAddr.Pos.X + field.Lenth) {
+                if(isScreenAttributeVisible((byte) field.Attrib) && field.isInField(X, Y)) {
                     return true;
                 }
             }
             return false;
+        }
+
+        //return IBM_FIELD if (x,y) in under field, or null if not in the field.
+        public IBM_FIELD isInField(int X, int Y) {
+            for (int idxFiled = 0; idxFiled < this.size(); idxFiled++) {
+                IBM_FIELD field = get(idxFiled);
+                if(field.isInField(X, Y)) {
+                    return field;
+                }
+            }
+            return null;
         }
 
         public String BuildReadDataByIndex(int index, boolean SBA, boolean Replace) {
