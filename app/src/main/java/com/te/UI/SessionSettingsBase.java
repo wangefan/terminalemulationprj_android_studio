@@ -15,7 +15,7 @@ public class SessionSettingsBase extends AppCompatActivity {
     private static final String TE_APP_STATUS_SETTINGS = "TE_APP_STATUS_SETTINGS";
     private static final String TE_APP_STATUS_LICENSE = "TE_APP_STATUS_LICENSE";
     private static final String TE_APP_STATUS_CUR_EDITING_IDX = "TE_APP_STATUS_CUR_EDITING_IDX";
-    private static final String TE_APP_STATUS_IS_53Key = "TE_APP_STATUS_IS_53Key";
+    private static final String TE_APP_STATUS_KEYPAD_TYPE = "TE_APP_STATUS_KEYPAD_TYPE";
 
     private static TESettings.SessionSetting mAddedSession = null;
 
@@ -67,7 +67,7 @@ public class SessionSettingsBase extends AppCompatActivity {
                 TESettingsInfo.loadSessionSettings(getApplication());
             }
             stdActivityRef.gIsActivate = savedInstanceState.getBoolean(TE_APP_STATUS_LICENSE);
-            stdActivityRef.gIs53Keys = savedInstanceState.getBoolean(TE_APP_STATUS_IS_53Key);
+            stdActivityRef.gKeypadType = savedInstanceState.getInt(TE_APP_STATUS_KEYPAD_TYPE);
             stdActivityRef.gCurrentEditSessionIndex = savedInstanceState.getInt(TE_APP_STATUS_CUR_EDITING_IDX);
             if(stdActivityRef.gCurrentEditSessionIndex == -1) {
                 mAddedSession = TESettingsInfo.restoreAddedSetting(this);
@@ -86,7 +86,7 @@ public class SessionSettingsBase extends AppCompatActivity {
         TESettingsInfo.saveSessionSettings(this);
         savedInstanceState.putBoolean(TE_APP_STATUS_SETTINGS, true);
         savedInstanceState.putBoolean(TE_APP_STATUS_LICENSE, stdActivityRef.gIsActivate);
-        savedInstanceState.putBoolean(TE_APP_STATUS_IS_53Key, stdActivityRef.gIs53Keys);
+        savedInstanceState.putInt(TE_APP_STATUS_KEYPAD_TYPE, stdActivityRef.gKeypadType);
         savedInstanceState.putInt(TE_APP_STATUS_CUR_EDITING_IDX, stdActivityRef.gCurrentEditSessionIndex);
         if(stdActivityRef.gCurrentEditSessionIndex == -1) { //add session
             TESettingsInfo.saveAddedSetting(mAddedSession, this);

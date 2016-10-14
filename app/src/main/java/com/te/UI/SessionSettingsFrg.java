@@ -67,7 +67,7 @@ public class SessionSettingsFrg extends SessionSettingsFrgBase {
     @Override
     public void onResume() {
         super.onResume();
-        mKeyMapping.setEnabled(stdActivityRef.gIs53Keys);
+        mKeyMapping.setEnabled(stdActivityRef.hasKey());
         mCkDetectOut.setEnabled(stdActivityRef.gIsActivate);
         mReaderconfig.setEnabled(CipherUtility.isReaderConfigAvable(getActivity()));
     }

@@ -198,7 +198,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
     }
 
     public static String getPhyKeycodeTextByKeycode(int nDecodedKeyCode) {
-        if(stdActivityRef.gIs53Keys) {
+        if(stdActivityRef.is53Key()) {
             AtomicInteger combinKey = new AtomicInteger(KeyEvent.KEYCODE_UNKNOWN);
             if(is53KeyBlueKeyCombin(nDecodedKeyCode, combinKey) && combinKey.get() != KeyEvent.KEYCODE_UNKNOWN) {
                 String format = stdActivityRef.getCurrActivity().getResources().getString(R.string.Format_phy_key_text);

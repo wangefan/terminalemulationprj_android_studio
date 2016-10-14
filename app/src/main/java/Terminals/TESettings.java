@@ -159,7 +159,7 @@ public class TESettings {
                 strHostTypeName = mTermNameTN;
                 if(strHostTypeName.compareTo(TESettingsInfo.TN3270TYPENAME) == 0) {
                     mTN3270KeyConfig.clear();
-                    if(stdActivityRef.gIs53Keys) {
+                    if(stdActivityRef.is53Key()) {
                         TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap_Taurus);
                     } else {
                         TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap);
@@ -167,7 +167,7 @@ public class TESettings {
                     mTN3270KeyConfigCount = mTN3270KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.TN5250TYPENAME) == 0) {
                     mTN5250KeyConfig.clear();
-                    if(stdActivityRef.gIs53Keys) {
+                    if(stdActivityRef.is53Key()) {
                         TESettingsInfo.fillMaps(mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus);
                     } else {
                         TESettingsInfo.fillMaps(mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
@@ -178,7 +178,7 @@ public class TESettings {
                 strHostTypeName = mTermName;
                 if(strHostTypeName.compareTo(TESettingsInfo.VT100TYPENAME) == 0) {
                     mVT100_102KeyConfig.clear();
-                    if(stdActivityRef.gIs53Keys) {
+                    if(stdActivityRef.is53Key()) {
                         TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus);
                     } else {
                         TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
@@ -186,7 +186,7 @@ public class TESettings {
                     mVT100_102KeyConfigCount = mVT100_102KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.VT102TYPENAME) == 0) {
                     mVT100_102KeyConfig.clear();
-                    if(stdActivityRef.gIs53Keys) {
+                    if(stdActivityRef.is53Key()) {
                         TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus);
                     } else {
                         TESettingsInfo.fillMaps(mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
@@ -194,7 +194,7 @@ public class TESettings {
                     mVT100_102KeyConfigCount = mVT100_102KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.VT220TYPENAME) == 0) {
                     mVT220KeyConfig.clear();
-                    if(stdActivityRef.gIs53Keys) {
+                    if(stdActivityRef.is53Key()) {
                         TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus);
                     } else {
                         TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
@@ -202,7 +202,7 @@ public class TESettings {
                     mVT220KeyConfigCount = mVT220KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.VTANSITYPENAME) == 0) {
                     mVT220KeyConfig.clear();
-                    if(stdActivityRef.gIs53Keys) {
+                    if(stdActivityRef.is53Key()) {
                         TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus);
                     } else {
                         TESettingsInfo.fillMaps(mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
