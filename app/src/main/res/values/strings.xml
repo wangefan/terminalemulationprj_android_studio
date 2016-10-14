@@ -711,23 +711,6 @@
         <item>UTF-8</item>
     </string-array>
 
-    <string name="pref_Title_LineBuffer">Line Buffer</string>
-    <string name="pref_Title_LocalEcho">Local Echo</string>
-
-    <!-- Auto connect -->
-    <string name="pref_Title_Autoconnect">Auto Connect</string>
-
-    <string name="pref_Title_AutoSignOn">Auto Sign On</string>
-    <string name="pref_Title_LoginPrompt">Login Prompt</string>
-    <string name="pref_Title_PwdPrompt">Password Prompt</string>
-    <string name="pref_Title_UserName">Login Name</string>
-    <string name="pref_Title_Pwd">Login Password</string>
-    <string name="pref_Title_SendToHost">Send to host</string>
-    <string name="pref_Title_TermLogin">Term.Login</string>
-    <string-array name="pref_vt_SignTermList">
-        <item>Enter</item>
-        <item>Tab</item>
-    </string-array>
 
     <!-- feedback command -->
     <string name="pref_Title_FeedBack">Costom Command</string>
