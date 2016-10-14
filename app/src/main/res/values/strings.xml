@@ -589,9 +589,9 @@
     <string name="auto_connect">Auto Connect</string>
     <string name="auto_sign">Auto Sign on</string>
     <string name="host_auto_sign_name">Login Name</string>
-    <string name="host_auto_sign_name_prom">Login Prompt</string>
-    <string name="host_auto_sign_pwd_prom">Password Prompt</string>
-    <string name="host_auto_sign_term_prom">Term Login</string>
+    <string name="host_auto_sign_name_prom">Login Prompt(VT Only)</string>
+    <string name="host_auto_sign_pwd_prom">Password Prompt(VT Only)</string>
+    <string name="host_auto_sign_term_prom">Term Login(VT Only)</string>
     <string name="host_auto_sign_pwd">Login Password</string>
     <string name="emulation_setting">Emulation Settings</string>
     <string name="server_setting_key">server_setting_key</string>
