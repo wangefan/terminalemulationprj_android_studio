@@ -28,7 +28,8 @@
     <EditTextPreference
         android:key="@string/host_auto_sign_pwd_key"
         android:title="@string/host_auto_sign_pwd"
-        android:dependency="@string/host_auto_sign_key"/>
+        android:dependency="@string/host_auto_sign_key"
+        android:inputType="textPassword"/>
     <EditTextPreference
         android:key="@string/host_auto_sign_name_prom_key"
         android:title="@string/host_auto_sign_name_prom"/>

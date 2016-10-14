@@ -244,4 +244,15 @@ public class CipherUtility {
 		String fileName = String.format("TE_SSH.S%d.%s.log", nSession + 1, getDateTime());
 		return fileName;
 	}
+
+	public static String getNumStar(String password) {
+		if(password != null) {
+			StringBuilder sb = new StringBuilder();
+			for (int idx = 0; idx < password.length(); idx++) {
+				sb.append('*');
+			}
+			return sb.toString();
+		}
+		return "";
+	}
 }

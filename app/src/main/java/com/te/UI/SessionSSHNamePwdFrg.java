@@ -12,17 +12,6 @@ public class SessionSSHNamePwdFrg extends SessionSettingsFrgBase {
     public SessionSSHNamePwdFrg() {
     }
 
-    private String getNumStar(String password) {
-        if(password != null) {
-            StringBuilder sb = new StringBuilder();
-            for (int idx = 0; idx < password.length(); idx++) {
-                sb.append('*');
-            }
-            return sb.toString();
-        }
-        return "";
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +27,7 @@ public class SessionSSHNamePwdFrg extends SessionSettingsFrgBase {
         if (p instanceof EditTextPreference) {
             EditTextPreference editTextPref = (EditTextPreference) p;
             if (p.getKey().compareTo((getResources().getString(R.string.ssh_pwd_key))) == 0) {
-                p.setSummary(getNumStar(editTextPref.getText()));
+                p.setSummary(CipherUtility.getNumStar(editTextPref.getText()));
             } else {
                 p.setSummary(editTextPref.getText());
             }

@@ -36,7 +36,7 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
         if (p instanceof EditTextPreference) {
             EditTextPreference editTextPref = (EditTextPreference) p;
             if (p.getKey().compareTo((getResources().getString(R.string.host_auto_sign_pwd_key))) == 0) {
-                p.setSummary("******");
+                p.setSummary(CipherUtility.getNumStar(editTextPref.getText()));
             } else {
                 p.setSummary(editTextPref.getText());
             }
