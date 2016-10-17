@@ -632,7 +632,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (requestCode) {
             case SessionSettings.REQ_EDIT:
-                mFragmentLeftdrawer.updateCurSessionTitle();
+                mFragmentLeftdrawer.updateSessionTitles();
                 mContentView.refresh();
                 setSessionJumpImage(TESettingsInfo.getSessionIndex());
                 setSessionStatusView();

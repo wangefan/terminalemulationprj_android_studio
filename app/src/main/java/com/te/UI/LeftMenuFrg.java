@@ -87,13 +87,16 @@ public class LeftMenuFrg extends Fragment {
         });
     }
 
-    public void updateCurSessionTitle() {
-        int nCurSession = TESettingsInfo.getSessionIndex();
-        String strTitle =
-                String.format(getResources().getString(R.string.Format_Session),
-                        Integer.toString(nCurSession + 1),
-                        TESettingsInfo.getHostAddrByIndex(nCurSession));
-        mSessionsView.setSessionTitle(nCurSession, strTitle);
+    public void updateSessionTitles() {
+        int nSessions = TESettingsInfo.getSessionCount();
+        for (int idxSession = 0; idxSession < nSessions; idxSession++) {
+            TESettingsInfo.getSessionSetting(idxSession);
+            String strTitle =
+                    String.format(getResources().getString(R.string.Format_Session),
+                            Integer.toString(idxSession + 1),
+                            TESettingsInfo.getHostAddrByIndex(idxSession));
+            mSessionsView.setSessionTitle(idxSession, strTitle);
+        }
         ((SessionsView.SessionItemsAdapter)mSessionsView.getAdapter()).notifyDataSetChanged();
     }
 
