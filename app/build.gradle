@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
-        versionName '0.0.0.6'
+        versionName '0.0.0.7'
         resValue "bool", "bSpecialHandleLicense", "false"
     }
     buildTypes {
@@ -32,7 +32,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 22
             versionCode 1
-            versionName '0.0.0.6'
+            versionName '0.0.0.7'
         }
         densowave {
             applicationId = "com.densowave.terminalemulation"
@@ -42,7 +42,7 @@ android {
             resValue "bool", "bSpecialHandleLicense", "true"
             minSdkVersion 15
             targetSdkVersion 22
-            versionName '0.0.0.6'
+            versionName '0.0.0.7'
             versionCode 1
         }
     }
