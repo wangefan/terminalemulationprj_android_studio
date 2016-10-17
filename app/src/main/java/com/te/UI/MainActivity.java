@@ -681,6 +681,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDrawerItemDelete(int position) {
         mTerminalProcessFrg.removeTerminalProc(position);
+        setSessionStatusView();
     }
 
     @Override

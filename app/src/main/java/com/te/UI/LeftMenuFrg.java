@@ -156,25 +156,22 @@ public class LeftMenuFrg extends Fragment {
                     if(pos == 0) { //choose next one
                         int nNextPos = TESettingsInfo.getSessionIndex() + 1;
                         clickSession(nNextPos); //select previous item
-                        mSessionsView.removeSession(pos);
                         TESettingsInfo.removeSession(pos);
-                        mSessionsView.refresh();
+                        syncSessionsViewFromSettings();
                         mSessionsView.setSelected(nNextPos - 1);
                         mLeftMenuListener.onDrawerItemDelete(pos);
                     }
                     else { //choose previous
                         int nPreviousPos = TESettingsInfo.getSessionIndex() - 1;
                         clickSession(nPreviousPos); //select previous item
-                        mSessionsView.removeSession(pos);
                         TESettingsInfo.removeSession(pos);
-                        mSessionsView.refresh();
+                        syncSessionsViewFromSettings();
                         mSessionsView.setSelected(nPreviousPos);
                         mLeftMenuListener.onDrawerItemDelete(pos);
                     }
                 } else {    //pos > TESettingsInfo.getSessionIndex() || //pos < TESettingsInfo.getSessionIndex()
-                    mSessionsView.removeSession(pos);
                     TESettingsInfo.removeSession(pos);
-                    mSessionsView.refresh();
+                    syncSessionsViewFromSettings();
                     mSessionsView.setSelected(TESettingsInfo.getSessionIndex());
                     mLeftMenuListener.onDrawerItemDelete(pos);
                 }
