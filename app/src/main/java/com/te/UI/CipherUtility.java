@@ -36,7 +36,6 @@ import java.util.List;
 import Terminals.stdActivityRef;
 
 public class CipherUtility {
-	static final String READER_CONFIG_PKG_NAME = "cipherlab.sw.readerconfig";
 
 	static public void Log_d(String tag, String msg) {
 		if (BuildConfig.DEBUG_MODE)
@@ -192,7 +191,8 @@ public class CipherUtility {
 
 	public static boolean isReaderConfigAvable(Context context) {
 		PackageManager manager = context.getPackageManager();
-		Intent intent = manager.getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
+		String pkgName = context.getString(R.string.STR_Reader_PKG_name);
+		Intent intent = manager.getLaunchIntentForPackage(pkgName);
 		if (intent == null) {
 			return false;
 		}
@@ -206,7 +206,8 @@ public class CipherUtility {
 
 	public static void showReaderConfig(Context context) {
 		if(isReaderConfigAvable(context)) {
-			Intent intent = context.getPackageManager().getLaunchIntentForPackage(READER_CONFIG_PKG_NAME);
+			String pkgName = context.getString(R.string.STR_Reader_PKG_name);
+			Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkgName);
 			context.startActivity(intent);
 		}
 	}

@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autoLink="web"
-        android:text="http://www.cipherlab.com"
+        android:text="string/STR_website"
         android:textSize="16sp" />
 
 </LinearLayout>

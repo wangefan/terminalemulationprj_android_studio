@@ -410,6 +410,13 @@ public class MainActivity extends AppCompatActivity
             if(appId.compareTo("com.densowave.terminalemulation") == 0) {
                 if(Build.DEVICE.compareTo("BHT1600") == 0) {
                     stdActivityRef.gIsActivate = true;
+                } else {
+                    UIUtility.messageBox(MainActivity.this, R.string.MSG_AUTH_Densowave_BHT1600_Alert, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
                 }
             }
         } else {
@@ -904,7 +911,8 @@ public class MainActivity extends AppCompatActivity
 
         try {
             PackageManager manager = this.getPackageManager();
-            PackageInfo info = manager.getPackageInfo("com.cipherlab.clbarcodeservice", 0);
+            String barcodeServicePKGName = getString(R.string.STR_barcode_service);
+            PackageInfo info = manager.getPackageInfo(barcodeServicePKGName, 0);
             ServiceVer.setText(info.versionName);
         } catch (NameNotFoundException e) {
             ServiceVer.setText("0.0.0");

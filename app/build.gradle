@@ -28,6 +28,9 @@ android {
             applicationId = "com.cipherlab.terminalemulation"
             resValue "string", "application_Id", "com.cipherlab.terminalemulation"
             resValue "string", "STR_CopyRight", "Copyright © CipherLab Co. Ltd."
+            resValue "string", "STR_Reader_PKG_name", "cipherlab.sw.readerconfig"
+            resValue "string", "STR_website", "http://www.cipherlab.com"
+            resValue "string", "STR_barcode_service", "com.cipherlab.clbarcodeservice"
             resValue "string", "STR_Settings_path", "CipherLabSettings"
             minSdkVersion 15
             targetSdkVersion 22
@@ -38,6 +41,9 @@ android {
             applicationId = "com.densowave.terminalemulation"
             resValue "string", "application_Id", "com.densowave.terminalemulation"
             resValue "string", "STR_CopyRight", "Copyright © Supplier of DENSO WAVE INCORPORATED"
+            resValue "string", "STR_Reader_PKG_name", "densowave.sw.readerconfig"
+            resValue "string", "STR_website", "https://www.denso-wave.com/en/"
+            resValue "string", "STR_barcode_service", "com.densowave.clbarcodeservice"
             resValue "string", "STR_Settings_path", "DensoWaveSettings"
             resValue "bool", "bSpecialHandleLicense", "true"
             minSdkVersion 15
