@@ -53,7 +53,7 @@ public class ContentView extends View {
             CipherUtility.Log_d("ContentView", "onDown");
             float x = e.getX() + mScrollPosX;
             float y = e.getY() + mScrollPosY;
-            CipherUtility.Log_d("ContentView", String.format("x = %d, y = %d", (int)x, (int)y));
+            CipherUtility.Log_d("ContentView", "x = %d, y = %d", (int)x, (int)y);
             switch (e.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     OnScreenMouseDown((int) x, (int) y);
@@ -357,7 +357,7 @@ public class ContentView extends View {
             }
 
             mOverScroller.startScroll(mScrollPosX, mScrollPosY, nMoveToX - mScrollPosX, nMoveToY - mScrollPosY);
-            CipherUtility.Log_d("ContentView", String.format("Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY));
+            CipherUtility.Log_d("ContentView", "Scroll to [x:%d , y:%d]", nMoveToX, nMoveToY);
         }
     }
 
@@ -394,10 +394,10 @@ public class ContentView extends View {
 
     public void OnScreenMouseDown(int x, int y) {
         CipherUtility.Log_d("ContentView", "OnScreenMouseDown");
-        CipherUtility.Log_d("ContentView", String.format("x = %d, y = %d", x, y));
+        CipherUtility.Log_d("ContentView", "x = %d, y = %d", x, y);
         Point BufferPos;
         BufferPos = CalculateCaretPos(x, y);
-        CipherUtility.Log_d("ContentView", String.format("BufferPos.x = %d, BufferPos.y = %d", BufferPos.X, BufferPos.Y));
+        CipherUtility.Log_d("ContentView", "BufferPos.x = %d, BufferPos.y = %d", BufferPos.X, BufferPos.Y);
         if (mTerminalProc != null)
             mTerminalProc.handleScreenTouch(BufferPos.X, BufferPos.Y);
 

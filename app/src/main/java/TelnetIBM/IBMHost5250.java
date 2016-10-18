@@ -547,10 +547,10 @@ public class IBMHost5250 extends IBMHostBase {
     protected int getServerKeyCode(int keyCode) {
         Integer nIBMKeyCode = mTN5250KeyCodeMap.get(keyCode);
         if(nIBMKeyCode != null) {
-            CipherUtility.Log_d("IBMHost5250", String.format("Keycode mapped, Keyevent = %d[%s], IBM Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nIBMKeyCode, getServerKeyText(nIBMKeyCode)));
+            CipherUtility.Log_d("IBMHost5250", "Keycode mapped, Keyevent = %d[%s], IBM Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nIBMKeyCode, getServerKeyText(nIBMKeyCode));
             return nIBMKeyCode;
         }
-        CipherUtility.Log_d("IBMHost5250", String.format("No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode)));
+        CipherUtility.Log_d("IBMHost5250", "No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode));
         return IBMKEY_NONE;
     }
 
@@ -624,7 +624,7 @@ public class IBMHost5250 extends IBMHostBase {
 
     @Override
     public void processChar(char ch) {
-        CipherUtility.Log_d("IBMHost5250", String.format("IBMHost5250.processChar, char = [%02x]", (byte) ch));
+        CipherUtility.Log_d("IBMHost5250", "IBMHost5250.processChar, char = [%02x]", (byte) ch);
         AtomicReference<IBmStates> curState = new AtomicReference<IBmStates>(IBmStates.None);
         AtomicReference<IBmActions> curAction = new AtomicReference<IBmActions>(IBmActions.None);
         AtomicReference<IBmActions> stateExitAction = new AtomicReference<IBmActions>(IBmActions.None);
@@ -637,24 +637,24 @@ public class IBMHost5250 extends IBMHostBase {
         } else
             GetStateEventAction(mCurCommand, mLastIBMState, mCurChar, curState, curAction);
 
-        CipherUtility.Log_d("IBMHost5250", String.format("preState = %s, curState = %s, curAction = %s", mLastIBMState.toString(), curState, curAction));
+        CipherUtility.Log_d("IBMHost5250", "preState = %s, curState = %s, curAction = %s", mLastIBMState.toString(), curState, curAction);
 
         boolean bStateChanged = (curState.get() != IBmStates.None && curState.get() != mLastIBMState);
         if (bStateChanged) {
             // check for state exit actions
             mTnIBmStateChangeEvents.GetStateChangeAction(mLastIBMState, Transitions.Exit, stateExitAction);
-            CipherUtility.Log_d("IBMHost5250", String.format("[Exit] action = %s", stateExitAction));
+            CipherUtility.Log_d("IBMHost5250", "[Exit] action = %s", stateExitAction);
             // Process the exit action
             if (stateExitAction.get() != IBmActions.None) DoAction(stateExitAction.get());
         } else {
-            CipherUtility.Log_d("IBMHost5250", String.format("[Exit] no exit action."));
+            CipherUtility.Log_d("IBMHost5250", "[Exit] no exit action.");
         }
 
         if (curAction.get() != IBmActions.None) {
-            CipherUtility.Log_d("IBMHost5250", String.format("[Cur Action] do action = %s", curAction));
+            CipherUtility.Log_d("IBMHost5250", "[Cur Action] do action = %s", curAction);
             DoAction(curAction.get());
         } else {
-            CipherUtility.Log_d("IBMHost5250", String.format("[Cur Action] no action"));
+            CipherUtility.Log_d("IBMHost5250", "[Cur Action] no action");
         }
 
         mLastAction = curAction.get();
@@ -663,7 +663,7 @@ public class IBMHost5250 extends IBMHostBase {
             // check for state entry actions
             mTnIBmStateChangeEvents.GetStateChangeAction(curState.get(), Transitions.Entry, stateEntryAction);
 
-            CipherUtility.Log_d("IBMHost5250", String.format("[Entry] action = %s", stateEntryAction));
+            CipherUtility.Log_d("IBMHost5250", "[Entry] action = %s", stateEntryAction);
 
             // Process the entry action
             if (stateEntryAction.get() != IBmActions.None) DoAction(stateEntryAction.get());
@@ -671,7 +671,7 @@ public class IBMHost5250 extends IBMHostBase {
             // change the parsers state attribute
             mLastIBMState = curState.get();
         } else {
-            CipherUtility.Log_d("IBMHost5250", String.format("[Entry] no entry action"));
+            CipherUtility.Log_d("IBMHost5250", "[Entry] no entry action");
         }
 
         if (mbChangeNextStatus) {
@@ -2377,7 +2377,7 @@ public class IBMHost5250 extends IBMHostBase {
         int nIBMKeyCode = IBMKEY_NONE;
         if(event instanceof ServerKeyEvent) {
             nIBMKeyCode = keyCode;
-            CipherUtility.Log_d("IBMHost5250", String.format("IBM Keycode = %d[%s]", nIBMKeyCode, getServerKeyText(nIBMKeyCode)));
+            CipherUtility.Log_d("IBMHost5250", "IBM Keycode = %d[%s]", nIBMKeyCode, getServerKeyText(nIBMKeyCode));
         } else {
             int nEncodePhyKeycode = KeyMapList.getEncodePhyKeyCode(event);
             nIBMKeyCode = getServerKeyCode(nEncodePhyKeycode);

@@ -56,14 +56,14 @@ public class SessionSettingsBase extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        CipherUtility.Log_d("SessionSettingsBase", String.format("onCreate"));
+        CipherUtility.Log_d("SessionSettingsBase", "onCreate");
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null) {
             // Restore state members from saved instance
             boolean bRestore = false;
             bRestore = savedInstanceState.getBoolean(TE_APP_STATUS_SETTINGS);
             if(bRestore) {
-                CipherUtility.Log_d("SessionSettingsBase", String.format("onCreate, Restore state to restore TE settings"));
+                CipherUtility.Log_d("SessionSettingsBase", "onCreate, Restore state to restore TE settings");
                 TESettingsInfo.loadSessionSettings(getApplication());
             }
             stdActivityRef.gIsActivate = savedInstanceState.getBoolean(TE_APP_STATUS_LICENSE);
@@ -81,7 +81,7 @@ public class SessionSettingsBase extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        CipherUtility.Log_d("SessionSettingsBase", String.format("onSaveInstanceState"));
+        CipherUtility.Log_d("SessionSettingsBase", "onSaveInstanceState");
         // Save the user's current game state
         TESettingsInfo.saveSessionSettings(this);
         savedInstanceState.putBoolean(TE_APP_STATUS_SETTINGS, true);

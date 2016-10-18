@@ -343,10 +343,10 @@ public class CVT100 extends CVT100Enum {
     protected int getServerKeyCode(int keyCode) {
         Integer nVTKeyCode = mVTKeyCodeMap.get(keyCode);
         if (nVTKeyCode != null) {
-            CipherUtility.Log_d("CVT100", String.format("Keycode mapped, Keyevent = %d[%s], VT Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nVTKeyCode, getServerKeyText(nVTKeyCode)));
+            CipherUtility.Log_d("CVT100", "Keycode mapped, Keyevent = %d[%s], VT Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nVTKeyCode, getServerKeyText(nVTKeyCode));
             return nVTKeyCode;
         }
-        CipherUtility.Log_d("CVT100", String.format("No Keycode mapped!, Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode)));
+        CipherUtility.Log_d("CVT100", "No Keycode mapped!, Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode));
         return VTKEY_NONE;
     }
 
@@ -502,7 +502,7 @@ public class CVT100 extends CVT100Enum {
 
         if (BuildConfig.DEBUG_MODE) {
             String strSeq = getCurSeq(e.CurSequence, e.CurParams.Elements);
-            CipherUtility.Log_d("CVT100", String.format("[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq)));
+            CipherUtility.Log_d("CVT100", "[VT Host][sequence %s, hex:%s]", strSeq, getHex(strSeq));
         }
 
         if (e.CurSequence.equals("")) {
@@ -1465,7 +1465,7 @@ public class CVT100 extends CVT100Enum {
         int nVTKeyCode = VTKEY_NONE;
         if (event instanceof ServerKeyEvent) {
             nVTKeyCode = keyCode;
-            CipherUtility.Log_d("CVT100", String.format("VT Keycode = %d[%s]", nVTKeyCode, getServerKeyText(nVTKeyCode)));
+            CipherUtility.Log_d("CVT100", "VT Keycode = %d[%s]", nVTKeyCode, getServerKeyText(nVTKeyCode));
         } else {
             int nEncodePhyKeycode = KeyMapList.getEncodePhyKeyCode(event);
             nVTKeyCode = getServerKeyCode(nEncodePhyKeycode);

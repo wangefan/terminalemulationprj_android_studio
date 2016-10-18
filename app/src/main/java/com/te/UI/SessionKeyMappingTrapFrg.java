@@ -27,7 +27,7 @@ public class SessionKeyMappingTrapFrg extends Fragment {
 
     public void onKeyDown(int keyCode, KeyEvent event) {
         int nEncodedKeycode = KeyMapList.getEncodePhyKeyCode(event);
-        CipherUtility.Log_d("SessionKeyMappingTrapFrg", String.format("onKeyDown, Keyevent = %d[%s]", nEncodedKeycode, KeyMapList.getPhysicalKeyTextByEncode(nEncodedKeycode)));
+        CipherUtility.Log_d("SessionKeyMappingTrapFrg", "onKeyDown, Keyevent = %d[%s]", nEncodedKeycode, KeyMapList.getPhysicalKeyTextByEncode(nEncodedKeycode));
         if (keyCode == KeyEvent.KEYCODE_ESCAPE) {
             getActivity().onBackPressed();
             return;

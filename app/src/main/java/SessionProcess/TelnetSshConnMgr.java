@@ -220,7 +220,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 				}
 				mSshConn.put_IdleTimeoutMs(150);//set ChannelRead timeout to infinite
 				int nNumDataToBeGot = mSshConn.ChannelReadAndPoll(mSshChanel, 150);
-				CipherUtility.Log_d("TelnetSshConnMgr", String.format("Avable number of data = %d", nNumDataToBeGot));
+				CipherUtility.Log_d("TelnetSshConnMgr", "Avable number of data = %d", nNumDataToBeGot);
 				if(nNumDataToBeGot > 0) {
 					CkByteData recvData = new CkByteData();
 					mSshConn.GetReceivedData(mSshChanel, recvData);
@@ -247,7 +247,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 				}
 			}
 		} catch (InterruptedException e) {
-			CipherUtility.Log_d("TelnetSshConnMgr", String.format("InterruptedException, msg = %s", e.getMessage()));
+			CipherUtility.Log_d("TelnetSshConnMgr", "InterruptedException, msg = %s", e.getMessage());
 			doDisconnect();
 			e.printStackTrace();
 		} catch (SSHConnException e) {

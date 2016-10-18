@@ -50,7 +50,7 @@ public class TerminalProcessFrg extends Fragment {
             boolean bRestore = false;
             bRestore = savedInstanceState.getBoolean(TE_SETTINGS);
             if(bRestore) {
-                CipherUtility.Log_d(TAG, String.format("Restore TE settings"));
+                CipherUtility.Log_d(TAG, "Restore TE settings");
                 TESettingsInfo.loadSessionSettings(getContext());
                 syncSessionsFromSettings();
             }
@@ -65,7 +65,7 @@ public class TerminalProcessFrg extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        CipherUtility.Log_d(TAG, String.format("onSaveInstanceState"));
+        CipherUtility.Log_d(TAG, "onSaveInstanceState");
         // Save the user's current game state
         TESettingsInfo.saveSessionSettings(getContext());
         savedInstanceState.putBoolean(TE_SETTINGS, true);

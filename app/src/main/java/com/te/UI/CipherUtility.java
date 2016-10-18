@@ -42,6 +42,14 @@ public class CipherUtility {
 			Log.d("TE:", "[" + tag + "]:" + msg);
 	}
 
+	static public void Log_d(String tag, String format, Object... args) {
+		if (BuildConfig.DEBUG_MODE) {
+			Log_d(tag, String.format(format, args));
+		}
+	}
+
+
+
 	static public void outputHex(String tag, char[] charArray) {
 		if (BuildConfig.DEBUG_MODE) {
 			String strHex = "";
