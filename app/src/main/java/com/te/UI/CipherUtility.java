@@ -48,8 +48,6 @@ public class CipherUtility {
 		}
 	}
 
-
-
 	static public void outputHex(String tag, char[] charArray) {
 		if (BuildConfig.DEBUG_MODE) {
 			String strHex = "";
