@@ -8,12 +8,15 @@ import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.support.v4.view.ViewCompat;
+import android.text.InputType;
 import android.text.TextPaint;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
 import com.te.UI.CipherUtility;
@@ -285,6 +288,7 @@ public class ContentView extends View {
         return nMoveToY;
     }
 
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mImage == null)
@@ -301,6 +305,19 @@ public class ContentView extends View {
         int nScreenPosY = nBmpPosY - mScrollPosY;
         mCorsor.setX(nScreenPosX);
         mCorsor.setY(nScreenPosY);
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        outAttrs.actionLabel = null;
+        outAttrs.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+        outAttrs.imeOptions = EditorInfo.IME_ACTION_DONE;
+        return new CViweInputConnection(this, true);
+    }
+
+    @Override
+    public boolean onCheckIsTextEditor() {
+        return true;
     }
 
     @Override
