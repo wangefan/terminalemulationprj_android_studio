@@ -94,23 +94,22 @@ public class SessionKeyMapEditingFrg extends Fragment {
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_9, PHY_CATE_NUM);
         //Punctuations
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_ADD, PHY_CATE_PUN);	// ( + )
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MINUS, PHY_CATE_PUN);	// ( -  )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_SUBTRACT, PHY_CATE_PUN);	// ( -  )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_MULTIPLY, PHY_CATE_PUN);	// ( * )
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_STAR, PHY_CATE_PUN);	// ( * )
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SLASH, PHY_CATE_PUN);	// ( / )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DIVIDE, PHY_CATE_PUN);	// ( / )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKSLASH, PHY_CATE_PUN);	// ( \ )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_EQUALS, PHY_CATE_PUN);	// ( = )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEMICOLON, PHY_CATE_PUN);	// ( ; )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_COMMA, PHY_CATE_PUN);	// ( , )
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, PHY_CATE_PUN);	// ( } )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, PHY_CATE_PUN);	// ( { )
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_HYPHEN, PHY_CATE_PUN);	// ( _)
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, PHY_CATE_PUN);	// ( } )
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MINUS, PHY_CATE_PUN);	// ( _)
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PERIOD, PHY_CATE_PUN);	// ( . )
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_GRAVE, PHY_CATE_PUN);	// ( ' )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_APOSTROPHE, PHY_CATE_PUN);
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN);
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DECIDECIMAL, PHY_CATE_PUN);
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DIVIDE, PHY_CATE_PUN);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN); can`t find
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DOT, PHY_CATE_PUN);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DIVIDE, PHY_CATE_PUN);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_GRAVE, PHY_CATE_PUN);	// ( ' )
         //Function Keys
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F1, PHY_CATE_FUNC);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F2, PHY_CATE_FUNC);
@@ -138,21 +137,21 @@ public class SessionKeyMapEditingFrg extends Fragment {
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F24,PHY_CATE_FUNC);*/
         //Navigation keys
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_LEFT, PHY_CATE_NAVG);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_UP, PHY_CATE_NAVG);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_UP, PHY_CATE_NAVG);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DPAD_DOWN, PHY_CATE_NAVG);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_HOME, PHY_CATE_NAVG);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_END, PHY_CATE_NAVG);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NAVIGATE_PREVIOUS, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PAGE_UP, PHY_CATE_NAVG);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PAGE_DOWN, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_HOME, PHY_CATE_NAVG);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_END, PHY_CATE_NAVG);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ESCAPE, PHY_CATE_NAVG); remove because reserve for default setting
         //Editing Keys
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_TAB, PHY_CATE_EDIT);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACK, PHY_CATE_EDIT);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SPACE, PHY_CATE_EDIT);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_INSERT, PHY_CATE_EDIT);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ENTER, PHY_CATE_EDIT); remove because reserve for default setting
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DEL, PHY_CATE_EDIT);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ENTER, PHY_CATE_EDIT);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ESCAPE, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_INSERT, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_FORWARD_DEL, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_TAB, PHY_CATE_EDIT);
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SPACE, PHY_CATE_EDIT);
     }
 
     public void setSessionSetting(TESettings.SessionSetting setting) {

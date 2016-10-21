@@ -27,7 +27,6 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_BACKSLASH, KeyEvent.KEYCODE_G);
         //<Blue><H>  System HW used
         //<Blue><I>  System HW used
-        //Todo:<Blue><J>  is the same with <Blue><C>, maybe system wrong
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_GRAVE, KeyEvent.KEYCODE_J);
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_F12, KeyEvent.KEYCODE_K);
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_F11, KeyEvent.KEYCODE_L);
