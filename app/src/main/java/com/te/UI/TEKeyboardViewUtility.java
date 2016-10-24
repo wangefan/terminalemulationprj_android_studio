@@ -369,7 +369,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
             case MY_KEYCODE_SYSKEY:
             {
                 hideTEKeyboard();
-                ((InputMethodManager) mContext.getSystemService(Activity.INPUT_METHOD_SERVICE)).showSoftInput(mTargetView, 0);
+                UIUtility.showSIP(mContext, mTargetView);
             }
             break;
             case MY_KEYCODE_DOWN:

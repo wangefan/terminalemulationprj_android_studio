@@ -1,9 +1,10 @@
  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-	 	android:fitsSystemWindows="true"
-        android:orientation="vertical">
+	 xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+	 android:fitsSystemWindows="true"
+     android:orientation="vertical"
+	 android:focusable="true" >
 
 	 <include layout="@layout/toolbar" />
 
@@ -26,8 +27,7 @@
 	    android:id="@+id/mainActivityDrawer"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:keepScreenOn="true"
-	    android:focusable="true" >
+	    android:keepScreenOn="true">
 		    <RelativeLayout
 		        android:id="@+id/container_body"
 				android:layout_width="fill_parent"
@@ -87,8 +87,6 @@
 					android:id="@+id/software_keyboard_view"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:focusable="true"
-					android:focusableInTouchMode="true"
 					android:visibility="gone"
 					android:layout_alignParentBottom="true"
 					android:keyBackground="@drawable/key_background"/>

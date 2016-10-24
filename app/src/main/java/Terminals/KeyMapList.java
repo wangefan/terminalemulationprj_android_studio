@@ -246,7 +246,7 @@ public abstract class KeyMapList extends ArrayList<KeyMapItem> {
         return (event.getMetaState() & KeyEvent.META_CTRL_MASK) != 0;
     }
 
-    private static boolean isShiftPressed(KeyEvent event) {
+    public static boolean isShiftPressed(KeyEvent event) {
         return (event.getMetaState() & KeyEvent.META_SHIFT_MASK) != 0;
     }
 

@@ -555,6 +555,16 @@ public class TESettingsInfo {
         Setting.mMacroList = macroList;
     }
 
+    public static Boolean getHostIsHWExitByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsHWExit;
+    }
+
+    public static Boolean getHostIsHWShowSIPByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.mIsHWShowSIP;
+    }
+
     public static boolean getHostIsCursorTrackByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.mIsCursorTracking;

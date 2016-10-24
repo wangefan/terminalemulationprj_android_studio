@@ -396,6 +396,12 @@ public class TESettings {
         @SerializedName("macroKeyList")
         public ArrayList<MacroItem> mMacroList = null;
 
+        @SerializedName("isHWExit")
+        public boolean mIsHWExit = false;
+
+        @SerializedName("isShowSIPESC")
+        public boolean mIsHWShowSIP = false;
+
         @SerializedName("CursorType")
         public int mNCursorType = 0; //0:Default, 1:Underline, 2:Block
 

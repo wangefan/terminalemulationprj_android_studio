@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -43,6 +44,7 @@ import SessionProcess.TerminalProcess;
 import Terminals.CipherReaderControl;
 import Terminals.ContentView;
 import Terminals.CursorView;
+import Terminals.KeyMapList;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
@@ -669,6 +671,23 @@ public class MainActivity extends AppCompatActivity
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+        //Handle HW key event
+        if(TESettingsInfo.getHostIsHWExitByIndex(TESettingsInfo.getSessionIndex()) && //Shift + Right
+                KeyMapList.isShiftPressed(event) &&
+                keyCode ==  KeyEvent.KEYCODE_DPAD_RIGHT) {
+            stdActivityRef.getCurrActivity().onExit();
+            return true;
+        } else if(TESettingsInfo.getHostIsHWShowSIPByIndex(TESettingsInfo.getSessionIndex()) && //Shift + Esc
+                KeyMapList.isShiftPressed(event) &&
+                keyCode ==  KeyEvent.KEYCODE_ESCAPE) {
+            UIUtility.showSIP(this, mContentView);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

@@ -19,6 +19,14 @@
         android:key="@string/screen_act_macro_key"
         android:title="@string/screen_act_macro"
         android:defaultValue="false"/>
+    <CheckBoxPreference
+        android:key="@string/screen_HWExit_key"
+        android:title="@string/screen_HWExit"
+        android:defaultValue="false"/>
+    <CheckBoxPreference
+        android:key="@string/screen_ShowSIPESC_key"
+        android:title="@string/screen_ShowSIPESC"
+        android:defaultValue="false"/>
     <ListPreference
         android:key="@string/screen_cursor_type_key"
         android:title="@string/screen_cursor_type"

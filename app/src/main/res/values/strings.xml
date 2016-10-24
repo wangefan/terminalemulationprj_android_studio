@@ -240,6 +240,10 @@
     <string name="screen_battery_alert">Choose Battery Alert Level(%)</string>
     <string name="screen_act_macro_key">screen_act_macro_key</string>
     <string name="screen_act_macro">Activate Macro</string>
+    <string name="screen_HWExit_key">screen_HWExit_key</string>
+    <string name="screen_HWExit">Set HW Key (SHIFT + RIGHT) To Exit App</string>
+    <string name="screen_ShowSIPESC_key">screen_ShowSIPESC_key</string>
+    <string name="screen_ShowSIPESC">Set HW Key (SHIFT + ESC) to Control SIP</string>
     <string name="screen_cursor_type_key">screen_cursor_type_key</string>
     <string name="screen_cursor_type">Cursor Type</string>
     <string name="screen_auto_scroll_key">screen_auto_scroll_key</string>

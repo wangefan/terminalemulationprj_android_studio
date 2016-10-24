@@ -30,6 +30,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
     private TESwitchPreference mSwchShowWiFiAlert = null;
     private TESwitchPreference mSwchShowBattrryAlert = null;
     private CheckBoxPreference mChkAcitvateMacro = null;
+    private CheckBoxPreference mChkHWExit = null;
+    private CheckBoxPreference mChkHWShowSIP = null;
     private ListPreference mlstCursorType = null;
     private TESwitchPreference mSwchAutoTracking = null;
     private Preference mPrefLockedLoc = null;
@@ -106,6 +108,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mSwchShowBattrryAlert.setChecked(mSetting.mIsShowBatteryAlert);
         mSwchShowBattrryAlert.setSummaryOn(String.valueOf(mSetting.mNShowBatteryAlertLevel));
         mChkAcitvateMacro.setChecked(mSetting.mIsActMacro);
+        mChkHWExit.setChecked(mSetting.mIsHWExit);
+        mChkHWShowSIP.setChecked(mSetting.mIsHWShowSIP);
         mlstCursorType.setValue(String.valueOf(mSetting.mNCursorType));
         mSwchAutoTracking.setChecked(mSetting.mIsCursorTracking);
         mSwchAutoTracking.setSummaryOn(getAutoTrackString(mSetting.getAutoTrackType()));
@@ -163,6 +167,10 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             mSetting.mIsShowBatteryAlert = mSwchShowBattrryAlert.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_act_macro_key)) == 0) {
             mSetting.mIsActMacro = mChkAcitvateMacro.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.screen_HWExit_key)) == 0) {
+            mSetting.mIsHWExit = mChkHWExit.isChecked();
+        } else if(key.compareTo(getResources().getString(R.string.screen_ShowSIPESC_key)) == 0) {
+            mSetting.mIsHWShowSIP = mChkHWShowSIP.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.screen_cursor_type_key)) == 0) {
             mSetting.mNCursorType = Integer.valueOf(mlstCursorType.getValue());
         } else if(key.compareTo(getResources().getString(R.string.screen_auto_scroll_key)) == 0) {
@@ -294,6 +302,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         });
 
         mChkAcitvateMacro = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_act_macro_key));
+        mChkHWExit = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_HWExit_key));
+        mChkHWShowSIP = (CheckBoxPreference) findPreference(getResources().getString(R.string.screen_ShowSIPESC_key));
         mlstCursorType = (ListPreference) findPreference(getResources().getString(R.string.screen_cursor_type_key));
         mSwchAutoTracking = (TESwitchPreference) findPreference(getResources().getString(R.string.screen_auto_scroll_key));
         mSwchAutoTracking.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
@@ -432,6 +442,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         super.onResume();
         mChkShowSessionNumber.setEnabled(stdActivityRef.gIsActivate);
         mChkAcitvateMacro.setEnabled(stdActivityRef.gIsActivate);
+        mChkHWExit.setEnabled(stdActivityRef.hasKey());
+        mChkHWShowSIP.setEnabled(stdActivityRef.hasKey());
         mPrefColorSettings.setEnabled(stdActivityRef.gIsActivate);
     }
 }

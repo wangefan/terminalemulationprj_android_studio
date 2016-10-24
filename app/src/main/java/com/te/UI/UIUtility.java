@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -29,6 +30,10 @@ import tourguide.tourguide.ToolTip;
 import tourguide.tourguide.TourGuide;
 
 public class UIUtility {
+	public static void showSIP(Context context, View view) {
+		((InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+	}
+
 	public interface OnLoadSettingProcListener {
 		void onLoadResult(boolean bSuccess);
 	}
