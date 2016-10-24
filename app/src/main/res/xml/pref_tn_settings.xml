@@ -29,11 +29,10 @@
         android:widgetLayout="@layout/te_switch"/>
     <PreferenceCategory
         android:title="@string/error_message">
-        <EditTextPreference
+        <com.te.UI.NumberPickerPreference
             android:title="@string/tn_popup_row"
             android:key="@string/tn_popup_row_key"
-            android:inputType="number"
-            android:selectAllOnFocus="true"/>
+            android:inputType="number"/>
         <CheckBoxPreference
             android:key="@string/tn_popup_window_key"
             android:title="@string/tn_popup_window"

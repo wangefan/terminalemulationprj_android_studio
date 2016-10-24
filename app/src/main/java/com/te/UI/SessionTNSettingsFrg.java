@@ -2,7 +2,6 @@ package com.te.UI;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import com.cipherlab.terminalemulation.R;
 
@@ -14,7 +13,7 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
     private CheckBoxPreference mChkAutoReset = null;
     private ListPreference mChkFLIfExceed = null;
     private TESwitchPreference mSwchDevName = null;
-    private EditTextPreference mEdtPopErrorRow = null;
+    private NumberPickerPreference mPopErrorRow = null;
     private CheckBoxPreference mChkPopupWindow = null;
 
     public SessionTNSettingsFrg() {
@@ -55,7 +54,7 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
 
             }
         });
-        mEdtPopErrorRow = (EditTextPreference) findPreference(getResources().getString(R.string.tn_popup_row_key));
+        mPopErrorRow = (NumberPickerPreference) findPreference(getResources().getString(R.string.tn_popup_row_key));
         mChkPopupWindow = (CheckBoxPreference) findPreference(getResources().getString(R.string.tn_popup_window_key));
     }
 
@@ -67,7 +66,8 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
         mChkFLIfExceed.setValue(String.valueOf(mSetting.mCheckFieldLength));
         mSwchDevName.setChecked(!mSetting.isUseDefaultDevName());
         mSwchDevName.setSummaryOn(mSetting.mDevName);
-        mEdtPopErrorRow.setText(String.valueOf(mSetting.mNErrorRowIndexg));
+        mPopErrorRow.setValue(String.valueOf(mSetting.mNErrorRowIndexg), 1, 24);
+        mPopErrorRow.setSummary(String.valueOf(mSetting.mNErrorRowIndexg));
         mChkPopupWindow.setChecked(mSetting.misPopUpErrorDialog);
     }
 
@@ -85,7 +85,8 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
             mSetting.setUseDefaultDevName(mSwchDevName.isChecked() == false);
             mSetting.mDevName = String.valueOf(mSwchDevName.getSummaryOn());
         } else if(key.compareTo(getResources().getString(R.string.tn_popup_row_key)) == 0) {
-            mSetting.mNErrorRowIndexg = Integer.valueOf(mEdtPopErrorRow.getText());
+            mSetting.mNErrorRowIndexg = Integer.valueOf(mPopErrorRow.getValue());
+            mPopErrorRow.setSummary(String.valueOf(mSetting.mNErrorRowIndexg));
         } else if(key.compareTo(getResources().getString(R.string.tn_popup_window_key)) == 0) {
             mSetting.misPopUpErrorDialog = mChkPopupWindow.isChecked();
         }
