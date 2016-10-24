@@ -34,7 +34,7 @@ public class SessionTNSettingsFrg extends SessionSettingsFrgBase {
         mSwchDevName.setOnTESwitchListener(new TESwitchPreference.OnTESwitchListener() {
             @Override
             public void onClick() {
-                UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, getActivity(), new UIUtility.OnEditMessageBoxListener() {
+                UIUtility.editMessageBox(R.string.MSG_get_cust_dev_name, mSetting.mDevName, getActivity(), new UIUtility.OnEditMessageBoxListener() {
                     @Override
                     public void onResult(String result) {
                         mSetting.setUseDefaultDevName(false);

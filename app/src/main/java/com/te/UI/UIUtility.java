@@ -156,18 +156,19 @@ public class UIUtility {
 		});
 	}
 
-	public static void editMessageBox(int nTitleStringID, Context context, final OnEditMessageBoxListener listener) {
+	public static void editMessageBox(int nTitleStringID, String content, Context context, final OnEditMessageBoxListener listener) {
 		LayoutInflater inflater = LayoutInflater.from(context);
 		final View editMessageboxView = inflater.inflate(R.layout.edit_messagebox, null);
+		final EditText etContent = (EditText) editMessageboxView.findViewById(R.id.ed_result);
+		etContent.setText(content);
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(nTitleStringID);
 		builder.setView(editMessageboxView);
 		builder.setPositiveButton(R.string.STR_OK, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				EditText editText = (EditText) (editMessageboxView.findViewById(R.id.ed_result));
 				if(listener != null)
-					listener.onResult(editText.getText().toString());
+					listener.onResult(etContent.getText().toString());
 			}
 		});
 		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {

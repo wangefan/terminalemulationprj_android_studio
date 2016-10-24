@@ -83,7 +83,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 if(nType == 0) { //Command
                     startActForResult(mSetting.g_ReaderParam.mGoodFeedBackESC, REQ_GOOD);
                 } else if(nType == 1) { //Text
-                    UIUtility.editMessageBox(R.string.fb_good_fb_text_title, getActivity(), new UIUtility.OnEditMessageBoxListener() {
+                    UIUtility.editMessageBox(R.string.fb_good_fb_text_title, mSetting.g_ReaderParam.mGoodFeedBackText, getActivity(), new UIUtility.OnEditMessageBoxListener() {
                         @Override
                         public void onResult(String result) {
                             mSetting.g_ReaderParam.mGoodFeedBackText = result;
@@ -142,7 +142,7 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 if(nType == 0) { //Command
                     startActForResult(mSetting.g_ReaderParam.mErrorFeedBackESC, REQ_ERROR);
                 } else if(nType == 1) { //Text
-                    UIUtility.editMessageBox(R.string.fb_error_fb_text_title, getActivity(), new UIUtility.OnEditMessageBoxListener() {
+                    UIUtility.editMessageBox(R.string.fb_error_fb_text_title, mSetting.g_ReaderParam.mErrorFeedBackText, getActivity(), new UIUtility.OnEditMessageBoxListener() {
                         @Override
                         public void onResult(String result) {
                             mSetting.g_ReaderParam.mErrorFeedBackText = result;
