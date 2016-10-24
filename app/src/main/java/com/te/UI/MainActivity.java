@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     }
     private static final String TAG_TERPROC_FRAGMENT = "TAG_TERPROC_FRAGMENT";
     private static final String KEY_FULL_SCREEEN = "KEY_FULL_SCREEEN";
-    private final long UPDATE_ALERT_INTERVAL = 300000; //300 sec, 5 min
+    private final long UPDATE_ALERT_INTERVAL = 60000; //60 sec, 1 min
     private Toolbar mToolbar;
     private LeftMenuFrg mFragmentLeftdrawer;
     private RelativeLayout mMacroView = null;
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     int wifiStrength = CipherUtility.getWiFiStrength(MainActivity.this);
-                    if (wifiStrength < nWifiAlert) {
+                    if (wifiStrength < nWifiAlert && mBFullScreen) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
                             @Override
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     int batStrength = CipherUtility.getBatteryPct(MainActivity.this);
-                    if (batStrength < nBatAlert) {
+                    if (batStrength < nBatAlert && mBFullScreen) {
                         final Runnable tempRun = this;
                         UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
                             @Override

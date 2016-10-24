@@ -15,16 +15,6 @@
         android:key="@string/screen_autopop_sip_conn_key"
         android:title="@string/screen_autopop_sip_conn"
         android:defaultValue="false"/>
-    <com.te.UI.TESwitchPreference
-        android:key="@string/screen_wifi_alert_key"
-        android:title="@string/screen_wifi_alert"
-        android:summaryOff="@string/screen_alert_off"
-        android:widgetLayout="@layout/te_switch"/>
-    <com.te.UI.TESwitchPreference
-        android:key="@string/screen_battery_alert_key"
-        android:title="@string/screen_battery_alert"
-        android:summaryOff="@string/screen_alert_off"
-        android:widgetLayout="@layout/te_switch"/>
     <CheckBoxPreference
         android:key="@string/screen_act_macro_key"
         android:title="@string/screen_act_macro"
@@ -90,5 +80,15 @@
             android:entryValues="@array/icon_update_interval_array_vals"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null" />
+        <com.te.UI.TESwitchPreference
+            android:key="@string/screen_wifi_alert_key"
+            android:title="@string/screen_wifi_alert"
+            android:summaryOff="@string/screen_alert_off"
+            android:widgetLayout="@layout/te_switch"/>
+        <com.te.UI.TESwitchPreference
+            android:key="@string/screen_battery_alert_key"
+            android:title="@string/screen_battery_alert"
+            android:summaryOff="@string/screen_alert_off"
+            android:widgetLayout="@layout/te_switch"/>
     </PreferenceCategory>
 </PreferenceScreen>
