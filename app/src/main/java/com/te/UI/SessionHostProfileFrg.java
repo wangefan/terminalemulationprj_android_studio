@@ -91,8 +91,8 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
             mLstServerType.setValue(mSetting.mTermNameTN);
         }
         mLstServerIp.setAddress(mSetting.mHostIP);
-        mPrefPort.setPort(mSetting.getHostPort());
-        mPrefPort.setSummary(mPrefPort.getPort());
+        mPrefPort.setValue(mSetting.getHostPort(), 0, 65535);
+        mPrefPort.setSummary(mPrefPort.getValue());
         mChkAutoConn.setChecked(mSetting.mBAutoConnect);
         mChkAutoSign.setChecked(mSetting.mBAutoSignOn);
         mPrefLoginName.setText(mSetting.mLoginName);
@@ -126,8 +126,8 @@ public class SessionHostProfileFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.host_ip_key)) == 0) {
             mSetting.mHostIP = mLstServerIp.getAddress();
         } else if(key.compareTo(getResources().getString(R.string.host_port_key)) == 0) {
-            mSetting.setHostPort(String.valueOf(mPrefPort.getPort()));
-            mPrefPort.setSummary(mPrefPort.getPort());
+            mSetting.setHostPort(String.valueOf(mPrefPort.getValue()));
+            mPrefPort.setSummary(mPrefPort.getValue());
         } else if(key.compareTo(getResources().getString(R.string.host_auto_conn_key)) == 0) {
             mSetting.mBAutoConnect = mChkAutoConn.isChecked();
             updatePreferenceForVT();

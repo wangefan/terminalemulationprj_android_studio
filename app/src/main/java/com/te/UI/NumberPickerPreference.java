@@ -12,7 +12,9 @@ import android.widget.NumberPicker;
 public class NumberPickerPreference extends DialogPreference {
 
     private NumberPicker mNumPicker;
-    private String mPort = "";
+    private String mValue = "";
+    private int mNMin = 0;
+    private int mNMax = 0;
 
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -20,21 +22,23 @@ public class NumberPickerPreference extends DialogPreference {
 
     private NumberPicker generateNumberPicker() {
         mNumPicker = new NumberPicker(getContext());
-        mNumPicker.setMinValue(1);
-        mNumPicker.setMaxValue(65535);
-        mNumPicker.setValue(Integer.valueOf(mPort));
+        mNumPicker.setMinValue(mNMin);
+        mNumPicker.setMaxValue(mNMax);
+        mNumPicker.setValue(Integer.valueOf(mValue));
         return mNumPicker;
     }
 
-    public void setPort(String port) {
-        mPort = port;
+    public void setValue(String val, int nMin, int nMax) {
+        mValue = val;
+        mNMin = nMin;
+        mNMax = nMax;
         if(mNumPicker != null) {
-            mNumPicker.setValue(Integer.valueOf(mPort));
+            mNumPicker.setValue(Integer.valueOf(mValue));
         }
     }
 
-    public String getPort() {
-        return mPort;
+    public String getValue() {
+        return mValue;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class NumberPickerPreference extends DialogPreference {
         final SavedState myState = new SavedState(superState);
         // Set the state's value with the class member that holds current
         // setting value
-        myState.mStrValue = mPort;
+        myState.mStrValue = mValue;
         return myState;
     }
 
@@ -65,7 +69,7 @@ public class NumberPickerPreference extends DialogPreference {
         // Cast state to custom BaseSavedState and pass to superclass
         SavedState myState = (SavedState) state;
         // Set this Preference's widget to reflect the restored state
-        mPort = myState.mStrValue;
+        mValue = myState.mStrValue;
         super.onRestoreInstanceState(myState.getSuperState());
     }
 
@@ -73,7 +77,7 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
-            mPort = String.valueOf(mNumPicker.getValue());
+            mValue = String.valueOf(mNumPicker.getValue());
             persistBoolean(!getPersistedBoolean(true));//here to trigger SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
