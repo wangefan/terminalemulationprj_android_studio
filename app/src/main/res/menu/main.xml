@@ -45,6 +45,11 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
+        android:id="@+id/id_program_name"
+        android:title="@string/program_name"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/about"
         android:title="@string/about"
         android:orderInCategory="100"

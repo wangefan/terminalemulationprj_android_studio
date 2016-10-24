@@ -384,6 +384,7 @@ public class MainActivity extends AppCompatActivity
         procUpdateWiFiAndBattIconTimer();
         mFragmentLeftdrawer.syncSessionsViewFromSettings();
         mFragmentLeftdrawer.clickSession(TESettingsInfo.getSessionIndex());
+        setTitle(TESettingsInfo.getProgramName());
     }
 
     private void setSessionStatusView() {
@@ -881,6 +882,20 @@ public class MainActivity extends AppCompatActivity
                                 TESettingsInfo.setCurLanguageIdx(nSelIdx);
                             }
                         });
+                break;
+            case R.id.id_program_name:
+                UIUtility.editMessageBox(R.string.MSG_set_program_name, TESettingsInfo.getProgramName(), this, new UIUtility.OnEditMessageBoxListener() {
+                    @Override
+                    public void onResult(String result) {
+                        TESettingsInfo.setProgramName(result);
+                        MainActivity.this.setTitle(result);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
                 break;
             case R.id.about:
                 onAbout();

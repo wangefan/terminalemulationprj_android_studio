@@ -513,6 +513,9 @@ public class TESettings {
         @SerializedName("isProtectExitFullScreen")
         public boolean mIsProtectedExitFullScreen = false;
 
+        @SerializedName("WindowsTitle")
+        public String mProgramName = "";
+
         public ReaderParam g_ReaderParam = new ReaderParam();
 
         //Not sync

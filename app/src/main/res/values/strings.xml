@@ -13,6 +13,7 @@
     <string name="MSG_Import_Warn">Import settings fail.</string>
     <string name="MSG_Import_ok">Import settings success.</string>
     <string name="MSG_Import_ssh_ok">Import Key file success.</string>
+    <string name="MSG_set_program_name">Set Program Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
     <string name="app_name">Terminal Emulation</string>
@@ -774,4 +775,5 @@
     <string name="pref_ringtone_silent">Silent</string>
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="MSG_AUTH_Densowave_BHT1600_Alert">Sorry, this application is only authorized to Denowave BHT1600</string>
+    <string name="program_name">Program</string>
 </resources>

@@ -374,6 +374,16 @@ public class TESettingsInfo {
         return Setting.mIsProtectedExitFullScreen;
     }
 
+    public static String getProgramName() {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mProgramName;
+    }
+
+    public static void setProgramName(String name) {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mProgramName = name;
+    }
+
     public static int getSessionIndex() {
         return mCurrentSessionIndex;
     }
