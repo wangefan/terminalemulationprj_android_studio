@@ -19,11 +19,11 @@
             android:key="@string/ssh_no_host_shell_key"
             android:title="@string/ssh_no_host_shell"/>
         <CheckBoxPreference
+            android:key="@string/ssh_re_key_60_key"
+            android:title="@string/ssh_re_key_60"/>
+        <CheckBoxPreference
             android:key="@string/ssh_re_key_1g_key"
             android:title="@string/ssh_re_key_1g"/>
-        <CheckBoxPreference
-            android:key="@string/ssh_write_log_key"
-            android:title="@string/ssh_write_log"/>
         <CheckBoxPreference
             android:key="@string/ssh_write_log_key"
             android:title="@string/ssh_write_log"/>
