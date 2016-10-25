@@ -91,7 +91,7 @@
     <string name="tn_alarm">TN Alarm</string>
     <string name="vt_alarm">VT Alarm</string>
     <string name="data_upper_case_key">tn_data_upper_case_key</string>
-    <string name="data_upper_case">Data Uppercase</string>
+    <string name="data_upper_case">Data Input Uppercase</string>
     <string name="tn_codepage_key">tn_codepage_key</string>
     <string name="tn_codepage">Code Page</string>
     <string name="tn_auto_reset_key">auto_reset_key</string>
@@ -106,11 +106,11 @@
     <string name="tn_devname">Custom Device Name</string>
     <string name="tn_devname_off"></string>
     <string name="vt_linebuffer_key">vt_linebuffer_key</string>
-    <string name="vt_linebuffer">Line Buffer</string>
+    <string name="vt_linebuffer">LineBuffer</string>
     <string name="vt_echo_key">vt_echo_key</string>
     <string name="vt_echo">Local Echo</string>
     <string name="vt_send_string_key">vt_send_string_key</string>
-    <string name="vt_send_string">Send String</string>
+    <string name="vt_send_string">Send String When Connect</string>
     <string name="vt_char_set_key">vt_char_set_key</string>
     <string name="vt_char_set">Remote Character Set</string>
     <string name="vt_replace_if_unconvert_key">vt_replace_if_unconvert_key</string>
@@ -185,8 +185,8 @@
         <item>Courier New</item>
         <item>Lucida Console</item>
         <item>Excalibur Monospace</item>
-        <item>NTANSI</item>
-        <item>NTOEM</item>
+        <item>NetTerm ANSI</item>
+        <item>NetTerm OEM</item>
     </string-array>
     <string-array name="font_array_vals">
         <item>0</item>
@@ -214,7 +214,6 @@
         <item>#999999</item>
         <item>#cccccc</item>
         <item>#ffffff</item>
-        <item>#9933cc</item>
         <item>#ff0000</item>
         <item>#00ff00</item>
         <item>#0000ff</item>
@@ -780,4 +779,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="MSG_AUTH_Densowave_BHT1600_Alert">Sorry, this application is only authorized to Denowave BHT1600</string>
     <string name="program_name">Program</string>
+    <string name="sample">Sample</string>
 </resources>
