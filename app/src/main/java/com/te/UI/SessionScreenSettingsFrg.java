@@ -347,7 +347,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                 final NumberPicker npRow = (NumberPicker) rolColView.findViewById(R.id.row_picker);
                 final NumberPicker npCol = (NumberPicker) rolColView.findViewById(R.id.col_picker);
                 npRow.setMinValue(0); npRow.setMaxValue(23);
-                npCol.setMinValue(0); npCol.setMaxValue(80);
+                npCol.setMinValue(0); npCol.setMaxValue(79);
                 npRow.setValue(mSetting.mNCursorLockRow);
                 npCol.setValue(mSetting.mNCursorLockCol);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
