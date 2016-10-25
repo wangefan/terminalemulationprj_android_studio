@@ -499,7 +499,7 @@
     <string name="MSG_detect_key">\nPlease press a physical key…\n\nWhen the key is unavailable, the screen would not be responding.\n\nPress \"ESC\" Key or \"Back\" to exit the dialog.</string>
     <string name="Msg_file_exist">This file already exists. Replace existing file?</string>
     <string name="ssh_select_key_file_title">Selected Key File</string>
-    <string name="ssh_add_delete_key_title">Add/Delete Key Files</string>
+    <string name="ssh_add_delete_key_title">Import/Delete Key Files</string>
 
     <string-array name="icon_update_interval_array">
         <item>not update</item>
@@ -546,7 +546,18 @@
         <item>10</item>
         <item>11</item>
     </string-array>
-
+    <string-array name="proxy_type_arr">
+        <item>None</item>
+        <item>SOCKS4</item>
+        <item>SOCKS5</item>
+        <item>HTTP</item>
+    </string-array>
+    <string-array name="proxy_type__vals_arr">
+        <item>None</item>
+        <item>SOCKS4</item>
+        <item>SOCKS5</item>
+        <item>HTTP</item>
+    </string-array>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_second_settings">Second Settings</string>
     <!-- Strings related to Settings -->

@@ -19,6 +19,12 @@
             android:key="@string/ssh_no_host_shell_key"
             android:title="@string/ssh_no_host_shell"/>
         <CheckBoxPreference
+            android:key="@string/ssh_re_key_1g_key"
+            android:title="@string/ssh_re_key_1g"/>
+        <CheckBoxPreference
+            android:key="@string/ssh_write_log_key"
+            android:title="@string/ssh_write_log"/>
+        <CheckBoxPreference
             android:key="@string/ssh_write_log_key"
             android:title="@string/ssh_write_log"/>
     </PreferenceCategory>
@@ -36,9 +42,13 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/ssh_proxy_cate">
-        <EditTextPreference
+        <ListPreference
             android:key="@string/ssh_proxy_type_key"
-            android:title="@string/ssh_proxy_type"/>
+            android:title="@string/ssh_proxy_type"
+            android:entries="@array/proxy_type_arr"
+            android:entryValues="@array/proxy_type__vals_arr"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
         <EditTextPreference
             android:key="@string/ssh_proxy_host_key"
             android:title="@string/ssh_proxy_host"/>

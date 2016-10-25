@@ -3,6 +3,7 @@ package com.te.UI;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 
 import com.cipherlab.terminalemulation.R;
@@ -19,7 +20,7 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
     private EditTextPreference medtServerEnvir = null;
     private EditTextPreference medtServerCmds = null;
     private EditTextPreference medtServerTTY = null;
-    private EditTextPreference medtProxyType = null;
+    private ListPreference mProxyType = null;
     private EditTextPreference medtProxyHost = null;
     private EditTextPreference medtProxyPort = null;
     private EditTextPreference medtProxyUser = null;
@@ -45,7 +46,7 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
         medtServerEnvir = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_envir_key));
         medtServerCmds = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_cmd_key));
         medtServerTTY = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_tty_key));
-        medtProxyType = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_type_key));
+        mProxyType = (ListPreference) findPreference(getResources().getString(R.string.ssh_proxy_type_key));
         medtProxyHost = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_host_key));
         medtProxyPort = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_port_key));
         medtProxyUser = (EditTextPreference) findPreference(getResources().getString(R.string.ssh_proxy_user_key));
@@ -65,7 +66,7 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
         medtServerEnvir.setText(mSetting.mSSHServerEnv);
         medtServerCmds.setText(mSetting.mSSHServerCommand);
         medtServerTTY.setText(mSetting.mSSHServerTTY);
-        medtProxyType.setText(mSetting.mSSHProxyType);
+        mProxyType.setValue(mSetting.mSSHProxyType);
         medtProxyHost.setText(mSetting.mSSHProxyHost);
         medtProxyPort.setText(mSetting.mSSHProxyPort);
         medtProxyUser.setText(mSetting.mSSHProxyUser);
@@ -95,7 +96,7 @@ public class SessionSSHKeyFileFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.ssh_tty_key)) == 0) {
             mSetting.mSSHServerTTY = medtServerTTY.getText();
         } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_type_key)) == 0) {
-            mSetting.mSSHProxyType = medtProxyType.getText();
+            mSetting.mSSHProxyType = mProxyType.getValue();
         } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_host_key)) == 0) {
             mSetting.mSSHProxyHost = medtProxyHost.getText();
         } else if(key.compareTo(getResources().getString(R.string.ssh_proxy_port_key)) == 0) {
