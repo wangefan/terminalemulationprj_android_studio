@@ -79,8 +79,6 @@ public class CVT100 extends CVT100Enum {
     public static java.util.Map<Integer, Integer> gDefaultVT100_102KeyCodeMap = new java.util.HashMap<>();
     VtParserEvent vtParserEvent = new VtParserEvent();
     private uc_Parser Parser = null;
-    private int TopMargin;
-    private int BottomMargin;
     private java.util.ArrayList<uc_CaretAttribs> SavedCarets = new java.util.ArrayList<uc_CaretAttribs>();
     private java.util.ArrayList<KeyEventVal> LineBufferList = new java.util.ArrayList<KeyEventVal>();
     private java.util.Map<Integer, Integer> mVTKeyCodeMap = null;
@@ -369,7 +367,8 @@ public class CVT100 extends CVT100Enum {
         }
     }
 
-    private void SetSize(int Rows, int Columns) {
+    @Override
+    protected void SetSize(int Rows, int Columns) {
         this._rows = Rows;
         this._cols = Columns;
 

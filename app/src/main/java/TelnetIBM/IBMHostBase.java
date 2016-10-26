@@ -27,5 +27,34 @@ public abstract class IBMHostBase extends TerminalBase {
 	            
 	        }
 	    }
-    
+
+	protected boolean isDBCS(final byte bHigh, final byte bLow) {
+		boolean bRet = false;
+		int nLanguage = TESettingsInfo.getTELanguage(TESettingsInfo.getSessionIndex());
+		switch (nLanguage) {
+			case 1: //1: TC
+				if ((bHigh >= 0x81 && bHigh <= 0xFE) && ((bLow >= 0x40 && bLow <= 0x7e) || (bLow >= 0xa1 && bLow <= 0xfe)))
+					bRet = true;
+				break;
+			case 2: //2: SC
+				if ((bHigh >= 0xa1 && bHigh <= 0xf7) && (bLow >= 0xa1 && bLow <= 0xfe))
+					bRet = true;
+				break;
+			case 3: //3: Kor
+				if ((bHigh >= 0xa1 && bHigh <= 0xfe) && (bLow >= 0xa1 && bLow <= 0xf3))
+					bRet = true;
+				break;
+			case 4: //4: Jap
+				if (((bHigh >= 0x81 && bHigh <= 0x9f) || (bHigh >= 0xe0 && bHigh <= 0xfc)) && (bLow >= 0x40 && bLow <= 0xfe))
+					bRet = true;
+				break;
+			case 0: //0: single byte char
+			case 5: //5: Gre
+			case 6: //6: Fre
+			default:
+				break;
+		}
+
+		return bRet;
+	}
 }

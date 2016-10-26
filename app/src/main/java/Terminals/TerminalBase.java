@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import com.te.UI.CipherUtility;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 import SessionProcess.TelnetConnMgr;
@@ -26,6 +27,10 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public char[][] AttribGrid = null;
     public int _cols;
     public int _rows;
+    protected int TopMargin;
+    protected int BottomMargin;
+    protected int LeftMargin;
+    protected int RightMargin;
     protected OnTerminalListener mTerminalListener;
     protected String mIp = "";
     protected String mPort = "";
@@ -37,6 +42,33 @@ public abstract class TerminalBase extends TerminalBaseEnum {
     public TerminalBase() {
         this.mTelnetParser = new TelnetParser();
         mTerminalListener = null;
+    }
+
+    protected void resetGrid() {
+        CharGrid = new char[_rows][];
+        AttribGrid = new char[_rows][];
+        for (int i = 0; i < this.CharGrid.length; i++) {
+            CharGrid[i] = new char[_cols];
+            AttribGrid[i] = new char[_cols];
+        }
+    }
+
+    protected void clearGrid() {
+        for (int i = 0; i < this.CharGrid.length; i++) {
+            Arrays.fill(CharGrid[i], (char) 0);
+            Arrays.fill(AttribGrid[i], (char) 0);
+        }
+    }
+
+    protected void SetSize(int Rows, int Columns) {
+        this._rows = Rows;
+        this._cols = Columns;
+
+        this.TopMargin = 0;
+        this.BottomMargin = Rows - 1;
+        this.LeftMargin = 0;
+        this.RightMargin = Columns - 1;
+        resetGrid();
     }
 
     public void setOnTerminalListener(OnTerminalListener onTerminalListener) {

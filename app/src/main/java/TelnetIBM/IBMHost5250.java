@@ -395,10 +395,6 @@ public class IBMHost5250 extends IBMHostBase {
     byte mbyCommandBuf = 0x00;
     byte[] mCurControlCode = {0x00, 0x00};
     int CurRecordLenth = 0;
-    private int TopMargin;
-    private int BottomMargin;
-    private int LeftMargin;
-    private int RightMargin;
     private boolean mBDBCS = false;
     private java.util.ArrayList<Character> DataList = new java.util.ArrayList<Character>();
     private java.util.ArrayList<Character> ParamList = new java.util.ArrayList<Character>();
@@ -552,26 +548,6 @@ public class IBMHost5250 extends IBMHostBase {
         }
         CipherUtility.Log_d("IBMHost5250", "No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode));
         return IBMKEY_NONE;
-    }
-
-    private void SetSize(int Rows, int Columns) {
-        this._rows = Rows;
-        this._cols = Columns;
-
-        this.TopMargin = 0;
-        this.BottomMargin = Rows - 1;
-        this.LeftMargin = 0;
-        this.RightMargin = Columns - 1;
-        resetGrid();
-    }
-
-    private void resetGrid() {
-        CharGrid = new char[_rows][];
-        AttribGrid = new char[_rows][];
-        for (int i = 0; i < this.CharGrid.length; i++) {
-            CharGrid[i] = new char[_cols];
-            AttribGrid[i] = new char[_cols];
-        }
     }
 
     public String GetTerminalTypeName() {
