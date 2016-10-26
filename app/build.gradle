@@ -3,14 +3,14 @@ apply from: "../artifacts.gradle"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '24.0.0'
+    buildToolsVersion '24.0.2'
     compileOptions.encoding = 'windows-1251'
     defaultConfig {
         applicationId 'com.cipherlab.terminalemulation'
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
-        versionName '0.0.0.7'
+        versionName '0.0.0.8'
         resValue "bool", "bSpecialHandleLicense", "false"
     }
     buildTypes {
@@ -19,6 +19,7 @@ android {
         }
         release {
             minifyEnabled false
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             buildConfigField "Boolean", "DEBUG_MODE", "false"
         }
@@ -35,7 +36,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 22
             versionCode 1
-            versionName '0.0.0.7'
+            versionName '0.0.0.8'
         }
         densowave {
             applicationId = "com.densowave.terminalemulation"
@@ -48,7 +49,7 @@ android {
             resValue "bool", "bSpecialHandleLicense", "true"
             minSdkVersion 15
             targetSdkVersion 22
-            versionName '0.0.0.7'
+            versionName '0.0.0.8'
             versionCode 1
         }
     }
