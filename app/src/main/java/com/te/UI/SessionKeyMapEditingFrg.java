@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import Terminals.KeyMapItem;
-import Terminals.KeyMapList;
+import Terminals.KeyMapUtility;
 import Terminals.TESettings;
 
 public class SessionKeyMapEditingFrg extends Fragment {
@@ -191,7 +191,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
 
                 mPhyKeys.setSelection(0);
                 mPhyKeys.setTag(0);
-                commitToTESettings(KeyMapList.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
+                commitToTESettings(KeyMapUtility.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
                 updateUIByPhyCode(mEditEncodedPhyKeyCode);
             }
 
@@ -210,10 +210,10 @@ public class SessionKeyMapEditingFrg extends Fragment {
                 PhyKeyItem phyKeyItem = (PhyKeyItem) mPhyKeys.getItemAtPosition(position);
                 final int nDecodedPhyCode = phyKeyItem.mPhyKeycode;
                 if(nDecodedPhyCode == KeyMapItem.UNDEFINE_PHY) {
-                    commitToTESettings(KeyMapList.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
+                    commitToTESettings(KeyMapUtility.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
                     updateUIByPhyCode(mEditEncodedPhyKeyCode);
                 } else {
-                    checkAndProcEncodedPhy(KeyMapList.encodePhyKeyCode(nDecodedPhyCode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
+                    checkAndProcEncodedPhy(KeyMapUtility.encodePhyKeyCode(nDecodedPhyCode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
                 }
             }
 
@@ -229,8 +229,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
             @Override
             public void onClick(View v) {
                 mchkShift.setChecked(!mchkShift.isChecked());
-                int nDecodeKeycode = KeyMapList.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
-                checkAndProcEncodedPhy(KeyMapList.encodePhyKeyCode(nDecodeKeycode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
+                int nDecodeKeycode = KeyMapUtility.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
+                checkAndProcEncodedPhy(KeyMapUtility.encodePhyKeyCode(nDecodeKeycode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
             }
         });
         mchkCtrl = (CheckBox) keyMappingEdtView.findViewById(R.id.id_ctrl);
@@ -240,8 +240,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
             @Override
             public void onClick(View v) {
                 mchkCtrl.setChecked(!mchkCtrl.isChecked());
-                int nDecodeKeycode = KeyMapList.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
-                checkAndProcEncodedPhy(KeyMapList.encodePhyKeyCode(nDecodeKeycode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
+                int nDecodeKeycode = KeyMapUtility.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
+                checkAndProcEncodedPhy(KeyMapUtility.encodePhyKeyCode(nDecodeKeycode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
             }
         });
         mchkAlt = (CheckBox) keyMappingEdtView.findViewById(R.id.id_alt);
@@ -251,8 +251,8 @@ public class SessionKeyMapEditingFrg extends Fragment {
             @Override
             public void onClick(View v) {
                 mchkAlt.setChecked(!mchkAlt.isChecked());
-                int nDecodeKeycode = KeyMapList.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
-                checkAndProcEncodedPhy(KeyMapList.encodePhyKeyCode(nDecodeKeycode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
+                int nDecodeKeycode = KeyMapUtility.decodePhyCodeRetunHelpKey(mEditEncodedPhyKeyCode, null, null, null);
+                checkAndProcEncodedPhy(KeyMapUtility.encodePhyKeyCode(nDecodeKeycode, mchkCtrl.isChecked(), mchkShift.isChecked(), mchkAlt.isChecked()));
             }
         });
         RelativeLayout layClear = (RelativeLayout) keyMappingEdtView.findViewById(R.id.id_lay_clear_key);
@@ -263,7 +263,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
                 mPhyKeys.setSelection(0);
                 mPhyKeys.setSelection(0);
                 mPhyKeys.setTag(0);
-                commitToTESettings(KeyMapList.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
+                commitToTESettings(KeyMapUtility.encodePhyKeyCode(KeyMapItem.UNDEFINE_PHY, false, false, false));
                 updateUIByPhyCode(mEditEncodedPhyKeyCode);
             }
         });
@@ -358,7 +358,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
         AtomicBoolean bCtrl = new AtomicBoolean(false);
         AtomicBoolean bShift = new AtomicBoolean(false);
         AtomicBoolean bAlt = new AtomicBoolean(false);
-        int nDecodePhyCode = KeyMapList.decodePhyCodeRetunHelpKey(nEncodedPhyKeyCode, bCtrl, bShift, bAlt);
+        int nDecodePhyCode = KeyMapUtility.decodePhyCodeRetunHelpKey(nEncodedPhyKeyCode, bCtrl, bShift, bAlt);
         if(nDecodePhyCode != KeyMapItem.UNDEFINE_PHY) {
             int nPhyCate = gKeyCodeCategryMap.get(nDecodePhyCode);
             mPhyCategory.setSelection(nPhyCate);
@@ -427,7 +427,7 @@ public class SessionKeyMapEditingFrg extends Fragment {
         PhyKeyItem(int nPhyKeycode) {
             mPhyKeycode = nPhyKeycode;
             if(mPhyKeycode != KeyMapItem.UNDEFINE_PHY) {
-                mPhyKeyText = KeyMapList.getPhyKeycodeTextByKeycode(mPhyKeycode);
+                mPhyKeyText = KeyMapUtility.getPhyKeycodeTextByKeycode(mPhyKeycode);
             }
         }
     }

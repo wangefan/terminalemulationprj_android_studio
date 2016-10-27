@@ -14,6 +14,7 @@ import java.util.HashMap;
 import Terminals.CipherReaderControl;
 import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
+import Terminals.KeyMapUtility;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 
@@ -144,13 +145,13 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
@@ -161,16 +162,16 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F8, VTKEY_F8);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F9, VTKEY_F9);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F10, VTKEY_F10);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), VTKEY_F11);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), VTKEY_F12);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), VTKEY_F13);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), VTKEY_F14);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), VTKEY_F15);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), VTKEY_F16);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), VTKEY_F17);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), VTKEY_F18);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), VTKEY_F19);
-        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), VTKEY_F20);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), VTKEY_F11);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), VTKEY_F12);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), VTKEY_F13);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), VTKEY_F14);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), VTKEY_F15);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), VTKEY_F16);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), VTKEY_F17);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), VTKEY_F18);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), VTKEY_F19);
+        gDefaultVT220KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), VTKEY_F20);
 
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
         gDefaultVT220KeyCodeMap.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
@@ -203,13 +204,13 @@ public class CVT100 extends CVT100Enum {
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_LEFT, VTKEY_LEFT);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_RIGHT, VTKEY_RIGHT);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, VTKEY_ESC);
-        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
-        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
-        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), VTKEY_LF);
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_COMMA, false, true, false), VTKEY_FIND);//Shift + [Comma or Blue + A]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_APOSTROPHE, false, true, false), VTKEY_SELECT);//Shift + [KEYCODE_APOSTROPHE or Blue + C]
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, VTKEY_INS);
-        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
-        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
-        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_PERIOD, false, true, false), VTKEY_REMOVE);//Shift + [PERIOD or Blue + B]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_LEFT_BRACKET, false, true, false), VTKEY_PREV);//Shift + [LEFT_BRACKET or Blue + E]
+        gDefaultVT100_102KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_RIGHT_BRACKET, false, true, false), VTKEY_NEXT);//Shift + [RIGHT_BRACKET or Blue + F]
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F1, VTKEY_F1);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F2, VTKEY_F2);
         gDefaultVT100_102KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F3, VTKEY_F3);
@@ -341,10 +342,10 @@ public class CVT100 extends CVT100Enum {
     protected int getServerKeyCode(int keyCode) {
         Integer nVTKeyCode = mVTKeyCodeMap.get(keyCode);
         if (nVTKeyCode != null) {
-            CipherUtility.Log_d("CVT100", "Keycode mapped, Keyevent = %d[%s], VT Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nVTKeyCode, getServerKeyText(nVTKeyCode));
+            CipherUtility.Log_d("CVT100", "Keycode mapped, Keyevent = %d[%s], VT Keycode = %d[%s]", keyCode, KeyMapUtility.getPhysicalKeyTextByEncode(keyCode), nVTKeyCode, getServerKeyText(nVTKeyCode));
             return nVTKeyCode;
         }
-        CipherUtility.Log_d("CVT100", "No Keycode mapped!, Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode));
+        CipherUtility.Log_d("CVT100", "No Keycode mapped!, Keyevent = %d[%s]", keyCode, KeyMapUtility.getPhysicalKeyTextByEncode(keyCode));
         return VTKEY_NONE;
     }
 
@@ -1466,7 +1467,7 @@ public class CVT100 extends CVT100Enum {
             nVTKeyCode = keyCode;
             CipherUtility.Log_d("CVT100", "VT Keycode = %d[%s]", nVTKeyCode, getServerKeyText(nVTKeyCode));
         } else {
-            int nEncodePhyKeycode = KeyMapList.getEncodePhyKeyCode(event);
+            int nEncodePhyKeycode = KeyMapUtility.getEncodePhyKeyCode(event);
             nVTKeyCode = getServerKeyCode(nEncodePhyKeycode);
         }
 

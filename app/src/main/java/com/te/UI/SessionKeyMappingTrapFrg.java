@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.cipherlab.terminalemulation.R;
 
-import Terminals.KeyMapList;
+import Terminals.KeyMapUtility;
 
 public class SessionKeyMappingTrapFrg extends Fragment {
     public static final String KEY_COMBI_RESULT = "KEY_COMBI_RESULT";
@@ -26,8 +26,8 @@ public class SessionKeyMappingTrapFrg extends Fragment {
     }
 
     public void onKeyDown(int keyCode, KeyEvent event) {
-        int nEncodedKeycode = KeyMapList.getEncodePhyKeyCode(event);
-        CipherUtility.Log_d("SessionKeyMappingTrapFrg", "onKeyDown, Keyevent = %d[%s]", nEncodedKeycode, KeyMapList.getPhysicalKeyTextByEncode(nEncodedKeycode));
+        int nEncodedKeycode = KeyMapUtility.getEncodePhyKeyCode(event);
+        CipherUtility.Log_d("SessionKeyMappingTrapFrg", "onKeyDown, Keyevent = %d[%s]", nEncodedKeycode, KeyMapUtility.getPhysicalKeyTextByEncode(nEncodedKeycode));
         if (keyCode == KeyEvent.KEYCODE_ESCAPE) {
             getActivity().onBackPressed();
             return;

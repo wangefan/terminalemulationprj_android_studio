@@ -45,6 +45,7 @@ import Terminals.CipherReaderControl;
 import Terminals.ContentView;
 import Terminals.CursorView;
 import Terminals.KeyMapList;
+import Terminals.KeyMapUtility;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
@@ -677,12 +678,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         //Handle HW key event
         if(TESettingsInfo.getHostIsHWExitByIndex(TESettingsInfo.getSessionIndex()) && //Shift + Right
-                KeyMapList.isShiftPressed(event) &&
+                KeyMapUtility.isShiftPressed(event) &&
                 keyCode ==  KeyEvent.KEYCODE_DPAD_RIGHT) {
             stdActivityRef.getCurrActivity().onExit();
             return true;
         } else if(TESettingsInfo.getHostIsHWShowSIPByIndex(TESettingsInfo.getSessionIndex()) && //Shift + Esc
-                KeyMapList.isShiftPressed(event) &&
+                KeyMapUtility.isShiftPressed(event) &&
                 keyCode ==  KeyEvent.KEYCODE_ESCAPE) {
             UIUtility.showSIP(this, mContentView);
             return true;

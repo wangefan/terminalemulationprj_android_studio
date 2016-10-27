@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
+import Terminals.KeyMapUtility;
 import Terminals.LanguageTable;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
@@ -123,10 +124,10 @@ public class IBMHost5250 extends IBMHostBase {
     private static java.util.Map<Integer, String> mTNKeyCodeText = new java.util.HashMap<>();
     public static void initKeyCodeMap() {
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_BACKSLASH, IBMKEY_ATTN);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_RIGHT_BRACKET, IBMKEY_CLREOF); //Right BRACKET or Blue + F
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, IBMKEY_DEL);//End or Blue + backspace
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MINUS, IBMKEY_DUP);   //KEYCODE_MINUS or Blue + N
@@ -134,11 +135,11 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_LEFT_BRACKET, IBMKEY_ERINPUT); //Left BRACKET or Blue + E
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PERIOD, IBMKEY_PRINT); //Period or Blue + B
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PAGE_DOWN, IBMKEY_FMINUS); //Page down or Blue + *
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ENTER, true, false, false), IBMKEY_FEXIT);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ENTER, true, false, false), IBMKEY_FEXIT);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_APOSTROPHE, IBMKEY_HELP); //KEYCODE_APOSTROPHE or Blue + C
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_COMMA, IBMKEY_HOME); //Comma or Blue + A
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_SEMICOLON, IBMKEY_INS); //Semicolon or Blue + R, need confirm
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_GRAVE, IBMKEY_ROLUP); //KEYCODE_GRAVE or Blue + J , VK_BACKQUOTE in TE C++
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F11, IBMKEY_ROLDN); //F11 or Blue + L, need confirm
@@ -157,26 +158,26 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), IBMKEY_F11);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), IBMKEY_F12);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), IBMKEY_F13);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), IBMKEY_F14);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), IBMKEY_F15);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), IBMKEY_F16);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), IBMKEY_F17);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), IBMKEY_F18);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), IBMKEY_F19);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), IBMKEY_F20);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F1, false, true, false), IBMKEY_F21);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F2, false, true, false), IBMKEY_F22);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F3, false, true, false), IBMKEY_F23);
-        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F4, false, true, false), IBMKEY_F24);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), IBMKEY_F11);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), IBMKEY_F12);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), IBMKEY_F13);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), IBMKEY_F14);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), IBMKEY_F15);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), IBMKEY_F16);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), IBMKEY_F17);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), IBMKEY_F18);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), IBMKEY_F19);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), IBMKEY_F20);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F1, false, true, false), IBMKEY_F21);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F2, false, true, false), IBMKEY_F22);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F3, false, true, false), IBMKEY_F23);
+        gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F4, false, true, false), IBMKEY_F24);
 
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_BACKSLASH, IBMKEY_ATTN);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_GRAVE, IBMKEY_PREV); //KEYCODE_GRAVE or Blue + J, VK_BACKQUOTE in TE C++
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F12, IBMKEY_CLREOF);//F12 or Blue + K
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, IBMKEY_DEL);//End or Blue + backspace
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MINUS, IBMKEY_DUP);   //KEYCODE_MINUS or Blue + N
@@ -185,10 +186,10 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_RIGHT_BRACKET, IBMKEY_FMARK); //Right BRACKET or Blue + F
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PAGE_DOWN, IBMKEY_HOME);//Page down or Blue + *
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_SEMICOLON, IBMKEY_INS); //Semicolon or Blue + R, need confirm
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F6, false, true, false), IBMKEY_ROLUP);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F7, false, true, false), IBMKEY_ROLDN);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F6, false, true, false), IBMKEY_ROLUP);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F7, false, true, false), IBMKEY_ROLDN);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F11, IBMKEY_SYSRQ); //F11 or Blue + L
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_LEFT, IBMKEY_LEFT);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
@@ -207,27 +208,27 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
         gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), IBMKEY_F11);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), IBMKEY_F12);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), IBMKEY_F13);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), IBMKEY_F14);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), IBMKEY_F15);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), IBMKEY_F16);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), IBMKEY_F17);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), IBMKEY_F18);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), IBMKEY_F19);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), IBMKEY_F20);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F1, false, true, false), IBMKEY_F21);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F2, false, true, false), IBMKEY_F22);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F3, false, true, false), IBMKEY_F23);
-        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_F4, false, true, false), IBMKEY_F24);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), IBMKEY_F11);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), IBMKEY_F12);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), IBMKEY_F13);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), IBMKEY_F14);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), IBMKEY_F15);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), IBMKEY_F16);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), IBMKEY_F17);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), IBMKEY_F18);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), IBMKEY_F19);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), IBMKEY_F20);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F1, false, true, false), IBMKEY_F21);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F2, false, true, false), IBMKEY_F22);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F3, false, true, false), IBMKEY_F23);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F4, false, true, false), IBMKEY_F24);
 
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
-        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
-        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
-        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ENTER, true, false, false), IBMKEY_FEXIT);
-        gDefaultTN_5250KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_LEFT, false, true, false), IBMKEY_RECORD);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ENTER, true, false, false), IBMKEY_FEXIT);
+        gDefaultTN_5250KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_LEFT, false, true, false), IBMKEY_RECORD);
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_FORWARD_DEL, IBMKEY_DEL);//Deletes characters ahead of the insertion point, unlike KEYCODE_DEL.
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
@@ -249,9 +250,9 @@ public class IBMHost5250 extends IBMHostBase {
         gDefaultTN_5250KeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_F12);
 
         gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
-        gDefaultTN_3270KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
+        gDefaultTN_3270KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
         gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
-        gDefaultTN_3270KeyCodeMap.put(KeyMapList.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_3270KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
         gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_FORWARD_DEL, IBMKEY_DEL);//Deletes characters ahead of the insertion point, unlike KEYCODE_DEL.
         gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
         gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
@@ -543,10 +544,10 @@ public class IBMHost5250 extends IBMHostBase {
     protected int getServerKeyCode(int keyCode) {
         Integer nIBMKeyCode = mTN5250KeyCodeMap.get(keyCode);
         if(nIBMKeyCode != null) {
-            CipherUtility.Log_d("IBMHost5250", "Keycode mapped, Keyevent = %d[%s], IBM Keycode = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode), nIBMKeyCode, getServerKeyText(nIBMKeyCode));
+            CipherUtility.Log_d("IBMHost5250", "Keycode mapped, Keyevent = %d[%s], IBM Keycode = %d[%s]", keyCode, KeyMapUtility.getPhysicalKeyTextByEncode(keyCode), nIBMKeyCode, getServerKeyText(nIBMKeyCode));
             return nIBMKeyCode;
         }
-        CipherUtility.Log_d("IBMHost5250", "No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapList.getPhysicalKeyTextByEncode(keyCode));
+        CipherUtility.Log_d("IBMHost5250", "No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapUtility.getPhysicalKeyTextByEncode(keyCode));
         return IBMKEY_NONE;
     }
 
@@ -2355,7 +2356,7 @@ public class IBMHost5250 extends IBMHostBase {
             nIBMKeyCode = keyCode;
             CipherUtility.Log_d("IBMHost5250", "IBM Keycode = %d[%s]", nIBMKeyCode, getServerKeyText(nIBMKeyCode));
         } else {
-            int nEncodePhyKeycode = KeyMapList.getEncodePhyKeyCode(event);
+            int nEncodePhyKeycode = KeyMapUtility.getEncodePhyKeyCode(event);
             nIBMKeyCode = getServerKeyCode(nEncodePhyKeycode);
         }
 
