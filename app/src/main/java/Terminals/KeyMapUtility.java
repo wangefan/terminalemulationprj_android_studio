@@ -13,8 +13,7 @@ public class KeyMapUtility {
     private static final int NCTRLVAL = 2000;
     private static final int NALTVAL = 4000;
     final static public LinkedHashMap<Integer, Integer> mKeyCodeWithCombinFrom53KeyPadMap = new LinkedHashMap<>();//Key: original Key code, Val: Keycode with Blue key
-
-    public KeyMapUtility() {
+    static {
         mKeyCodeWithCombinFrom53KeyPadMap.clear();
         //Alphabets
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_COMMA, KeyEvent.KEYCODE_A);
