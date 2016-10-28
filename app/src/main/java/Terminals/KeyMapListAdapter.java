@@ -37,17 +37,17 @@ public class KeyMapListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mKeyMapItemList.size();
+        return mKeyMapItemList.listSize();
     }
 
     @Override
     public Object getItem(int position) {
-        return mKeyMapItemList.get(position);
+        return mKeyMapItemList.getItem(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return mKeyMapItemList.indexOf(getItem(position));
+        return mKeyMapItemList.indexOfList(getItem(position));
     }
 
     @Override

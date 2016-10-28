@@ -128,9 +128,9 @@ public class CVT100 extends CVT100Enum {
     public void setKeyMapList(KeyMapList keyMapList) {
         if(keyMapList != null) { //Load from settings
             mVTKeyCodeMap = new HashMap<>();
-            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.size(); idxKeyMapList++) {
-                KeyMapItem keyMapItem = keyMapList.get(idxKeyMapList);
-                mVTKeyCodeMap.put(keyMapItem.mPhysicalKeycode, keyMapItem.mServerKeycode);
+            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.listSize(); idxKeyMapList++) {
+                KeyMapItem keyMapItem = keyMapList.getItem(idxKeyMapList);
+                mVTKeyCodeMap.put(keyMapItem.getPhysicalKeycode(), keyMapItem.getServerKeycode());
             }
         }
     }

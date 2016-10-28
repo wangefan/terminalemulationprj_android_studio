@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import Terminals.KeyMapItem;
+import Terminals.KeyMapList;
 import Terminals.KeyMapUtility;
 import Terminals.TESettings;
 
@@ -162,9 +163,11 @@ public class SessionKeyMapEditingFrg extends Fragment {
         mEditServerKeyCode = nEditServerKeyCode;
         //To find mapped physical key
         mEditEncodedPhyKeyCode = KeyMapItem.UNDEFINE_PHY;
-        for(KeyMapItem keyItem :  mSetting.getKeyMapList()) {
-            if(mEditServerKeyCode == keyItem.mServerKeycode) {
-                mEditEncodedPhyKeyCode = keyItem.mPhysicalKeycode;
+        KeyMapList mapList = mSetting.getKeyMapList();
+        for(int i = 0; i < mapList.listSize(); ++i) {
+            KeyMapItem keyItem = mapList.getItem(i);
+            if(mEditServerKeyCode == keyItem.getServerKeycode()) {
+                mEditEncodedPhyKeyCode = keyItem.getPhysicalKeycode();
                 break;
             }
         }
@@ -328,19 +331,23 @@ public class SessionKeyMapEditingFrg extends Fragment {
     }
 
     private void replaceMappedPhyKeycode(int nServerKeyCode, int nEncodedPhyKeyCode) {
-        for(KeyMapItem keyItem :  mSetting.getKeyMapList()) {
-            if(nServerKeyCode == keyItem.mServerKeycode) {
-                keyItem.mPhysicalKeycode = nEncodedPhyKeyCode;
+        KeyMapList mapList = mSetting.getKeyMapList();
+        for(int i = 0; i < mapList.listSize(); ++i) {
+            KeyMapItem keyItem = mapList.getItem(i);
+            if(nServerKeyCode == keyItem.getServerKeycode()) {
+                keyItem.setPhysicalKeycode(nEncodedPhyKeyCode);
                 break;
             }
         }
     }
 
     private boolean checkIfMapped(int nEncodePhyKeycode, AtomicInteger mappedServerKeyCode) {
-        for(KeyMapItem keyItem :  mSetting.getKeyMapList()) {
-            if(nEncodePhyKeycode == keyItem.mPhysicalKeycode) {
+        KeyMapList mapList = mSetting.getKeyMapList();
+        for(int i = 0; i < mapList.listSize(); ++i) {
+            KeyMapItem keyItem = mapList.getItem(i);
+            if(nEncodePhyKeycode == keyItem.getPhysicalKeycode()) {
                 if(mappedServerKeyCode != null) {
-                    mappedServerKeyCode.set(keyItem.mServerKeycode);
+                    mappedServerKeyCode.set(keyItem.getServerKeycode());
                 }
                 return true;
             }

@@ -129,13 +129,13 @@ public class TESettingsInfo {
         return true;
     }
 
-    public static void fillMaps(KeyMapList keyMapListDest, Map<Integer, Integer> keyCodeMapSrc) {
+    public static void fillMaps(KeyMapList keyMapListDest, Map<Integer, Integer> keyCodeMapSrc, boolean bIsTN) {
         Iterator entries = keyCodeMapSrc.entrySet().iterator();
         while (entries.hasNext()) {
             Map.Entry entry = (Map.Entry) entries.next();
             Integer phyKeyCode = (Integer) entry.getKey();
             Integer serverKeycode = (Integer) entry.getValue();
-            keyMapListDest.add(new KeyMapItem(serverKeycode, phyKeyCode));
+            keyMapListDest.addItem(KeyMapItem.createItem(serverKeycode, phyKeyCode, bIsTN));
         }
     }
 
@@ -251,9 +251,9 @@ public class TESettingsInfo {
         if(setting.mTN3270KeyConfig == null) {
             setting.mTN3270KeyConfig = new TN3270KeyMapList();
             if(stdActivityRef.is53Key()) {
-                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap_Taurus);
+                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap_Taurus, true);
             } else {
-                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap);
+                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap, true);
             }
 
             setting.mTN3270KeyConfigCount = setting.mTN3270KeyConfig.size();
@@ -261,27 +261,27 @@ public class TESettingsInfo {
         if(setting.mTN5250KeyConfig == null) {
             setting.mTN5250KeyConfig = new TN5250KeyMapList();
             if(stdActivityRef.is53Key()) {
-                fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus);
+                fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap_Taurus, true);
             } else {
-                fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap);
+                fillMaps(setting.mTN5250KeyConfig, IBMHost5250.gDefaultTN_5250KeyCodeMap, true);
             }
             setting.mTN5250KeyConfigCount = setting.mTN5250KeyConfig.size();
         }
         if(setting.mVT100_102KeyConfig == null) {
             setting.mVT100_102KeyConfig = new VT100_102KeyMapList();
             if(stdActivityRef.is53Key()) {
-                fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus);
+                fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap_Taurus, false);
             } else {
-                fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap);
+                fillMaps(setting.mVT100_102KeyConfig, CVT100.gDefaultVT100_102KeyCodeMap, false);
             }
             setting.mVT100_102KeyConfigCount = setting.mVT100_102KeyConfig.size();
         }
         if(setting.mVT220KeyConfig == null) {
             setting.mVT220KeyConfig = new VT220KeyMapList();
             if(stdActivityRef.is53Key()) {
-                fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus);
+                fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap_Taurus, false);
             } else {
-                fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap);
+                fillMaps(setting.mVT220KeyConfig, CVT100.gDefaultVT220KeyCodeMap, false);
             }
             setting.mVT220KeyConfigCount = setting.mVT220KeyConfig.size();
         }

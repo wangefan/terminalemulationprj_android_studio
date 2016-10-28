@@ -236,7 +236,7 @@ public class SessionKeyMappingFrg extends Fragment {
                     KeyMapItem keyItem = (KeyMapItem) mKeyMapListView.getItemAtPosition(position);
                     Intent intent = new Intent(getActivity(), Session3rdSettings.class);
                     intent.setAction(Session3rdSettings.ACTION_KEYMAP_EDIT);
-                    intent.putExtra(Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE, keyItem.mServerKeycode);
+                    intent.putExtra(Session3rdSettings.ACTION_KEYMAP_EDIT_SERVER_KEYCODE, keyItem.getServerKeycode());
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.MSG_KeyMappingItem_not_accept), Toast.LENGTH_SHORT).show();
@@ -250,32 +250,37 @@ public class SessionKeyMappingFrg extends Fragment {
         KeyMapList keyListInSettings = mSetting.getKeyMapList();
         KeyMapList keyListReSeq = null;
         int [] keySequenceBase = null;
+        boolean bIsTN = false;
         if(keyListInSettings instanceof VT100_102KeyMapList) {
             keyListReSeq = new VT100_102KeyMapList();
             keySequenceBase = VT100_102SERVER_KEY_SEQUENCE;
+            bIsTN = false;
         } else if(keyListInSettings instanceof VT220KeyMapList) {
             keyListReSeq = new VT220KeyMapList();
             keySequenceBase = VT220SERVER_KEY_SEQUENCE;
+            bIsTN = false;
         } else if(keyListInSettings instanceof TN5250KeyMapList) {
             keyListReSeq = new TN5250KeyMapList();
             keySequenceBase = TN5250SERVER_KEY_SEQUENCE;
+            bIsTN = true;
         } else if(keyListInSettings instanceof TN3270KeyMapList) {
             keyListReSeq = new TN3270KeyMapList();
             keySequenceBase = TN3270SERVER_KEY_SEQUENCE;
+            bIsTN = true;
         }
 
         //Re sequence list by SEQUENCE_LIST
         if(keySequenceBase != null && keyListReSeq != null) {
             for(int idxKey = 0; idxKey < keySequenceBase.length; ++idxKey) {
-                KeyMapItem newKeyItem = new KeyMapItem(keySequenceBase[idxKey], KeyMapItem.UNDEFINE_PHY);
-                for (int idxCurList = 0; idxCurList < keyListInSettings.size(); idxCurList++) {
-                    KeyMapItem curKeyItem = keyListInSettings.get(idxCurList);
-                    if(keySequenceBase[idxKey] == curKeyItem.mServerKeycode) {
-                        newKeyItem.mPhysicalKeycode = curKeyItem.mPhysicalKeycode;
+                KeyMapItem newKeyItem = KeyMapItem.createItem(keySequenceBase[idxKey], KeyMapItem.UNDEFINE_PHY, bIsTN);
+                for (int idxCurList = 0; idxCurList < keyListInSettings.listSize(); idxCurList++) {
+                    KeyMapItem curKeyItem = keyListInSettings.getItem(idxCurList);
+                    if(keySequenceBase[idxKey] == curKeyItem.getServerKeycode()) {
+                        newKeyItem.setPhysicalKeycode(curKeyItem.getPhysicalKeycode());
                         break;
                     }
                 }
-                keyListReSeq.add(newKeyItem);
+                keyListReSeq.addItem(newKeyItem);
             }
             final KeyMapListAdapter adapter = new KeyMapListAdapter(getActivity(), keyListReSeq);
             mKeyMapListView.setAdapter(adapter);

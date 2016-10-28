@@ -479,9 +479,9 @@ public class IBMHost5250 extends IBMHostBase {
     public void setKeyMapList(KeyMapList keyMapList) {
         if(keyMapList != null) { //Load from settings
             mTN5250KeyCodeMap = new HashMap<>();
-            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.size(); idxKeyMapList++) {
-                KeyMapItem keyMapItem = keyMapList.get(idxKeyMapList);
-                mTN5250KeyCodeMap.put(keyMapItem.mPhysicalKeycode, keyMapItem.mServerKeycode);
+            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.listSize(); idxKeyMapList++) {
+                KeyMapItem keyMapItem = keyMapList.getItem(idxKeyMapList);
+                mTN5250KeyCodeMap.put(keyMapItem.getPhysicalKeycode(), keyMapItem.getServerKeycode());
             }
         }
     }

@@ -1,22 +1,23 @@
 package Terminals;
 
 
-import com.google.gson.annotations.SerializedName;
-
-public class KeyMapItem {
+public abstract class KeyMapItem {
     public static final int UNDEFINE_PHY = -1;
 
-    @SerializedName(value="VTFunKeyVal", alternate={"TNFunKeyVal"})
-    public int mServerKeycode = 0;
+    public abstract int getServerKeycode();
+    public abstract int getPhysicalKeycode();
 
-    @SerializedName(value="VTPhyKeyCode", alternate={"TNPhyKeyCode"})
-    public int mPhysicalKeycode = 0;
+    public abstract void setServerKeycode(int nServerKeycode);
+    public abstract void setPhysicalKeycode(int nPhysicalKeycode);
 
     public KeyMapItem() {
     }
 
-    public KeyMapItem (int serverKeycode, int physicalKeycode) {
-        mServerKeycode = serverKeycode;
-        mPhysicalKeycode = physicalKeycode;
+    public static KeyMapItem createItem(Integer serverKeycode, Integer phyKeyCode, boolean bIsTN) {
+        if(bIsTN) {
+            return new KeyMapItemTN(serverKeycode, phyKeyCode);
+        } else {
+            return new KeyMapItemVT(serverKeycode, phyKeyCode);
+        }
     }
 }
