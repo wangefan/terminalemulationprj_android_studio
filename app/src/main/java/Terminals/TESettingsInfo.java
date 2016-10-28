@@ -10,10 +10,12 @@ import com.te.UI.CipherUtility;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -79,7 +81,11 @@ public class TESettingsInfo {
     private static final String IMPORT_PATH = "IMPORT_PATH";
     private static final String SSH_KEY_PATH = "SSH_KEY_PATH";
 
-    public static boolean loadSessionSettings(Context context) {
+    /* success: return empty string
+     * false: return cause in string.
+     */
+    public static String loadSessionSettings(Context context) {
+        String result = "";
         if (mSp == null) {
             mSp = context.getSharedPreferences(_NAME, Context.MODE_PRIVATE);
         }
@@ -95,9 +101,9 @@ public class TESettingsInfo {
         mListVBTime.add(4500l);
         mListVBTime.add(5000l);
         mListVBTime.add(5500l);
-        File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
-        if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
-            try {
+        try {
+            File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
+            if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
                 teJsonFile.getParentFile().mkdirs();
                 InputStream inputStream = context.getAssets().open(TE_JASONFILE_NAME);
                 FileOutputStream fileOutputStream = new FileOutputStream(teJsonFile.getAbsolutePath());
@@ -108,14 +114,30 @@ public class TESettingsInfo {
                 fileOutputStream.close();
                 fileOutputStream = null;
             }
-            catch (Exception e) {
-                return false;
-            }
+            importSettings(teJsonFile);
+        } catch (Exception e) {
+            result = e.getMessage();
         }
-        return importSettings(teJsonFile);
+        return result;
     }
 
-    private static boolean importSettings(File teJsonFile) {
+    /* success: return empty string
+     * false: return cause in string.
+     */
+    public static String importSessionSettings(String path) {
+        String result = "";
+        File teJsonFile = new File(path);
+        if(teJsonFile.isDirectory() || teJsonFile.exists() == false)
+            return "json file not exist.";
+        try {
+            importSettings(teJsonFile);
+        } catch (Exception e) {
+            result = e.getMessage();
+        }
+        return result;
+    }
+
+    private static boolean importSettings(File teJsonFile) throws FileNotFoundException, UnsupportedEncodingException {
         mTESettings = deSerialize(teJsonFile);
         if (mTESettings == null || mTESettings.SETTINGS == null)
             return false;
@@ -211,13 +233,6 @@ public class TESettingsInfo {
         return createJsonFile(teJsonFile);
     }
 
-    public static boolean importSessionSettings(String path) {
-        File teJsonFile = new File(path);
-        if(teJsonFile.isDirectory() || teJsonFile.exists() == false)
-            return false;
-        return importSettings(teJsonFile);
-    }
-
     public static void deleteJsonFile(Context context) {
         File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
         if (teJsonFile.exists()) {
@@ -225,22 +240,16 @@ public class TESettingsInfo {
         }
     }
 
-    private static TESettings deSerialize(File teJsonFile) {
-        try {
-            FileInputStream inStream = new FileInputStream(teJsonFile);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            TESettings teSettings = gson.fromJson(reader, TESettings.class);
-            for (int idxSetting = 0; idxSetting < teSettings.SETTINGS.size(); idxSetting++) {
-                SessionSetting setting = teSettings.SETTINGS.get(idxSetting);
-                processAfterLoadSetting(setting);
-            }
-            return teSettings;
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static TESettings deSerialize(File teJsonFile) throws FileNotFoundException, UnsupportedEncodingException {
+        FileInputStream inStream = new FileInputStream(teJsonFile);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        TESettings teSettings = gson.fromJson(reader, TESettings.class);
+        for (int idxSetting = 0; idxSetting < teSettings.SETTINGS.size(); idxSetting++) {
+            SessionSetting setting = teSettings.SETTINGS.get(idxSetting);
+            processAfterLoadSetting(setting);
         }
-        return null;
+        return teSettings;
     }
 
     private static void processAfterLoadSetting(SessionSetting setting) {

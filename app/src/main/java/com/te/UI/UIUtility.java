@@ -602,14 +602,15 @@ public class UIUtility {
 
 	public static void doLoadSettingProc(final Context context, final OnLoadSettingProcListener listener) {
 		//ask user to try to clear setting, or exit app
-		if(TESettingsInfo.loadSessionSettings(context) == false) {
+		String result = TESettingsInfo.loadSessionSettings(context);
+		if(result.length() > 0) {
 			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which) {
 						case DialogInterface.BUTTON_POSITIVE:
 							TESettingsInfo.deleteJsonFile(context);
-							listener.onLoadResult(TESettingsInfo.loadSessionSettings(context));
+							listener.onLoadResult(TESettingsInfo.loadSessionSettings(context).isEmpty());
 							break;
 						case DialogInterface.BUTTON_NEGATIVE:
 							listener.onLoadResult(false);
@@ -618,7 +619,7 @@ public class UIUtility {
 				}
 			};
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setMessage(R.string.MSG_clear_setting).setPositiveButton(R.string.str_positive, dialogClickListener)
+			builder.setMessage(String.format(context.getString(R.string.MSG_clear_setting), result)).setPositiveButton(R.string.str_positive, dialogClickListener)
 					.setNegativeButton(R.string.str_negative, dialogClickListener);
 			AlertDialog alert = builder.create();
 			alert.show();

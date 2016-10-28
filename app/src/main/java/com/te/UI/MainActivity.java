@@ -44,7 +44,6 @@ import SessionProcess.TerminalProcess;
 import Terminals.CipherReaderControl;
 import Terminals.ContentView;
 import Terminals.CursorView;
-import Terminals.KeyMapList;
 import Terminals.KeyMapUtility;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
@@ -869,8 +868,9 @@ public class MainActivity extends AppCompatActivity
                         new SimpleFileDialog.SimpleFileDialogListener() {
                             @Override
                             public void onFilePath(String chosenDir) {
-                                if (TESettingsInfo.importSessionSettings(chosenDir) == false) {
-                                    Toast.makeText(MainActivity.this, R.string.MSG_Import_Warn, Toast.LENGTH_SHORT).show();
+                                String result = TESettingsInfo.importSessionSettings(chosenDir);
+                                if (result.length() > 0) {
+                                    UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_Import_Warn), result), null);
                                 } else {
                                     mTerminalProcessFrg.syncSessionsFromSettings();
                                     syncSessionsFromSettings();

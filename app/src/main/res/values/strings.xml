@@ -10,7 +10,7 @@
     <string name="MSG_Activate_Succ">You have activated successful, please re-execute the application to use full functions.</string>
     <string name="MSG_Export_Warn">Export settings fail.</string>
     <string name="MSG_Export_ok">Export settings success.</string>
-    <string name="MSG_Import_Warn">Import settings fail.</string>
+    <string name="MSG_Import_Warn">Import settings fail, possible root case is:\r\n %s</string>
     <string name="MSG_Import_ok">Import settings success.</string>
     <string name="MSG_Import_ssh_ok">Import Key file success.</string>
     <string name="MSG_set_program_name">Set Program Name</string>
@@ -78,7 +78,7 @@
     <string name="out_range_key">out_range_key</string>
     <string name="reader_config_key">reader_config_key</string>
     <string name="log_key">log_key</string>
-    <string name="MSG_clear_setting">Can`t load your setting.</string>
+    <string name="MSG_clear_setting">Can`t load your setting, error cause:\r\n%1$s</string>
     <string name="str_positive">Reset setting to default</string>
     <string name="str_negative">Exit</string>
     <string name="MSG_Connecting">Connecting to host...</string>
