@@ -96,6 +96,9 @@ public class LeftMenuFrg extends Fragment {
                             Integer.toString(idxSession + 1),
                             TESettingsInfo.getHostAddrByIndex(idxSession));
             mSessionsView.setSessionTitle(idxSession, strTitle);
+            if(stdActivityRef.gIsActivate == false) {
+                break;
+            }
         }
         ((SessionsView.SessionItemsAdapter)mSessionsView.getAdapter()).notifyDataSetChanged();
     }
