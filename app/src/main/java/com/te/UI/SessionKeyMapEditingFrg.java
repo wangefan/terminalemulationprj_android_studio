@@ -145,9 +145,9 @@ public class SessionKeyMapEditingFrg extends Fragment {
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PAGE_DOWN, PHY_CATE_NAVG);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_HOME, PHY_CATE_NAVG);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MOVE_END, PHY_CATE_NAVG);
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ESCAPE, PHY_CATE_NAVG); remove because reserve for default setting
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ESCAPE, PHY_CATE_NAVG); //Todo: Handle to not be editable like TE C++
         //Editing Keys
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ENTER, PHY_CATE_EDIT); remove because reserve for default setting
+        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_ENTER, PHY_CATE_EDIT);//Todo: Handle to not be editable like TE C++
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_DEL, PHY_CATE_EDIT);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_INSERT, PHY_CATE_EDIT);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_FORWARD_DEL, PHY_CATE_EDIT);
