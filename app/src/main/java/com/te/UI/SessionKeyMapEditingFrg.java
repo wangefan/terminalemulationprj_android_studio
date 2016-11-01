@@ -107,9 +107,9 @@ public class SessionKeyMapEditingFrg extends Fragment {
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_MINUS, PHY_CATE_PUN);	// ( _)
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_PERIOD, PHY_CATE_PUN);	// ( . )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_APOSTROPHE, PHY_CATE_PUN);
-        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN); can`t find
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DOT, PHY_CATE_PUN);
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DIVIDE, PHY_CATE_PUN);
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEPARATOR, PHY_CATE_PUN); Remove bacause can`t press from keypad
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DOT, PHY_CATE_PUN); Remove bacause can`t press from keypad
+        //gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DIVIDE, PHY_CATE_PUN); Remove bacause can`t press from keypad
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_GRAVE, PHY_CATE_PUN);	// ( ' )
         //Function Keys
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F1, PHY_CATE_FUNC);
@@ -124,6 +124,9 @@ public class SessionKeyMapEditingFrg extends Fragment {
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F10, PHY_CATE_FUNC);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F11, PHY_CATE_FUNC);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F12, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyMapUtility.KEYCODE__CUSTOM_281, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyMapUtility.KEYCODE__CUSTOM_300, PHY_CATE_FUNC);
+        gKeyCodeCategryMap.put(KeyMapUtility.KEYCODE__CUSTOM_301, PHY_CATE_FUNC);
         /*gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F13,PHY_CATE_FUNC);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F14,PHY_CATE_FUNC);
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_F15,PHY_CATE_FUNC);

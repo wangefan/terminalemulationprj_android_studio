@@ -9,6 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class KeyMapUtility {
+    public  static final int KEYCODE__CUSTOM_281 = 281;
+    public  static final int KEYCODE__CUSTOM_300 = 300;
+    public  static final int KEYCODE__CUSTOM_301 = 301;
+
     private static final int NSHIFTVAL = 1000;
     private static final int NCTRLVAL = 2000;
     private static final int NALTVAL = 4000;
@@ -53,6 +57,9 @@ public class KeyMapUtility {
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_F8, KeyEvent.KEYCODE_8);
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_F9, KeyEvent.KEYCODE_9);
         mKeyCodeWithCombinFrom53KeyPadMap.put(KeyEvent.KEYCODE_F10, KeyEvent.KEYCODE_0);
+        mKeyCodeWithCombinFrom53KeyPadMap.put(KeyMapUtility.KEYCODE__CUSTOM_281, KeyEvent.KEYCODE_O);
+        mKeyCodeWithCombinFrom53KeyPadMap.put(KeyMapUtility.KEYCODE__CUSTOM_300, KeyEvent.KEYCODE_P);
+        mKeyCodeWithCombinFrom53KeyPadMap.put(KeyMapUtility.KEYCODE__CUSTOM_301, KeyEvent.KEYCODE_Q);
     }
 
     public static int decodePhyCodeRetunHelpKey(int nEncodedPhyCode, AtomicBoolean bHasCtrl, AtomicBoolean bHasShift, AtomicBoolean bHasAlt) {
