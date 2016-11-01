@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName '0.0.0.8'
+        versionName '0.0.0.9'
         resValue "bool", "bSpecialHandleLicense", "false"
     }
     buildTypes {
@@ -19,7 +19,6 @@ android {
         }
         release {
             minifyEnabled false
-            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             buildConfigField "Boolean", "DEBUG_MODE", "false"
         }
@@ -36,7 +35,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 22
             versionCode 1
-            versionName '0.0.0.8'
+            versionName '0.0.0.9'
         }
         densowave {
             applicationId = "com.densowave.terminalemulation"
@@ -49,7 +48,7 @@ android {
             resValue "bool", "bSpecialHandleLicense", "true"
             minSdkVersion 15
             targetSdkVersion 22
-            versionName '0.0.0.8'
+            versionName '0.0.0.9'
             versionCode 1
         }
     }
