@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import com.te.UI.CipherUtility;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import Terminals.KeyMapList;
@@ -128,6 +129,38 @@ public class IBMHost3270 extends IBMHostBase {
 
         public int getShiftSpec() {
             return -1;
+        }
+
+        /*-----------------------------------------------------------------------------
+         -Purpose: Check if the poing (x,y) is in aField
+         -Return : true: pt is in the field; false: pt is not in the field
+         -Remark :
+         -----------------------------------------------------------------------------*/
+        public boolean ptInField(int x, int y) {
+            if (!valid())
+                return false;
+            boolean bRet = false;
+            int nRow = (x + nLen) / _cols;
+
+            if (y == this.y) {
+                //the first line
+                if (nRow > 0 && x >= this.x) {
+                    //multy lines
+                    bRet = true;
+                } else if (x >= this.x && x < this.x + this.nLen) {
+                    //only one line
+                    bRet = true;
+                }
+            } else if (y == this.y + nRow) {
+                //the last line
+                if (x < (this.x + this.nLen) % _cols)
+                    bRet = true;
+            } else if (y > this.y && y < this.y + nRow) {
+                //middle lines
+                bRet = true;
+            }
+
+            return bRet;
         }
     }
 
@@ -399,20 +432,24 @@ public class IBMHost3270 extends IBMHostBase {
     };
 
     //Members
+    private byte PreviousChar; // Robin+ 2006.7.20 to support DBCS input
     private char mCurChar;
     private char mCurCommand;
     private char CurOrder;
     private char mCurWcc;
     private IBmStates mPreIBMState = IBMS_Ground;
     private IBmActions mLastEventAction;
+    private ArrayList<Character> OrderBuffer = new ArrayList<>();
     private int mParsePanding = 0;
     private boolean bLock = false;
     private boolean bInsert = false;
     private boolean bDBCS = false;
-    private int nBufX;  //buffer address
-    private int nBufY; //buffer address
-    private int nICX;
-    private int nICY; //Insert cursor address, the address after user unlock keyboard or press home key
+    private AtomicInteger nBufX = new AtomicInteger();  //buffer address
+    private AtomicInteger nBufY = new AtomicInteger(); //buffer address
+    private AtomicInteger nICX = new AtomicInteger();
+    private AtomicInteger nICY = new AtomicInteger(); //Insert cursor address, the address after user unlock keyboard or press home key
+    int FieldStdX;
+    int FieldStdY;
     private char cAttrib = 0;
     private CTNTag TNTag = new CTNTag();
     private CTNTag ProtectTNTag = new CTNTag();
@@ -592,6 +629,11 @@ public class IBMHost3270 extends IBMHostBase {
         return find;
     }
 
+    private byte EBCDIC2ASCII(Character c) {
+        byte cRet = (byte) szEBCDIC[c];
+        return cRet;
+    }
+
     private byte ASCII2EBCDIC(byte c) {
         byte cRet = (byte) 0xFF; //return 0xFF if no match
         for (int i = 64; i < 255; i++) {
@@ -609,7 +651,7 @@ public class IBMHost3270 extends IBMHostBase {
         -Return :
         -Remark :
         -----------------------------------------------------------------------------*/
-    void prevPos(AtomicReference<Integer> x, AtomicReference<Integer> y) { //Previous coordinate
+    void prevPos(AtomicInteger x, AtomicInteger y) { //Previous coordinate
         int nValue = (y.get() * _cols + x.get() - 1);
         y.set(nValue / _cols);
         x.set(nValue % _cols);
@@ -621,17 +663,17 @@ public class IBMHost3270 extends IBMHostBase {
         -Return :
         -Remark :
         -----------------------------------------------------------------------------*/
-    void nextPos(AtomicReference<Integer> x, AtomicReference<Integer> y) {//Next coordinate
+    void nextPos(AtomicInteger x, AtomicInteger y) {//Next coordinate
         int nValue = (y.get() * _cols + x.get() + 1);
         y.set(nValue / _cols);
         x.set(nValue % _cols);
     }
 
     int fillBuffZERO(int nStartX, int nStartY, int nEndX, int nEndY, byte[] szContent, int nLen) {
-        AtomicReference<Integer> nStartXAtom = new AtomicReference<>(nStartX);
-        AtomicReference<Integer> nStartYAtom = new AtomicReference<>(nStartY);
-        AtomicReference<Integer> nEndXAtom = new AtomicReference<>(nEndX);
-        AtomicReference<Integer> nEndYAtom = new AtomicReference<>(nEndY);
+        AtomicInteger nStartXAtom = new AtomicInteger(nStartX);
+        AtomicInteger nStartYAtom = new AtomicInteger(nStartY);
+        AtomicInteger nEndXAtom = new AtomicInteger(nEndX);
+        AtomicInteger nEndYAtom = new AtomicInteger(nEndY);
         prevPos(nEndXAtom, nEndYAtom);
         if  (getPosVal(nStartXAtom.get(), nStartYAtom.get()) > getPosVal(nEndXAtom.get(), nEndYAtom.get())) {
             return nLen;
@@ -653,7 +695,7 @@ public class IBMHost3270 extends IBMHostBase {
      -Return :
      -Remark : In fact the last position of Signed Numeric field is reserved for '-'
      -----------------------------------------------------------------------------*/
-    void getLastPos(tagField aField, AtomicReference<Integer> x, AtomicReference<Integer> y, boolean bRes) {
+    void getLastPos(tagField aField, AtomicInteger x, AtomicInteger y, boolean bRes) {
         if (!aField.valid()) {
             return;
         }
@@ -669,12 +711,12 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     int convertFieldData(int nStartX, int nStartY, int nEndX, int nEndY, boolean bReplace, byte[] szContent, int nLen) {
-        AtomicReference<Integer> nStartXAtom = new AtomicReference<>(nStartX);
-        AtomicReference<Integer> nStartYAtom = new AtomicReference<>(nStartY);
-        AtomicReference<Integer> nEndXAtom = new AtomicReference<>(nEndX);
-        AtomicReference<Integer> nEndYAtom = new AtomicReference<>(nEndY);
-        AtomicReference<Integer> nX1Atom = new AtomicReference<>();
-        AtomicReference<Integer> nY1Atom = new AtomicReference<>();
+        AtomicInteger nStartXAtom = new AtomicInteger(nStartX);
+        AtomicInteger nStartYAtom = new AtomicInteger(nStartY);
+        AtomicInteger nEndXAtom = new AtomicInteger(nEndX);
+        AtomicInteger nEndYAtom = new AtomicInteger(nEndY);
+        AtomicInteger nX1Atom = new AtomicInteger();
+        AtomicInteger nY1Atom = new AtomicInteger();
         byte[] szPC = new byte[2];
         int nCount = 0;
         bDBCS = false;
@@ -748,7 +790,8 @@ public class IBMHost3270 extends IBMHostBase {
         ActiveField = new tagField();
         cAttrib = 0;
         clearGrid();
-        nICX = nICY = -1;
+        nICX.set(-1);
+        nICY.set(-1);
         ViewClear();
         ViewPostInvalidate();
     }
@@ -759,10 +802,10 @@ public class IBMHost3270 extends IBMHostBase {
         int nAddr;
         int nStartBufX = 0;
         int nStartBufY = 0;
-        AtomicReference<Integer> nEndXAtom = new AtomicReference<>();
-        AtomicReference<Integer> nEndYAtom = new AtomicReference<>();
+        AtomicInteger nEndXAtom = new AtomicInteger();
+        AtomicInteger nEndYAtom = new AtomicInteger();
 
-        nAddr = getAidBufferAddress(nBufY, nBufX);
+        nAddr = getAidBufferAddress(nBufY.get(), nBufX.get());
         szContent[nSend++] = 0x60;
         szContent[nSend++] = (byte) ((nAddr & 0xFF00) / 256);
         szContent[nSend++] = (byte) (nAddr & 0x00FF);
@@ -804,6 +847,267 @@ public class IBMHost3270 extends IBMHostBase {
         szContent[nSend++] = (byte) 0xef;
         DispatchMessageRaw(this, szContent, nSend);
     }
+
+    private void getBufferAddress(int value, AtomicInteger y, AtomicInteger x) {
+        for(int col = 0; col < _cols; col++) {
+            for(int row = 0 ; row <_rows ; row++) {
+                if (BufferAddrMap[col][row] ==  value) {
+                    y.set(row);
+                    x.set(col);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void getBufferPos(AtomicInteger xAtom, AtomicInteger yAtom) {
+        xAtom.set(nBufX.get());
+        yAtom.set(nBufY.get());
+    }
+
+    private void setBufferPos(int X,int Y){
+        nBufX.set(X);
+        nBufY.set(Y);
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: adjust hardware status according to current field
+     -Param  : aField: the field to refer
+     -Return :
+     -Remark :
+     -----------------------------------------------------------------------------*/
+    void changeHardStatus(tagField aField) {
+        PreviousChar = 0;
+        bDBCS = false; // Robin+ 2006.7.20 to handle DBCS input
+        if (!aField.valid())
+            return;
+        cAttrib = (char) aField.cAttrib; // Robin+ 2006.9.11 change attrib after ActiveField changed
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: get a bit of a character
+     -Param  : c:    the character
+     -         nPos: the bit position
+     -Return : true: if the bit is 1; false: if the bit is 0
+     -Remark : in IBM, bit 0 is the high bit of a byte
+     -----------------------------------------------------------------------------*/
+    boolean getBit(byte c, int nPos) {
+        c = (byte) (c << nPos); //In IBM bit 0 is the high bit of a byte
+        c = (byte) (c >> 7);
+        return c == 1;
+    }
+    /*-----------------------------------------------------------------------------
+     -Purpose: set a bit of a character at specfic position
+     -Param  : c:    the character to set bit
+     -         nPos: the bit position
+     -         bEnable: set 1 or 0
+     -Return : the character after set bit
+     -Remark : in IBM, bit 0 is the high bit of a byte
+     -----------------------------------------------------------------------------*/
+    byte setBit(byte c, int nPos, boolean bEnable) {
+        byte cRet = 1;
+        nPos = 7 - nPos;
+        cRet = (byte) (cRet << nPos);
+        if (bEnable) {
+            cRet = (byte) (c | cRet);
+        } else {
+            cRet = (byte) (c & ~cRet);
+        }
+        return cRet;
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: set screen buffer with character c at position (i,j)
+     -Param  : i: x position; j: y position; c: character
+     -Return : void
+     -Remark : if screen format is in effect, set the NewScreen buffer too.
+     _Revise : Robin+ 2004.11.5 attribute
+     -----------------------------------------------------------------------------*/
+    private void setScrBuf(int X, int Y, byte c) {
+        CharGrid[Y][X] = (char) c;
+        AttribGrid[Y][X] = cAttrib; // Robin+ 2004.11.5 Set screen attribute
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: move cursor to default position
+     -Param  :
+     -Return :
+     -Remark :
+     -Revise : Robin 2004.10.14 move cursor to IC ....
+     -----------------------------------------------------------------------------*/
+    private void defaultAddress() {
+        //As described in IBM, we should moves the cursor to the address given in the last IC order
+        //or defaults to the first position of the first non-bypass input field if no IC order has
+        //been given. If there is no non-bypass field, it defaults to row1, column 1.
+        tagField aField = new tagField();
+        boolean bValid = TNTag.toFirst();
+
+        nBufX.set(0);
+        nBufY.set(0);
+        ActiveField = new tagField();
+        if (nICX.get() != -1 && nICY.get() != -1) {
+            //Robin+ 2004.10.14 moves the cursor to the address given in the last IC order
+            nBufX.set(nICX.get());
+            nBufY.set(nICY.get());
+            //Find field at the position
+            while (bValid) {
+                TNTag.getCurr(aField);
+                if (aField.ptInField(nBufX.get(), nBufY.get())) {
+                    ActiveField.copy(aField);
+                    break;
+                }
+                if (!TNTag.toNext())
+                    break;
+            }
+        } else {
+            while (bValid) {
+                byte c = 0;
+                TNTag.getCurr(aField);
+                c = aField.szFFW[0];
+                //if (c != 0 && !GetBit(c, 2))
+                if (true) {
+                    nBufX.set(aField.x);
+                    nBufY.set(aField.y);
+                    ActiveField.copy(aField);
+                    break;
+                }
+                if (!TNTag.toNext())
+                    break;
+            }
+        }
+        changeHardStatus(ActiveField);
+    }
+
+    private void repeatFillData(int ToY, int ToX, byte Data) {
+        AtomicInteger xAtom = new AtomicInteger();
+        AtomicInteger yAtom = new AtomicInteger();
+        getBufferPos(xAtom, yAtom);
+        int nRepeatlen = (ToY * _cols + ToX) - (yAtom.get() * _cols + xAtom.get());
+        if (nRepeatlen <= 0)
+            return;
+
+        for (int i = 0; i < nRepeatlen; i++) {
+            setScrBuf(xAtom.get(), yAtom.get(), Data);
+            if (xAtom.get() >= (_cols - 1)) {
+                xAtom.set(1);
+                yAtom.incrementAndGet();//y++
+            }
+            else
+                xAtom.incrementAndGet(); //x++
+        }
+        setBufferPos(xAtom.get(), yAtom.get());
+    }
+
+    void orderSetBufferAddress(int nParmH, int nParmL) {
+        getBufferAddress(nParmH * 256 + nParmL, nBufY, nBufX);
+
+        if (nBufX.get() >= (_cols - 1)) {
+            nBufX.set(0);
+            nBufY.incrementAndGet();
+        }
+    }
+
+    private void setStartOfField() {
+        //bit 2 protect
+        //bit 3 : 0,Alpha 1,Number
+        //bit 4,5 : 11 ,Not Display Other Display
+        //bit 7 :MTD
+        boolean samefield = false;
+
+        cAttrib = OrderBuffer.get(1);
+        boolean Protect;
+        Protect= getBit((byte) cAttrib, 2);
+
+        tagField LastFirld = new tagField();
+
+        nextPos(nBufX, nBufY);
+
+        if (!TNTag.isEmpty()) {
+            if (TNTag.getCurrAdd(LastFirld)){
+                if (LastFirld.nLen == 0) {
+                    LastFirld.nLen = (nBufY.get() * _cols + nBufX.get()) - (FieldStdY * _cols + FieldStdX);
+                    if (LastFirld.nLen>0)
+                        LastFirld.nLen--;
+                    for (int i = 0; i < LastFirld.nLen; i++) {
+                        LastFirld.cAttrib = setBit(LastFirld.cAttrib, 6, true);
+                        AttribGrid[LastFirld.y][LastFirld.x + i] = (char) LastFirld.cAttrib;
+                    }
+                    TNTag.setCurrAdd(LastFirld);
+                }
+            }
+        }
+
+        if (!ProtectTNTag.isEmpty()) {
+            if (ProtectTNTag.getCurrAdd(LastFirld)) {
+                if (LastFirld.nLen == 0) {
+                    LastFirld.nLen = (nBufY.get() * _cols + nBufX.get()) - (FieldStdY * _cols + FieldStdX);
+                    if (LastFirld.nLen == 0) {
+                        samefield = true;
+                    }
+                    else
+                        samefield = false;
+
+                    if (LastFirld.nLen > 0)
+                        LastFirld.nLen--;
+
+                    ProtectTNTag.setCurrAdd(LastFirld);
+                }
+            }
+        }
+
+        tagField aField = new tagField();
+
+        aField.x = (byte) nBufX.get();
+        aField.y = (byte) nBufY.get();
+
+        FieldStdX = nBufX.get();
+        FieldStdY = nBufY.get();
+        aField.cAttrib = (byte) cAttrib;
+
+        if (samefield)
+            ProtectTNTag.setCurrAdd(aField);
+        else
+            ProtectTNTag.addMember(aField);
+
+        if (Protect) {
+            return;
+        }
+
+        TNTag.addMember(aField);
+    }
+
+    private void parseOrders() {
+        CurOrder = OrderBuffer.get(0);
+        switch(CurOrder) {
+            case EraseUnprotectedToAddress:
+                break;
+            case ModifyField:
+                break;
+            case ProgramTab:
+            case RepeatToAddress:
+                AtomicInteger yAtom = new AtomicInteger();
+                AtomicInteger xAtom = new AtomicInteger();
+                getBufferAddress(OrderBuffer.get(1) * 256 + OrderBuffer.get(2), yAtom, xAtom);
+                repeatFillData(yAtom.get(), xAtom.get(), EBCDIC2ASCII(OrderBuffer.get(3)));
+                break;
+            case SetAttribute:
+                break;
+            case SetBufferAddress:
+                orderSetBufferAddress(OrderBuffer.get(1), OrderBuffer.get(2));
+                break;
+            case StartField:
+                setStartOfField();
+                break;
+            case StartFieldExtended:
+                break;
+            case InsertCursor:
+                getBufferPos(nICX, nICY);
+                defaultAddress();
+                break;
+            default:
+                break;
+        }
+    }
     //action for Commands end
 
     private void doAction(IBmActions action) {
@@ -827,7 +1131,7 @@ public class IBMHost3270 extends IBMHostBase {
                 mCurWcc = mCurChar;
                 break;
             case IBMA_OrdersRecord:
-                //Todo:OrderBuffer.push_back(mCurChar);
+                OrderBuffer.add(mCurChar);
                 break;
             case IBMA_RecordData:
                 //Todo:DataBuffer.push_back(mCurChar);
@@ -837,8 +1141,8 @@ public class IBMHost3270 extends IBMHostBase {
                 //Todo:DataBuffer.clear();
                 break;
             case IBMA_OrdersParse:
-                //Todo:ParseOrders();
-                //Todo:OrderBuffer.clear();
+                parseOrders();
+                OrderBuffer.clear();
                 break;
             default:
                 break;
