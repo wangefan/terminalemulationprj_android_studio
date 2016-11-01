@@ -648,7 +648,7 @@
     <string name="ssh_key_file_key">ssh_key_file_key</string>
     <string name="ssh_key_file">Key File</string>
     <string name="ssh_mgr_key_files">Manage Key Files</string>
-    <string name="ssh_add_key_files_title">Add Key File</string>
+    <string name="ssh_add_key_files_title">Import Key File</string>
     <string name="ssh_add_key_files_edit_pha_title">Edit Passphrase</string>
     <string name="ssh_add_key_files_next">Next</string>
     <string name="ssh_add_key_files_edit_pha_1">Passphrase</string>
