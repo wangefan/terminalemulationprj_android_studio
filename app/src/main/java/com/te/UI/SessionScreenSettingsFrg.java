@@ -97,16 +97,28 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         }
     }
 
+    private void updateWiFiAlertUIFromSetting() {
+        if(mSetting.mIsShowWifiIconOnFull && mSetting.mIsUpdateWiFiIconOnFull) {
+            mSwchShowWiFiAlert.setEnabled(true);
+        } else {
+            mSwchShowWiFiAlert.setEnabled(false);
+        }
+    }
+
+    private void updateBattAlertUIFromSetting() {
+        if(mSetting.mIsShowBatteryIconOnFull && mSetting.mIsUpdateBatteryIconOnFull) {
+            mSwchShowBattrryAlert.setEnabled(true);
+        } else {
+            mSwchShowBattrryAlert.setEnabled(false);
+        }
+    }
+
     @Override
     protected void syncPrefUIFromTESettings() {
         mChkShowSessionNumber.setChecked(mSetting.mIsShowSessionNumber);
         mChkShowSessionStatus.setChecked(mSetting.mIsShowSessionStatus);
         mChkScreenPanning.setChecked(mSetting.mIsScreenPanning);
         mChkAutoPopSIPOnConn.setChecked(mSetting.mIsAutoPopSIPOnConn);
-        mSwchShowWiFiAlert.setChecked(mSetting.mIsShowWifiAlert);
-        mSwchShowWiFiAlert.setSummaryOn(String.valueOf(mSetting.mNShowWifiAlertLevel));
-        mSwchShowBattrryAlert.setChecked(mSetting.mIsShowBatteryAlert);
-        mSwchShowBattrryAlert.setSummaryOn(String.valueOf(mSetting.mNShowBatteryAlertLevel));
         mChkAcitvateMacro.setChecked(mSetting.mIsActMacro);
         mChkHWExit.setChecked(mSetting.mIsHWExit);
         mChkHWShowSIP.setChecked(mSetting.mIsHWShowSIP);
@@ -131,6 +143,12 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
             mSwhShowWFBTOnFullScreen.setChecked(false);
         }
         updateIntervalUIFromSetting();
+        mSwchShowWiFiAlert.setChecked(mSetting.mIsShowWifiAlert);
+        mSwchShowWiFiAlert.setSummaryOn(String.valueOf(mSetting.mNShowWifiAlertLevel));
+        mSwchShowBattrryAlert.setChecked(mSetting.mIsShowBatteryAlert);
+        mSwchShowBattrryAlert.setSummaryOn(String.valueOf(mSetting.mNShowBatteryAlertLevel));
+        updateWiFiAlertUIFromSetting();
+        updateBattAlertUIFromSetting();
     }
 
     private String getShowWFBTOnFullScreenSummary(boolean isShowTaskbarOnFull, boolean isShowWifiIconOnFull, boolean isShowBatteryIconOnFull) {
@@ -219,6 +237,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                 }
             }
             updateIntervalUIFromSetting();
+            updateWiFiAlertUIFromSetting();
+            updateBattAlertUIFromSetting();
         } else if(key.compareTo(getResources().getString(R.string.screen_icon_update_interval_key)) == 0) {
             if(mlstUpdateIconInterval.getValue().compareTo("0") == 0) {
                 mSetting.mIsUpdateWiFiIconOnFull = false;
@@ -237,6 +257,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                     }
                 }
             }
+            updateWiFiAlertUIFromSetting();
+            updateBattAlertUIFromSetting();
         }
     }
 
@@ -425,6 +447,8 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
                                 mSwhShowWFBTOnFullScreen.setSummaryOn(result);
                                 mSwhShowWFBTOnFullScreen.setChecked(true);
                                 updateIntervalUIFromSetting();
+                                updateWiFiAlertUIFromSetting();
+                                updateBattAlertUIFromSetting();
                             }
                         });
             }
