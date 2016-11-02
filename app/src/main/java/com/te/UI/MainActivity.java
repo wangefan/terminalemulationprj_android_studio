@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
     }
     private static final String TAG_TERPROC_FRAGMENT = "TAG_TERPROC_FRAGMENT";
     private static final String KEY_FULL_SCREEEN = "KEY_FULL_SCREEEN";
-    private final long UPDATE_ALERT_INTERVAL = 60000; //60 sec, 1 min
     private Toolbar mToolbar;
     private LeftMenuFrg mFragmentLeftdrawer;
     private RelativeLayout mMacroView = null;
@@ -321,6 +320,7 @@ public class MainActivity extends AppCompatActivity
         boolean bWifiAlert = TESettingsInfo.getHostIsShowWifiAlertByIndex(TESettingsInfo.getSessionIndex());
         boolean bBatAlert = TESettingsInfo.getHostIsShowBatteryAlertByIndex(TESettingsInfo.getSessionIndex());
         mUpdateWifiAlertHandler.removeCallbacksAndMessages(null);
+        final int nUpdateInterval = TESettingsInfo.getUpdateWiFiAndtBatteryIntervalByIndex(TESettingsInfo.getSessionIndex()) * 60 * 1000;
         if (bWifiAlert) {
             final int nWifiAlert = TESettingsInfo.getHostShowWifiAltLevelByIndex(TESettingsInfo.getSessionIndex());
             mUpdateWifiAlertHandler.postDelayed(new Runnable() {
@@ -332,11 +332,11 @@ public class MainActivity extends AppCompatActivity
                         UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_WifiAlert), wifiStrength), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mUpdateWifiAlertHandler.postDelayed(tempRun, UPDATE_ALERT_INTERVAL);
+                                mUpdateWifiAlertHandler.postDelayed(tempRun, nUpdateInterval);
                             }
                         });
                     } else {
-                        mUpdateWifiAlertHandler.postDelayed(this, UPDATE_ALERT_INTERVAL);
+                        mUpdateWifiAlertHandler.postDelayed(this, nUpdateInterval);
                     }
                 }
             }, 2000);
@@ -354,11 +354,11 @@ public class MainActivity extends AppCompatActivity
                         UIUtility.messageBox(MainActivity.this, String.format(getResources().getString(R.string.MSG_BattAlert), batStrength), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mUpdateBaterAlertHandler.postDelayed(tempRun, UPDATE_ALERT_INTERVAL);
+                                mUpdateBaterAlertHandler.postDelayed(tempRun, nUpdateInterval);
                             }
                         });
                     } else {
-                        mUpdateBaterAlertHandler.postDelayed(this, UPDATE_ALERT_INTERVAL);
+                        mUpdateBaterAlertHandler.postDelayed(this, nUpdateInterval);
                     }
                 }
             }, 2000);
