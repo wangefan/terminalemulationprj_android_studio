@@ -18,9 +18,6 @@ import java.util.List;
 import Terminals.ContentView;
 import Terminals.TESettingsInfo;
 
-/**
- * Created by yifan.wang on 2016/4/28.
- */
 public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListener {
     public interface TEKeyboardViewListener {
         void onSetKeyboardType(KeyboardType kType);
