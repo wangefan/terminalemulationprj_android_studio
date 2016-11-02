@@ -431,6 +431,8 @@ public class IBMHost3270 extends IBMHostBase {
         new TN_StateEventInfo(IBmStates.IBMS_Anywhere, '\u00FF', '\u00FF', IBmActions.IBMA_None, IBmStates.IBMS_Ground),
     };
 
+    final char DBCS_LEADING_AND_ENDING = 0x6f;
+
     //Members
     private byte PreviousChar; // Robin+ 2006.7.20 to support DBCS input
     private char mCurChar;
@@ -440,6 +442,7 @@ public class IBMHost3270 extends IBMHostBase {
     private IBmStates mPreIBMState = IBMS_Ground;
     private IBmActions mLastEventAction;
     private ArrayList<Character> OrderBuffer = new ArrayList<>();
+    private ArrayList<Character> DataBuffer = new ArrayList<>();
     private int mParsePanding = 0;
     private boolean bLock = false;
     private boolean bInsert = false;
@@ -1108,6 +1111,18 @@ public class IBMHost3270 extends IBMHostBase {
                 break;
         }
     }
+
+    private void parserFieldData() {
+        AtomicInteger xAtom = new AtomicInteger();
+        AtomicInteger yAtom = new AtomicInteger();
+        getBufferPos(xAtom, yAtom);
+        bDBCS = false;
+        for (int i = 0; i < DataBuffer.size(); i++) {
+            char c = DataBuffer.get(i);
+            setScrBuf(xAtom.get(), yAtom.get(), (byte) c);
+        }
+        setBufferPos(xAtom.get(), yAtom.get());
+    }
     //action for Commands end
 
     private void doAction(IBmActions action) {
@@ -1134,11 +1149,11 @@ public class IBMHost3270 extends IBMHostBase {
                 OrderBuffer.add(mCurChar);
                 break;
             case IBMA_RecordData:
-                //Todo:DataBuffer.push_back(mCurChar);
+                DataBuffer.add(mCurChar);
                 break;
             case IBMA_ParseData:
-                //Todo:ParserFieldData();
-                //Todo:DataBuffer.clear();
+                parserFieldData();
+                DataBuffer.clear();
                 break;
             case IBMA_OrdersParse:
                 parseOrders();
