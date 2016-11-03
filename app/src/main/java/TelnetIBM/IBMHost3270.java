@@ -632,8 +632,8 @@ public class IBMHost3270 extends IBMHostBase {
         return find;
     }
 
-    private byte EBCDIC2ASCII(Character c) {
-        byte cRet = (byte) szEBCDIC[c];
+    private char EBCDIC2ASCII(Character c) {
+        char cRet = szEBCDIC[c];
         return cRet;
     }
 
@@ -926,8 +926,8 @@ public class IBMHost3270 extends IBMHostBase {
      -Remark : if screen format is in effect, set the NewScreen buffer too.
      _Revise : Robin+ 2004.11.5 attribute
      -----------------------------------------------------------------------------*/
-    private void setScrBuf(int X, int Y, byte c) {
-        CharGrid[Y][X] = (char) c;
+    private void setScrBuf(int X, int Y, char c) {
+        CharGrid[Y][X] = c;
         AttribGrid[Y][X] = cAttrib; // Robin+ 2004.11.5 Set screen attribute
     }
 
@@ -981,7 +981,7 @@ public class IBMHost3270 extends IBMHostBase {
         changeHardStatus(ActiveField);
     }
 
-    private void repeatFillData(int ToY, int ToX, byte Data) {
+    private void repeatFillData(int ToY, int ToX, char Data) {
         AtomicInteger xAtom = new AtomicInteger();
         AtomicInteger yAtom = new AtomicInteger();
         getBufferPos(xAtom, yAtom);
@@ -1119,7 +1119,7 @@ public class IBMHost3270 extends IBMHostBase {
         bDBCS = false;
         for (int i = 0; i < DataBuffer.size(); i++) {
             char c = DataBuffer.get(i);
-            setScrBuf(xAtom.get(), yAtom.get(), (byte) c);
+            setScrBuf(xAtom.get(), yAtom.get(), c);
         }
         setBufferPos(xAtom.get(), yAtom.get());
     }
@@ -1170,6 +1170,11 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     @Override
+    protected boolean isScreenAttributeVisible(byte attr) {
+        return (attr & 0x0c) == 0x0c;
+    }
+
+    @Override
     public Point getCursorGridPos() {
         return null;
     }
@@ -1201,7 +1206,45 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public void drawAll() {
-
+        StringBuilder dbcsTemp = new StringBuilder();
+        for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
+            for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
+                char c = CharGrid[idxRow][idxCol];
+                switch (c) {
+                    case DBCS_LEADING_AND_ENDING:
+                        if(bDBCS) {
+                            bDBCS = false;
+                        } else {
+                            bDBCS = true;
+                        }
+                        break;
+                    default://data
+                        if(bDBCS == false) { //Single Byte
+                            if (IsCharAttributes(c) == false) {
+                                char curAttr = AttribGrid[idxRow][idxCol];
+                                if(isScreenAttributeVisible((byte) curAttr)) {
+                                    if(getBit((byte) curAttr, 2)) {//means protected
+                                        continue;
+                                    }
+                                    char curData = EBCDIC2ASCII(c);
+                                    boolean bUnderLine = getBit((byte) curAttr, 6);
+                                    DrawChar(curData, idxCol, idxRow, false, bUnderLine, false);
+                                }
+                            }
+                        } else { //Double byte
+                            char curAttr = AttribGrid[idxRow][idxCol];
+                            boolean bUnderLine = getBit((byte) curAttr, 6);
+                            dbcsTemp.append(c);
+                            if(dbcsTemp.length() >= 2) {
+                                String word = converToDBCSByTable(dbcsTemp.toString());
+                                DrawChar(Character.valueOf(word.charAt(0)), idxCol, idxRow, false, bUnderLine, true);
+                                dbcsTemp.setLength(0);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     @Override

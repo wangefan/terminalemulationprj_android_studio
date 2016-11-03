@@ -356,6 +356,7 @@ public class CVT100 extends CVT100Enum {
 
     }
 
+    @Override
     public void drawAll() {
         for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
