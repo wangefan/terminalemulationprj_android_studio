@@ -896,8 +896,7 @@ public class IBMHost3270 extends IBMHostBase {
      -----------------------------------------------------------------------------*/
     boolean getBit(byte c, int nPos) {
         c = (byte) (c << nPos); //In IBM bit 0 is the high bit of a byte
-        c = (byte) (c >> 7);
-        return c == 1;
+        return (c & 0x80) == 0x80;
     }
     /*-----------------------------------------------------------------------------
      -Purpose: set a bit of a character at specfic position
@@ -1120,6 +1119,7 @@ public class IBMHost3270 extends IBMHostBase {
         for (int i = 0; i < DataBuffer.size(); i++) {
             char c = DataBuffer.get(i);
             setScrBuf(xAtom.get(), yAtom.get(), c);
+            nextPos(xAtom, yAtom);
         }
         setBufferPos(xAtom.get(), yAtom.get());
     }
@@ -1167,16 +1167,19 @@ public class IBMHost3270 extends IBMHostBase {
     public IBMHost3270() {
         mPreIBMState = IBMS_Ground;
         mParsePanding = 0;
+        SetSize(24, 80);
+        //Todo: add 3270 map
+        //mTN3270KeyCodeMap = new HashMap<>(gDefaultTN_3270KeyCodeMap_Taurus);
     }
 
     @Override
     protected boolean isScreenAttributeVisible(byte attr) {
-        return (attr & 0x0c) == 0x0c;
+        return (attr & 0x0c) != 0x0c;
     }
 
     @Override
     public Point getCursorGridPos() {
-        return null;
+        return new Point(nBufX.get(), nBufY.get());
     }
 
     @Override
@@ -1186,7 +1189,7 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public String GetTerminalTypeName() {
-        return null;
+        return "IBM-3278-2";
     }
 
     @Override
@@ -1223,11 +1226,9 @@ public class IBMHost3270 extends IBMHostBase {
                             if (IsCharAttributes(c) == false) {
                                 char curAttr = AttribGrid[idxRow][idxCol];
                                 if(isScreenAttributeVisible((byte) curAttr)) {
-                                    if(getBit((byte) curAttr, 2)) {//means protected
-                                        continue;
-                                    }
                                     char curData = EBCDIC2ASCII(c);
-                                    boolean bUnderLine = getBit((byte) curAttr, 6);
+                                    //means protected
+                                    boolean bUnderLine = getBit((byte) curAttr, 6) && getBit((byte) curAttr, 2) == false;
                                     DrawChar(curData, idxCol, idxRow, false, bUnderLine, false);
                                 }
                             }

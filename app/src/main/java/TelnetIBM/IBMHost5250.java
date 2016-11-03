@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
 import Terminals.KeyMapUtility;
-import Terminals.LanguageTable;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 import Terminals.typeConvertion;
