@@ -1250,7 +1250,7 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public void ParseEnd() {
-
+        drawAll();
     }
 
     @Override
