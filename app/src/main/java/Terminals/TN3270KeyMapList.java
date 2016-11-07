@@ -6,7 +6,7 @@ import com.cipherlab.terminalemulation.R;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import TelnetIBM.IBMHost5250;
+import TelnetIBM.IBMHost3270;
 
 public class TN3270KeyMapList extends ArrayList<KeyMapItemTN> implements KeyMapList {
 
@@ -26,8 +26,7 @@ public class TN3270KeyMapList extends ArrayList<KeyMapItemTN> implements KeyMapL
 
     @Override
     public String getServerKeyTextByKeycode(int nServerKeycode) {
-        //Todo: use 3270
-        return IBMHost5250.getServerKeyText(nServerKeycode);
+        return IBMHost3270.getServerKeyText(nServerKeycode);
     }
 
     @Override
