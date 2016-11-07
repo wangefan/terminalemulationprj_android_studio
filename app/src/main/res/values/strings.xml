@@ -5,14 +5,14 @@
     <string name="MSG_BattAlert">Battery Level:%1$s</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="MSG_ChangeSession">Change session to %s</string>
-    <string name="MSG_DeleteSession_Warn">Must has one session.</string>
+    <string name="MSG_DeleteSession_Warn">There must be at least one session.</string>
     <string name="MSG_Activate_Warn">The activation key is not valid.</string>
     <string name="MSG_Activate_Succ">You have activated successful, please re-execute the application to use full functions.</string>
-    <string name="MSG_Export_Warn">Export settings fail.</string>
-    <string name="MSG_Export_ok">Export settings success.</string>
-    <string name="MSG_Import_Warn">Import settings fail, possible root case is:\r\n %s</string>
-    <string name="MSG_Import_ok">Import settings success.</string>
-    <string name="MSG_Import_ssh_ok">Import Key file success.</string>
+    <string name="MSG_Export_Warn">Export settings failed.</string>
+    <string name="MSG_Export_ok">Export settings successfully.</string>
+    <string name="MSG_Import_Warn">Import settings failed. Possible cause:\r\n %s</string>
+    <string name="MSG_Import_ok">Import settings successfully.</string>
+    <string name="MSG_Import_ssh_ok">Import Key file successfully.</string>
     <string name="MSG_set_program_name">Set Program Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
@@ -77,7 +77,7 @@
     <string name="out_range_key">out_range_key</string>
     <string name="reader_config_key">reader_config_key</string>
     <string name="log_key">log_key</string>
-    <string name="MSG_clear_setting">Can`t load your setting, error cause:\r\n%1$s</string>
+    <string name="MSG_clear_setting">Failed to load the settings. Possible cause:\r\n%1$s</string>
     <string name="str_positive">Reset setting to default</string>
     <string name="str_negative">Exit</string>
     <string name="MSG_Connecting">Connecting to host...</string>
@@ -368,7 +368,6 @@
     <string name="host_profile">Host Profile</string>
     <string name="host_type">Host Type</string>
     <string name="pref_user_HostName">Host Name</string>
-    <string name="pref_user_Host_summary">Host_summary</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="IBM5250Val">ibm5250</string>
