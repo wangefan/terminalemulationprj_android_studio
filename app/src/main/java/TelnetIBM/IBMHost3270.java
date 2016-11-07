@@ -2,13 +2,19 @@ package TelnetIBM;
 
 import android.view.KeyEvent;
 
+import com.cipherlab.terminalemulation.R;
 import com.te.UI.CipherUtility;
+import com.te.UI.ServerKeyEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
+import Terminals.KeyMapUtility;
+import Terminals.stdActivityRef;
 
 import static TelnetIBM.IBMHost3270.IBmOrder3270.*;
 import static TelnetIBM.IBMHost3270.IBmStates.*;
@@ -431,9 +437,201 @@ public class IBMHost3270 extends IBMHostBase {
         new TN_StateEventInfo(IBmStates.IBMS_Anywhere, '\u00FF', '\u00FF', IBmActions.IBMA_None, IBmStates.IBMS_Ground),
     };
 
+    //The valuse are the same with TE-C++
+    public static final int IBMKEY_NONE = -1;
+    public static final int IBMKEY_ATTN = ServerKeyEvent.TN_KEYCODE_ATTN;
+    public static final int IBMKEY_LEFTDELETE = ServerKeyEvent.TN_KEYCODE_LEFTDELETE;
+    public static final int IBMKEY_PREV = ServerKeyEvent.TN_KEYCODE_PREV;
+    public static final int IBMKEY_CLR = ServerKeyEvent.TN_KEYCODE_CLR;
+    public static final int IBMKEY_CLREOF = ServerKeyEvent.TN_KEYCODE_CLREOF;
+    public static final int IBMKEY_DEL = ServerKeyEvent.TN_KEYCODE_DEL;
+    public static final int IBMKEY_DUP = ServerKeyEvent.TN_KEYCODE_DUP;
+    public static final int IBMKEY_ENTER = ServerKeyEvent.TN_KEYCODE_ENTER;
+    public static final int IBMKEY_ERINPUT = ServerKeyEvent.TN_KEYCODE_ERINPUT;
+    public static final int IBMKEY_FBEGIN = ServerKeyEvent.TN_KEYCODE_FBEGIN;
+    public static final int IBMKEY_FEND = ServerKeyEvent.TN_KEYCODE_FEND;
+    public static final int IBMKEY_FMARK = ServerKeyEvent.TN_KEYCODE_FMARK;
+    public static final int IBMKEY_LAST = ServerKeyEvent.TN_KEYCODE_LAST;
+    public static final int IBMKEY_HOME = ServerKeyEvent.TN_KEYCODE_HOME;
+    public static final int IBMKEY_INS = ServerKeyEvent.TN_KEYCODE_INS;
+    public static final int IBMKEY_NEWLINE = ServerKeyEvent.TN_KEYCODE_NEWLINE;
+    public static final int IBMKEY_RESET = ServerKeyEvent.TN_KEYCODE_RESET;
+    public static final int IBMKEY_ROLDN = ServerKeyEvent.TN_KEYCODE_ROLDN;
+    public static final int IBMKEY_ROLUP = ServerKeyEvent.TN_KEYCODE_ROLUP;
+    public static final int IBMKEY_SYSRQ = ServerKeyEvent.TN_KEYCODE_SYSRQ;
+    public static final int IBMKEY_NEXT = ServerKeyEvent.TN_KEYCODE_NEXT;
+    public static final int IBMKEY_LEFT = ServerKeyEvent.TN_KEYCODE_LEFT;
+    public static final int IBMKEY_RIGHT = ServerKeyEvent.TN_KEYCODE_RIGHT;
+    public static final int IBMKEY_UP = ServerKeyEvent.TN_KEYCODE_UP;
+    public static final int IBMKEY_DOWN = ServerKeyEvent.TN_KEYCODE_DOWN;
+    public static final int IBMKEY_PA1 = 108;
+    public static final int IBMKEY_PA2 = 110;
+    public static final int IBMKEY_PA3 = 107;
+    public static final int IBMKEY_F1 = ServerKeyEvent.FUN_KEYCODE_F1;
+    public static final int IBMKEY_F2 = ServerKeyEvent.FUN_KEYCODE_F2;
+    public static final int IBMKEY_F3 = ServerKeyEvent.FUN_KEYCODE_F3;
+    public static final int IBMKEY_F4 = ServerKeyEvent.FUN_KEYCODE_F4;
+    public static final int IBMKEY_F5 = ServerKeyEvent.FUN_KEYCODE_F5;
+    public static final int IBMKEY_F6 = ServerKeyEvent.FUN_KEYCODE_F6;
+    public static final int IBMKEY_F7 = ServerKeyEvent.FUN_KEYCODE_F7;
+    public static final int IBMKEY_F8 = ServerKeyEvent.FUN_KEYCODE_F8;
+    public static final int IBMKEY_F9 = ServerKeyEvent.FUN_KEYCODE_F9;
+    public static final int IBMKEY_F10 = ServerKeyEvent.FUN_KEYCODE_F10;
+    public static final int IBMKEY_F11 = ServerKeyEvent.FUN_KEYCODE_F11;
+    public static final int IBMKEY_F12 = ServerKeyEvent.FUN_KEYCODE_F12;
+    public static final int IBMKEY_F13 = ServerKeyEvent.FUN_KEYCODE_F13;
+    public static final int IBMKEY_F14 = ServerKeyEvent.FUN_KEYCODE_F14;
+    public static final int IBMKEY_F15 = ServerKeyEvent.FUN_KEYCODE_F15;
+    public static final int IBMKEY_F16 = ServerKeyEvent.FUN_KEYCODE_F16;
+    public static final int IBMKEY_F17 = ServerKeyEvent.FUN_KEYCODE_F17;
+    public static final int IBMKEY_F18 = ServerKeyEvent.FUN_KEYCODE_F18;
+    public static final int IBMKEY_F19 = ServerKeyEvent.FUN_KEYCODE_F19;
+    public static final int IBMKEY_F20 = ServerKeyEvent.FUN_KEYCODE_F20;
+    public static final int IBMKEY_F21 = ServerKeyEvent.FUN_KEYCODE_F21;
+    public static final int IBMKEY_F22 = ServerKeyEvent.FUN_KEYCODE_F22;
+    public static final int IBMKEY_F23 = ServerKeyEvent.FUN_KEYCODE_F23;
+    public static final int IBMKEY_F24 = ServerKeyEvent.FUN_KEYCODE_F24;
+
     final char DBCS_LEADING_AND_ENDING = 0x6f;
 
+    public static java.util.Map<Integer, Integer> gDefaultTN_3270KeyCodeMap_Taurus = new java.util.HashMap<>();
+    public static java.util.Map<Integer, Integer> gDefaultTN_3270KeyCodeMap = new java.util.HashMap<>();
+    private static java.util.Map<Integer, String> mTNKeyCodeText = new java.util.HashMap<>();
+    static {
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_BACKSLASH, IBMKEY_ATTN);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_GRAVE, IBMKEY_PREV); //KEYCODE_GRAVE or Blue + J, VK_BACKQUOTE in TE C++
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F12, IBMKEY_CLREOF);//F12 or Blue + K
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, IBMKEY_DEL);//End or Blue + backspace
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MINUS, IBMKEY_DUP);   //KEYCODE_MINUS or Blue + N
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_LEFT_BRACKET, IBMKEY_ERINPUT); //Left BRACKET or Blue + E
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_RIGHT_BRACKET, IBMKEY_FMARK); //Right BRACKET or Blue + F
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PAGE_DOWN, IBMKEY_HOME);//Page down or Blue + *
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_SEMICOLON, IBMKEY_INS); //Semicolon or Blue + R, need confirm
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_N, true, false, false), IBMKEY_NEWLINE); //Ctrl + N
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F6, false, true, false), IBMKEY_ROLUP);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F7, false, true, false), IBMKEY_ROLDN);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F11, IBMKEY_SYSRQ); //F11 or Blue + L
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_LEFT, IBMKEY_LEFT);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_UP, IBMKEY_UP);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DPAD_DOWN, IBMKEY_DOWN);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_COMMA, IBMKEY_PA1); //Comma or Blue + A
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_PERIOD, IBMKEY_PA2); //Period or Blue + B
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_APOSTROPHE, IBMKEY_PA3); //KEYCODE_APOSTROPHE or Blue + C
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F1, IBMKEY_F1);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F2, IBMKEY_F2);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F3, IBMKEY_F3);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F4, IBMKEY_F4);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F5, IBMKEY_F5);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F6, IBMKEY_F6);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F7, IBMKEY_F7);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_1, false, true, false), IBMKEY_F11);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_2, false, true, false), IBMKEY_F12);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_3, false, true, false), IBMKEY_F13);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_4, false, true, false), IBMKEY_F14);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_5, false, true, false), IBMKEY_F15);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_6, false, true, false), IBMKEY_F16);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_7, false, true, false), IBMKEY_F17);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_8, false, true, false), IBMKEY_F18);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_9, false, true, false), IBMKEY_F19);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_0, false, true, false), IBMKEY_F20);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F1, false, true, false), IBMKEY_F21);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F2, false, true, false), IBMKEY_F22);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F3, false, true, false), IBMKEY_F23);
+        gDefaultTN_3270KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_F4, false, true, false), IBMKEY_F24);
+
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
+        gDefaultTN_3270KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_TAB, IBMKEY_NEXT);
+        gDefaultTN_3270KeyCodeMap.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_ESCAPE, true, false, false), IBMKEY_CLR);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_FORWARD_DEL, IBMKEY_DEL);//Deletes characters ahead of the insertion point, unlike KEYCODE_DEL.
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_ENTER, IBMKEY_ENTER);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_ESCAPE, IBMKEY_RESET);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_LEFT, IBMKEY_LEFT);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_RIGHT, IBMKEY_RIGHT);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_UP, IBMKEY_UP);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_DPAD_DOWN, IBMKEY_DOWN);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F1, IBMKEY_F1);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F2, IBMKEY_F2);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F3, IBMKEY_F3);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F4, IBMKEY_F4);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F5, IBMKEY_F5);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F6, IBMKEY_F6);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F7, IBMKEY_F7);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F8, IBMKEY_F8);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F9, IBMKEY_F9);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F10, IBMKEY_F10);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F11, IBMKEY_F11);
+        gDefaultTN_3270KeyCodeMap.put(KeyEvent.KEYCODE_F12, IBMKEY_F12);
+
+        mTNKeyCodeText.put(IBMKEY_ATTN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ATTN));
+        mTNKeyCodeText.put(IBMKEY_FBEGIN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_FBEGIN));
+        mTNKeyCodeText.put(IBMKEY_DEL, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_DEL));
+        mTNKeyCodeText.put(IBMKEY_FEND, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_FEND));
+        mTNKeyCodeText.put(IBMKEY_ERINPUT, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ERINPUT));
+        mTNKeyCodeText.put(IBMKEY_FMARK, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_FMARK));
+        mTNKeyCodeText.put(IBMKEY_LAST, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_LAST));
+        mTNKeyCodeText.put(IBMKEY_NEXT, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_NEXT));
+        mTNKeyCodeText.put(IBMKEY_ROLDN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ROLDN));
+        mTNKeyCodeText.put(IBMKEY_ROLUP, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ROLUP));
+        mTNKeyCodeText.put(IBMKEY_PREV, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_PREV));
+        mTNKeyCodeText.put(IBMKEY_SYSRQ, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_SYSRQ));
+        mTNKeyCodeText.put(IBMKEY_INS, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_INS));
+        mTNKeyCodeText.put(IBMKEY_DUP, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_DUP));
+        mTNKeyCodeText.put(IBMKEY_CLR, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_CLR));
+        mTNKeyCodeText.put(IBMKEY_RESET, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_RESET));
+        mTNKeyCodeText.put(IBMKEY_ENTER, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_ENTER));
+        mTNKeyCodeText.put(IBMKEY_LEFT, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_LEFT));
+        mTNKeyCodeText.put(IBMKEY_LEFTDELETE, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_LEFTDELETE));
+        mTNKeyCodeText.put(IBMKEY_HOME, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_HOME));
+        //mTNKeyCodeText.put(//IBMKEY_RECORD_BSP, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_RECORD_BSP));mTNKeyCodeText.put(IBMKEY_FMARK, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_FMARK));
+        mTNKeyCodeText.put(IBMKEY_NEWLINE, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_NEWLINE));
+        mTNKeyCodeText.put(IBMKEY_CLREOF, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_CLREOF));
+        mTNKeyCodeText.put(IBMKEY_RIGHT, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_RIGHT));
+        mTNKeyCodeText.put(IBMKEY_UP, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_UP));
+        mTNKeyCodeText.put(IBMKEY_DOWN, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_DOWN));
+        mTNKeyCodeText.put(IBMKEY_F1, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F1));
+        mTNKeyCodeText.put(IBMKEY_F2, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F2));
+        mTNKeyCodeText.put(IBMKEY_F3, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F3));
+        mTNKeyCodeText.put(IBMKEY_F4, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F4));
+        mTNKeyCodeText.put(IBMKEY_F5, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F5));
+        mTNKeyCodeText.put(IBMKEY_F6, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F6));
+        mTNKeyCodeText.put(IBMKEY_F7, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F7));
+        mTNKeyCodeText.put(IBMKEY_F8, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F8));
+        mTNKeyCodeText.put(IBMKEY_F9, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F9));
+        mTNKeyCodeText.put(IBMKEY_F10, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F10));
+        mTNKeyCodeText.put(IBMKEY_F11, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F11));
+        mTNKeyCodeText.put(IBMKEY_F12, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F12));
+        mTNKeyCodeText.put(IBMKEY_F13, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F13));
+        mTNKeyCodeText.put(IBMKEY_F14, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F14));
+        mTNKeyCodeText.put(IBMKEY_F15, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F15));
+        mTNKeyCodeText.put(IBMKEY_F16, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F16));
+        mTNKeyCodeText.put(IBMKEY_F17, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F17));
+        mTNKeyCodeText.put(IBMKEY_F18, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F18));
+        mTNKeyCodeText.put(IBMKEY_F19, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F19));
+        mTNKeyCodeText.put(IBMKEY_F20, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F20));
+        mTNKeyCodeText.put(IBMKEY_F21, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F21));
+        mTNKeyCodeText.put(IBMKEY_F22, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F22));
+        mTNKeyCodeText.put(IBMKEY_F23, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F23));
+        mTNKeyCodeText.put(IBMKEY_F24, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_F24));
+        mTNKeyCodeText.put(IBMKEY_PA1, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_PA1));
+        mTNKeyCodeText.put(IBMKEY_PA2, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_PA2));
+        mTNKeyCodeText.put(IBMKEY_PA3, stdActivityRef.getCurrActivity().getResources().getString(R.string.IBMKEY_PA3));
+    }
+    public static String getServerKeyText(int nKeyCode) {
+        return mTNKeyCodeText.get(nKeyCode);
+    }
+
     //Members
+    private java.util.Map<Integer, Integer> mTN3270KeyCodeMap = null;
     private byte PreviousChar; // Robin+ 2006.7.20 to support DBCS input
     private char mCurChar;
     private char mCurCommand;
@@ -646,6 +844,30 @@ public class IBMHost3270 extends IBMHostBase {
             }
         }
         return cRet;
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: Check if the poing (x,y) is any aField
+     -Return : true: pt is in the field; false: pt is not in the field
+     -Remark :
+     -----------------------------------------------------------------------------*/
+    private boolean ptInFields(int x, int y) {
+        boolean bRet = false;
+        boolean bValid = false;
+        tagField aField = new tagField();
+        TNTag.saveListPos();
+        bValid = TNTag.toFirst();
+        while (bValid) {
+            TNTag.getCurr(aField);
+            if (aField.ptInField(x, y)) {
+                bRet = true;
+                break;
+            }
+            if (!TNTag.toNext())
+                break;
+        }
+        TNTag.restoreListPos();
+        return bRet;
     }
 
     /*-----------------------------------------------------------------------------
@@ -1168,8 +1390,7 @@ public class IBMHost3270 extends IBMHostBase {
         mPreIBMState = IBMS_Ground;
         mParsePanding = 0;
         SetSize(24, 80);
-        //Todo: add 3270 map
-        //mTN3270KeyCodeMap = new HashMap<>(gDefaultTN_3270KeyCodeMap_Taurus);
+        mTN3270KeyCodeMap = new HashMap<>(gDefaultTN_3270KeyCodeMap_Taurus);
     }
 
     @Override
@@ -1184,7 +1405,13 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     protected int getServerKeyCode(int keyCode) {
-        return 0;
+        Integer nIBMKeyCode = mTN3270KeyCodeMap.get(keyCode);
+        if(nIBMKeyCode != null) {
+            CipherUtility.Log_d("IBMHost3270", "Keycode mapped, Keyevent = %d[%s], IBM Keycode = %d[%s]", keyCode, KeyMapUtility.getPhysicalKeyTextByEncode(keyCode), nIBMKeyCode, getServerKeyText(nIBMKeyCode));
+            return nIBMKeyCode;
+        }
+        CipherUtility.Log_d("IBMHost3270", "No Keycode mapped! Keyevent = %d[%s]", keyCode, KeyMapUtility.getPhysicalKeyTextByEncode(keyCode));
+        return IBMKEY_NONE;
     }
 
     @Override
@@ -1194,7 +1421,213 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public void handleKeyDown(int keyCode, KeyEvent event) {
+        int nIBMKeyCode = IBMKEY_NONE;
+        if(event instanceof ServerKeyEvent) {
+            nIBMKeyCode = keyCode;
+            CipherUtility.Log_d("IBMHost3270", "IBM Keycode = %d[%s]", nIBMKeyCode, getServerKeyText(nIBMKeyCode));
+        } else {
+            int nEncodePhyKeycode = KeyMapUtility.getEncodePhyKeyCode(event);
+            nIBMKeyCode = getServerKeyCode(nEncodePhyKeycode);
+        }
 
+        if(bLock) {
+            if(nIBMKeyCode != IBMKEY_RESET)
+                return;
+        }
+
+        if(nIBMKeyCode != IBMKEY_NONE) {
+            switch (nIBMKeyCode) {
+                case IBMKEY_NEXT:
+                    if (ActiveField.valid()) {
+                        if (TNTag.toNext())
+                            TNTag.getCurr(ActiveField);
+                        else {
+                            TNTag.toFirst();
+                            TNTag.getCurr(ActiveField);
+                        }
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                    } else if (TNTag.toFirst()) {
+                        TNTag.getCurr(ActiveField);
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                    }
+                    changeHardStatus(ActiveField);
+                    break;
+                case IBMKEY_PREV:
+                    if (ActiveField.valid()) {
+                        if (TNTag.toPrev())
+                            TNTag.getCurr(ActiveField);
+                        else {
+                            TNTag.toLast();
+                            TNTag.getCurr(ActiveField);
+                        }
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                    } else if (TNTag.toLast()) {
+                        TNTag.getCurr(ActiveField);
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                    }
+                    changeHardStatus(ActiveField);
+                    break;
+                case IBMKEY_FBEGIN:
+                    if (ActiveField.valid()) {
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                    }
+                    break;
+                case IBMKEY_FEND:
+                    if (ActiveField.valid()) {
+                        getLastPos(ActiveField, nBufX, nBufY, true);
+                    }
+                    break;
+                case IBMKEY_LEFTDELETE:
+                    /*Todo:IBMKEY_LEFTDELETE
+                    if (ActiveField.valid()) {
+                        Backspace();
+                        EraseChar(ActiveField, nBufX, nBufY);
+                        ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
+                        TNTag.setCurr(ActiveField);
+                    }
+                    */
+                    break;
+                case IBMKEY_DEL:
+                    /*Todo:IBMKEY_DEL
+                    if (ActiveField.valid()) {
+                        EraseChar(ActiveField, nBufX, nBufY);
+                        EraseMapChar(ActiveField, ReX, ReY);
+                        ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
+                        TNTag.setCurr(ActiveField);
+                    }
+                    */
+                    break;
+                case IBMKEY_LEFT:
+                    //Todo:MoveCursor(VK_LEFT);
+                    break;
+                case IBMKEY_RIGHT:
+                    //Todo:MoveCursor(VK_RIGHT);
+                    break;
+                case IBMKEY_UP:
+                    //Todo:MoveCursor(VK_UP);
+                    break;
+                case IBMKEY_DOWN:
+                    //Todo:MoveCursor(VK_DOWN);
+                    break;
+                case IBMKEY_INS:
+                    bInsert = !bInsert;
+                    break;
+                case IBMKEY_PA1:
+                case IBMKEY_PA2:
+                case IBMKEY_PA3:
+                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, data);
+                    break;
+
+                case IBMKEY_ATTN:
+                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0x02);
+                    break;
+                case IBMKEY_CLR:
+                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0x6d);
+                case IBMKEY_ERINPUT:
+                    /*Todo:IBMKEY_ERINPUT
+                    NullFields(TRUE);
+                    if (TNTag.toFirst()) {
+                        TNTag.getCurr(ActiveField);
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                        changeHardStatus(ActiveField);
+                    }
+                    */
+                    break;
+                case IBMKEY_CLREOF:
+                    /*Todo:IBMKEY_CLREOF
+                    if (ActiveField.valid()) {
+                        EraseEof(ActiveField, nBufX, nBufY);
+                        ActiveField.szFFW[0] = setBit(ActiveField.szFFW[0], 4, true);
+                        TNTag.setCurr(ActiveField);
+                    }
+                    */
+                    break;
+                case IBMKEY_HOME:
+                    if (TNTag.toFirst()) {
+                        TNTag.getCurr(ActiveField);
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                        changeHardStatus(ActiveField);
+                    }
+                    break;
+                case IBMKEY_RESET:
+                    if (bLock) {
+                        bLock = false;
+                    }
+                    break;
+                case IBMKEY_DUP:
+                    /*Todo:IBMKEY_DUP
+                    if (ActiveField.valid()) {
+                        tagField NextField = new tagField();
+                        if (TNTag.readNext(NextField)) {
+                            Duplicatefield(NextField, ActiveField);
+                            if (TNTag.toNext()) {
+                                TNTag.getCurr(ActiveField);
+                                nBufX.set(ActiveField.x);
+                                nBufY.set(ActiveField.y);
+                                changeHardStatus(ActiveField);
+                            }
+                        }
+                    }*/
+                    break;
+                case IBMKEY_FMARK:
+                    //Todo:IBMFieldMaekActiveField(1);
+                    break;
+                case IBMKEY_SYSRQ:
+                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0xf0);
+                    break;
+                case IBMKEY_LAST:
+                    if (ActiveField.valid()) {
+                        TNTag.toLast();
+                        TNTag.getCurr(ActiveField);
+                        nBufX.set(ActiveField.x);
+                        nBufY.set(ActiveField.y);
+                        changeHardStatus(ActiveField);
+                    }
+                    break;
+                case IBMKEY_NEWLINE:
+                    int xTemp = nBufX.get();
+                    int yTemp = nBufY.get();
+                    yTemp++;
+                    xTemp =0;
+                    if (!ptInFields(xTemp, yTemp)) {
+                        if (ActiveField.valid()) {
+                            if (TNTag.toNext())
+                                TNTag.getCurr(ActiveField);
+                            else {
+                                TNTag.toFirst();
+                                TNTag.getCurr(ActiveField);
+                            }
+                            nBufX.set(ActiveField.x);
+                            nBufY.set(ActiveField.y);
+                        } else if (TNTag.toFirst()) {
+                            TNTag.getCurr(ActiveField);
+                            nBufX.set(ActiveField.x);
+                            nBufY.set(ActiveField.y);
+                        }
+                    } else {
+                        nBufX.set(xTemp);
+                        nBufY.set(yTemp);
+                    }
+                    changeHardStatus(ActiveField);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            char pressedKey = (char) event.getUnicodeChar();
+            if (pressedKey == 0)
+                return;
+            //Todo:PutAsciiKey(pressedKey);
+        }
+
+        ViewPostInvalidate();
     }
 
     @Override
@@ -1302,7 +1735,13 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public void setKeyMapList(KeyMapList keyMapList) {
-
+        if(keyMapList != null) { //Load from settings
+            mTN3270KeyCodeMap = new HashMap<>();
+            for (int idxKeyMapList = 0; idxKeyMapList < keyMapList.listSize(); idxKeyMapList++) {
+                KeyMapItem keyMapItem = keyMapList.getItem(idxKeyMapList);
+                mTN3270KeyCodeMap.put(keyMapItem.getPhysicalKeycode(), keyMapItem.getServerKeycode());
+            }
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import TelnetIBM.IBMHost3270;
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 
@@ -160,9 +161,9 @@ public class TESettings {
                 if(strHostTypeName.compareTo(TESettingsInfo.TN3270TYPENAME) == 0) {
                     mTN3270KeyConfig.clear();
                     if(stdActivityRef.is53Key()) {
-                        TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap_Taurus, true);
+                        TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost3270.gDefaultTN_3270KeyCodeMap_Taurus, true);
                     } else {
-                        TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap, true);
+                        TESettingsInfo.fillMaps(mTN3270KeyConfig, IBMHost3270.gDefaultTN_3270KeyCodeMap, true);
                     }
                     mTN3270KeyConfigCount = mTN3270KeyConfig.size();
                 } else if(strHostTypeName.compareTo(TESettingsInfo.TN5250TYPENAME) == 0) {

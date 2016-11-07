@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import TelnetIBM.IBMHost3270;
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 import Terminals.TESettings.SessionSetting;
@@ -260,9 +261,9 @@ public class TESettingsInfo {
         if(setting.mTN3270KeyConfig == null) {
             setting.mTN3270KeyConfig = new TN3270KeyMapList();
             if(stdActivityRef.is53Key()) {
-                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap_Taurus, true);
+                fillMaps(setting.mTN3270KeyConfig, IBMHost3270.gDefaultTN_3270KeyCodeMap_Taurus, true);
             } else {
-                fillMaps(setting.mTN3270KeyConfig, IBMHost5250.gDefaultTN_3270KeyCodeMap, true);
+                fillMaps(setting.mTN3270KeyConfig, IBMHost3270.gDefaultTN_3270KeyCodeMap, true);
             }
 
             setting.mTN3270KeyConfigCount = setting.mTN3270KeyConfig.size();
