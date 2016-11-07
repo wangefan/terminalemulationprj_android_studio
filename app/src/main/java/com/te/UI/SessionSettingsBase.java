@@ -54,6 +54,10 @@ public class SessionSettingsBase extends AppCompatActivity {
         return mAddedSession;
     }
 
+    public static void resetAddedSession() {
+        mAddedSession = null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         CipherUtility.Log_d("SessionSettingsBase", "onCreate");
@@ -73,7 +77,7 @@ public class SessionSettingsBase extends AppCompatActivity {
                 mAddedSession = TESettingsInfo.restoreAddedSetting(this);
             }
         } else {
-            if(stdActivityRef.gCurrentEditSessionIndex == -1) {
+            if(stdActivityRef.gCurrentEditSessionIndex == -1 && mAddedSession == null) {
                 mAddedSession = TESettingsInfo.createNewDefaultSessionSetting(this);
             }
         }

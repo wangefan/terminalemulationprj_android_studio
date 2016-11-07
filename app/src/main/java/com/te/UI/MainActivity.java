@@ -720,6 +720,7 @@ public class MainActivity extends AppCompatActivity
     public void onAddSession() {
         if (TESettingsInfo.getSessionCount() < TESettingsInfo.MAX_SESSION_COUNT) {
             stdActivityRef.gCurrentEditSessionIndex = -1;
+            SessionSettingsBase.resetAddedSession();
             Intent intent = new Intent(this, SessionSettings.class);
             startActivityForResult(intent, SessionSettings.REQ_ADD);
         }
