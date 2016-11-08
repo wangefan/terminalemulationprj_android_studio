@@ -97,7 +97,6 @@ public class SessionKeyMapEditingFrg extends Fragment {
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_ADD, PHY_CATE_PUN);	// ( + )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_SUBTRACT, PHY_CATE_PUN);	// ( -  )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_MULTIPLY, PHY_CATE_PUN);	// ( * )
-        gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_DIVIDE, PHY_CATE_PUN);	// ( / )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_BACKSLASH, PHY_CATE_PUN);	// ( \ )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_NUMPAD_EQUALS, PHY_CATE_PUN);	// ( = )
         gKeyCodeCategryMap.put(KeyEvent.KEYCODE_SEMICOLON, PHY_CATE_PUN);	// ( ; )
