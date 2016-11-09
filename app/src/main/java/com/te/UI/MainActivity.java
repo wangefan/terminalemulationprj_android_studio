@@ -970,6 +970,11 @@ public class MainActivity extends AppCompatActivity
         builder.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        onExit();
+    }
+
     public void onExit() {
         if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getIsExitProtect()) {
             UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
@@ -981,8 +986,20 @@ public class MainActivity extends AppCompatActivity
                         }
                     });
         } else {
-            HideKeyboard();
-            finish();
+            String strMsg = getResources().getString(R.string.MSG_exit);
+            UIUtility.doYesNoDialog(MainActivity.this, strMsg, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            HideKeyboard();
+                            finish();
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                }
+            });
         }
     }
 
