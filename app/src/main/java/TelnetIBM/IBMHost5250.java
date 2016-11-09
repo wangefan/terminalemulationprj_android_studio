@@ -1563,11 +1563,6 @@ public class IBMHost5250 extends IBMHostBase {
         }
     }
 
-    public void warning() {
-        CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
-        stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
-    }
-
     // #{{ Data Packing
     private byte[] ConverPackToRawData(String Str) {
 
@@ -1907,6 +1902,23 @@ public class IBMHost5250 extends IBMHostBase {
         this.Caret.IsOff = true;
     }
 
+    private void CaretLeft() {
+        if (FieldList.size() <= 0)
+            return;
+        IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
+        if (this.GetIndexCaret() <= 0) {//?p?G???_?w?b??@??,?e???eTAB?@?????
+            PrevIndexTab();
+            CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
+            this.SetIndexCaret(CurField.Lenth - 1);
+
+        } else {
+            PrvIndexCaret();
+        }
+
+        //UpDateActiveField();
+        CaretUpdate();
+    }
+
     private void CaretRight() {
         while (true) {
             IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
@@ -1935,23 +1947,6 @@ public class IBMHost5250 extends IBMHostBase {
             return;
         IBM_FIELD CurField = FieldList.get(GetIndexTab());
         this.SetIndexCaret(CurField.Lenth - 1);
-        CaretUpdate();
-    }
-
-    private void CaretLeft() {
-        if (FieldList.size() <= 0)
-            return;
-        IBM_FIELD CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
-        if (this.GetIndexCaret() <= 0) {//?p?G???_?w?b??@??,?e???eTAB?@?????
-            PrevIndexTab();
-            CurField = (IBM_FIELD) FieldList.get(GetIndexTab());
-            this.SetIndexCaret(CurField.Lenth - 1);
-
-        } else {
-            PrvIndexCaret();
-        }
-
-        //UpDateActiveField();
         CaretUpdate();
     }
 

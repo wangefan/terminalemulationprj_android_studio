@@ -1,8 +1,11 @@
 package TelnetIBM;
 
+import com.te.UI.CipherUtility;
+
 import Terminals.LanguageTable;
 import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
+import Terminals.stdActivityRef;
 
 /**
  * Created by Franco.Liu on 2015/1/21.
@@ -72,6 +75,11 @@ public abstract class IBMHostBase extends TerminalBase {
                 break;
         }
         return strResult;
+    }
+
+    protected void warning() {
+        CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+        stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
     }
 
     abstract protected boolean isScreenAttributeVisible(byte attr);

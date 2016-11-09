@@ -168,6 +168,31 @@ public class IBMHost3270 extends IBMHostBase {
 
             return bRet;
         }
+
+        public boolean canExit() {
+            boolean bRet = true;
+            if (getBit(szFFW[1], 5) == true && //MF
+                    getBit(szFFW[1], 6) == true &&
+                    getBit(szFFW[1], 7) == true) {
+                boolean bFirst = (CharGrid[y][x] == 0);
+                for (int idxX = x; idxX < x + nLen; idxX++) {
+                    boolean bItr = (CharGrid[y][idxX] == 0);
+                    if (bFirst != bItr) {
+                        bRet = false;
+                        break;
+                    }
+                }
+            } else if (getBit(szFFW[1], 4)) {//ME
+                bRet = false;
+                for (int idxX = x; idxX < x + nLen; idxX++) {
+                    if (CharGrid[y][idxX] != 0) {
+                        bRet = true;
+                        break;
+                    }
+                }
+            }
+            return bRet;
+        }
     }
 
     private class CTNTag {
@@ -1096,6 +1121,76 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     /*-----------------------------------------------------------------------------
+     -Purpose: move cursor (up, down, right ,left)
+     -Remark : change the active field if needed
+     -----------------------------------------------------------------------------*/
+    void moveCursor(int serverKeycode) {
+        int nOldX = nBufX.get(), nOldY = nBufY.get();
+        switch (serverKeycode) {
+            case IBMKEY_UP:
+                if (nBufY.get() > 0)
+                    nBufY.decrementAndGet();
+                else
+                    nBufY.set(_rows - 1);
+                break;
+            case IBMKEY_DOWN:
+                if (nBufY.get() < _rows - 1)
+                    nBufY.incrementAndGet();
+                else
+                    nBufY.set(0);
+                break;
+            case IBMKEY_RIGHT:
+                nextPos(nBufX, nBufY);
+                break;
+            case IBMKEY_LEFT:
+                prevPos(nBufX, nBufY);
+                break;
+        }
+
+        if (!ptInFields(nBufX.get(), nBufY.get())) {
+            nBufX.set(nOldX);
+            nBufY.set(nOldY);
+            return;
+        }
+
+        if (!(ActiveField.ptInField(nBufX.get(), nBufY.get()))) {
+            if (ActiveField.canExit()) {
+                setActiveField();
+                changeHardStatus(ActiveField);
+            } else {//restore cursor
+                warning();
+                nBufX.set(nOldX);
+                nBufY.set(nOldY);
+            }
+        }
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: set current active field when move cursor
+     -Param  :
+     -Return :
+     -Remark : while move cursor we should tracking active field
+     -----------------------------------------------------------------------------*/
+    private void setActiveField() {
+        if (ActiveField.ptInField(nBufX.get(), nBufY.get()))
+            return;
+
+        tagField aField = new tagField();
+        boolean bValid = TNTag.toFirst();
+
+        //find active field
+        while (bValid) {
+            TNTag.getCurr(aField);
+            if (aField.ptInField(nBufX.get(), nBufY.get())) {
+                ActiveField.copy(aField);
+                break;
+            }
+            if (!TNTag.toNext())
+                break;
+        }
+    }
+
+    /*-----------------------------------------------------------------------------
      -Purpose: adjust hardware status according to current field
      -Param  : aField: the field to refer
      -Return :
@@ -1503,16 +1598,10 @@ public class IBMHost3270 extends IBMHostBase {
                     */
                     break;
                 case IBMKEY_LEFT:
-                    //Todo:MoveCursor(VK_LEFT);
-                    break;
                 case IBMKEY_RIGHT:
-                    //Todo:MoveCursor(VK_RIGHT);
-                    break;
                 case IBMKEY_UP:
-                    //Todo:MoveCursor(VK_UP);
-                    break;
                 case IBMKEY_DOWN:
-                    //Todo:MoveCursor(VK_DOWN);
+                    moveCursor(nIBMKeyCode);
                     break;
                 case IBMKEY_INS:
                     bInsert = !bInsert;
