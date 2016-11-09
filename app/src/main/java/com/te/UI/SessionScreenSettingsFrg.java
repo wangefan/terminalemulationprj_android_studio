@@ -130,6 +130,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         mlstFont.setValue(String.valueOf(mSetting.mNFontType));
         mlstFontSize.setValue(getFontSizeValFromSetting(mSetting.mNFontWidth, mSetting.mNFontHeight));
         mChkAutoFullScreenOnConn.setChecked(mSetting.mIsAutoFullscreenOnConn);
+        mChkShowNavibarOnFullScreen.setChecked(mSetting.mIsShowNavibarOnFullScreen);
         if(mSetting.mIsShowStatusbarOnFull ||
                 mSetting.mIsShowWifiIconOnFull ||
                 mSetting.mIsShowBatteryIconOnFull) {
