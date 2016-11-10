@@ -490,7 +490,7 @@ public class TESettings {
         @SerializedName("updateWifiCBValue") // 1 min, 3 min, 5 min, 15 min, 30 min, 60 min
         public int mWiFiIntervalValue = 15;//Both Wi-Fi and battery  use this item in Android version
 
-        @SerializedName("isUpdateBattery")//not use this item in Android version
+        @SerializedName("isUpdateBattery")
         public boolean mIsUpdateBatteryIconOnFull = false;
 
         @SerializedName("updateBatteryCBIndex") // 0:1 min, 1:3 min, 2:5 min, 3:15 min, 4:30 min, 5:60 min
