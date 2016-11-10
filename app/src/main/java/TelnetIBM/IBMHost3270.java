@@ -213,34 +213,36 @@ public class IBMHost3270 extends IBMHostBase {
         }
 
         boolean addMember(tagField aField) {
+            tagField newField = new tagField();
+            newField.copy(aField);
             if(pHead == null) {
                 pHead = pEnd = pCurr = CurrAdd = aField;
                 pHead.pPrev = null;
-                ListMem.add(aField);
+                ListMem.add(newField);
             } else {
                 tagField pSearchField = pHead;
                 boolean bMatch = false;
                 while (pSearchField != null) {
-                    if (pSearchField.x == aField.x && pSearchField.y == aField.y) {
-                        pSearchField.cAttrib = aField.cAttrib;
-                        pSearchField.szFCW[0] = aField.szFCW[0];
-                        pSearchField.szFCW[1] = aField.szFCW[1];
-                        pSearchField.szFFW[0] = aField.szFFW[0];
-                        pSearchField.szFFW[1] = aField.szFFW[1];
+                    if (pSearchField.x == newField.x && pSearchField.y == newField.y) {
+                        pSearchField.cAttrib = newField.cAttrib;
+                        pSearchField.szFCW[0] = newField.szFCW[0];
+                        pSearchField.szFCW[1] = newField.szFCW[1];
+                        pSearchField.szFFW[0] = newField.szFFW[0];
+                        pSearchField.szFFW[1] = newField.szFFW[1];
                         bMatch = true;
-                        CurrAdd = aField;
+                        CurrAdd = newField;
                         break;
                     }
                     pSearchField = pSearchField.pNext;
                 }
 
                 if (!bMatch) {
-                    CurrAdd = aField;
-                    pEnd.pNext = aField;
-                    aField.pPrev = pEnd;
-                    pEnd = aField;
+                    CurrAdd = newField;
+                    pEnd.pNext = newField;
+                    newField.pPrev = pEnd;
+                    pEnd = newField;
                     pEnd.pNext = null;
-                    ListMem.add(aField);
+                    ListMem.add(newField);
                 }
             }
             return true;
