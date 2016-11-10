@@ -243,7 +243,7 @@ public class SessionScreenSettingsFrg extends SessionSettingsFrgBase {
         } else if(key.compareTo(getResources().getString(R.string.screen_icon_update_interval_key)) == 0) {
             if(mlstUpdateIconInterval.getValue().compareTo("0") == 0) {
                 mSetting.mIsUpdateWiFiIconOnFull = false;
-                mSetting.mIsShowBatteryIconOnFull = false;
+                mSetting.mIsUpdateBatteryIconOnFull = false;
             } else {
                 mSetting.mIsUpdateWiFiIconOnFull = true;
                 mSetting.mIsUpdateBatteryIconOnFull = true;
