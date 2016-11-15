@@ -520,6 +520,13 @@ public class IBMHost3270 extends IBMHostBase {
     public static final int IBMKEY_F24 = ServerKeyEvent.FUN_KEYCODE_F24;
 
     final char DBCS_LEADING_AND_ENDING = 0x6f;
+    //AID Code Value
+    final char ENT_VAL = 0xF1;                        //Enter
+    final char PF1_VAL = 0x31;                        //PF1
+    final char PF13_VAL = 0xB1;                        //PF13
+    final char AUTO_VAL = 0x3F;                        //Auto Enter
+    final char PGUP_VAL = 0XF4;
+    final char PGDN_VAL = 0XF5;
 
     public static java.util.Map<Integer, Integer> gDefaultTN_3270KeyCodeMap_Taurus = new java.util.HashMap<>();
     public static java.util.Map<Integer, Integer> gDefaultTN_3270KeyCodeMap = new java.util.HashMap<>();
@@ -862,15 +869,47 @@ public class IBMHost3270 extends IBMHostBase {
         return cRet;
     }
 
-    private byte ASCII2EBCDIC(byte c) {
-        byte cRet = (byte) 0xFF; //return 0xFF if no match
+    private char ASCII2EBCDIC(char c) {
+        char cRet = 0xFF; //return 0xFF if no match
         for (int i = 64; i < 255; i++) {
             if (szEBCDIC[i] == c) {
-                cRet = (byte) i;
+                cRet = (char) i;
                 break;
             }
         }
         return cRet;
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: insrt a character in screen and right move the reset content in the field
+     -Param  : aField: target field; (x,y): coordinate
+     -Return :
+     -Remark :  Robin+ 2006.8.3
+     TODO: InsertMapChar is not supported untill now
+     -----------------------------------------------------------------------------*/
+    private void insertChar(tagField aField, int x, int y) {
+        int nRest = 0, i = 0;
+        AtomicInteger nextXAtom = new AtomicInteger();
+        AtomicInteger nextYAtom = new AtomicInteger();
+        nextXAtom.set(x);
+        nextYAtom.set(y);
+        char PreChar = 0, CurChar = 0;
+        cAttrib = AttribGrid[nBufY.get()][nBufX.get()];
+        nRest = aField.nLen - diffPos(aField.x, aField.y, x, y);
+        while (i < nRest) {
+            CurChar = CharGrid[nextYAtom.get()][nextXAtom.get()];
+            CharGrid[nextYAtom.get()][nextXAtom.get()] = PreChar;
+            char asciiChar = EBCDIC2ASCII(PreChar);
+            if(isScreenAttributeVisible(cAttrib)) {
+                DrawChar(asciiChar, nextXAtom.get(), nextYAtom.get(), false, isUnderLine(cAttrib), false);
+            }
+            AttribGrid[nextYAtom.get()][nextXAtom.get()] = cAttrib;
+            PreChar = CurChar;
+            nextPos(nextXAtom, nextYAtom);
+            i++;
+        }
+        CharGrid[y][x] = 0;
+        AttribGrid[nextYAtom.get()][nextXAtom.get()] = 0;
     }
 
     /*-----------------------------------------------------------------------------
@@ -962,14 +1001,15 @@ public class IBMHost3270 extends IBMHostBase {
         }
     }
 
-    int convertFieldData(int nStartX, int nStartY, int nEndX, int nEndY, boolean bReplace, byte[] szContent, int nLen) {
+    private String convertFieldData(int nStartX, int nStartY, int nEndX, int nEndY, boolean bReplace) {
+        StringBuilder sb = new StringBuilder();
         AtomicInteger nStartXAtom = new AtomicInteger(nStartX);
         AtomicInteger nStartYAtom = new AtomicInteger(nStartY);
         AtomicInteger nEndXAtom = new AtomicInteger(nEndX);
         AtomicInteger nEndYAtom = new AtomicInteger(nEndY);
         AtomicInteger nX1Atom = new AtomicInteger();
         AtomicInteger nY1Atom = new AtomicInteger();
-        byte[] szPC = new byte[2];
+        char[] szPC = new char[2];
         int nCount = 0;
         bDBCS = false;
         nextPos(nEndXAtom, nEndYAtom);
@@ -982,12 +1022,12 @@ public class IBMHost3270 extends IBMHostBase {
             // try to get two characters
             if (nX1Atom.get() == nEndXAtom.get() && nY1Atom.get() == nEndXAtom.get()) {
                 // c is the last character
-                szPC[1] = (byte) CharGrid[nStartYAtom.get()][nStartXAtom.get()];
+                szPC[1] = CharGrid[nStartYAtom.get()][nStartXAtom.get()];
                 nCount = 1;
             }
             else {
-                szPC[1] = (byte) CharGrid[nStartYAtom.get()][nStartXAtom.get()];
-                szPC[0] = (byte) CharGrid[nY1Atom.get()][nX1Atom.get()];
+                szPC[1] = CharGrid[nStartYAtom.get()][nStartXAtom.get()];
+                szPC[0] = CharGrid[nY1Atom.get()][nX1Atom.get()];
                 nCount = 2;
             }
 
@@ -1011,25 +1051,101 @@ public class IBMHost3270 extends IBMHostBase {
             else */
             {
                 if (bDBCS) {
-                    szContent[nLen++] = 0x0f;
+                    sb.append(0x0f);
                     bDBCS = false;
                 } else if (szPC[1]==0x1e) {
-                    szContent[nLen++] =0x1e;
+                    sb.append(0x1e);
                 } else {
                     if (szPC[1] != 0)
-                        szContent[nLen++] = ASCII2EBCDIC(szPC[1]);
+                        sb.append(ASCII2EBCDIC(szPC[1]));
                     else
-                        szContent[nLen++] = 0;
+                        sb.append(0);
                 }
             }
             nextPos(nStartXAtom, nStartYAtom);
         } // end of while
 
         if (bDBCS) {
-            szContent[nLen++] = 0x0f;
+            sb.append(0x0f);
             bDBCS = false;
         }
-        return nLen;
+        return sb.toString();
+    }
+
+    private String buildAidPack(char cAID) {
+        StringBuilder sb = new StringBuilder();
+        int Addr = getAidBufferAddress(nBufY.get(), nBufX.get());
+        sb.append(cAID);
+        sb.append((Addr& 0xFF00)/256);
+        sb.append((Addr& 0x00FF));
+        return sb.toString();
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: send data to host
+     -----------------------------------------------------------------------------*/
+    private void ibmSend(char cAID) {
+        bLock = true;
+
+        String szSend = "";
+        if (ActiveField.valid()) {
+            // Robin+ 2004.6.14 correct the coordinate
+            int nLen = diffPos((int) ActiveField.x, (int) ActiveField.y, nBufX.get(), nBufY.get());
+            if (nLen == ActiveField.nLen)
+                prevPos(nBufX, nBufY);
+        }
+
+        szSend += buildAidPack(cAID);
+
+        //build content
+        {
+            tagField aField = new tagField();
+            TNTag.saveListPos();
+            boolean bValid = TNTag.toFirst();
+            while (bValid) {
+                int x, y;
+                AtomicInteger nEndX = new AtomicInteger();
+                AtomicInteger nEndY = new AtomicInteger();
+                AtomicInteger nLastX = new AtomicInteger();
+                AtomicInteger nLastY = new AtomicInteger();
+
+                TNTag.getCurr(aField);
+                if (getBit(aField.cAttrib, 7)) {
+                    x = aField.x;
+                    y = aField.y;
+                    getLastPos(aField, nLastX, nLastY, false);
+                    getLastPos(aField, nEndX, nEndY, true);
+
+                    int Addr = getAidBufferAddress(y, x);
+                    szSend += 0x11;
+                    szSend += (Addr& 0xFF00)/256;
+                    szSend += (Addr& 0x00FF);
+
+                    //Trim
+                    while (nEndX.get() >= x || nEndY.get() > y) {
+                        if (CharGrid[nEndY.get()][nEndX.get()] != 0 && CharGrid[nEndY.get()][nEndX.get()] != 32)
+                            break;
+                        else
+                            prevPos(nEndX, nEndY);
+                    }
+
+                    x = aField.x;
+                    y = aField.y;
+
+                    if (x >= nEndX.get() || nEndY.get() >= y) {
+                        szSend += convertFieldData(x, y, nEndX.get(), nEndY.get(), true);
+                    }
+                }
+                if (!TNTag.toNext())
+                    break;
+            }
+            TNTag.restoreListPos();
+        }
+
+        szSend += 0xff;
+        szSend += 0xef;
+        DispatchMessage(this, szSend);
+        //    bLock = FALSE;                Robin- 2004.6.14 lock keyboard untill host reset it
     }
 
     //action for Commands begin
@@ -1070,8 +1186,9 @@ public class IBMHost3270 extends IBMHostBase {
 
             szContent[nSend++] = 0x1d;
             szContent[nSend++] = Field.cAttrib;
-            nSend = convertFieldData((int)Field.x, (int)Field.y, nEndXAtom.get(), nEndYAtom.get(), false, szContent, nSend);
-
+            byte [] converData = convertFieldData((int)Field.x, (int)Field.y, nEndXAtom.get(), nEndYAtom.get(), false).getBytes();
+            System.arraycopy(converData, 0, szContent, nSend, converData.length);
+            nSend += converData.length;
             nextPos(nEndXAtom, nEndYAtom);
             nStartBufX = nEndXAtom.get();
             nStartBufY = nEndYAtom.get();
@@ -1085,7 +1202,9 @@ public class IBMHost3270 extends IBMHostBase {
             getLastPos(Field, nEndXAtom, nEndYAtom, false);
             szContent[nSend++] = 0x1d;
             szContent[nSend++] = Field.cAttrib;
-            nSend = convertFieldData(Field.x, Field.y, nEndXAtom.get(), nEndYAtom.get(), false, szContent, nSend);
+            byte [] converData = convertFieldData(Field.x, Field.y, nEndXAtom.get(), nEndYAtom.get(), false).getBytes();
+            System.arraycopy(converData, 0, szContent, nSend, converData.length);
+            nSend += converData.length;
             nextPos(nEndXAtom, nEndYAtom);
             nStartBufX = nEndXAtom.get();
             nStartBufY = nEndYAtom.get();
@@ -1123,10 +1242,42 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     /*-----------------------------------------------------------------------------
+     -Purpose: Is current ActiveField is a auto enter field?
+     -Param  :
+     -Return :
+     -Remark : please refer to IBM document for more inf.
+     -----------------------------------------------------------------------------*/
+    private boolean isAutoEnt() {
+        if (getBit(ActiveField.szFFW[1], 0))
+            return true;
+        else
+            return false;
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: is current attribute need under line?
+     -Param  : attribute
+     -Return : true: need  false:no need
+     -----------------------------------------------------------------------------*/
+    private boolean isUnderLine(char curAttr) {
+        return getBit((byte) curAttr, 6) && getBit((byte) curAttr, 2) == false;
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: calculate the count between x1,y1 and x2,y2
+     -Param  : x1,y1: the first point; x2,y2: the last point
+     -Return : count
+     -Remark : x1,y1 must before x2,y2
+     -----------------------------------------------------------------------------*/
+    private int diffPos(int x1, int y1, int x2, int y2) {
+        return Math.abs((y1 * _cols + x1) - (y2 * _cols + x2));
+    }
+
+    /*-----------------------------------------------------------------------------
      -Purpose: move cursor (up, down, right ,left)
      -Remark : change the active field if needed
      -----------------------------------------------------------------------------*/
-    void moveCursor(int serverKeycode) {
+    private void moveCursor(int serverKeycode) {
         int nOldX = nBufX.get(), nOldY = nBufY.get();
         switch (serverKeycode) {
             case IBMKEY_UP:
@@ -1198,7 +1349,7 @@ public class IBMHost3270 extends IBMHostBase {
      -Return :
      -Remark :
      -----------------------------------------------------------------------------*/
-    void changeHardStatus(tagField aField) {
+    private void changeHardStatus(tagField aField) {
         PreviousChar = 0;
         bDBCS = false; // Robin+ 2006.7.20 to handle DBCS input
         if (!aField.valid())
@@ -1213,7 +1364,7 @@ public class IBMHost3270 extends IBMHostBase {
      -Return : true: if the bit is 1; false: if the bit is 0
      -Remark : in IBM, bit 0 is the high bit of a byte
      -----------------------------------------------------------------------------*/
-    boolean getBit(byte c, int nPos) {
+    private boolean getBit(byte c, int nPos) {
         c = (byte) (c << nPos); //In IBM bit 0 is the high bit of a byte
         return (c & 0x80) == 0x80;
     }
@@ -1225,7 +1376,7 @@ public class IBMHost3270 extends IBMHostBase {
      -Return : the character after set bit
      -Remark : in IBM, bit 0 is the high bit of a byte
      -----------------------------------------------------------------------------*/
-    byte setBit(byte c, int nPos, boolean bEnable) {
+    private byte setBit(byte c, int nPos, boolean bEnable) {
         byte cRet = 1;
         nPos = 7 - nPos;
         cRet = (byte) (cRet << nPos);
@@ -1319,7 +1470,7 @@ public class IBMHost3270 extends IBMHostBase {
         setBufferPos(xAtom.get(), yAtom.get());
     }
 
-    void orderSetBufferAddress(int nParmH, int nParmL) {
+    private void orderSetBufferAddress(int nParmH, int nParmL) {
         getBufferAddress(nParmH * 256 + nParmL, nBufY, nBufX);
 
         if (nBufX.get() >= (_cols - 1)) {
@@ -1491,7 +1642,7 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     @Override
-    protected boolean isScreenAttributeVisible(byte attr) {
+    protected boolean isScreenAttributeVisible(char attr) {
         return (attr & 0x0c) != 0x0c;
     }
 
@@ -1715,10 +1866,60 @@ public class IBMHost3270 extends IBMHostBase {
             char pressedKey = (char) event.getUnicodeChar();
             if (pressedKey == 0)
                 return;
-            //Todo:PutAsciiKey(pressedKey);
+            putAsciiKey(pressedKey);
         }
 
         ViewPostInvalidate();
+    }
+
+    private void putAsciiKey(char c) {
+        char ebcdic = ASCII2EBCDIC(c);
+        if (!ptInFields(nBufX.get(), nBufY.get())) {
+            defaultAddress();
+        }
+
+        //Todo: handle dbcs
+        if ((PreviousChar > 0x7f) && isDBCS(PreviousChar, (byte) c)) {
+            bDBCS = true;
+            PreviousChar = 0;
+        } else {
+            bDBCS = false;
+            PreviousChar = (byte) c;
+        }
+
+        if (bInsert) {
+            insertChar(ActiveField, nBufX.get(), nBufY.get());
+        }
+
+        cAttrib = AttribGrid[nBufY.get()][nBufX.get()]; // Robin+ 2004.11.9
+        setScrBuf(nBufX.get(), nBufY.get(), ebcdic);
+        if(isScreenAttributeVisible(cAttrib)) {
+            DrawChar(c, nBufX.get(), nBufY.get(), false, isUnderLine(cAttrib), false);
+        }
+        nextPos(nBufX, nBufY);
+        ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
+        TNTag.setCurr(ActiveField); //save to list
+
+        int nLen = diffPos(ActiveField.x, ActiveField.y, nBufX.get(), nBufY.get());
+        int nBufLen = ActiveField.nLen;
+
+        if (nLen == nBufLen) {
+            if (isAutoEnt()) {
+                ibmSend(ENT_VAL); // Robin 2004.6.14 AUTO_VAL -> ENT_VAL
+            } else {
+                ActiveField = new tagField();
+                if (!TNTag.isLast()) {
+                    TNTag.toNext();
+                    TNTag.getCurr(ActiveField);
+                } else {
+                    if (TNTag.toFirst())
+                        TNTag.getCurr(ActiveField);
+                }
+                changeHardStatus(ActiveField);
+                nBufX.set(ActiveField.x);
+                nBufY.set(ActiveField.y);
+            }
+        }
     }
 
     @Override
@@ -1749,11 +1950,10 @@ public class IBMHost3270 extends IBMHostBase {
                         if(bDBCS == false) { //Single Byte
                             if (IsCharAttributes(c) == false) {
                                 char curAttr = AttribGrid[idxRow][idxCol];
-                                if(isScreenAttributeVisible((byte) curAttr)) {
+                                if(isScreenAttributeVisible(curAttr)) {
                                     char curData = EBCDIC2ASCII(c);
                                     //means protected
-                                    boolean bUnderLine = getBit((byte) curAttr, 6) && getBit((byte) curAttr, 2) == false;
-                                    DrawChar(curData, idxCol, idxRow, false, bUnderLine, false);
+                                    DrawChar(curData, idxCol, idxRow, false, isUnderLine(curAttr), false);
                                 }
                             }
                         } else { //Double byte

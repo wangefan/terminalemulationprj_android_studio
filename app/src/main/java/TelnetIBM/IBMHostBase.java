@@ -82,7 +82,7 @@ public abstract class IBMHostBase extends TerminalBase {
         stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
     }
 
-    abstract protected boolean isScreenAttributeVisible(byte attr);
+    abstract protected boolean isScreenAttributeVisible(char attr);
 
     public class Ibm_Caret {
         public Point Pos;

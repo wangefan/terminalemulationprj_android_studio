@@ -414,7 +414,7 @@ public class IBMHost5250 extends IBMHostBase {
     }
 
     @Override
-    protected boolean isScreenAttributeVisible(byte attr) {
+    protected boolean isScreenAttributeVisible(char attr) {
         return (attr & mAttrMaskNotShow) != mAttrMaskNotShow;
     }
 
@@ -499,7 +499,7 @@ public class IBMHost5250 extends IBMHostBase {
                             if (IsCharAttributes(c) == false) {
                                 char chater = szEBCDIC[(int) c];
                                 char curAttr = AttribGrid[idxRow][idxCol];
-                                if (isScreenAttributeVisible((byte) curAttr))
+                                if (isScreenAttributeVisible(curAttr))
                                     DrawChar(chater, idxCol, idxRow, false, FieldList.isNeedLine(idxCol, idxRow), false);
                             }
                         } else { //Double byte
@@ -1554,7 +1554,7 @@ public class IBMHost5250 extends IBMHostBase {
             } else {
                 this.CharGrid[posTemp.Y][posTemp.X] = CurField.Data[i];
                 this.AttribGrid[posTemp.Y][posTemp.X] = CurField.Attrib;
-                if (isScreenAttributeVisible((byte) CurField.Attrib)) {
+                if (isScreenAttributeVisible(CurField.Attrib)) {
                     char chater = szEBCDIC[(int) CurField.Data[i]];
                     DrawChar(chater, posTemp.X, posTemp.Y, false, true, false);
                 }
@@ -2444,7 +2444,7 @@ public class IBMHost5250 extends IBMHostBase {
         IBM_FIELD decField = GetNextField();
         if (srcField == null || decField == null)
             return;
-        if(isScreenAttributeVisible((byte) srcField.Attrib) == false)
+        if(isScreenAttributeVisible(srcField.Attrib) == false)
             return;
         NullField(decField, true);
         for (int idxData = 0; idxData < decField.Data.length; idxData++) {
@@ -2825,7 +2825,7 @@ public class IBMHost5250 extends IBMHostBase {
         boolean isNeedLine(int X, int Y) {
             for (int idxFiled = 0; idxFiled < this.size(); idxFiled++) {
                 IBM_FIELD field = get(idxFiled);
-                if(isScreenAttributeVisible((byte) field.Attrib) && field.isInField(X, Y)) {
+                if(isScreenAttributeVisible(field.Attrib) && field.isInField(X, Y)) {
                     return true;
                 }
             }
