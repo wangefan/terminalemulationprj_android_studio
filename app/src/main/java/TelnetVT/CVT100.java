@@ -1179,12 +1179,12 @@ public class CVT100 extends CVT100Enum {
                 }
 
 
-                ViewDrawSpace(X, Y, this.CharGrid[Y].length - X);
+                DrawSpace(X, Y, this.CharGrid[Y].length - X);
                 for (int i = Y + 1; i < this._rows; i++) {
                     //Arrays.asList(this.CharGrid[i]).clear();
                     Arrays.fill(this.CharGrid[i], (char) 0);
                     //Arrays.fill(this.AttribGrid[i], 0, this.AttribGrid[i].length,0);
-                    ViewDrawSpace(0, i, this.CharGrid[i].length);
+                    DrawSpace(0, i, this.CharGrid[i].length);
                 }
                 break;
 
@@ -1197,12 +1197,12 @@ public class CVT100 extends CVT100Enum {
                     CharAttribStruct Obj = new CharAttribStruct();
                     this.AttribGrid[Y][i] = Obj;
                 }
-                ViewDrawSpace(0, Y, X + 1);
+                DrawSpace(0, Y, X + 1);
                 for (int i = 0; i < Y; i++) {
                     //Arrays.asList(this.CharGrid[i]).clear();
                     Arrays.fill(this.CharGrid[i], (char) 0);
                     //Arrays.fill(this.AttribGrid[i], 0, this.AttribGrid[i].length,0);
-                    ViewDrawSpace(0, i, this.CharGrid[i].length);
+                    DrawSpace(0, i, this.CharGrid[i].length);
                 }
                 break;
 

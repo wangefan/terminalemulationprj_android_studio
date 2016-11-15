@@ -312,6 +312,17 @@ public class IBMHost3270 extends IBMHostBase {
             }
         }
 
+        boolean getPrev(tagField pField) {
+            if (pHead == null)
+                return false;
+            else {
+                if(toPrev() == false)
+                    return false;
+                pField.copy(pCurr);
+                return true;
+            }
+        }
+
         boolean getCurr(tagField aField) {
             if (pHead == null)
                 return false;
@@ -1401,6 +1412,31 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     /*-----------------------------------------------------------------------------
+     -Purpose: erase a character in screen and left move the reset content in the field
+     -Param  : aField: target field; (x,y): coordinate
+     -Return :
+     -Remark :
+     -----------------------------------------------------------------------------*/
+    private void eraseChar(tagField aField, int x, int y) {
+        int nRest = 0, i = 0;
+        AtomicInteger nNextX = new AtomicInteger();
+        AtomicInteger nNextY = new AtomicInteger();
+        nRest = aField.nLen - diffPos(aField.x, aField.y, x, y);
+        while (i < nRest) {
+            nNextX.set(x);
+            nNextY.set(y);
+            nextPos(nNextX, nNextY);
+            CharGrid[y][x] = CharGrid[nNextY.get()][nNextX.get()];
+            procChar(CharGrid[y][x], AttribGrid[y][x], x, y);
+            x = nNextX.get();
+            y = nNextY.get();
+            i++;
+        }
+        CharGrid[y][x] = 0;
+        procChar(CharGrid[y][x], AttribGrid[y][x], x, y);
+    }
+
+    /*-----------------------------------------------------------------------------
      -Purpose: move cursor to default position
      -Param  :
      -Return :
@@ -1731,14 +1767,34 @@ public class IBMHost3270 extends IBMHostBase {
                     }
                     break;
                 case IBMKEY_LEFTDELETE:
-                    /*Todo:IBMKEY_LEFTDELETE
                     if (ActiveField.valid()) {
-                        Backspace();
-                        EraseChar(ActiveField, nBufX, nBufY);
+                        if (nBufX.get() == ActiveField.x && nBufY.get() == ActiveField.y) {
+                            tagField tempField = new tagField();
+                            if (TNTag.getPrev(tempField)) {
+                                ActiveField.copy(tempField);
+                            } else {
+                                if (TNTag.toLast())
+                                    TNTag.getCurr(ActiveField);
+                            }
+                            int xResult = ActiveField.x + ActiveField.nLen - 1;
+                            int yResult = ActiveField.y;
+
+                            if (xResult >= _cols) {
+                                yResult += xResult / _cols;
+                                xResult = xResult % _cols;
+                            }
+                            nBufX.set(xResult);
+                            nBufY.set(yResult);
+                            changeHardStatus(ActiveField);
+                        }
+                        else
+                            prevPos(nBufX, nBufY);
+                        eraseChar(ActiveField, nBufX.get(), nBufY.get());
                         ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
                         TNTag.setCurr(ActiveField);
+                    } else {
+                        warning();
                     }
-                    */
                     break;
                 case IBMKEY_DEL:
                     /*Todo:IBMKEY_DEL
@@ -1893,9 +1949,7 @@ public class IBMHost3270 extends IBMHostBase {
 
         cAttrib = AttribGrid[nBufY.get()][nBufX.get()]; // Robin+ 2004.11.9
         setScrBuf(nBufX.get(), nBufY.get(), ebcdic);
-        if(isScreenAttributeVisible(cAttrib)) {
-            DrawChar(c, nBufX.get(), nBufY.get(), false, isUnderLine(cAttrib), false);
-        }
+        procChar(ebcdic, cAttrib, nBufX.get(), nBufY.get());
         nextPos(nBufX, nBufY);
         ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
         TNTag.setCurr(ActiveField); //save to list
@@ -1919,6 +1973,15 @@ public class IBMHost3270 extends IBMHostBase {
                 nBufX.set(ActiveField.x);
                 nBufY.set(ActiveField.y);
             }
+        }
+    }
+
+    protected void procChar(char edbic, char attr, int x, int y) {
+        if(isScreenAttributeVisible(attr)) {
+            char ch = EBCDIC2ASCII(edbic);
+            DrawChar(ch, x, y, false, isUnderLine(attr), false);
+        } else {
+            DrawSpace(x, y, 1);
         }
     }
 

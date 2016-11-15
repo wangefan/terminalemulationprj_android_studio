@@ -171,7 +171,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
             mTerminalListener.onNotify(NOTF_ACT_CLEAR_VIEW);
     }
 
-    public void ViewDrawSpace(Integer x, Integer y, Integer space) {
+    public void DrawSpace(Integer x, Integer y, Integer space) {
         if (mTerminalListener != null)
             mTerminalListener.onNotify(NOTF_ACT_DRAW_SPACE, x, y, space);
     }

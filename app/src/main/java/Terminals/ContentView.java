@@ -254,10 +254,9 @@ public class ContentView extends View {
     }
 
     public void DrawSpace(int x, int y, int space) {
-        //Rect rect = new Rect((int)mFontRect.width() * x, (int)mFontRect.height() * y, (int)(mFontRect.width() * space), (int)(mFontRect.height() * 1));
-        Rect rect = new Rect((int) mFontRect.width() * x, (int) mFontRect.height() * y, (int) (mFontRect.width() * x) + (mFontRect.width() * space), (int) (mFontRect.height() * y) + mFontRect.height());
         if (mCanvas == null)
             return;
+        Rect rect = new Rect(mFontRect.width() * x, mFontRect.height() * y, mFontRect.width() * x + mFontRect.width() * space, mFontRect.height() * y + mFontRect.height());
         mCanvas.drawRect(rect, mBgpaint);
     }
 
