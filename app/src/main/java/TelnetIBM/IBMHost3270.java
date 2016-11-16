@@ -1449,8 +1449,10 @@ public class IBMHost3270 extends IBMHostBase {
      _Revise : Robin+ 2004.11.5 attribute
      -----------------------------------------------------------------------------*/
     private void setScrBuf(int X, int Y, char c) {
-        CharGrid[Y][X] = c;
-        AttribGrid[Y][X] = cAttrib; // Robin+ 2004.11.5 Set screen attribute
+        if(X < _cols && Y < _rows) {
+            CharGrid[Y][X] = c;
+            AttribGrid[Y][X] = cAttrib; // Robin+ 2004.11.5 Set screen attribute
+        }
     }
 
     /*-----------------------------------------------------------------------------
