@@ -532,12 +532,37 @@ public class IBMHost3270 extends IBMHostBase {
 
     final char DBCS_LEADING_AND_ENDING = 0x6f;
     //AID Code Value
+    //Todo: To confirm 3270 has auto enter or not? i think no and should remove usage from ENT_VAL
     final char ENT_VAL = 0xF1;                        //Enter
-    final char PF1_VAL = 0x31;                        //PF1
-    final char PF13_VAL = 0xB1;                        //PF13
-    final char AUTO_VAL = 0x3F;                        //Auto Enter
-    final char PGUP_VAL = 0XF4;
-    final char PGDN_VAL = 0XF5;
+    final char ENT_VAL_3270 = 0x7d;                   //Enter
+    final char ATTN_3270 = 0x02;
+    final char PF1_3270 = 0xF1;
+    final char PF2_3270 = 0xF2;
+    final char PF3_3270 = 0xF3;
+    final char PF4_3270 = 0xF4;
+    final char PF5_3270 = 0xF5;
+    final char PF6_3270 = 0xF6;
+    final char PF7_3270 = 0xF7;
+    final char PF8_3270 = 0xF8;
+    final char PF9_3270 = 0xF9;
+    final char PF10_3270 = 0x7a;
+    final char PF11_3270 = 0x7b;
+    final char PF12_3270 = 0x7c;
+    final char PF13_3270 = 0xc1;
+    final char PF14_3270 = 0xc2;
+    final char PF15_3270 = 0xc3;
+    final char PF16_3270 = 0xc4;
+    final char PF17_3270 = 0xc5;
+    final char PF18_3270 = 0xc6;
+    final char PF19_3270 = 0xc7;
+    final char PF20_3270 = 0xc8;
+    final char PF21_3270 = 0xc9;
+    final char PF22_3270 = 0x4a;
+    final char PF23_3270 = 0x4b;
+    final char PF24_3270 = 0x4c;
+    final char PA1_3270 = 0x6c;
+    final char PA2_3270 = 0x6e;
+    final char PA3_3270 = 0x6b;
 
     public static java.util.Map<Integer, Integer> gDefaultTN_3270KeyCodeMap_Taurus = new java.util.HashMap<>();
     public static java.util.Map<Integer, Integer> gDefaultTN_3270KeyCodeMap = new java.util.HashMap<>();
@@ -1068,7 +1093,7 @@ public class IBMHost3270 extends IBMHostBase {
                     sb.append(0x1e);
                 } else {
                     if (szPC[1] != 0)
-                        sb.append(ASCII2EBCDIC(szPC[1]));
+                        sb.append(szPC[1]);
                     else
                         sb.append(0);
                 }
@@ -1087,8 +1112,8 @@ public class IBMHost3270 extends IBMHostBase {
         StringBuilder sb = new StringBuilder();
         int Addr = getAidBufferAddress(nBufY.get(), nBufX.get());
         sb.append(cAID);
-        sb.append((Addr& 0xFF00)/256);
-        sb.append((Addr& 0x00FF));
+        sb.append((char)((Addr & 0xFF00) / 256));
+        sb.append((char)(Addr & 0x00FF));
         return sb.toString();
     }
 
@@ -1128,9 +1153,9 @@ public class IBMHost3270 extends IBMHostBase {
                     getLastPos(aField, nEndX, nEndY, true);
 
                     int Addr = getAidBufferAddress(y, x);
-                    szSend += 0x11;
-                    szSend += (Addr& 0xFF00)/256;
-                    szSend += (Addr& 0x00FF);
+                    szSend += (char) 0x11;
+                    szSend += (char) ((Addr& 0xFF00) / 256);
+                    szSend += (char) (Addr& 0x00FF);
 
                     //Trim
                     while (nEndX.get() >= x || nEndY.get() > y) {
@@ -1153,8 +1178,8 @@ public class IBMHost3270 extends IBMHostBase {
             TNTag.restoreListPos();
         }
 
-        szSend += 0xff;
-        szSend += 0xef;
+        szSend += (char) 0xff;
+        szSend += (char) 0xef;
         DispatchMessage(this, szSend);
         //    bLock = FALSE;                Robin- 2004.6.14 lock keyboard untill host reset it
     }
@@ -1721,6 +1746,44 @@ public class IBMHost3270 extends IBMHostBase {
 
         if(nIBMKeyCode != IBMKEY_NONE) {
             switch (nIBMKeyCode) {
+                case IBMKEY_ENTER:
+                    ibmSend(ENT_VAL_3270);
+                    break;
+                /*Todo: confirm IBMKEY_ROLUP and IBMKEY_ROLDN is needed
+                case IBMKEY_ROLUP:
+                case IBMKEY_ROLDN:
+                    break;*/
+                case IBMKEY_F1:
+                case IBMKEY_F2:
+                case IBMKEY_F3:
+                case IBMKEY_F4:
+                case IBMKEY_F5:
+                case IBMKEY_F6:
+                case IBMKEY_F7:
+                case IBMKEY_F8:
+                case IBMKEY_F9:
+                case IBMKEY_F10:
+                case IBMKEY_F11:
+                case IBMKEY_F12:
+                case IBMKEY_F13:
+                case IBMKEY_F14:
+                case IBMKEY_F15:
+                case IBMKEY_F16:
+                case IBMKEY_F17:
+                case IBMKEY_F18:
+                case IBMKEY_F19:
+                case IBMKEY_F20:
+                case IBMKEY_F21:
+                case IBMKEY_F22:
+                case IBMKEY_F23:
+                case IBMKEY_F24:
+                    //Todo:
+                    break;
+                case IBMKEY_PA1:
+                case IBMKEY_PA2:
+                case IBMKEY_PA3:
+                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, data);
+                    break;
                 case IBMKEY_NEXT:
                     if (ActiveField.valid()) {
                         if (TNTag.toNext())
@@ -1815,12 +1878,6 @@ public class IBMHost3270 extends IBMHostBase {
                 case IBMKEY_INS:
                     bInsert = !bInsert;
                     break;
-                case IBMKEY_PA1:
-                case IBMKEY_PA2:
-                case IBMKEY_PA3:
-                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, data);
-                    break;
-
                 case IBMKEY_ATTN:
                     //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0x02);
                     break;
@@ -1998,7 +2055,7 @@ public class IBMHost3270 extends IBMHostBase {
     @Override
     public void drawAll() {
         StringBuilder dbcsTemp = new StringBuilder();
-        for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
+        for (int idxRow = 0; idxRow < _rows; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
                 char c = CharGrid[idxRow][idxCol];
                 switch (c) {
@@ -2037,6 +2094,7 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public void ParseEnd() {
+        mPreIBMState = IBMS_Ground;
         drawAll();
     }
 

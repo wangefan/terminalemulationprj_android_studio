@@ -484,7 +484,7 @@ public class IBMHost5250 extends IBMHostBase {
     @Override
     public void drawAll() {
         StringBuilder dbcsTemp = new StringBuilder();
-        for (int idxRow = this.TopMargin; idxRow < this.BottomMargin; idxRow++) {
+        for (int idxRow = 0; idxRow < _rows; idxRow++) {
             for (int idxCol = 0; idxCol < this._cols; ++idxCol) {
                 char c = CharGrid[idxRow][idxCol];
                 switch (c) {
