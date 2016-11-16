@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import Terminals.KeyMapItem;
 import Terminals.KeyMapList;
 import Terminals.KeyMapUtility;
+import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 
 import static TelnetIBM.IBMHost3270.IBmOrder3270.*;
@@ -1277,6 +1278,22 @@ public class IBMHost3270 extends IBMHostBase {
         nBufY.set(Y);
     }
 
+    private boolean fillField(tagField aField, String str) {
+        AtomicInteger x = new AtomicInteger();
+        AtomicInteger y = new AtomicInteger();
+        x.set(aField.x);
+        y.set(aField.y);
+        int nLen = Math.min(aField.nLen, str.length());
+
+        for (int i = 0; i < nLen; i++) {
+            CharGrid[y.get()][x.get()] = ASCII2EBCDIC(str.charAt(i));
+            nextPos(x, y);
+        }
+        nBufX.set(x.get());
+        nBufY.set(y.get());
+        return true;
+    }
+
     /*-----------------------------------------------------------------------------
      -Purpose: Is current ActiveField is a auto enter field?
      -Param  :
@@ -2158,6 +2175,35 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     protected boolean autoLogin() {
-        return false;
+        boolean bCanSend = false;
+        boolean bRet = false;
+        tagField aField = new tagField();
+        String loginName = TESettingsInfo.getHostUserNameByIndex(TESettingsInfo.getSessionIndex());
+        String pwd = TESettingsInfo.getHostPassWordByIndex(TESettingsInfo.getSessionIndex());
+        TNTag.saveListPos();
+        if (TNTag.toFirst()) {
+            TNTag.getCurr(aField);
+            if (fillField(aField, loginName)) {
+                aField.cAttrib = setBit(aField.cAttrib, 7, true);
+                TNTag.setCurr(aField);
+                bCanSend = true;
+            }
+
+            if (TNTag.toNext()) {
+                TNTag.getCurr(aField);
+                if (fillField(aField, pwd)) {
+                    aField.cAttrib = setBit(aField.cAttrib, 7, true);
+                    TNTag.setCurr(aField);
+                    bCanSend = true;
+                }
+            }
+        }
+        TNTag.restoreListPos();
+        if (bCanSend) {
+            bLock = true;
+            ibmSend(ENT_VAL_3270);
+            bRet = true;
+        }
+        return bRet;
     }
 }
