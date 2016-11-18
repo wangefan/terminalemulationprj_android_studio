@@ -1118,6 +1118,14 @@ public class IBMHost3270 extends IBMHostBase {
         return sb.toString();
     }
 
+    private void ibmSendAid(char cAID) {
+        bLock = true;
+        String content = buildAidPack(cAID);
+        content += (char) 0xff;
+        content += (char) 0xef;
+        DispatchMessage(this, content);
+    }
+
     /*-----------------------------------------------------------------------------
      -Purpose: send data to host
      -----------------------------------------------------------------------------*/
@@ -1773,30 +1781,76 @@ public class IBMHost3270 extends IBMHostBase {
                 case IBMKEY_ROLDN:
                     break;*/
                 case IBMKEY_F1:
+                    ibmSendAid(PF1_3270);
+                    break;
                 case IBMKEY_F2:
+                    ibmSendAid(PF2_3270);
+                    break;
                 case IBMKEY_F3:
+                    ibmSendAid(PF3_3270);
+                    break;
                 case IBMKEY_F4:
+                    ibmSendAid(PF4_3270);
+                    break;
                 case IBMKEY_F5:
+                    ibmSendAid(PF5_3270);
+                    break;
                 case IBMKEY_F6:
+                    ibmSendAid(PF6_3270);
+                    break;
                 case IBMKEY_F7:
+                    ibmSendAid(PF7_3270);
+                    break;
                 case IBMKEY_F8:
+                    ibmSendAid(PF8_3270);
+                    break;
                 case IBMKEY_F9:
+                    ibmSendAid(PF9_3270);
+                    break;
                 case IBMKEY_F10:
+                    ibmSendAid(PF10_3270);
+                    break;
                 case IBMKEY_F11:
+                    ibmSendAid(PF11_3270);
+                    break;
                 case IBMKEY_F12:
+                    ibmSendAid(PF12_3270);
+                    break;
                 case IBMKEY_F13:
+                    ibmSendAid(PF13_3270);
+                    break;
                 case IBMKEY_F14:
+                    ibmSendAid(PF14_3270);
+                    break;
                 case IBMKEY_F15:
+                    ibmSendAid(PF15_3270);
+                    break;
                 case IBMKEY_F16:
+                    ibmSendAid(PF16_3270);
+                    break;
                 case IBMKEY_F17:
+                    ibmSendAid(PF17_3270);
+                    break;
                 case IBMKEY_F18:
+                    ibmSendAid(PF18_3270);
+                    break;
                 case IBMKEY_F19:
+                    ibmSendAid(PF19_3270);
+                    break;
                 case IBMKEY_F20:
+                    ibmSendAid(PF20_3270);
+                    break;
                 case IBMKEY_F21:
+                    ibmSendAid(PF21_3270);
+                    break;
                 case IBMKEY_F22:
+                    ibmSendAid(PF22_3270);
+                    break;
                 case IBMKEY_F23:
+                    ibmSendAid(PF23_3270);
+                    break;
                 case IBMKEY_F24:
-                    //Todo:
+                    ibmSendAid(PF24_3270);
                     break;
                 case IBMKEY_PA1:
                 case IBMKEY_PA2:
