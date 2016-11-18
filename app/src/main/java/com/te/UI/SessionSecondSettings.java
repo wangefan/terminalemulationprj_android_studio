@@ -41,7 +41,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
             settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_SERVER_SETTING) == 0) {
-            if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            if(SessionSettingsBase.getCurrentEditSession().mIsTN == 1) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_setting));
                 SessionTNSettingsFrg settingsFrg = getFragment(SessionTNSettingsFrg.class);
                 settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
@@ -58,7 +58,7 @@ public class SessionSecondSettings extends SessionSettingsBase {
             settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
             commitFrgToActivity(settingsFrg);
         } else if(action.compareTo(ACTION_ALARM_SETTING) == 0) {
-            if(TESettingsInfo.getIsHostTNByIndex(TESettingsInfo.getSessionIndex()) == true) {
+            if(SessionSettingsBase.getCurrentEditSession().mIsTN == 1) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.tn_alarm));
                 SessionTNAlarmFrg settingsFrg = getFragment(SessionTNAlarmFrg.class);
                 settingsFrg.setSessionSetting(SessionSettingsBase.getCurrentEditSession());
