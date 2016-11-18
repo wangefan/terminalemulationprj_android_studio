@@ -537,6 +537,8 @@ public class IBMHost3270 extends IBMHostBase {
     final char ENT_VAL = 0xF1;                        //Enter
     final char ENT_VAL_3270 = 0x7d;                   //Enter
     final char ATTN_3270 = 0x02;
+    final char CLR_3270 = 0x6d;
+    final char SYSRQ_3270 = 0xf0;
     final char PF1_3270 = 0xF1;
     final char PF2_3270 = 0xF2;
     final char PF3_3270 = 0xF3;
@@ -1853,9 +1855,13 @@ public class IBMHost3270 extends IBMHostBase {
                     ibmSendAid(PF24_3270);
                     break;
                 case IBMKEY_PA1:
+                    ibmSendAid(PA1_3270);
+                    break;
                 case IBMKEY_PA2:
+                    ibmSendAid(PA2_3270);
+                    break;
                 case IBMKEY_PA3:
-                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, data);
+                    ibmSendAid(PA3_3270);
                     break;
                 case IBMKEY_NEXT:
                     if (ActiveField.valid()) {
@@ -1952,10 +1958,11 @@ public class IBMHost3270 extends IBMHostBase {
                     bInsert = !bInsert;
                     break;
                 case IBMKEY_ATTN:
-                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0x02);
+                    ibmSendAid(ATTN_3270);
                     break;
                 case IBMKEY_CLR:
-                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0x6d);
+                    ibmSendAid(CLR_3270);
+                    break;
                 case IBMKEY_ERINPUT:
                     /*Todo:IBMKEY_ERINPUT
                     NullFields(TRUE);
@@ -2008,7 +2015,7 @@ public class IBMHost3270 extends IBMHostBase {
                     //Todo:IBMFieldMaekActiveField(1);
                     break;
                 case IBMKEY_SYSRQ:
-                    //Todo:IBMSendAid(HostSet[tnSession].hSocket, 0xf0);
+                    ibmSendAid(SYSRQ_3270);
                     break;
                 case IBMKEY_LAST:
                     if (ActiveField.valid()) {
@@ -2023,7 +2030,7 @@ public class IBMHost3270 extends IBMHostBase {
                     int xTemp = nBufX.get();
                     int yTemp = nBufY.get();
                     yTemp++;
-                    xTemp =0;
+                    xTemp = 0;
                     if (!ptInFields(xTemp, yTemp)) {
                         if (ActiveField.valid()) {
                             if (TNTag.toNext())
