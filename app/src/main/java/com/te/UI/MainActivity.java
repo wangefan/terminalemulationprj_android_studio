@@ -758,8 +758,14 @@ public class MainActivity extends AppCompatActivity
                 }
             });
         }
+
         MenuItem activation = menu.findItem(R.id.activation_key);
-        activation.setEnabled(stdActivityRef.gIsActivate == false);
+        String appId = getResources().getString(R.string.application_Id);
+        if(appId.compareTo("com.densowave.terminalemulation") == 0) {
+            activation.setVisible(false);
+        } else {
+            activation.setEnabled(stdActivityRef.gIsActivate == false);
+        }
         updateConnMenuItem();
         return true;
     }
@@ -924,7 +930,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.exit:
                 onExit();
                 break;
-            //Todo:Will remove
+            /*Todo:Will remove
             case R.id.key_gen:
                 ClipboardManager clipboard = (ClipboardManager)
                         getSystemService(Context.CLIPBOARD_SERVICE);
@@ -934,7 +940,7 @@ public class MainActivity extends AppCompatActivity
                 // Set the clipboard's primary clip.
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(MainActivity.this, String.format("%s\nSerial number copied!", key), Toast.LENGTH_LONG).show();
-                break;
+                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
