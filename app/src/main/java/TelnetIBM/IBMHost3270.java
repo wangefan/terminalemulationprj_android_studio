@@ -1288,6 +1288,32 @@ public class IBMHost3270 extends IBMHostBase {
         nBufY.set(Y);
     }
 
+    /*-----------------------------------------------------------------------------
+     -Purpose: clear the content of current field and reset MDT if needed
+     -Param  : pField: the field to clear
+     -       : bMDT: need we reset MDT? TRUE: set MDT on; FALSE: dont't change it
+     -Return :
+     -Remark :
+     -----------------------------------------------------------------------------*/
+    private void nullAField(tagField pField, boolean bMDT) {
+        byte c = pField.szFFW[0];
+        AtomicInteger nCurX = new AtomicInteger();
+        AtomicInteger nCurY = new AtomicInteger();
+        nCurX.set(pField.x);
+        nCurY.set(pField.y);
+        if (bMDT) {
+            c = setBit(c, 4, true);
+            pField.szFFW[0] = c;
+        }
+
+        //clear fields
+        for (int i = 0; i < pField.nLen; i++) {
+            CharGrid[nCurY.get()][nCurX.get()] = 0;
+            DrawChar((char) 0, nCurX.get(), nCurY.get(), false, isUnderLine(AttribGrid[nCurY.get()][nCurX.get()]), false);
+            nextPos(nCurX, nCurY);
+        }
+    }
+
     private boolean fillField(tagField aField, String str) {
         AtomicInteger x = new AtomicInteger();
         AtomicInteger y = new AtomicInteger();
@@ -1939,14 +1965,11 @@ public class IBMHost3270 extends IBMHostBase {
                     }
                     break;
                 case IBMKEY_DEL:
-                    /*Todo:IBMKEY_DEL
                     if (ActiveField.valid()) {
-                        EraseChar(ActiveField, nBufX, nBufY);
-                        EraseMapChar(ActiveField, ReX, ReY);
+                        eraseChar(ActiveField, nBufX.get(), nBufY.get());
                         ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
                         TNTag.setCurr(ActiveField);
                     }
-                    */
                     break;
                 case IBMKEY_LEFT:
                 case IBMKEY_RIGHT:
@@ -1964,15 +1987,23 @@ public class IBMHost3270 extends IBMHostBase {
                     ibmSendAid(CLR_3270);
                     break;
                 case IBMKEY_ERINPUT:
-                    /*Todo:IBMKEY_ERINPUT
-                    NullFields(TRUE);
+                    //Null all fields
+                    tagField aField = new tagField();
+                    boolean bValid = TNTag.toFirst();
+                    while (bValid) {
+                        TNTag.getCurr(aField);
+                        nullAField(aField, true);
+                        TNTag.setCurr(aField);
+                        if (!TNTag.toNext())
+                            break;
+                    }
+
                     if (TNTag.toFirst()) {
                         TNTag.getCurr(ActiveField);
                         nBufX.set(ActiveField.x);
                         nBufY.set(ActiveField.y);
                         changeHardStatus(ActiveField);
                     }
-                    */
                     break;
                 case IBMKEY_CLREOF:
                     /*Todo:IBMKEY_CLREOF

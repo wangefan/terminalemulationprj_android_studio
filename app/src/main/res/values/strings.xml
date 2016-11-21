@@ -33,7 +33,7 @@
     <string name="STR_OK">OK</string>
     <string name="STR_Activate">Activate</string>
     <string name="STR_Cancel">Cancel</string>
-    <string name="STR_Confirm">Confirm Settings</string>
+    <string name="STR_Confirm">Confirm</string>
     <string name="STR_pass">OK</string>
     <string name="STR_Choose_Audio">Choose Audio file</string>
     <string name="server_key">Server Key</string>
