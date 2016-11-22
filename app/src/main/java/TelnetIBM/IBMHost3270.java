@@ -1497,6 +1497,31 @@ public class IBMHost3270 extends IBMHostBase {
      -Return :
      -Remark :
      -----------------------------------------------------------------------------*/
+    private void eraseEOF(tagField aField, int x, int y) {
+        int nRest = 0, i = 0;
+        AtomicInteger nNextX = new AtomicInteger();
+        AtomicInteger nNextY = new AtomicInteger();
+        nRest = aField.nLen - diffPos(aField.x, aField.y, x, y);
+        while (i < nRest) {
+            nNextX.set(x);
+            nNextY.set(y);
+            nextPos(nNextX, nNextY);
+            CharGrid[y][x] = 0;
+            procChar(CharGrid[y][x], AttribGrid[y][x], x, y);
+            x = nNextX.get();
+            y = nNextY.get();
+            i++;
+        }
+        CharGrid[y][x] = 0;
+        procChar(CharGrid[y][x], AttribGrid[y][x], x, y);
+    }
+
+    /*-----------------------------------------------------------------------------
+     -Purpose: erase a character in screen and left move the reset content in the field
+     -Param  : aField: target field; (x,y): coordinate
+     -Return :
+     -Remark :
+     -----------------------------------------------------------------------------*/
     private void eraseChar(tagField aField, int x, int y) {
         int nRest = 0, i = 0;
         AtomicInteger nNextX = new AtomicInteger();
@@ -2006,13 +2031,11 @@ public class IBMHost3270 extends IBMHostBase {
                     }
                     break;
                 case IBMKEY_CLREOF:
-                    /*Todo:IBMKEY_CLREOF
                     if (ActiveField.valid()) {
-                        EraseEof(ActiveField, nBufX, nBufY);
+                        eraseEOF(ActiveField, nBufX.get(), nBufY.get());
                         ActiveField.szFFW[0] = setBit(ActiveField.szFFW[0], 4, true);
                         TNTag.setCurr(ActiveField);
                     }
-                    */
                     break;
                 case IBMKEY_HOME:
                     if (TNTag.toFirst()) {
