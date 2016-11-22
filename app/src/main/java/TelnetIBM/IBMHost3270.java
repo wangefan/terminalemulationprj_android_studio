@@ -2051,11 +2051,30 @@ public class IBMHost3270 extends IBMHostBase {
                     }
                     break;
                 case IBMKEY_DUP:
-                    /*Todo:IBMKEY_DUP
                     if (ActiveField.valid()) {
                         tagField NextField = new tagField();
                         if (TNTag.readNext(NextField)) {
-                            Duplicatefield(NextField, ActiveField);
+                            AtomicInteger DecX = new AtomicInteger();
+                            AtomicInteger DecY = new AtomicInteger();
+                            AtomicInteger SrcX = new AtomicInteger();
+                            AtomicInteger SrcY = new AtomicInteger();
+                            DecX.set(NextField.x);
+                            DecY.set(NextField.y);
+                            SrcX.set(ActiveField.x);
+                            SrcY.set(ActiveField.y);
+
+                            if ((ActiveField.cAttrib  & 0x0c) != 0x0c) {
+                                nullAField(NextField, true);
+                                for (int i=0; i < NextField.nLen; i++) {
+                                    if (i >= ActiveField.nLen)
+                                        break;
+                                    CharGrid[DecY.get()][DecX.get()] = CharGrid[SrcY.get()][SrcX.get()];
+                                    procChar(CharGrid[DecY.get()][DecX.get()], AttribGrid[DecY.get()][DecX.get()], DecX.get(), DecY.get());
+                                    nextPos(DecX, DecY);
+                                    nextPos(SrcX, SrcY);
+                                }
+                            }
+
                             if (TNTag.toNext()) {
                                 TNTag.getCurr(ActiveField);
                                 nBufX.set(ActiveField.x);
@@ -2063,7 +2082,7 @@ public class IBMHost3270 extends IBMHostBase {
                                 changeHardStatus(ActiveField);
                             }
                         }
-                    }*/
+                    }
                     break;
                 case IBMKEY_FMARK:
                     //Todo:IBMFieldMaekActiveField(1);
