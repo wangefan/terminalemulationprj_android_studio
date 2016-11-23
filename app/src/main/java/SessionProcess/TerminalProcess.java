@@ -6,6 +6,8 @@ import android.view.KeyEvent;
 import com.te.UI.TEKeyboardViewUtility;
 import com.cipherlab.terminalemulation.R;
 import java.util.ArrayList;
+
+import TelnetIBM.IBMHost3270;
 import TelnetIBM.IBMHost5250;
 import TelnetVT.CVT100;
 import Terminals.KeyMapList;
@@ -136,9 +138,11 @@ public class TerminalProcess {
             mTerminal.setSsh(SSh);
         } else {
             String serverTypeName = TESettingsInfo.getTNHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
-            if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0||
-                    serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM3270Val)) == 0) {
+            if (serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM5250Val)) == 0 ) {
                 mTerminal = new IBMHost5250();
+                mTerminal.setSsh(false);
+            } else if(serverTypeName.compareToIgnoreCase(context.getResources().getString(R.string.IBM3270Val)) == 0) {
+                mTerminal = new IBMHost3270();
                 mTerminal.setSsh(false);
             }
         }
