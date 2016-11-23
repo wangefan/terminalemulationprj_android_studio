@@ -2245,7 +2245,13 @@ public class IBMHost3270 extends IBMHostBase {
 
     @Override
     public void OnScreenBufferPos(int x, int y) {
-
+        if (!ptInFields(x, y))
+            return;
+        nBufX.set(x);
+        nBufY.set(y);
+        if(false == ActiveField.ptInField(x, y)) {
+            setActiveField();
+        }
     }
 
     @Override
