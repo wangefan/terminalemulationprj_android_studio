@@ -86,7 +86,7 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
     private final int MY_KEYCODE_TN_CLR = -21;
     private final int MY_KEYCODE_TN_CLREOF = -22;
     private final int MY_KEYCODE_TN_DEL = -23;
-    //private final int MY_KEYCODE_TN_FIELDMARK = -24;  TN3270
+    private final int MY_KEYCODE_TN_FIELDMARK = -24;
     private final int MY_KEYCODE_TN_FIELD_EXIT = -25;
     private final int MY_KEYCODE_TN_FIELD_BEG = -26;
     private final int MY_KEYCODE_TN_FIELD_END = -27;
@@ -501,6 +501,9 @@ public class TEKeyboardViewUtility implements KeyboardView.OnKeyboardActionListe
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_DEL);
             }
             break;
+            case MY_KEYCODE_TN_FIELDMARK:
+                serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FMARK);
+                break;
             case MY_KEYCODE_TN_FIELD_EXIT:
             {
                 serverKeyDownUp(ServerKeyEvent.TN_KEYCODE_FEXIT);

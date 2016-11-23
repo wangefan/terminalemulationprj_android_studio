@@ -904,7 +904,12 @@ public class IBMHost3270 extends IBMHostBase {
     }
 
     private char EBCDIC2ASCII(Character c) {
-        char cRet = szEBCDIC[c];
+        char cRet;
+        if(c == 0x1e) {
+            cRet = ';';
+        } else {
+            cRet = szEBCDIC[c];
+        }
         return cRet;
     }
 
@@ -917,6 +922,44 @@ public class IBMHost3270 extends IBMHostBase {
             }
         }
         return cRet;
+    }
+
+    private void fieldMark() {
+        if (!ptInFields(nBufX.get(), nBufY.get())) {
+            defaultAddress();
+        }
+
+        if (bInsert) {
+            insertChar(ActiveField, nBufX.get(), nBufY.get());
+        }
+
+        cAttrib = AttribGrid[nBufY.get()][nBufX.get()];
+        setScrBuf(nBufX.get(), nBufY.get(), (char) 0x1e);
+        procChar((char) 0x1e, cAttrib, nBufX.get(), nBufY.get());
+        nextPos(nBufX, nBufY);
+        ActiveField.cAttrib = setBit(ActiveField.cAttrib, 7, true);
+        TNTag.setCurr(ActiveField); //save to list
+
+        int nLen = diffPos(ActiveField.x, ActiveField.y, nBufX.get(), nBufY.get());
+        int nBufLen = ActiveField.nLen;
+
+        if (nLen == nBufLen) {
+            if (isAutoEnt()) {
+                ibmSend(ENT_VAL);
+            } else {
+                ActiveField = new tagField();
+                if (!TNTag.isLast()) {
+                    TNTag.toNext();
+                    TNTag.getCurr(ActiveField);
+                } else {
+                    if (TNTag.toFirst())
+                        TNTag.getCurr(ActiveField);
+                }
+                changeHardStatus(ActiveField);
+                nBufX.set(ActiveField.x);
+                nBufY.set(ActiveField.y);
+            }
+        }
     }
 
     /*-----------------------------------------------------------------------------
@@ -2085,7 +2128,7 @@ public class IBMHost3270 extends IBMHostBase {
                     }
                     break;
                 case IBMKEY_FMARK:
-                    //Todo:IBMFieldMaekActiveField(1);
+                    fieldMark();
                     break;
                 case IBMKEY_SYSRQ:
                     ibmSendAid(SYSRQ_3270);
