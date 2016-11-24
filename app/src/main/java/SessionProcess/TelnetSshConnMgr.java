@@ -259,9 +259,7 @@ public class TelnetSshConnMgr extends TelnetConnMgr {
 				case SSHConnException.EXCEP_OPEN_CHANN_FAIL:
 				case SSHConnException.EXCEP_PSEDO_TER_FAIL:
 				case SSHConnException.EXCEP_HOST_SHELL_FAIL:
-					String sshErrorFormat = stdActivityRef.getCurrActivity().getString(R.string.MSG_SSH_connect_error);
-					message = String.format(sshErrorFormat, e.getErrotTextFromAPI());
-					doConnectError(message);
+					doConnectError(stdActivityRef.getCurrActivity().getString(R.string.MSG_SSH_connect_error));
 					break;
 				case SSHConnException.EXCEP_DISCONNECTED:
 					doDisconnect();
