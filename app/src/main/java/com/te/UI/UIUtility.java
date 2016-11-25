@@ -56,6 +56,11 @@ public class UIUtility {
 	public interface OnSSHEditPassphraseListener {
 		void onDone(final String pass1, final String pass2);
 	}
+
+	//nResult: 0 => portrait, 1 => landscape, 2=> user define
+	public interface OnScreenOrientationListener {
+		void onResult(int nResult);
+	}
 	static private ProgressDialog mPDialog = null;
 	static private ProgressDialog mProgNetwork = null;
 	static private Point mPrgDlgSize = new Point();
@@ -267,6 +272,29 @@ public class UIUtility {
 			}
 		}
 		mBtnPositive.setEnabled(bEnable);
+	}
+
+	//nCurMode: 0 => portrait, 1 => landscape, 2=> user define
+	public static void doScreenOrientationDlg(Context context, int nCurMode, final OnScreenOrientationListener listener) {
+		LayoutInflater inflater = LayoutInflater.from(context);
+		final View screenOrientationDlg = inflater.inflate(R.layout.screen_orientation, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(R.string.screen_orientation_title);
+		builder.setView(screenOrientationDlg);
+
+		builder.setPositiveButton(R.string.strScreenOrientation_apply, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				listener.onResult(1);
+			}
+		});
+		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 	public static void doSSHConfirmPassphrase(Context context, final OnSSHEditPassphraseListener listener) {

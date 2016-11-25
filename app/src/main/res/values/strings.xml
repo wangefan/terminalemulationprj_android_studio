@@ -48,6 +48,8 @@
     <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>
     <string name="strFullScreen">Full Screen</string>
+    <string name="strScreenOrientation">Screen Orientation</string>
+    <string name="strScreenOrientation_apply">Apply</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="str_serverType">Server Type</string>
@@ -222,6 +224,7 @@
     <string name="fb_tn_err_vib_key">fb_tn_err_vib_key</string>
     <string name="tn_msg_alarm_cate">Message Alarm</string>
     <string name="tn_err_alarm_cate">Error Alarm</string>
+    <string name="screen_orientation_title">Set Screen Orientation</string>
     <string name="str_access_ctrl">Access Control</string>
     <string name="str_access_ctrl_check">Enter Password</string>
     <string name="str_activation_key">Activation Key</string>
@@ -245,7 +248,7 @@
     <string name="protect_item_exit_full_screen">Exit Full Screen</string>
     <string name="check_pwd">Password (maximum 8 characters)</string>
     <string name="STR_Reset">Reset</string>
-    <string name="msg_pwd_not_match">â€»Passwords do not match</string>
+    <string name="msg_pwd_not_match">?»Passwords do not match</string>
     <string name="show_wf_batt_info_title">Wi-Fi/Battery Status</string>
     <string name="screen_icon_update_interval_key">screen_icon_update_interval_key</string>
     <string name="screen_icon_update_interval">Update Wi-Fi/Battery Icon Interval</string>
@@ -359,7 +362,7 @@
     <string name="Msg_dup_key_mapped" >"The physical key combination has been mapped to %s. Do you want to replace it?"</string>
     <string name="screen_autopop_sip_conn_key">screen_autopop_sip_conn_key</string>
     <string name="screen_autopop_sip_conn">Auto Popup SIP On Connection</string>
-    <string name="MSG_detect_key">\nPlease press a physical keyâ€¦\n\nWhen the key is unavailable, the screen would not be responding.\n\nPress \"ESC\" Key or \"Back\" to exit the dialog.</string>
+    <string name="MSG_detect_key">\nPlease press a physical key?¦\n\nWhen the key is unavailable, the screen would not be responding.\n\nPress \"ESC\" Key or \"Back\" to exit the dialog.</string>
     <string name="Msg_file_exist">This file already exists. Replace existing file?</string>
     <string name="ssh_select_key_file_title">Selected Key File</string>
     <string name="ssh_add_delete_key_title">Import/Delete Key Files</string>

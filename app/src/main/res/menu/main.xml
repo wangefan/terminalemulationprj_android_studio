@@ -20,6 +20,11 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
+        android:id="@+id/screen_orientation"
+        android:title="@string/strScreenOrientation"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/access_ctrl"
         android:title="@string/str_access_ctrl"
         android:orderInCategory="100"

@@ -789,6 +789,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.full_screen:
                 procFullScreen();
                 break;
+            case R.id.screen_orientation:
+                //Todo: give valid screen mode
+                int nScreenOritMode = 0;
+                UIUtility.doScreenOrientationDlg(MainActivity.this,
+                        nScreenOritMode,
+                        new UIUtility.OnScreenOrientationListener() {
+                            @Override
+                            public void onResult(int nResult) {
+
+                            }
+                        });
+                break;
             case R.id.access_ctrl:
                 if (TESettingsInfo.getIsAccessCtrlProtected()) {
                     UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
