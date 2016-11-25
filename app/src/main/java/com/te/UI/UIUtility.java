@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -275,17 +276,41 @@ public class UIUtility {
 	}
 
 	//nCurMode: 0 => portrait, 1 => landscape, 2=> user define
-	public static void doScreenOrientationDlg(Context context, int nCurMode, final OnScreenOrientationListener listener) {
+	public static void doScreenOrientationDlg(final Context context, int nCurMode, final OnScreenOrientationListener listener) {
 		LayoutInflater inflater = LayoutInflater.from(context);
 		final View screenOrientationDlg = inflater.inflate(R.layout.screen_orientation, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.screen_orientation_title);
 		builder.setView(screenOrientationDlg);
+		final ImageView ivScreenMoode = (ImageView) screenOrientationDlg.findViewById(R.id.id_screen_orientation);
+		final TextView tvScreenMoode = (TextView) screenOrientationDlg.findViewById(R.id.id_screen_orientation_text);
+		switch (nCurMode) {
+			case 0://portrait
+			default:
+				ivScreenMoode.setImageResource(R.drawable.lock_portrait);
+				tvScreenMoode.setText(R.string.screen_orientation_lk_portrait);
+				break;
+			case 1://landscape
+				ivScreenMoode.setImageResource(R.drawable.lock_landscape);
+				tvScreenMoode.setText(R.string.screen_orientation_lk_landscape);
+				break;
+			case 2://user defined
+				ivScreenMoode.setImageResource(R.drawable.sc_user);
+				tvScreenMoode.setText(R.string.screen_orientation_user);
+				break;
+		}
 
 		builder.setPositiveButton(R.string.strScreenOrientation_apply, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				listener.onResult(1);
+				String selMode = tvScreenMoode.getText().toString();
+				if(selMode.compareTo(context.getString(R.string.screen_orientation_lk_portrait)) == 0) {
+					listener.onResult(0);
+				} else if(selMode.compareTo(context.getString(R.string.screen_orientation_lk_landscape)) == 0) {
+					listener.onResult(1);
+				} else if(selMode.compareTo(context.getString(R.string.screen_orientation_user)) == 0) {
+					listener.onResult(2);
+				}
 			}
 		});
 		builder.setNegativeButton(R.string.STR_Cancel, new DialogInterface.OnClickListener() {

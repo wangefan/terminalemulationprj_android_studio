@@ -310,6 +310,14 @@ public class TESettingsInfo {
         }
     }
 
+    public static void setScreenOrientation(int nScreenOrientation) {
+        mTESettings.Common.mScreenOrientation = nScreenOrientation;
+    }
+
+    public static int getScreenOrientation() {
+        return mTESettings.Common.mScreenOrientation;
+    }
+
     public static ArrayList<TESettings.CSsh_Key> getCommonSSHKeys() {
         return mTESettings.Common.mSSHKeyFiles;
     }

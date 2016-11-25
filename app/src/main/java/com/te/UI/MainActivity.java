@@ -790,14 +790,14 @@ public class MainActivity extends AppCompatActivity
                 procFullScreen();
                 break;
             case R.id.screen_orientation:
-                //Todo: give valid screen mode
-                int nScreenOritMode = 0;
+                int nScreenOritMode = TESettingsInfo.getScreenOrientation();
                 UIUtility.doScreenOrientationDlg(MainActivity.this,
                         nScreenOritMode,
                         new UIUtility.OnScreenOrientationListener() {
                             @Override
                             public void onResult(int nResult) {
-
+                                TESettingsInfo.setScreenOrientation(nResult);
+                                //Todo: do screen rotate
                             }
                         });
                 break;

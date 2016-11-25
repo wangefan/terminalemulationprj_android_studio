@@ -44,6 +44,9 @@ public class TESettings {
         @SerializedName("Ssh_Keys")
         public ArrayList<CSsh_Key> mSSHKeyFiles = null;
 
+        @SerializedName("ScreenOrientation")
+        public int mScreenOrientation = 0; // 0:Portrait, 1:Landscape, 2:User define
+
         @SerializedName("Languages")
         public ArrayList<String> mLanguages = new ArrayList<String>();
 
