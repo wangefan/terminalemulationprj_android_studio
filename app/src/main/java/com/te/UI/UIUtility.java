@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -284,6 +285,23 @@ public class UIUtility {
 		builder.setView(screenOrientationDlg);
 		final ImageView ivScreenMoode = (ImageView) screenOrientationDlg.findViewById(R.id.id_screen_orientation);
 		final TextView tvScreenMoode = (TextView) screenOrientationDlg.findViewById(R.id.id_screen_orientation_text);
+		final RelativeLayout layScreenOrit = (RelativeLayout) screenOrientationDlg.findViewById(R.id.id_lay_screen_orit);
+		layScreenOrit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String strCurScreenMode = tvScreenMoode.getText().toString();
+				if(strCurScreenMode.compareTo(context.getString(R.string.screen_orientation_lk_portrait)) == 0) {
+					ivScreenMoode.setImageResource(R.drawable.lock_landscape);
+					tvScreenMoode.setText(R.string.screen_orientation_lk_landscape);
+				} else if(strCurScreenMode.compareTo(context.getString(R.string.screen_orientation_lk_landscape)) == 0) {
+					ivScreenMoode.setImageResource(R.drawable.sc_user);
+					tvScreenMoode.setText(R.string.screen_orientation_user);
+				} else if(strCurScreenMode.compareTo(context.getString(R.string.screen_orientation_user)) == 0) {
+					ivScreenMoode.setImageResource(R.drawable.lock_portrait);
+					tvScreenMoode.setText(R.string.screen_orientation_lk_portrait);
+				}
+			}
+		});
 		switch (nCurMode) {
 			case 0://portrait
 			default:
