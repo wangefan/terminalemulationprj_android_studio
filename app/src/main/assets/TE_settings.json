@@ -1,7 +1,7 @@
 {
     "Common": {
         "Ssh_Keys": [],
-        "ScreenOrientation":1,
+        "ScreenOrientation":2,
         "Languages": [
             "en-US"
         ],
