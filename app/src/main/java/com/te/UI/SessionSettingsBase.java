@@ -2,7 +2,6 @@ package com.te.UI;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.cipherlab.terminalemulation.R;
@@ -11,7 +10,7 @@ import Terminals.TESettings;
 import Terminals.TESettingsInfo;
 import Terminals.stdActivityRef;
 
-public class SessionSettingsBase extends AppCompatActivity {
+public class SessionSettingsBase extends SetOrientationActivity {
     private static final String TE_APP_STATUS_SETTINGS = "TE_APP_STATUS_SETTINGS";
     private static final String TE_APP_STATUS_LICENSE = "TE_APP_STATUS_LICENSE";
     private static final String TE_APP_STATUS_CUR_EDITING_IDX = "TE_APP_STATUS_CUR_EDITING_IDX";

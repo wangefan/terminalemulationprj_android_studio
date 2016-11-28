@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -49,7 +50,7 @@ import Terminals.TESettingsInfo;
 import Terminals.TerminalBase;
 import Terminals.stdActivityRef;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends SetOrientationActivity
         implements LeftMenuListener, TEKeyboardViewUtility.TEKeyboardViewListener
 
 {
@@ -797,7 +798,7 @@ public class MainActivity extends AppCompatActivity
                             @Override
                             public void onResult(int nResult) {
                                 TESettingsInfo.setScreenOrientation(nResult);
-                                //Todo: do screen rotate
+                                procScreenOrientation();
                             }
                         });
                 break;

@@ -1,16 +1,9 @@
 package com.te.UI;
 
-import java.util.Arrays;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.LoginFilter;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +19,9 @@ import android.widget.Toast;
 
 import com.cipherlab.terminalemulation.R;
 
-public class SymbolActivity extends AppCompatActivity implements OnItemClickListener {
+import java.util.Arrays;
+
+public class SymbolActivity extends SetOrientationActivity implements OnItemClickListener {
 
 	private TextView mtvSendingString;
 	private Button mbtnClear;
