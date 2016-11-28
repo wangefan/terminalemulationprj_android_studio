@@ -1054,7 +1054,7 @@ public class IBMHost3270 extends IBMHostBase {
 
         while (nStartXAtom.get() != nEndXAtom.get() || nStartYAtom.get() != nEndYAtom.get()) {
             szContent[nLen++] = 0;
-            nextPos(nStartXAtom, nEndYAtom);
+            nextPos(nStartXAtom, nStartYAtom);
         }// end of while
         return nLen;
     }
