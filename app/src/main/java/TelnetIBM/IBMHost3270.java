@@ -787,6 +787,15 @@ public class IBMHost3270 extends IBMHostBase {
             }
         }
 
+        if (mBLstChar && curChar == 0xef) {
+            if (mCurCommand == IBMCommand3270.IBMCm_Write || mCurCommand == IBMCommand3270.IBMCm_EraseWrite) {
+                curIBMState.set(IBmStates.IBMS_Ground);
+                curAction.set(IBmActions.IBMA_None);
+                return true;
+            }
+        }
+
+
         if (preIBMState == IBMS_Command || preIBMState == IBMS_CommandEndEx ) {
             switch(curChar) {
                 case EraseUnprotectedToAddress:
