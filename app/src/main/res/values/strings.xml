@@ -227,7 +227,7 @@
     <string name="screen_orientation_title">Set Screen Orientation</string>
     <string name="screen_orientation_lk_landscape">Keep Landscape</string>
     <string name="screen_orientation_lk_portrait">Keep Portrait</string>
-    <string name="screen_orientation_user">User Defined</string>
+    <string name="screen_orientation_user">System Default</string>
     <string name="str_access_ctrl">Access Control</string>
     <string name="str_access_ctrl_check">Enter Password</string>
     <string name="str_activation_key">Activation Key</string>
