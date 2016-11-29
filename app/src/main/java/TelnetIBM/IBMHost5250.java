@@ -609,7 +609,6 @@ public class IBMHost5250 extends IBMHostBase {
         if(mBLstChar && curChar == 0xef) {
             state.set(IBmStates.Ground);
             action.set(IBmActions.None);
-            mBLstChar = false;
             return true;
         }
 

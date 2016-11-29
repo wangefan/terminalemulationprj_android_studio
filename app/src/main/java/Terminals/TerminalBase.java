@@ -473,6 +473,7 @@ public abstract class TerminalBase extends TerminalBaseEnum {
                     }
                 }
             }
+            mBLstChar = false;
         }
 
         public char GetCharFromCurrent(int index) {
