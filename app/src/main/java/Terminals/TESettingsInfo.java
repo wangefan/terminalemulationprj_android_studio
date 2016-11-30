@@ -104,7 +104,7 @@ public class TESettingsInfo {
         mListVBTime.add(5500l);
         try {
             File teJsonFile = new File(CipherUtility.getTESettingsPath(context), TE_JASONFILE_NAME);
-            if (!teJsonFile.exists()) {  //Copy default TE_settings.json from asset to internal
+            if (!teJsonFile.exists() || teJsonFile.length() <= 0) {  //Copy default TE_settings.json from asset to internal
                 teJsonFile.getParentFile().mkdirs();
                 InputStream inputStream = context.getAssets().open(TE_JASONFILE_NAME);
                 FileOutputStream fileOutputStream = new FileOutputStream(teJsonFile.getAbsolutePath());
