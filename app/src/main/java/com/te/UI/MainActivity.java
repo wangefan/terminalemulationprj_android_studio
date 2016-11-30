@@ -2,12 +2,9 @@ package com.te.UI;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -16,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
@@ -69,6 +65,7 @@ public class MainActivity extends SetOrientationActivity
     private boolean mBFullScreen = false;
     private ContentView mContentView;
     private RelativeLayout mLogoView = null;
+    private ImageView mLogoViewImage = null;
     private RelativeLayout mMainRelLayout;
     private CursorView Cursor;
     private ImageView mSessionJumpBtn = null;
@@ -471,6 +468,13 @@ public class MainActivity extends SetOrientationActivity
         });
 
         mLogoView = (RelativeLayout) findViewById(R.id.logo_view);
+        mLogoViewImage = (ImageView) mLogoView.findViewById(R.id.ImgLogoView);
+        String appId = getResources().getString(R.string.application_Id);
+        if(appId.compareTo("com.densowave.terminalemulation") == 0) {
+            mLogoViewImage.setBackgroundResource(R.drawable.desowave_logo);
+        } else {
+            mLogoViewImage.setBackgroundResource(R.drawable.cipherlab_logo);
+        }
         mLogoView.setClickable(true);
         mLogoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -764,6 +768,7 @@ public class MainActivity extends SetOrientationActivity
         String appId = getResources().getString(R.string.application_Id);
         if(appId.compareTo("com.densowave.terminalemulation") == 0) {
             activation.setVisible(false);
+            menu.removeItem(R.id.screen_orientation);
         } else {
             activation.setEnabled(stdActivityRef.gIsActivate == false);
         }
@@ -1129,7 +1134,7 @@ public class MainActivity extends SetOrientationActivity
             mDecorView.setSystemUiVisibility(uiFullScreenOptions);
             mBFullScreen = true;
             if (TESettingsInfo.showResetFullScreen() == true) {
-                UIUtility.showResetFullScreen(MainActivity.this, mLogoView.findViewById(R.id.ImgLogoView));
+                UIUtility.showResetFullScreen(MainActivity.this, mLogoViewImage);
             }
         } else {
             getSupportActionBar().show();
