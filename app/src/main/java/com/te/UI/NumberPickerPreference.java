@@ -77,6 +77,7 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
+            mNumPicker.clearFocus();//this line force to update new value before getValue
             mValue = String.valueOf(mNumPicker.getValue());
             persistBoolean(!getPersistedBoolean(true));//here to trigger SharedPreferences.OnSharedPreferenceChangeListener
         }
