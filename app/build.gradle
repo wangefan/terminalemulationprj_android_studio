@@ -61,5 +61,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/BarcodeAPI.jar')
     compile files('libs/AndroidSwipeLayout-v1.1.8.jar')
+    compile files('libs/BarcodeAPI_DensoWave.jar')
     compile project(path: ':tourguide')
 }

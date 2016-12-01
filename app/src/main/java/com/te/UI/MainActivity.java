@@ -1,7 +1,6 @@
 package com.te.UI;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cipherlab.barcode.GeneralString;
 import com.cipherlab.terminalemulation.BuildConfig;
 import com.cipherlab.terminalemulation.R;
 import com.te.UI.LeftMenuFrg.LeftMenuListener;
@@ -78,47 +76,15 @@ public class MainActivity extends SetOrientationActivity
     private TerminalProcessFrg mTerminalProcessFrg = null;
     // ReaderManager is using to communicate with Barcode Reader Service
     //private com.cipherlab.barcode.ReaderManager mReaderManager;
-    private final BroadcastReceiver myDataReceiver = new BroadcastReceiver() {
+    private final CipherReaderControl.OnReaderControlListener mReaderListener = new CipherReaderControl.OnReaderControlListener() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            // Software trigger must receive this intent message
-            String action = intent.getAction();
-            String data;
-            if (action.compareTo(GeneralString.Intent_SOFTTRIGGER_DATA) == 0) {
+        public void onData(String data) {
+            TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
+            termProc.processReadBarcode(data);
+        }
 
-                // extra string from intent
-                data = intent.getStringExtra(GeneralString.BcReaderData);
-
-                // show decoded data
-                //e1.setText(data);
-            } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
-                // If user disable KeyboardEmulation, barcode reader service will broadcast Intent_PASS_TO_APP
-                TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
-                // extra string from intent
-                data = intent.getStringExtra(GeneralString.BcReaderData);
-
-                //MacroRec.addMacroBarcode(data);
-                termProc.processReadBarcode(data);
-                //mReaderManager.SetActive(false);
-                // show decoded data
-                //e1.setText(data);
-
-            } else if (action.equals(GeneralString.Intent_READERSERVICE_CONNECTED)) {
-                // Make sure this app bind to barcode reader sevice , then user can use APIs to get/set settings from barcode reader service
-
-                //BcReaderType myReaderType =  mReaderManager.GetReaderType();
-                //mReaderManager.SetActive(true);
-                //boolean rt=mReaderManager.GetActive();
-
-                //e1.setText(myReaderType.toString());
-
-					/*NotificationParams settings = new NotificationParams();
-                    mReaderManager.Get_NotificationParams(settings);
-
-					ReaderOutputConfiguration settings2 = new ReaderOutputConfiguration();
-					mReaderManager.Get_ReaderOutputConfiguration(settings2);
-					*/
-            }
+        @Override
+        public void onReaderServiceConnected() {
 
         }
     };
@@ -561,7 +527,7 @@ public class MainActivity extends SetOrientationActivity
 
         registerForContextMenu(mMainRelLayout);
 
-        CipherReaderControl.InitReader(this, myDataReceiver);
+        CipherReaderControl.InitReader(this, mReaderListener);
         TerminalProcess.initKeyCodeMap();
         UIUtility.init();
 
@@ -616,16 +582,11 @@ public class MainActivity extends SetOrientationActivity
         TerminalProcess.clearKeyCodeMap();
 
         TESettingsInfo.saveSessionSettings(this);
-        // ***************************************************//
-        // Unregister Broadcast Receiver before app close
-        // ***************************************************//
-        unregisterReceiver(myDataReceiver);
 
         // ***************************************************//
         // release(unbind) before app close
         // ***************************************************//
-        CipherReaderControl.ReleaseReader();
-
+        CipherReaderControl.ReleaseReader(this);
     }
 
     @Override
@@ -692,7 +653,11 @@ public class MainActivity extends SetOrientationActivity
             UIUtility.showSIP(this, mContentView);
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        boolean bResult = mContentView.onKeyDown(keyCode, event);
+        if(!bResult) {
+            bResult = super.onKeyDown(keyCode, event);
+        }
+        return bResult;
     }
 
     @Override
