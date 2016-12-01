@@ -267,7 +267,7 @@ public class MainActivity extends SetOrientationActivity
         mBattStatusIcon.setVisibility(bShow ? View.VISIBLE : View.GONE);
         if(bShow) {
             int nBatteryStrength = CipherUtility.getBatteryPct(context);
-            final int LEVEL_UNIT = 20;
+            final int LEVEL_UNIT = 25;
             int nLevel = nBatteryStrength / LEVEL_UNIT;
             switch (nLevel) {
                 case 0:
