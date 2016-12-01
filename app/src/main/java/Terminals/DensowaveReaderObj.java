@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.densowave.barcode.GeneralString;
-
 public class DensowaveReaderObj extends ReaderObjBase {
     private com.densowave.barcode.ReaderManager mReaderManager;
     private CipherReaderControl.OnReaderControlListener mListener;
@@ -17,14 +15,14 @@ public class DensowaveReaderObj extends ReaderObjBase {
             // Software trigger must receive this intent message
             String action = intent.getAction();
             String data;
-            if (action.compareTo(GeneralString.Intent_SOFTTRIGGER_DATA) == 0) {
-                data = intent.getStringExtra(GeneralString.BcReaderData);
-            } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
-                data = intent.getStringExtra(GeneralString.BcReaderData);
+            if (action.compareTo(com.densowave.barcode.GeneralString.Intent_SOFTTRIGGER_DATA) == 0) {
+                data = intent.getStringExtra(com.densowave.barcode.GeneralString.BcReaderData);
+            } else if (action.compareTo(com.densowave.barcode.GeneralString.Intent_PASS_TO_APP) == 0) {
+                data = intent.getStringExtra(com.densowave.barcode.GeneralString.BcReaderData);
                 if(mListener != null) {
                     mListener.onData(data);
                 }
-            } else if (action.equals(GeneralString.Intent_READERSERVICE_CONNECTED)) {
+            } else if (action.equals(com.densowave.barcode.GeneralString.Intent_READERSERVICE_CONNECTED)) {
                 if(mListener != null) {
                     mListener.onReaderServiceConnected();
                 }

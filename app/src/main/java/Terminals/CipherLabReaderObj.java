@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.cipherlab.barcode.GeneralString;
-
 public class CipherLabReaderObj extends ReaderObjBase {
     private com.cipherlab.barcode.ReaderManager mReaderManager;
     private CipherReaderControl.OnReaderControlListener mListener;
@@ -17,14 +15,14 @@ public class CipherLabReaderObj extends ReaderObjBase {
             // Software trigger must receive this intent message
             String action = intent.getAction();
             String data;
-            if (action.compareTo(GeneralString.Intent_SOFTTRIGGER_DATA) == 0) {
-                data = intent.getStringExtra(GeneralString.BcReaderData);
-            } else if (action.compareTo(GeneralString.Intent_PASS_TO_APP) == 0) {
-                data = intent.getStringExtra(GeneralString.BcReaderData);
+            if (action.compareTo(com.cipherlab.barcode.GeneralString.Intent_SOFTTRIGGER_DATA) == 0) {
+                data = intent.getStringExtra(com.cipherlab.barcode.GeneralString.BcReaderData);
+            } else if (action.compareTo(com.cipherlab.barcode.GeneralString.Intent_PASS_TO_APP) == 0) {
+                data = intent.getStringExtra(com.cipherlab.barcode.GeneralString.BcReaderData);
                 if(mListener != null) {
                     mListener.onData(data);
                 }
-            } else if (action.equals(GeneralString.Intent_READERSERVICE_CONNECTED)) {
+            } else if (action.equals(com.cipherlab.barcode.GeneralString.Intent_READERSERVICE_CONNECTED)) {
                 if(mListener != null) {
                     mListener.onReaderServiceConnected();
                 }
