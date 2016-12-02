@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.inputmethodservice.KeyboardView;
+import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -820,6 +821,7 @@ public class MainActivity extends SetOrientationActivity
                                                         Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
                                                     } else {
                                                         Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
+                                                        MediaScannerConnection.scanFile(MainActivity.this, new String[] {chosenDir}, null, null);
                                                     }
                                                     TESettingsInfo.setExportSettingsPath(chosenDir);
                                                     break;
@@ -833,6 +835,7 @@ public class MainActivity extends SetOrientationActivity
                                         Toast.makeText(MainActivity.this, R.string.MSG_Export_Warn, Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(MainActivity.this, R.string.MSG_Export_ok, Toast.LENGTH_SHORT).show();
+                                        MediaScannerConnection.scanFile(MainActivity.this, new String[] {chosenDir}, null, null);
                                     }
                                     TESettingsInfo.setExportSettingsPath(chosenDir);
                                 }
