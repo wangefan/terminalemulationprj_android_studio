@@ -514,6 +514,9 @@ public class TESettings {
         @SerializedName("isEnableProtect")
         public boolean mIsProtectedAccessControl = false;
 
+        @SerializedName("isProtectScreenOrientation")
+        public boolean mIsProtectScreenOrientation = false;
+
         @SerializedName("isProtectSettings")
         public boolean mIsProtectedSettings = false;
 

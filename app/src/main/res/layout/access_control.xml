@@ -106,6 +106,30 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/id_lay_item_set_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?android:attr/listPreferredItemHeight"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/protect_item_set_orientation"
+                    android:paddingLeft="30dp"
+                    android:paddingStart="30dp"
+                    android:layout_centerVertical="true" />
+                <CheckBox
+                    android:id="@+id/id_protect_item_set_screen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/id_lay_item_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -246,6 +246,7 @@
     <string name="enter_pwd">Enter Password</string>
     <string name="enter_pwd2">Confirm Password</string>
     <string name="protect_settings">Select to apply password protection</string>
+    <string name="protect_item_set_orientation">Set Screen Orientation</string>
     <string name="protect_item_settings">Settings</string>
     <string name="protect_item_exit">Exit Application</string>
     <string name="protect_item_exit_full_screen">Exit Full Screen</string>

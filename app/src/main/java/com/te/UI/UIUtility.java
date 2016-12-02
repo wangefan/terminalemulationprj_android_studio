@@ -78,6 +78,7 @@ public class UIUtility {
 	static EditText mEdPwd2 = null;
 	static TextView mTVNotMatch = null;
 	static LinearLayout mLayAllSettings = null;
+	static CheckBox mCkIsSetScreenOritProct = null;
 	static CheckBox mCkIsSettingsProct = null;
 	static CheckBox mCkIsExitProct = null;
 	static CheckBox mCkIsExitFullProct = null;
@@ -428,6 +429,18 @@ public class UIUtility {
 		mTVNotMatch = (TextView) mAccessCtrlDialog.findViewById(R.id.id_msg_not_match);
 		mTVNotMatch.setVisibility(View.GONE);
 		mLayAllSettings = (LinearLayout) mAccessCtrlDialog.findViewById(R.id.all_settings_lay);
+
+		mCkIsSetScreenOritProct = (CheckBox) mAccessCtrlDialog.findViewById(R.id.id_protect_item_set_screen);
+		mCkIsSetScreenOritProct.setClickable(false);
+		mAccessCtrlDialog.findViewById(R.id.id_lay_item_set_screen).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mIsDirty = true;
+				mCkIsSetScreenOritProct.setChecked(!mCkIsSetScreenOritProct.isChecked());
+				updatePostiveBtn();
+			}
+		});
+
 		mCkIsSettingsProct = (CheckBox) mAccessCtrlDialog.findViewById(R.id.id_protect_item_settings);
 		mCkIsSettingsProct.setClickable(false);
 		mAccessCtrlDialog.findViewById(R.id.id_lay_item_settings).setOnClickListener(new View.OnClickListener() {
@@ -465,6 +478,7 @@ public class UIUtility {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				TESettingsInfo.setAccessCtrlProtect(mSwSetPwd.isChecked());
+				TESettingsInfo.setScreenOritProtect(mCkIsSetScreenOritProct.isChecked());
 				TESettingsInfo.setSettingsProtect(mCkIsSettingsProct.isChecked());
 				TESettingsInfo.setExitProtect(mCkIsExitProct.isChecked());
 				TESettingsInfo.setExitFullScreenProtect(mCkIsExitFullProct.isChecked());
@@ -492,6 +506,7 @@ public class UIUtility {
 					mEdPwd1.setText("");
 					mEdPwd2.setText("");
 					CipherUtility.enableAllChild(mLayPassword, false);
+					mCkIsSetScreenOritProct.setChecked(false);
 					mCkIsSettingsProct.setChecked(false);
 					mCkIsExitProct.setChecked(false);
 					mCkIsExitFullProct.setChecked(false);
@@ -506,6 +521,7 @@ public class UIUtility {
 		mEdPwd2.setText(TESettingsInfo.getAccessCtrlProtectedPassword());
 		updateAllPwdsEditUI(mSwSetPwd.isChecked());
 
+		mCkIsSetScreenOritProct.setChecked(TESettingsInfo.getScreenOritProtect());
 		mCkIsSettingsProct.setChecked(TESettingsInfo.getIsSettingsProtect());
 		mCkIsExitProct.setChecked(TESettingsInfo.getIsExitProtect());
 		mCkIsExitFullProct.setChecked(TESettingsInfo.getIsExitFullScreenProtect());

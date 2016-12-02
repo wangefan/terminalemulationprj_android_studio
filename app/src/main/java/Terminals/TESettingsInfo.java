@@ -362,6 +362,16 @@ public class TESettingsInfo {
         return Setting.mIsProtectedAccessControl;
     }
 
+    public static void setScreenOritProtect(boolean bProctect) {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        Setting.mIsProtectScreenOrientation = bProctect;
+    }
+
+    public static boolean getScreenOritProtect() {
+        SessionSetting Setting = mTESettings.getSessionSetting(0);
+        return Setting.mIsProtectScreenOrientation;
+    }
+
     public static void setSettingsProtect(boolean bProctect) {
         SessionSetting Setting = mTESettings.getSessionSetting(0);
         Setting.mIsProtectedSettings = bProctect;

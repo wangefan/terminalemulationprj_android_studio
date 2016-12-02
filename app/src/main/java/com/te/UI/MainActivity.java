@@ -261,6 +261,19 @@ public class MainActivity extends SetOrientationActivity
         }
     }
 
+    private void procScreenOrientationDlg() {
+        int nScreenOritMode = TESettingsInfo.getScreenOrientation();
+        UIUtility.doScreenOrientationDlg(MainActivity.this,
+                nScreenOritMode,
+                new UIUtility.OnScreenOrientationListener() {
+                    @Override
+                    public void onResult(int nResult) {
+                        TESettingsInfo.setScreenOrientation(nResult);
+                        procScreenOrientation();
+                    }
+                });
+    }
+
     private void procUpdateWiFiAndBattIconTimer() {
         mUpdateWiFiAndBaterIconHandler.removeCallbacksAndMessages(null);
         updateWiFiIcon(this);
@@ -762,16 +775,17 @@ public class MainActivity extends SetOrientationActivity
                 procFullScreen();
                 break;
             case R.id.screen_orientation:
-                int nScreenOritMode = TESettingsInfo.getScreenOrientation();
-                UIUtility.doScreenOrientationDlg(MainActivity.this,
-                        nScreenOritMode,
-                        new UIUtility.OnScreenOrientationListener() {
-                            @Override
-                            public void onResult(int nResult) {
-                                TESettingsInfo.setScreenOrientation(nResult);
-                                procScreenOrientation();
-                            }
-                        });
+                if (TESettingsInfo.getIsAccessCtrlProtected() && TESettingsInfo.getScreenOritProtect()) {
+                    UIUtility.doCheckAccessCtrlDialog(MainActivity.this,
+                            new UIUtility.OnAccessCtrlChkListener() {
+                                @Override
+                                public void onValid() {
+                                    procScreenOrientationDlg();
+                                }
+                            });
+                } else {
+                    procScreenOrientationDlg();
+                }
                 break;
             case R.id.access_ctrl:
                 if (TESettingsInfo.getIsAccessCtrlProtected()) {
