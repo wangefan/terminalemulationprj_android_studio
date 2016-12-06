@@ -655,6 +655,9 @@ public class MainActivity extends SetOrientationActivity
 
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+        if(!isCurSessionConnected()) {
+            return true;
+        }
         //Handle HW key event
         if(TESettingsInfo.getHostIsHWExitByIndex(TESettingsInfo.getSessionIndex()) && //Shift + Right
                 KeyMapUtility.isShiftPressed(event) &&
