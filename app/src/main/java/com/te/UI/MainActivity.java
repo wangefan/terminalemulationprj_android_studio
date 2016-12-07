@@ -655,9 +655,6 @@ public class MainActivity extends SetOrientationActivity
 
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-        if(!isCurSessionConnected()) {
-            return true;
-        }
         //Handle HW key event
         if(TESettingsInfo.getHostIsHWExitByIndex(TESettingsInfo.getSessionIndex()) && //Shift + Right
                 KeyMapUtility.isShiftPressed(event) &&
@@ -668,6 +665,9 @@ public class MainActivity extends SetOrientationActivity
                 KeyMapUtility.isShiftPressed(event) &&
                 keyCode ==  KeyEvent.KEYCODE_ESCAPE) {
             UIUtility.showSIP(this, mContentView);
+            return true;
+        }
+        if(!isCurSessionConnected()) {
             return true;
         }
         boolean bResult = mContentView.onKeyDown(keyCode, event);
