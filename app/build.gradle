@@ -9,7 +9,7 @@ android {
         applicationId 'com.cipherlab.terminalemulation'
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName '0.03'
         resValue "bool", "bSpecialHandleLicense", "false"
     }
@@ -35,7 +35,7 @@ android {
             resValue "string", "STR_Settings_path", "CipherLabSettings"
             minSdkVersion 15
             targetSdkVersion 22
-            versionCode 2
+            versionCode 3
             versionName '0.0.3'
         }
         densowave {
@@ -50,7 +50,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 22
             versionName '0.0.3'
-            versionCode 2
+            versionCode 3
         }
     }
 }
