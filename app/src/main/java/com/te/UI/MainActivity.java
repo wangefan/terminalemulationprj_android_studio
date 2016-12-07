@@ -667,14 +667,7 @@ public class MainActivity extends SetOrientationActivity
             UIUtility.showSIP(this, mContentView);
             return true;
         }
-        if(!isCurSessionConnected()) {
-            return true;
-        }
-        boolean bResult = mContentView.onKeyDown(keyCode, event);
-        if(!bResult) {
-            bResult = super.onKeyDown(keyCode, event);
-        }
-        return bResult;
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -1096,9 +1089,11 @@ public class MainActivity extends SetOrientationActivity
         if (bShow) {
             mMainRelLayout.setVisibility(View.VISIBLE);
             mLogoView.setVisibility(View.INVISIBLE);
+            mContentView.requestFocus();
         } else {
             mMainRelLayout.setVisibility(View.INVISIBLE);
             mLogoView.setVisibility(View.VISIBLE);
+            mContentView.clearFocus();
         }
     }
 

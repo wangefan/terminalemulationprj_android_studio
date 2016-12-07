@@ -121,8 +121,8 @@ public class ContentView extends View {
         mCorsor = Cursor;
         mOverScroller = new OverScroller(context);
         mGestureDetector = new GestureDetector(context, mGestureListener);
-        this.setFocusableInTouchMode(true);
-        this.setFocusable(true);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
         if (isInEditMode())
             return;
     }
