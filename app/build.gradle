@@ -53,6 +53,9 @@ android {
             versionCode 3
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
