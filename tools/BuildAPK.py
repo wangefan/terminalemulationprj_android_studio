@@ -32,7 +32,7 @@ move(new_gradlePropt_path, old_gradlePropt_path)#Move new file
 #call gradlew to clean and build apks
 build_apk_command = '.\\gradlew -PversCode=' + str(new_version_code)+ ' -PversName=' + new_version_name +' clean assembleRelease' #ex: gradlew -PversCode=1 -PversName=0.0.1 clean assembleRelease
 
-print('execute [' + build_apk_command_one + ']')
+print('execute [' + build_apk_command + ']')
 system(build_apk_command)
 
 #wait 20 min, print fail if not timeout
