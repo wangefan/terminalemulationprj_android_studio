@@ -78,7 +78,10 @@ public abstract class IBMHostBase extends TerminalBase {
     }
 
     protected void warning() {
-        CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+        boolean bWarn = TESettingsInfo.getHostUseErrFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+        if(bWarn) {
+            CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+        }
         stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
     }
 

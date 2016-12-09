@@ -10,9 +10,10 @@
             android:positiveButtonText="@null" />
         <Preference
             android:key="@string/fb_good_content_key"/>
-        <Preference
+        <com.te.UI.TESwitchPreference
             android:key="@string/fb_good_sound_key"
-            android:title="@string/soundfile_title"/>
+            android:title="@string/soundfile_title"
+            android:widgetLayout="@layout/te_switch"/>
         <ListPreference
             android:key="@string/goodvib_key"
             android:title="@string/vib_title"
@@ -32,9 +33,10 @@
             android:positiveButtonText="@null" />
         <Preference
             android:key="@string/fb_error_content_key"/>
-        <Preference
+        <com.te.UI.TESwitchPreference
             android:key="@string/fb_err_sound_key"
-            android:title="@string/soundfile_title"/>
+            android:title="@string/soundfile_title"
+            android:widgetLayout="@layout/te_switch"/>
         <ListPreference
             android:key="@string/errvib_key"
             android:title="@string/vib_title"

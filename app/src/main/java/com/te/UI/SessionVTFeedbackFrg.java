@@ -18,11 +18,11 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
 
     private ListPreference mLstGoodFBType = null;
     private Preference mPrefGoodFBContent = null;
-    private Preference mPrefGoodSound = null;
+    private TESwitchPreference mPrefGoodSound = null;
     private ListPreference mLstGoodVBDur = null;
     private ListPreference mLstErrorFBType = null;
     private Preference mPrefErrorFBContent = null;
-    private Preference mPrefErrSound = null;
+    private TESwitchPreference mPrefErrSound = null;
     private ListPreference mLstErrVBDur = null;
 
 	public SessionVTFeedbackFrg() {
@@ -100,10 +100,13 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
-        mPrefGoodSound = findPreference(getResources().getString(R.string.fb_good_sound_key));
+        mPrefGoodSound = (TESwitchPreference) findPreference(getResources().getString(R.string.fb_good_sound_key));
         mPrefGoodSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                if(mPrefGoodSound.isChecked() == false) {
+                    return true;
+                }
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
                         getResources().getString(R.string.STR_Choose_Audio),
                         new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtWav),
@@ -159,10 +162,13 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
-        mPrefErrSound = findPreference(getResources().getString(R.string.fb_err_sound_key));
+        mPrefErrSound = (TESwitchPreference) findPreference(getResources().getString(R.string.fb_err_sound_key));
         mPrefErrSound.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                if(mPrefErrSound.isChecked() == false) {
+                    return true;
+                }
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
                         getResources().getString(R.string.STR_Choose_Audio),
                         new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtWav),
@@ -199,10 +205,12 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
         mLstGoodFBType.setValue(String.valueOf(mSetting.g_ReaderParam.mGoodFBType));
         syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
         syncSettingToGoodSoundPref(mSetting.g_ReaderParam.mGoodSoundFile);
+        mPrefGoodSound.setChecked(mSetting.g_ReaderParam.mbUseGoodSoundFile);
         mLstGoodVBDur.setValue(String.valueOf(mSetting.g_ReaderParam.mGoodVBIndex));
         mLstErrorFBType.setValue(String.valueOf(mSetting.g_ReaderParam.mErrorFBType));
         syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
         syncSettingToErrSoundPref(mSetting.g_ReaderParam.mErrorSoundFile);
+        mPrefErrSound.setChecked(mSetting.g_ReaderParam.mbUseErrSoundFile);
         mLstErrVBDur.setValue(String.valueOf(mSetting.g_ReaderParam.mErrorVBIndex));
     }
 
@@ -212,10 +220,14 @@ public class SessionVTFeedbackFrg extends SessionSettingsFrgBase {
             String selGoodFBType = mLstGoodFBType.getValue();
             mSetting.g_ReaderParam.mGoodFBType = Integer.valueOf(selGoodFBType);
             syncSettingToGoodFBCmdPref(mSetting.g_ReaderParam.mGoodFBType);
+        } else if(key.compareTo(getResources().getString(R.string.fb_good_sound_key)) == 0) {
+            mSetting.g_ReaderParam.mbUseGoodSoundFile = mPrefGoodSound.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.fb_error_key)) == 0) {
             String selErrFBType = mLstErrorFBType.getValue();
             mSetting.g_ReaderParam.mErrorFBType = Integer.valueOf(selErrFBType);
             syncSettingToErrorFBCmdPref(mSetting.g_ReaderParam.mErrorFBType);
+        } else if(key.compareTo(getResources().getString(R.string.fb_err_sound_key)) == 0) {
+            mSetting.g_ReaderParam.mbUseErrSoundFile = mPrefErrSound.isChecked();
         } else if(key.compareTo(getResources().getString(R.string.goodvib_key)) == 0) {
             String selGoodVBIdx = mLstGoodVBDur.getValue();
             mSetting.g_ReaderParam.mGoodVBIndex = Integer.valueOf(selGoodVBIdx);

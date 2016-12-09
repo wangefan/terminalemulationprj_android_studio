@@ -547,6 +547,9 @@ public class TESettings {
             @SerializedName("goodFeedBackSoundPath")
             public String mGoodSoundFile = "";
 
+            @SerializedName("useGoodFeedBackSound")
+            public boolean mbUseGoodSoundFile = false;
+
             @SerializedName("goodFeedVibrationTime")
             public int mGoodVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec
 
@@ -562,6 +565,9 @@ public class TESettings {
             @SerializedName("errorFeedBackSoundPath")
             public String mErrorSoundFile = "";
 
+            @SerializedName("useErrFeedBackSound")
+            public boolean mbUseErrSoundFile = false;
+
             @SerializedName("errorFeedVibrationTime")
             public int mErrorVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec
 
@@ -573,6 +579,9 @@ public class TESettings {
 
             @SerializedName("cmdScannerSoundPath")
             public String mScannerSoundFile = "";
+
+            @SerializedName("useScannerSoundFile")
+            public boolean mbUseScannerSoundFile = false;
 
             @SerializedName("cmdScannerVibrationTime")
             public int mScannerVBIndex = 0; //0~11, 0 sec, 0.5 sec~ 5.0 sec

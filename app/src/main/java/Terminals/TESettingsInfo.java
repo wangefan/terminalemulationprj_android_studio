@@ -813,6 +813,11 @@ public class TESettingsInfo {
         return Setting.g_ReaderParam.mGoodSoundFile;
     }
 
+    public static boolean getHostUseGoodFeedbackSoundByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mbUseGoodSoundFile;
+    }
+
     public static long getHostGoodFBVBByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return mListVBTime.get(Setting.g_ReaderParam.mGoodVBIndex);
@@ -821,6 +826,11 @@ public class TESettingsInfo {
     public static String getHostErrorFeedbackSoundByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.mErrorSoundFile;
+    }
+
+    public static boolean getHostUseErrFeedbackSoundByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mbUseErrSoundFile;
     }
 
     public static long getHostErrorFBVBByIndex(int index) {
@@ -846,6 +856,11 @@ public class TESettingsInfo {
     public static String getHostReaderSoundByIndex(int index) {
         SessionSetting Setting = mTESettings.getSessionSetting(index);
         return Setting.g_ReaderParam.mScannerSoundFile;
+    }
+
+    public static boolean getUseHostReaderSoundByIndex(int index) {
+        SessionSetting Setting = mTESettings.getSessionSetting(index);
+        return Setting.g_ReaderParam.mbUseScannerSoundFile;
     }
 
     public static long getHostReaderVBByIndex(int index) {

@@ -5,9 +5,10 @@
     <Preference
         android:key="@string/fb_disable_reader_key"
         android:title="@string/fb_disable_reader"/>
-    <Preference
+    <com.te.UI.TESwitchPreference
         android:key="@string/fb_reader_sound_key"
-        android:title="@string/soundfile_title"/>
+        android:title="@string/soundfile_title"
+        android:widgetLayout="@layout/te_switch"/>
     <ListPreference
         android:key="@string/reader_vib_key"
         android:title="@string/vib_title"

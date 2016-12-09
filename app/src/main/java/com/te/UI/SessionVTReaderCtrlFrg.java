@@ -18,7 +18,7 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
 
     private Preference mPrefEnableCmd = null;
     private Preference mPrefDisableCmd = null;
-    private Preference mPrefSoundFile = null;
+    private TESwitchPreference mPrefSoundFile = null;
     private ListPreference mLstVBDur = null;
 
 	public SessionVTReaderCtrlFrg() {
@@ -65,10 +65,13 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
                 return true;
             }
         });
-        mPrefSoundFile = findPreference(getResources().getString(R.string.fb_reader_sound_key));
+        mPrefSoundFile = (TESwitchPreference) findPreference(getResources().getString(R.string.fb_reader_sound_key));
         mPrefSoundFile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                if(mPrefSoundFile.isChecked() == false) {
+                    return true;
+                }
                 SimpleFileDialog FileOpenDialog = new SimpleFileDialog(getActivity(),
                         getResources().getString(R.string.STR_Choose_Audio),
                         new ArrayList<>(Arrays.asList(getResources().getString(R.string.STR_ExtWav),
@@ -105,6 +108,7 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
         syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerEnableCmd), mPrefEnableCmd);
         syncSettingToCmdPref(CipherlabSymbol.TransformMulit(mSetting.g_ReaderParam.mScannerDisableCmd), mPrefDisableCmd);
         syncSettingToSoundPref(mSetting.g_ReaderParam.mScannerSoundFile);
+        mPrefSoundFile.setChecked(mSetting.g_ReaderParam.mbUseScannerSoundFile);
         mLstVBDur.setValue(String.valueOf(mSetting.g_ReaderParam.mScannerVBIndex));
     }
 
@@ -113,6 +117,8 @@ public class SessionVTReaderCtrlFrg extends SessionSettingsFrgBase {
         if(key.compareTo(getResources().getString(R.string.reader_vib_key)) == 0) {
             String selVBIdx = mLstVBDur.getValue();
             mSetting.g_ReaderParam.mScannerVBIndex = Integer.valueOf(selVBIdx);
+        } else if(key.compareTo(getResources().getString(R.string.fb_reader_sound_key)) == 0) {
+            mSetting.g_ReaderParam.mbUseScannerSoundFile = mPrefSoundFile.isChecked();
         }
         ((Session3rdSettings)getActivity()).gIsAlarmModified = true;
     }

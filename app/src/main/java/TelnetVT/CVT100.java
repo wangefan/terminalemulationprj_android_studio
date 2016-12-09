@@ -403,7 +403,10 @@ public class CVT100 extends CVT100Enum {
                 if (strGood != null && strGood.isEmpty() == false) {
                     if (StrCmd.compareTo(strGood) == 0) {
                         String strGoodSoundFile = TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
-                        CipherUtility.playSound(strGoodSoundFile);
+                        boolean bUse = TESettingsInfo.getHostUseGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+                        if(bUse) {
+                            CipherUtility.playSound(strGoodSoundFile);
+                        }
                         stdActivityRef.ApplicationVibration(TESettingsInfo.getHostGoodFBVBByIndex(TESettingsInfo.getSessionIndex()));
                     }
                 }
@@ -413,7 +416,10 @@ public class CVT100 extends CVT100Enum {
                 String strErr = TESettingsInfo.getHostErrorFeedbackCmdByIndex(TESettingsInfo.getSessionIndex());if (strErr != null && strErr.isEmpty() == false) {
                     if (StrCmd.compareTo(strErr) == 0) {
                         String strErrSoundFile = TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
-                        CipherUtility.playSound(strErrSoundFile);
+                        boolean bUse = TESettingsInfo.getHostUseErrFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+                        if(bUse) {
+                            CipherUtility.playSound(strErrSoundFile);
+                        }
                         stdActivityRef.ApplicationVibration(TESettingsInfo.getHostErrorFBVBByIndex(TESettingsInfo.getSessionIndex()));
                     }
                 }
@@ -425,7 +431,10 @@ public class CVT100 extends CVT100Enum {
             if (strReader != null && strReader.isEmpty() == false) {
                 if (StrCmd.compareTo(strReader) == 0) {
                     String strReaderSoundFile = TESettingsInfo.getHostReaderSoundByIndex(TESettingsInfo.getSessionIndex());
-                    CipherUtility.playSound(strReaderSoundFile);
+                    boolean bUse = TESettingsInfo.getUseHostReaderSoundByIndex(TESettingsInfo.getSessionIndex());
+                    if(bUse) {
+                        CipherUtility.playSound(strReaderSoundFile);
+                    }
                     stdActivityRef.ApplicationVibration(TESettingsInfo.getHostReaderVBByIndex(TESettingsInfo.getSessionIndex()));
                     CipherReaderControl.SetActived(true);
                 }
@@ -435,7 +444,10 @@ public class CVT100 extends CVT100Enum {
             if (strDisableReader != null && strDisableReader.isEmpty() == false) {
                 if (StrCmd.compareTo(strDisableReader) == 0) {
                     String strReaderSoundFile = TESettingsInfo.getHostReaderSoundByIndex(TESettingsInfo.getSessionIndex());
-                    CipherUtility.playSound(strReaderSoundFile);
+                    boolean bUse = TESettingsInfo.getUseHostReaderSoundByIndex(TESettingsInfo.getSessionIndex());
+                    if(bUse) {
+                        CipherUtility.playSound(strReaderSoundFile);
+                    }
                     stdActivityRef.ApplicationVibration(TESettingsInfo.getHostReaderVBByIndex(TESettingsInfo.getSessionIndex()));
                     CipherReaderControl.SetActived(false);
                 }
@@ -1064,12 +1076,16 @@ public class CVT100 extends CVT100Enum {
         if(TESettingsInfo.getHostIsFeedbackByTextCmdByIndex(TESettingsInfo.getSessionIndex()) == true) {
             if(TESettingsInfo.getHostIsGoodFeedbackByTextByIndex(TESettingsInfo.getSessionIndex()) == true) {
                 String destText = TESettingsInfo.getHostGoodFeedbackTextByIndex(TESettingsInfo.getSessionIndex());
+
                 if(destText.length() > 0) {
                     mCurrentGoodFBText.append(CurChar);
                     String curText = mCurrentGoodFBText.toString();
                     if(destText.contains(curText)) {
                         if(destText.length() == curText.length()) {
-                            CipherUtility.playSound(TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                            boolean bUse = TESettingsInfo.getHostUseGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+                            if(bUse) {
+                                CipherUtility.playSound(TESettingsInfo.getHostGoodFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                            }
                             mCurrentGoodFBText = new StringBuilder();
                         }
                     } else {
@@ -1088,7 +1104,10 @@ public class CVT100 extends CVT100Enum {
                     String curText = mCurrentErrorFBText.toString();
                     if(destText.contains(curText)) {
                         if(destText.length() == curText.length()) {
-                            CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                            boolean bUse = TESettingsInfo.getHostUseErrFeedbackSoundByIndex(TESettingsInfo.getSessionIndex());
+                            if(bUse) {
+                                CipherUtility.playSound(TESettingsInfo.getHostErrorFeedbackSoundByIndex(TESettingsInfo.getSessionIndex()));
+                            }
                             mCurrentErrorFBText = new StringBuilder();
                         }
                     } else {
