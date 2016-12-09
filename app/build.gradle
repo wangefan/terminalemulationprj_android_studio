@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply from: "../artifacts.gradle"
 
 android {
+    signingConfigs {
+        release {
+            keyAlias "te_key"
+            keyPassword "2305851823058"
+            storeFile file("te_key.jks")
+            storePassword "2305851823058"
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '24.0.2'
     compileOptions.encoding = 'windows-1251'
@@ -18,6 +26,7 @@ android {
             buildConfigField "Boolean", "DEBUG_MODE", "true"
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             buildConfigField "Boolean", "DEBUG_MODE", "false"
