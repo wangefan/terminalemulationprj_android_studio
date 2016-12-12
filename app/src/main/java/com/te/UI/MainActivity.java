@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.inputmethodservice.KeyboardView;
 import android.media.MediaScannerConnection;
 import android.os.Build;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -35,6 +38,7 @@ import com.te.UI.LeftMenuFrg.LeftMenuListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import SessionProcess.TerminalProcess;
 import Terminals.CipherReaderControl;
@@ -405,7 +409,7 @@ public class MainActivity extends SetOrientationActivity
                 stdActivityRef.gIsActivate = true;
             }
         }
-
+        
         setContentView(R.layout.activity_main);
 
         //Initialize Views
@@ -903,6 +907,7 @@ public class MainActivity extends SetOrientationActivity
                             @Override
                             public void onSelResult(String result, int nSelIdx) {
                                 TESettingsInfo.setCurLanguageIdx(nSelIdx);
+                                setLocal();
                             }
                         });
                 break;
@@ -1035,6 +1040,26 @@ public class MainActivity extends SetOrientationActivity
         }
         TerminalProcess termProc = mTerminalProcessFrg.getTerminalProc(TESettingsInfo.getSessionIndex());
         return (termProc != null && termProc.isConnected());
+    }
+
+    private void setLocal() {
+        String lang = "en";
+        int nSelLan = TESettingsInfo.getCurLanguageIdx();
+        switch (nSelLan) {
+            case 0:
+            default:
+                lang = "en";
+                break;
+            case 1:
+                lang = "jp";
+                break;
+        }
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 
     private void updateConnMenuItem() {

@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="MSG_FDChek_reject">バーコードデーターが存在しています。データをチェックしてください</string>
+    <string name="MSG_WifiAlert">無線信号強度:%1$d</string>
+    <string name="MSG_exit">終了してよろしいですか？</string>
+    <string name="MSG_BattAlert">バッテリ残量:%1$s</string>
+    <string name="MSG_get_cust_dev_name">デバイス名</string>
+    <string name="MSG_ChangeSession">セッション変更 %s</string>
+    <string name="MSG_DeleteSession_Warn">少なくともで1つのセッションを選択してください。</string>
+    <string name="MSG_Activate_Warn">有効なActivation Keyではありません</string>
+    <string name="MSG_Activate_Succ">Activate成功しました、アプリケーションを再実行してください</string>
+    <string name="MSG_Export_Warn">エクスポート失敗</string>
+    <string name="MSG_Export_ok">エクスポート成功</string>
+    <string name="MSG_Import_Warn">インポート失敗, 失敗可能な原因:\n %s</string>
+    <string name="MSG_Import_ok">インポート成功</string>
+    <string name="MSG_Import_ssh_ok">インポートキーファイル成功</string>
+    <string name="MSG_set_program_name">プログラム名セット</string>
+    <string name="Format_Session">セッション %1$s: %2$s</string>
+    <string name="Format_SessionStatus">%1$s, セッション %2$s, IP:%3$s</string>
+    <string name="STR_ClearAll">全てクリア</string>
+    <string name="title_activity_symbol">文字列選択</string>
+    <string name="MSG_CharacterTenLimit">入力フィールド文字数制限（最大10文字）</string>
+    <string name="MSG_CharacterOneLimit">入力フィールド文字数制限（最大1文字）</string>
+    <string name="about">关于</string>
+    <string name="exit">閉じる</string>
+    <string name="remove_session">セッション削除</string>
+    <string name="STR_Activate">確認</string>
+    <string name="STR_Cancel">キャンセル</string>
+    <string name="STR_Confirm">確認</string>
+    <string name="STR_Choose_Audio">オーディオファイル選択</string>
+    <string name="server_key">サーパーのキーパッド使用</string>
+    <string name="physical_key">端末のキーパッド使用（キーパッド付き端末のみ）</string>
+    <string name="server_key_defalut">サーパーのキー名称</string>
+    <string name="physical_key_defalut">端末のキー名称（キーパッド付き端末のみ）</string>
+    <string name="detect_key_title">端末キーパッド検出</string>
+    <string name="strConnection">接続</string>
+    <string name="strConnectServer">サーバーに接続...</string>
+    <string name="strSessionSettings">設定</string>
+    <string name="strFullScreen">全画面表示</string>
+    <string name="strScreenOrientation">画面の向き</string>
+    <string name="strScreenOrientation_apply">適用</string>
+    <string name="drawer_open">開く</string>
+    <string name="drawer_close">閉じる</string>
+    <string name="str_serverType">サーバータイプ</string>
+    <string name="str_ip">IPアドレス</string>
+    <string name="str_upperCase">英字の大文字に変換</string>
+    <string name="str_network">ネットワーク</string>
+    <string name="str_detectoutofrange">信号圏外検出</string>
+    <string name="str_autoconnect">自動接続</string>
+    <string name="str_autosignon">自動sign on</string>
+    <string name="str_signonName">ユーザー名</string>
+    <string name="str_signonPwd">パスワード</string>
+    <string name="str_signonNameHint">ユーザー名入力</string>
+    <string name="str_signonPwdHint">パスワード入力</string>
+    <string name="str_generateLog">ログ作成</string>
+    <string name="setting_title">セッション %s</string>
+    <string name="new_session">新しいセッション</string>
+    <string name="MSG_clear_setting">設定読込失敗、原因:\n%1$s</string>
+    <string name="str_positive">出荷設定</string>
+    <string name="str_negative">閉じる</string>
+    <string name="MSG_Connecting">ホストに接続...</string>
+    <string name="MSG_Disonnected">接続切断</string>
+    <string name="MSG_Disonnected_error">接続できませんでした、ネットワークを確認してください</string>
+    <string name="MSG_SSH_connect_error">接続できませんでした</string>
+    <string name="MSG_KeyMappingItem_not_accept">有効なライセンスがありません</string>
+    <string name="tn_setting">TN設定</string>
+    <string name="vt_setting">VT設定</string>
+    <string name="tn_alarm">TNアラーム</string>
+    <string name="vt_alarm">VTアラーム</string>
+    <string name="data_upper_case">英字の大文字に変換</string>
+    <string name="tn_codepage">コードページ</string>
+    <string name="tn_auto_unlock">キーパッド入力制限自動解除</string>
+    <string name="tn_field_length_if_exceed">読取ったデータがフィールド長超えた場合</string>
+    <string name="tn_popup_row">エラーメッセージの行位置指定</string>
+    <string name="tn_devname">送信TNサーバー名設定</string>
+    <string name="tn_devname_off"></string>
+    <string name="vt_linebuffer">送信VTサーバーストリングバッファー設定</string>
+    <string name="vt_echo">ローカルEcho</string>
+    <string name="vt_send_string">接続成功時文字列送信</string>
+    <string name="vt_char_set">VTサーバーのデコードキャラクタセット</string>
+    <string name="vt_replace_if_unconvert">デコードできない場合の変換キャラクタ</string>
+    <string name="vt_replace_if_unconvert_sum_off">変換しない</string>
+    <string name="auto_track_visible">カーソル追跡（可視範囲内）</string>
+    <string name="auto_track_center">センター</string>
+    <string name="auto_track_locked">カーソル固定</string>
+    <string name="STR_KeyboardInput">入力キーボード</string>
+    <string name="STR_KeyboardInput2">入力キーボード（16進数）</string>
+    <string name="STR_SymbolInput">記号テーブル</string>
+    <string name="sending_string_title">文字列:</string>
+    <string name="screen_setting">画面</string>
+    <string name="screen_session_number">セッション番号表示</string>
+    <string name="screen_session_status">ホストIP表示</string>
+    <string name="screen_screen_panning">スクリーンパンニング</string>
+    <string name="screen_wifi_alert">Wi-Fiアラームレベル</string>
+    <string name="screen_battery_alert">バッテリ残量アラームレベル</string>
+    <string name="screen_act_macro">マイクロ有効</string>
+    <string name="screen_HWExit">Set HW Key (SHIFT + RIGHT) To Exit App</string>
+    <string name="screen_ShowSIPESC">Set HW Key (SHIFT + ESC) to Control SIP</string>
+    <string name="screen_cursor_type">カーソルタイプ</string>
+    <string name="screen_alert_off">警告しない</string>
+    <string name="screen_auto_track">自動追跡</string>
+    <string name="screen_auto_track_off">追跡しない</string>
+    <string name="screen_track_lock">カーソル固定</string>
+    <string name="screen_font">フォント</string>
+    <string name="screen_font_size">フォントサイズ</string>
+    <string name="screen_color">色設定</string>
+    <string name="screen_auto_full_on_conn">接続時自動全画面表示</string>
+    <string name="screen_show_navi_bar">ナビバー表示</string>
+    <string name="screen_show_wf_bt_status">全画面表示時Wi-Fi/バッテリinfo表示</string>
+    <string name="screen_show_wf_bt_status_off">なし</string>
+    <string name="full_screen">全画面</string>
+    <string name="LockedLocFormat">行:%1$d, カラム:%2$dd</string>
+    <string name="font_color_title">フォント色</string>
+    <string name="bg_color_title">バックグラウンド色</string>
+    <string name="row_col_dialog">ロケーション</string>
+    <string name="row_title">行:</string>
+    <string name="col_title">カラム：</string>
+    <string name="color_picker_fonts_title">フォント色設定</string>
+    <string name="color_picker_bg_title">背景色設定</string>
+    <string name="vt_control_reader">コマンドによるリーダー制御</string>
+    <string name="vt_feedback">コマンド/テキストによるフィードバック</string>
+    <string name="vt_good_feedback">フィードバック成功</string>
+    <string name="vt_error_feedback">フィードバックエラー</string>
+    <string name="vt_feedback_off">オフ</string>
+    <string name="vt_feedback_on">オン</string>
+    <string name="vt_control_reader_key_off">オフ</string>
+    <string name="vt_control_reader_key_on">オン</string>
+    <string name="keymap_edit">使用ボタンを選択</string>
+    <string name="msg_tour_edit_profile_title">プロファイル設定</string>
+    <string name="msg_tour_edit_profile">プロファイル設定行ってからホストに接続してください\n 閉じる</string>
+    <string name="msg_tour_add_session_title">セッション追加</string>
+    <string name="msg_tour_add_session">\"最大5セッションまで追加可能\n 閉じる\"</string>
+    <string name="msg_tour_del_session_title">セッション削除</string>
+    <string name="msg_tour_del_session">スワイプ（左から右）でセッション削除可能\nまたはボタン押下\n</string>
+    <string name="msg_tour_screen_title">全画面表示閉じる</string>
+    <string name="msg_tour_screen">画面の空白箇所をダブルクリックで元画面表示に戻る</string>
+    <string name="str_detect_out_title">ネットワーク接続中..</string>
+    <string name="fb_type_title">フィードバックタイプ</string>
+    <string name="fb_content_command">コマンド</string>
+    <string name="fb_content_text">テキスト</string>
+    <string name="fb_good_fb_text_title">フィードバック成功</string>
+    <string name="fb_error_fb_text_title">フィードバックエラー</string>
+    <string name="vib_title">バイブ持続時間</string>
+    <string name="soundfile_title">サウンドファイル名</string>
+    <string name="cur_path">ファイル場所:</string>
+    <string name="str_create_file_title">ファイル名:</string>
+    <string name="fb_enable_reader">コマンド有効</string>
+    <string name="fb_disable_reader">コマンド無効</string>
+    <string name="tn_msg_alarm_cate">メッセージアラーム</string>
+    <string name="tn_err_alarm_cate">エラーアラーム</string>
+    <string name="screen_orientation_title">画面の向きを設定</string>
+    <string name="screen_orientation_lk_landscape">画面横をキープ</string>
+    <string name="screen_orientation_lk_portrait">画面縦をキープ</string>
+    <string name="screen_orientation_user">デフォルト</string>
+    <string name="str_access_ctrl">アクセス制御</string>
+    <string name="str_access_ctrl_check">パスワード入力</string>
+    <string name="str_activation_key">アクティベーションキー</string>
+    <string name="str_export">エクスポート</string>
+    <string name="str_import">インポート</string>
+    <string name="str_language">言語</string>
+    <string name="STR_expot_setting">エクスポート</string>
+    <string name="set_pwd">パスワード設定</string>
+    <string name="enter_pwd">パスワード入力</string>
+    <string name="enter_pwd2">パスワード確認</string>
+    <string name="protect_settings">パスワードで保護する設定選択</string>
+    <string name="protect_item_set_orientation">画面の向きを設定</string>
+    <string name="protect_item_settings">設定</string>
+    <string name="protect_item_exit">閉じる</string>
+    <string name="protect_item_exit_full_screen">全画面表示閉じる</string>
+    <string name="check_pwd">パスワード（最大8文字）</string>
+    <string name="STR_Reset">リセット</string>
+    <string name="msg_pwd_not_match">※パスワード間違いです</string>
+    <string name="show_wf_batt_info_title">Wi-Fi/バッテリステータス</string>
+    <string name="screen_icon_update_interval">Wi-Fi/バッテリ アイコン更新間隔</string>
+
+    <string name="undefinedPhy">未定義</string>
+    <string name="phykey_title">物理キーマッピング</string>
+    <string name="phy_category_title">カテゴリ:</string>
+    <string name="clear_key_text">クリアキー</string>
+    <string name="trap_text">トラップ</string>
+    <string name="Msg_dup_key_mapped" >"キーは%sに設定されています。変更しますか?"</string>
+    <string name="screen_autopop_sip_conn">接続後自動SIP表示</string>
+    <string name="MSG_detect_key">\n物理キーを押してください。\nキーが使用できない場合、キーが利用できない場合、画面は応答しません。\n\n\"ESC\" または \"Back\"キー押下で元画面に戻る</string>
+    <string name="Msg_file_exist">ファイルは存在しています。上書きしますか？</string>
+    <string name="ssh_select_key_file_title">キーファイル選択</string>
+    <string name="ssh_add_delete_key_title">インポート/削除キーファイル</string>
+    <string name="title_activity_settings">設定</string>
+    <string name="title_activity_second_settings">第二の設定</string>
+    <!-- Strings related to Settings -->
+    <string name="host_profile">ホストプロファイル</string>
+    <string name="host_type">ホストタイプ</string>
+    <!-- Example General settings -->
+    <string name="pref_header_general">一般</string>
+    <string name="pref_header_port">ポート</string>
+    <string name="more">もっと表示...</string>
+    <string name="auto_connect">自動接続</string>
+    <string name="auto_sign">自動サインオン</string>
+    <string name="host_auto_sign_name">ログイン名</string>
+    <string name="host_auto_sign_name_prom">ログインプロンプト(VT のみ)</string>
+    <string name="host_auto_sign_pwd_prom">パスワードプロンプト(VT のみ)</string>
+    <string name="host_auto_sign_term_prom">タームログイン（VTのみ）</string>
+    <string name="host_auto_sign_pwd">ログインパスワード</string>
+    <string name="emulation_setting">エミュレーター設定</string>
+    <string name="server_setting">サーバー設定</string>
+    <string name="error_message">エラーメッセージ</string>
+    <string name="screen">スクリーン</string>
+    <string name="alarm">アラーム</string>
+    <string name="key_mapping">キーマッピング</string>
+    <string name="ssh_on">SSH使用</string>
+    <string name="ssh_off">SSH使用しない</string>
+    <string name="ssh_log">SSH Log</string>
+    <string name="ssh_log_sum">SSH Log作成</string>
+    <string name="ssh_auth_cate">認証</string>
+    <string name="ssh_auth_type">認証タイプ</string>
+    <string name="ssh_auth_setting_title">詳細設定</string>
+    <string name="ssh_name">ログイン名</string>
+    <string name="ssh_pwd">パスワード</string>
+    <string name="ssh_key_file">キーファイル</string>
+    <string name="ssh_mgr_key_files">キーファイル管理</string>
+    <string name="ssh_add_key_files_title">インポートキーファイル</string>
+    <string name="ssh_add_key_files_edit_pha_title">パスフレーズ編集</string>
+    <string name="ssh_add_key_files_next">次へ</string>
+    <string name="ssh_add_key_files_edit_pha_1">パスフレーズ</string>
+    <string name="ssh_add_key_files_edit_pha_2">パスフレーズ確認</string>
+    <string name="ssh_add_key_files_done">完了</string>
+    <string name="ssh_general_cate">一般設定</string>
+    <string name="ssh_no_pseudo">ホスト側Pseudo-Terminalなし</string>
+    <string name="ssh_no_host_shell">Host Shellなし</string>
+    <string name="ssh_re_key_60">60分每 Re-Key</string>
+    <string name="ssh_re_key_1g">データ送受信1G每 Re-Key</string>
+    <string name="ssh_write_log">既存のログファイルを上書き</string>
+    <string name="ssh_server_cate">サーバー</string>
+    <string name="ssh_envir">環境</string>
+    <string name="ssh_cmd">コマンド</string>
+    <string name="ssh_proxy_type">タイプ</string>
+    <string name="ssh_proxy_user">ユーザー</string>
+    <string name="ssh_proxy_pwd">パスワード</string>
+    <string name="network">ネットワーク</string>
+    <string name="keep_alive">ネットワークキープアライブ</string>
+    <string name="out_range">信号圏外検出</string>
+    <string name="barcode_setting">バーコード設定</string>
+    <string name="config">設定</string>
+    <string name="debug">デバッグ</string>
+    <string name="generate_log">ログ</string>
+    <string name="pref_cursor_type">カーソルタイプ</string>
+    <string name="pref_Title_CursorTracking">カーソル追跡</string>
+    <string name="pref_Title_ShowMacro">マクロ</string>
+    <string name="pref_header_language">言語</string>
+    <string name="pref_header_fieldexceed">読取ったデータがフィールド長超えた場合</string>
+    <string name="pref_header_remote_char">VTサーバーのデコードキャラクタセット</string>
+    <!-- feedback command -->
+    <string name="pref_Title_FeedBack">カスタムコマンド</string>
+    <string name="pref_Title_ReaderCmd">リーダー制御</string>
+    <string name="pref_Title_ReaderCmdEnable">リーダー有効</string>
+    <string name="pref_Title_ReaderCmdDisable">リーダー無効</string>
+    <string name="pref_Title_FeedBackCmd">コントロールフィードバック</string>
+    <string name="pref_Title_ControlCmdBadread">読取失敗</string>
+    <string name="pref_Title_ControlCmdGoodread">読取成功</string>
+    <string name="pref_title_display_name">表示名</string>
+    <string name="pref_title_add_friends_to_messages">メッセージに友達を追加する</string>
+    <!-- Example settings for Data & Sync -->
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">通知</string>
+    <string name="pref_title_new_message_notifications">新しいメッセージ通知</string>
+    <string name="pref_ringtone_silent">サイレント</string>
+    <string name="pref_title_vibrate">バイブ</string>
+    <string name="MSG_AUTH_Densowave_BHT1600_Alert">このアプリケーションはDensowave　BHT-1600専用です。</string>
+    <string name="sample">サンプル</string>
+
+    <string-array name="icon_update_interval_array">
+        <item>not update</item>
+        <item>1 min</item>
+        <item>3 min</item>
+        <item>5 min</item>
+        <item>15 min</item>
+        <item>30 min</item>
+        <item>60 min</item>
+    </string-array>
+    <string-array name="icon_update_interval_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="vib_arr">
+        <item>0 sec</item>
+        <item>0.5 sec</item>
+        <item>1.0 sec</item>
+        <item>1.5 sec</item>
+        <item>2.0 sec</item>
+        <item>2.5 sec</item>
+        <item>3.0 sec</item>
+        <item>3.5 sec</item>
+        <item>4.0 sec</item>
+        <item>4.5 sec</item>
+        <item>5.0 sec</item>
+    </string-array>
+    <string-array name="vib_arr_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+    <string-array name="proxy_type_arr">
+        <item>None</item>
+        <item>SOCKS4</item>
+        <item>SOCKS5</item>
+        <item>HTTP</item>
+    </string-array>
+    <string-array name="proxy_type__vals_arr">
+        <item>None</item>
+        <item>SOCKS4</item>
+        <item>SOCKS5</item>
+        <item>HTTP</item>
+    </string-array>
+    <string-array name="sertype_array">
+        <item>IBM 5250</item>
+        <item>IBM 3270</item>
+        <item>VT 100</item>
+        <item>VT 102</item>
+        <item>VT 220</item>
+        <item>ANSI</item>
+    </string-array>
+    <string-array name="sertype_array_vals">
+        <item>@string/IBM5250Val</item>
+        <item>@string/IBM3270Val</item>
+        <item>@string/VT100Val</item>
+        <item>@string/VT102Val</item>
+        <item>@string/VT220Val</item>
+        <item>@string/ANSIVal</item>
+    </string-array>
+    <string-array name="term_array">
+        <item>Tab</item>
+        <item>Enter</item>
+    </string-array>
+    <string-array name="term_val_array">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="ssh_auth_type_array">
+        <item>Name/Pwd</item>
+        <item>Key File</item>
+    </string-array>
+    <string-array name="ssh_auth_type_array_vals">
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="alert_array">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+    </string-array>
+    <string-array name="codepage_array">
+        <item>Single Byte Character</item>
+        <item>Traditional Chinese</item>
+        <item>Simplified Chinese</item>
+        <item>Korean</item>
+        <item>Japanese</item>
+        <item>Greek</item>
+        <item>French</item>
+    </string-array>
+    <string-array name="codepage_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="field_length_array">
+        <item>Reject</item>
+        <item>Truncate</item>
+        <item>Split to next field</item>
+    </string-array>
+    <string-array name="field_length_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="char_set_array">
+        <item>Ansi</item>
+        <item>Utf8</item>
+    </string-array>
+    <string-array name="char_set_array_vals">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="cursor_type_array">
+        <item>Default</item>
+        <item>Underline</item>
+        <item>Block</item>
+    </string-array>
+    <string-array name="cursor_type_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="auto_track_array">
+        <item>@string/auto_track_visible</item>
+        <item>@string/auto_track_center</item>
+        <item>@string/auto_track_locked</item>
+    </string-array>
+    <string-array name="font_array">
+        <item>Courier New</item>
+        <item>Lucida Console</item>
+        <item>Excalibur Monospace</item>
+        <item>NetTerm ANSI</item>
+        <item>NetTerm OEM</item>
+    </string-array>
+    <string-array name="font_array_vals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="font_size_array">
+        <item>5 x 10</item>
+        <item>6 x 12</item>
+        <item>8 x 16</item>
+        <item>10 x 20</item>
+    </string-array>
+    <string-array name="font_size_array_vals">
+        <item>5 x 10</item>
+        <item>6 x 12</item>
+        <item>8 x 16</item>
+        <item>10 x 20</item>
+    </string-array>
+    <string-array name="fb_array">
+        <item>By Command</item>
+        <item>By Text</item>
+    </string-array>
+    <string-array name="fb_array_vals">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="replace_char_arr">
+        <item>&#032;</item>
+        <item>X</item>
+        <item>&#037;</item>
+        <item>&#038;</item>
+        <item>&#042;</item>
+        <item>&#045;</item>
+        <item>&#095;</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+    <string-array name="pref_vt_charset_list">
+        <item>ANSI</item>
+        <item>UTF-8</item>
+    </string-array>
+    <string-array name="Languages">
+        <item>英語</item>
+        <item>日本語</item>
+    </string-array>
+    <string-array name="show_wf_batt_info_array">
+        <item>Show Status Bar</item>
+        <item>Show Wi-Fi Status</item>
+        <item>Show Battery Status</item>
+        <item>Show Wi-Fi and Battery Status</item>
+    </string-array>
+    <string-array name="phykey_cate_array">
+        <item>Alphabets</item>
+        <item>Numbers</item>
+        <item>Punctuations</item>
+        <item>Function Keys</item>
+        <item>Navigation keys</item>
+        <item>Editing Keys</item>
+    </string-array>
+    <string name="phy_title">物理キー：</string>
+    <string name="str_choose_file_title">選択ファイル:</string>
+</resources>

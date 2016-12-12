@@ -11,39 +11,39 @@
     <string name="MSG_Activate_Succ">You have activated successful, please re-execute the application to use full functions.</string>
     <string name="MSG_Export_Warn">Export settings failed.</string>
     <string name="MSG_Export_ok">Export settings successfully.</string>
-    <string name="MSG_Import_Warn">Import settings failed. Possible cause:\r\n %s</string>
+    <string name="MSG_Import_Warn">Import settings failed. Possible cause:\n %s</string>
     <string name="MSG_Import_ok">Import settings successfully.</string>
     <string name="MSG_Import_ssh_ok">Import Key file successfully.</string>
     <string name="MSG_set_program_name">Set Program Name</string>
     <string name="Format_Session">Session %1$s: %2$s</string>
     <string name="Format_SessionStatus">%1$s, Session %2$s, IP:%3$s</string>
-    <string name="app_name">Terminal Emulation</string>
+    <string name="app_name" translatable="false">Terminal Emulation</string>
     <string name="STR_ClearAll">Clear All</string>
     <string name="title_activity_symbol">Select String</string>
     <string name="MSG_CharacterTenLimit">The maximum character limit reached! Up to 10 chars allowed.</string>
     <string name="MSG_CharacterOneLimit">The maximum character limit reached! Only one char allowed.</string>
-    <string name="Format_phy_key_text">[%1$s or &#060;B&#062; %2$s]</string>
-    <string name="ip_title">IP:</string>
-    <string name="hostname_title">Host Name:</string>
-    <string name="dot">.</string>
+    <string name="Format_phy_key_text" translatable="false">[%1$s or &#060;B&#062; %2$s]</string>
+    <string name="ip_title" translatable="false">IP:</string>
+    <string name="hostname_title" translatable="false">Host Name:</string>
+    <string name="dot" translatable="false">.</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
     <string name="remove_session">Remove Session</string>
-    <string name="STR_DllName">Reader Service</string>
-    <string name="STR_OK">OK</string>
+    <string name="STR_DllName" translatable="false">Reader Service</string>
+    <string name="STR_OK" translatable="false">OK</string>
     <string name="STR_Activate">Activate</string>
     <string name="STR_Cancel">Cancel</string>
     <string name="STR_Confirm">Confirm</string>
-    <string name="STR_pass">OK</string>
+    <string name="STR_pass" translatable="false">OK</string>
     <string name="STR_Choose_Audio">Choose Audio file</string>
     <string name="server_key">Server Key</string>
     <string name="physical_key">Physical Key</string>
     <string name="server_key_defalut">Server Key Name</string>
     <string name="physical_key_defalut">Physical Key Name</string>
     <string name="detect_key_title">Detect Keys</string>
-    <string name="shift">&#060;Shift&#062;</string>
-    <string name="ctrl">&#060;Ctrl&#062;</string>
-    <string name="Alt">&#060;Alt&#062;</string>
+    <string name="shift" translatable="false">&#060;Shift&#062;</string>
+    <string name="ctrl" translatable="false">&#060;Ctrl&#062;</string>
+    <string name="Alt" translatable="false">&#060;Alt&#062;</string>
     <string name="strConnection">Connect</string>
     <string name="strConnectServer">Connect to server...</string>
     <string name="strSessionSettings">Settings</string>
@@ -66,21 +66,21 @@
     <string name="str_generateLog">Generate Log</string>
     <string name="setting_title">Session %s</string>
     <string name="new_session">New Session</string>
-    <string name="host_type_key">host_type_key</string>
-    <string name="host_ip_key">host_ip_key</string>
-    <string name="host_port_key">host_port_key</string>
-    <string name="host_auto_conn_key">host_auto_conn_key</string>
-    <string name="host_auto_sign_key">host_auto_sign_key</string>
-    <string name="host_auto_sign_name_key">host_auto_sign_name_key</string>
-    <string name="host_auto_sign_pwd_key">host_auto_sign_pwd_key</string>
-    <string name="host_auto_sign_name_prom_key">host_auto_sign_name_prom_key</string>
-    <string name="host_auto_sign_pwd_prom_key">host_auto_sign_pwd_prom_key</string>
-    <string name="host_auto_sign_term_prom_key">host_auto_sign_term_prom_key</string>
-    <string name="keep_alive_key">keep_alive_key</string>
-    <string name="out_range_key">out_range_key</string>
-    <string name="reader_config_key">reader_config_key</string>
-    <string name="log_key">log_key</string>
-    <string name="MSG_clear_setting">Failed to load the settings. Possible cause:\r\n%1$s</string>
+    <string name="host_type_key" translatable="false">host_type_key</string>
+    <string name="host_ip_key" translatable="false">host_ip_key</string>
+    <string name="host_port_key" translatable="false">host_port_key</string>
+    <string name="host_auto_conn_key" translatable="false">host_auto_conn_key</string>
+    <string name="host_auto_sign_key" translatable="false">host_auto_sign_key</string>
+    <string name="host_auto_sign_name_key" translatable="false">host_auto_sign_name_key</string>
+    <string name="host_auto_sign_pwd_key" translatable="false">host_auto_sign_pwd_key</string>
+    <string name="host_auto_sign_name_prom_key" translatable="false">host_auto_sign_name_prom_key</string>
+    <string name="host_auto_sign_pwd_prom_key" translatable="false">host_auto_sign_pwd_prom_key</string>
+    <string name="host_auto_sign_term_prom_key" translatable="false">host_auto_sign_term_prom_key</string>
+    <string name="keep_alive_key" translatable="false">keep_alive_key</string>
+    <string name="out_range_key" translatable="false">out_range_key</string>
+    <string name="reader_config_key" translatable="false">reader_config_key</string>
+    <string name="log_key" translatable="false">log_key</string>
+    <string name="MSG_clear_setting">Failed to load the settings. Possible cause:\n%1$s</string>
     <string name="str_positive">Reset setting to default</string>
     <string name="str_negative">Exit</string>
     <string name="MSG_Connecting">Connecting to host...</string>
@@ -92,30 +92,30 @@
     <string name="vt_setting">VT Settings</string>
     <string name="tn_alarm">TN Alarm</string>
     <string name="vt_alarm">VT Alarm</string>
-    <string name="data_upper_case_key">tn_data_upper_case_key</string>
+    <string name="data_upper_case_key" translatable="false">tn_data_upper_case_key</string>
     <string name="data_upper_case">Data Input Uppercase</string>
-    <string name="tn_codepage_key">tn_codepage_key</string>
+    <string name="tn_codepage_key" translatable="false">tn_codepage_key</string>
     <string name="tn_codepage">Code Page</string>
-    <string name="tn_auto_reset_key">auto_reset_key</string>
+    <string name="tn_auto_reset_key" translatable="false">auto_reset_key</string>
     <string name="tn_auto_unlock">Auto Unlock Input</string>
-    <string name="tn_field_length_if_exceed_key">field_length_if_exceed_key</string>
+    <string name="tn_field_length_if_exceed_key" translatable="false">field_length_if_exceed_key</string>
     <string name="tn_field_length_if_exceed">Field Length if Exceed</string>
-    <string name="tn_popup_window_key">tn_popup_window_key</string>
-    <string name="tn_popup_window">Pop-up Window</string>
-    <string name="tn_popup_row_key">tn_popup_row_key</string>
+    <string name="tn_popup_window_key" translatable="false">tn_popup_window_key</string>
+    <string name="tn_popup_window" translatable="false">Pop-up Window</string>
+    <string name="tn_popup_row_key" translatable="false">tn_popup_row_key</string>
     <string name="tn_popup_row">Display Error in Row</string>
-    <string name="tn_devname_key">devname_key</string>
+    <string name="tn_devname_key" translatable="false">devname_key</string>
     <string name="tn_devname">Custom Device Name</string>
     <string name="tn_devname_off"></string>
-    <string name="vt_linebuffer_key">vt_linebuffer_key</string>
+    <string name="vt_linebuffer_key" translatable="false">vt_linebuffer_key</string>
     <string name="vt_linebuffer">LineBuffer</string>
-    <string name="vt_echo_key">vt_echo_key</string>
+    <string name="vt_echo_key" translatable="false">vt_echo_key</string>
     <string name="vt_echo">Local Echo</string>
-    <string name="vt_send_string_key">vt_send_string_key</string>
+    <string name="vt_send_string_key" translatable="false">vt_send_string_key</string>
     <string name="vt_send_string">Send String When Connect</string>
-    <string name="vt_char_set_key">vt_char_set_key</string>
+    <string name="vt_char_set_key" translatable="false">vt_char_set_key</string>
     <string name="vt_char_set">Remote Character Set</string>
-    <string name="vt_replace_if_unconvert_key">vt_replace_if_unconvert_key</string>
+    <string name="vt_replace_if_unconvert_key" translatable="false">vt_replace_if_unconvert_key</string>
     <string name="vt_replace_if_unconvert">Replace Char if Unconvertable</string>
     <string name="vt_replace_if_unconvert_sum_off">Not Replace</string>
     <string name="auto_track_visible">Visible</string>
@@ -124,59 +124,58 @@
     <string name="STR_KeyboardInput">Keyboard input</string>
     <string name="STR_KeyboardInput2">Keyboard input (Hexadecimal)</string>
     <string name="STR_SymbolInput">Symbol table input</string>
-    <string name="MSG_InvalidHexString">The binary cannot have an odd number of digits</string>
     <string name="sending_string_title">String:</string>
     <string name="screen_setting">Screen</string>
-    <string name="screen_session_number_key">screen_session_number_key</string>
+    <string name="screen_session_number_key" translatable="false">screen_session_number_key</string>
     <string name="screen_session_number">Show Session Number</string>
-    <string name="screen_session_status_key">screen_session_status_key</string>
+    <string name="screen_session_status_key" translatable="false">screen_session_status_key</string>
     <string name="screen_session_status">Show Connecting Host IP</string>
-    <string name="screen_screen_panning_key">screen_screen_panning_key</string>
+    <string name="screen_screen_panning_key" translatable="false">screen_screen_panning_key</string>
     <string name="screen_screen_panning">Screen Panning</string>
-    <string name="screen_wifi_alert_key">screen_wifi_alert_key</string>
+    <string name="screen_wifi_alert_key" translatable="false">screen_wifi_alert_key</string>
     <string name="screen_wifi_alert">Choose Wi-Fi Alert Level(%)</string>
-    <string name="screen_battery_alert_key">screen_battery_alert_key</string>
+    <string name="screen_battery_alert_key" translatable="false">screen_battery_alert_key</string>
     <string name="screen_battery_alert">Choose Battery Alert Level(%)</string>
-    <string name="screen_act_macro_key">screen_act_macro_key</string>
+    <string name="screen_act_macro_key" translatable="false">screen_act_macro_key</string>
     <string name="screen_act_macro">Activate Macro</string>
-    <string name="screen_HWExit_key">screen_HWExit_key</string>
+    <string name="screen_HWExit_key" translatable="false">screen_HWExit_key</string>
     <string name="screen_HWExit">Set HW Key (SHIFT + RIGHT) To Exit App</string>
-    <string name="screen_ShowSIPESC_key">screen_ShowSIPESC_key</string>
+    <string name="screen_ShowSIPESC_key" translatable="false">screen_ShowSIPESC_key</string>
     <string name="screen_ShowSIPESC">Set HW Key (SHIFT + ESC) to Control SIP</string>
-    <string name="screen_cursor_type_key">screen_cursor_type_key</string>
+    <string name="screen_cursor_type_key" translatable="false">screen_cursor_type_key</string>
     <string name="screen_cursor_type">Cursor Type</string>
-    <string name="screen_auto_scroll_key">screen_auto_scroll_key</string>
+    <string name="screen_auto_scroll_key" translatable="false">screen_auto_scroll_key</string>
     <string name="screen_alert_off">No Alert</string>
     <string name="screen_auto_track">Auto Tracking</string>
     <string name="screen_auto_track_off">Not Track</string>
-    <string name="screen_track_lock_key">screen_track_lock_key</string>
+    <string name="screen_track_lock_key" translatable="false">screen_track_lock_key</string>
     <string name="screen_track_lock">Locked Location</string>
-    <string name="screen_font_key">screen_font_key</string>
+    <string name="screen_font_key" translatable="false">screen_font_key</string>
     <string name="screen_font">Fonts</string>
-    <string name="screen_font_size_key">screen_font_size_key</string>
+    <string name="screen_font_size_key" translatable="false">screen_font_size_key</string>
     <string name="screen_font_size">Font Size</string>
-    <string name="screen_color_key">screen_color_key</string>
+    <string name="screen_color_key" translatable="false">screen_color_key</string>
     <string name="screen_color">Color Settings</string>
-    <string name="screen_auto_full_on_conn_key">screen_auto_full_on_conn_key</string>
+    <string name="screen_auto_full_on_conn_key" translatable="false">screen_auto_full_on_conn_key</string>
     <string name="screen_auto_full_on_conn">Auto Full Screen On Connection</string>
-    <string name="screen_show_navi_bar_key">screen_show_navi_bar_key</string>
+    <string name="screen_show_navi_bar_key" translatable="false">screen_show_navi_bar_key</string>
     <string name="screen_show_navi_bar">Show Navigation Bar</string>
-    <string name="screen_show_wf_batt_key">screen_show_wf_batt_key</string>
+    <string name="screen_show_wf_batt_key" translatable="false">screen_show_wf_batt_key</string>
     <string name="screen_show_wf_bt_status">Show Wi-Fi/Battery Info On Full Screen</string>
     <string name="screen_show_wf_bt_status_off">None</string>
     <string name="full_screen">Full Screen</string>
     <string name="LockedLocFormat">Row: %1$d, Col:%2$d</string>
     <string name="font_color_title">Font Color</string>
     <string name="bg_color_title">Background Color</string>
-    <string name="FontSizeFormat">%1$d x %2$d</string>
+    <string name="FontSizeFormat" translatable="false">%1$d x %2$d</string>
     <string name="row_col_dialog">Location</string>
     <string name="row_title">Row:</string>
     <string name="col_title">Col:</string>
     <string name="color_picker_fonts_title">Pick Font color</string>
     <string name="color_picker_bg_title">Pick Background color</string>
-    <string name="vt_control_reader_key">vt_control_reader_key</string>
+    <string name="vt_control_reader_key" translatable="false">vt_control_reader_key</string>
     <string name="vt_control_reader">Control Reader By Command</string>
-    <string name="vt_feedback_key">vt_feedback_key</string>
+    <string name="vt_feedback_key" translatable="false">vt_feedback_key</string>
     <string name="vt_feedback">Feedback By Command/Text</string>
     <string name="vt_good_feedback">Good Feedback</string>
     <string name="vt_error_feedback">Error Feedback</string>
@@ -186,42 +185,42 @@
     <string name="vt_control_reader_key_on">On</string>
     <string name="keymap_edit">Select Physical Key</string>
     <string name="msg_tour_edit_profile_title">Edit your profile here.</string>
-    <string name="msg_tour_edit_profile">You should edit your profile setting before connecting to your host.\r\nPress to exit.</string>
+    <string name="msg_tour_edit_profile">You should edit your profile setting before connecting to your host.\nPress to exit.</string>
     <string name="msg_tour_add_session_title">Add Session</string>
-    <string name="msg_tour_add_session">You could add more one sessions (maximum 5 sessions).\r\nPress to exit.</string>
+    <string name="msg_tour_add_session">You could add more one sessions (maximum 5 sessions).\nPress to exit.</string>
     <string name="msg_tour_del_session_title">Delete Session</string>
-    <string name="msg_tour_del_session">You could delete a session by swipe item (left to right) and press button to delete it.\r\nPress to exit.</string>
+    <string name="msg_tour_del_session">You could delete a session by swipe item (left to right) and press button to delete it.\nPress to exit.</string>
     <string name="msg_tour_screen_title">Leave full screen</string>
-    <string name="msg_tour_screen">You can double-tap anywhere on the screen to leave full-screen mode.\r\nPress to exit.</string>
+    <string name="msg_tour_screen">You can double-tap anywhere on the screen to leave full-screen mode.\nPress to exit.</string>
     <string name="str_detect_out_title">Waiting for network..</string>
-    <string name="fb_good_key">fb_good_key</string>
-    <string name="fb_error_key">fb_error_key</string>
+    <string name="fb_good_key" translatable="false">fb_good_key</string>
+    <string name="fb_error_key" translatable="false">fb_error_key</string>
     <string name="fb_type_title">Feedback Type</string>
-    <string name="fb_good_content_key">fb_good_content_key</string>
-    <string name="fb_error_content_key">fb_error_content_key</string>
+    <string name="fb_good_content_key" translatable="false">fb_good_content_key</string>
+    <string name="fb_error_content_key" translatable="false">fb_error_content_key</string>
     <string name="fb_content_command">Command</string>
     <string name="fb_content_text">Text</string>
     <string name="fb_good_fb_text_title">Good Feedback Text</string>
     <string name="fb_error_fb_text_title">Error Feedback Text</string>
-    <string name="fb_good_sound_key">fb_good_sound_key</string>
-    <string name="fb_err_sound_key">fb_err_sound_key</string>
-    <string name="goodvib_key">goodvib_key</string>
-    <string name="errvib_key">errvib_key</string>
+    <string name="fb_good_sound_key" translatable="false">fb_good_sound_key</string>
+    <string name="fb_err_sound_key" translatable="false">fb_err_sound_key</string>
+    <string name="goodvib_key" translatable="false">goodvib_key</string>
+    <string name="errvib_key" translatable="false">errvib_key</string>
     <string name="vib_title">Vibration Duration</string>
     <string name="soundfile_title">Sound File Name</string>
     <string name="cur_path">Current Path:</string>
     <string name="str_choose_file_title">Chosen File:</string>
     <string name="str_create_file_title">File Name:</string>
-    <string name="fb_enable_reader_key">fb_enable_reader_key</string>
-    <string name="fb_disable_reader_key">fb_disable_reader_key</string>
-    <string name="fb_reader_sound_key">fb_reader_sound_key</string>
-    <string name="reader_vib_key">reader_vib_key</string>
+    <string name="fb_enable_reader_key" translatable="false">fb_enable_reader_key</string>
+    <string name="fb_disable_reader_key" translatable="false">fb_disable_reader_key</string>
+    <string name="fb_reader_sound_key" translatable="false">fb_reader_sound_key</string>
+    <string name="reader_vib_key" translatable="false">reader_vib_key</string>
     <string name="fb_enable_reader">Enable Command</string>
     <string name="fb_disable_reader">Disable Command</string>
-    <string name="fb_tn_msg_sound_key">fb_tn_msg_sound_key</string>
-    <string name="fb_tn_msg_vib_key">fb_tn_msg_vib_key</string>
-    <string name="fb_tn_err_sound_key">fb_tn_err_sound_key</string>
-    <string name="fb_tn_err_vib_key">fb_tn_err_vib_key</string>
+    <string name="fb_tn_msg_sound_key" translatable="false">fb_tn_msg_sound_key</string>
+    <string name="fb_tn_msg_vib_key" translatable="false">fb_tn_msg_vib_key</string>
+    <string name="fb_tn_err_sound_key" translatable="false">fb_tn_err_sound_key</string>
+    <string name="fb_tn_err_vib_key" translatable="false">fb_tn_err_vib_key</string>
     <string name="tn_msg_alarm_cate">Message Alarm</string>
     <string name="tn_err_alarm_cate">Error Alarm</string>
     <string name="screen_orientation_title">Set Screen Orientation</string>
@@ -232,16 +231,16 @@
     <string name="str_access_ctrl_check">Enter Password</string>
     <string name="str_activation_key">Activation Key</string>
     <string name="str_export">Export Settings</string>
-    <string name="str_default_export_name">TE_settings</string>
+    <string name="str_default_export_name" translatable="false">TE_settings</string>
     <string name="str_import">Import Settings</string>
     <string name="str_language">Languages</string>
-    <string name="STR_ExtWav">wav</string>
-    <string name="STR_ExtMp3">mp3</string>
-    <string name="STR_ExtOgg">ogg</string>
-    <string name="STR_ExtPpk">ppk</string>
-    <string name="STR_ExtPem">pem</string>
+    <string name="STR_ExtWav" translatable="false">wav</string>
+    <string name="STR_ExtMp3" translatable="false">mp3</string>
+    <string name="STR_ExtOgg" translatable="false">ogg</string>
+    <string name="STR_ExtPpk" translatable="false">ppk</string>
+    <string name="STR_ExtPem" translatable="false">pem</string>
     <string name="STR_expot_setting">Export Settings</string>
-    <string name="STR_ExtJson">json</string>
+    <string name="STR_ExtJson" translatable="false">json</string>
     <string name="set_pwd">Set Password</string>
     <string name="enter_pwd">Enter Password</string>
     <string name="enter_pwd2">Confirm Password</string>
@@ -254,117 +253,117 @@
     <string name="STR_Reset">Reset</string>
     <string name="msg_pwd_not_match">※Passwords do not match</string>
     <string name="show_wf_batt_info_title">Wi-Fi/Battery Status</string>
-    <string name="screen_icon_update_interval_key">screen_icon_update_interval_key</string>
+    <string name="screen_icon_update_interval_key" translatable="false">screen_icon_update_interval_key</string>
     <string name="screen_icon_update_interval">Update Wi-Fi/Battery Icon Interval</string>
-    <string name="VTKEY_TAB">Tab</string>
-    <string name="VTKEY_ENTER">Enter</string>
-    <string name="VTKEY_LEFT">Left</string>
-    <string name="VTKEY_RIGHT">Right</string>
-    <string name="VTKEY_UP">Up Arrow</string>
-    <string name="VTKEY_DW">Down Arrow</string>
-    <string name="VTKEY_BS">Backspace</string>
-    <string name="VTKEY_PGUP">Page Up</string>
-    <string name="VTKEY_PGDW">Page Down</string>
-    <string name="VTKEY_HOME">Home</string>
-    <string name="VTKEY_END">End</string>
-    <string name="VTKEY_INS">Insert</string>
-    <string name="VTKEY_DEL">Delete</string>
-    <string name="VTKEY_ESC">Esc</string>
-    <string name="VTKEY_LF">Line Feed</string>
-    <string name="VTKEY_FIND">Find</string>
-    <string name="VTKEY_SELECT">Select</string>
-    <string name="VTKEY_REMOVE">Remove</string>
-    <string name="VTKEY_PREV">Previous</string>
-    <string name="VTKEY_NEXT">Next</string>
-    <string name="VTKEY_F1">F1</string>
-    <string name="VTKEY_F2">F2</string>
-    <string name="VTKEY_F3">F3</string>
-    <string name="VTKEY_F4">F4</string>
-    <string name="VTKEY_F5">F5</string>
-    <string name="VTKEY_F6">F6</string>
-    <string name="VTKEY_F7">F7</string>
-    <string name="VTKEY_F8">F8</string>
-    <string name="VTKEY_F9">F9</string>
-    <string name="VTKEY_F10">F10</string>
-    <string name="VTKEY_F11">F11</string>
-    <string name="VTKEY_F12">F12</string>
-    <string name="VTKEY_F13">F13</string>
-    <string name="VTKEY_F14">F14</string>
-    <string name="VTKEY_F15">F15</string>
-    <string name="VTKEY_F16">F16</string>
-    <string name="VTKEY_F17">F17</string>
-    <string name="VTKEY_F18">F18</string>
-    <string name="VTKEY_F19">F19</string>
-    <string name="VTKEY_F20">F20</string>
-    <string name="IBMKEY_ATTN">Attention</string>
-    <string name="IBMKEY_FBEGIN">Begin</string>
-    <string name="IBMKEY_DEL">Delete</string>
-    <string name="IBMKEY_FEND">End</string>
-    <string name="IBMKEY_ERINPUT">Erase Input</string>
-    <string name="IBMKEY_FPLUS">Field +</string>
-    <string name="IBMKEY_FMINUS">Field -</string>
-    <string name="IBMKEY_FEXIT">Field Exit</string>
-    <string name="IBMKEY_LAST">Last</string>
-    <string name="IBMKEY_NEXT">Next</string>
-    <string name="IBMKEY_ROLDN">Roll Down</string>
-    <string name="IBMKEY_ROLUP">Roll Up</string>
-    <string name="IBMKEY_PREV">Previous</string>
-    <string name="IBMKEY_RECORD">Record</string>
-    <string name="IBMKEY_SYSRQ">System Request</string>
-    <string name="IBMKEY_INS">Insert</string>
-    <string name="IBMKEY_DUP">Duplicate</string>
-    <string name="IBMKEY_HELP">Help</string>
-    <string name="IBMKEY_CLR">Clear</string>
-    <string name="IBMKEY_RESET">Reset</string>
-    <string name="IBMKEY_ENTER">Enter</string>
-    <string name="IBMKEY_LEFT">Left Arrow</string>
-    <string name="IBMKEY_LEFTDELETE">Backspace</string>
-    <string name="IBMKEY_PRINT">Print</string>
-    <string name="IBMKEY_HOME">Home</string>
-    <string name="IBMKEY_NEWLINE">Newline</string>
-    <string name="IBMKEY_CLREOF">Clear EOF</string>
-    <string name="IBMKEY_RIGHT">Right Arrow</string>
-    <string name="IBMKEY_UP">Up Arrow</string>
-    <string name="IBMKEY_DOWN">Down Arrow</string>
-    <string name="IBMKEY_F1">PF1</string>
-    <string name="IBMKEY_F2">PF2</string>
-    <string name="IBMKEY_F3">PF3</string>
-    <string name="IBMKEY_F4">PF4</string>
-    <string name="IBMKEY_F5">PF5</string>
-    <string name="IBMKEY_F6">PF6</string>
-    <string name="IBMKEY_F7">PF7</string>
-    <string name="IBMKEY_F8">PF8</string>
-    <string name="IBMKEY_F9">PF9</string>
-    <string name="IBMKEY_F10">PF10</string>
-    <string name="IBMKEY_F11">PF11</string>
-    <string name="IBMKEY_F12">PF12</string>
-    <string name="IBMKEY_F13">PF13</string>
-    <string name="IBMKEY_F14">PF14</string>
-    <string name="IBMKEY_F15">PF15</string>
-    <string name="IBMKEY_F16">PF16</string>
-    <string name="IBMKEY_F17">PF17</string>
-    <string name="IBMKEY_F18">PF18</string>
-    <string name="IBMKEY_F19">PF19</string>
-    <string name="IBMKEY_F20">PF20</string>
-    <string name="IBMKEY_F21">PF21</string>
-    <string name="IBMKEY_F22">PF22</string>
-    <string name="IBMKEY_F23">PF23</string>
-    <string name="IBMKEY_F24">PF24</string>
-    <string name="IBMKEY_PA1">PA1</string>
-    <string name="IBMKEY_PA2">PA2</string>
-    <string name="IBMKEY_PA3">PA3</string>
-    <string name="IBMKEY_FMARK">Field Mark</string>
+    <string name="VTKEY_TAB" translatable="false">Tab</string>
+    <string name="VTKEY_ENTER" translatable="false">Enter</string>
+    <string name="VTKEY_LEFT" translatable="false">Left</string>
+    <string name="VTKEY_RIGHT" translatable="false">Right</string>
+    <string name="VTKEY_UP" translatable="false">Up Arrow</string>
+    <string name="VTKEY_DW" translatable="false">Down Arrow</string>
+    <string name="VTKEY_BS" translatable="false">Backspace</string>
+    <string name="VTKEY_PGUP" translatable="false">Page Up</string>
+    <string name="VTKEY_PGDW" translatable="false">Page Down</string>
+    <string name="VTKEY_HOME" translatable="false">Home</string>
+    <string name="VTKEY_END" translatable="false">End</string>
+    <string name="VTKEY_INS" translatable="false">Insert</string>
+    <string name="VTKEY_DEL" translatable="false">Delete</string>
+    <string name="VTKEY_ESC" translatable="false">Esc</string>
+    <string name="VTKEY_LF" translatable="false">Line Feed</string>
+    <string name="VTKEY_FIND" translatable="false">Find</string>
+    <string name="VTKEY_SELECT" translatable="false">Select</string>
+    <string name="VTKEY_REMOVE" translatable="false">Remove</string>
+    <string name="VTKEY_PREV" translatable="false">Previous</string>
+    <string name="VTKEY_NEXT" translatable="false">Next</string>
+    <string name="VTKEY_F1" translatable="false">F1</string>
+    <string name="VTKEY_F2" translatable="false">F2</string>
+    <string name="VTKEY_F3" translatable="false">F3</string>
+    <string name="VTKEY_F4" translatable="false">F4</string>
+    <string name="VTKEY_F5" translatable="false">F5</string>
+    <string name="VTKEY_F6" translatable="false">F6</string>
+    <string name="VTKEY_F7" translatable="false">F7</string>
+    <string name="VTKEY_F8" translatable="false">F8</string>
+    <string name="VTKEY_F9" translatable="false">F9</string>
+    <string name="VTKEY_F10" translatable="false">F10</string>
+    <string name="VTKEY_F11" translatable="false">F11</string>
+    <string name="VTKEY_F12" translatable="false">F12</string>
+    <string name="VTKEY_F13" translatable="false">F13</string>
+    <string name="VTKEY_F14" translatable="false">F14</string>
+    <string name="VTKEY_F15" translatable="false">F15</string>
+    <string name="VTKEY_F16" translatable="false">F16</string>
+    <string name="VTKEY_F17" translatable="false">F17</string>
+    <string name="VTKEY_F18" translatable="false">F18</string>
+    <string name="VTKEY_F19" translatable="false">F19</string>
+    <string name="VTKEY_F20" translatable="false">F20</string>
+    <string name="IBMKEY_ATTN" translatable="false">Attention</string>
+    <string name="IBMKEY_FBEGIN" translatable="false">Begin</string>
+    <string name="IBMKEY_DEL" translatable="false">Delete</string>
+    <string name="IBMKEY_FEND" translatable="false">End</string>
+    <string name="IBMKEY_ERINPUT" translatable="false">Erase Input</string>
+    <string name="IBMKEY_FPLUS" translatable="false">Field +</string>
+    <string name="IBMKEY_FMINUS" translatable="false">Field -</string>
+    <string name="IBMKEY_FEXIT" translatable="false">Field Exit</string>
+    <string name="IBMKEY_LAST" translatable="false">Last</string>
+    <string name="IBMKEY_NEXT" translatable="false">Next</string>
+    <string name="IBMKEY_ROLDN" translatable="false">Roll Down</string>
+    <string name="IBMKEY_ROLUP" translatable="false">Roll Up</string>
+    <string name="IBMKEY_PREV" translatable="false">Previous</string>
+    <string name="IBMKEY_RECORD" translatable="false">Record</string>
+    <string name="IBMKEY_SYSRQ" translatable="false">System Request</string>
+    <string name="IBMKEY_INS" translatable="false">Insert</string>
+    <string name="IBMKEY_DUP" translatable="false">Duplicate</string>
+    <string name="IBMKEY_HELP" translatable="false">Help</string>
+    <string name="IBMKEY_CLR" translatable="false">Clear</string>
+    <string name="IBMKEY_RESET" translatable="false">Reset</string>
+    <string name="IBMKEY_ENTER" translatable="false">Enter</string>
+    <string name="IBMKEY_LEFT" translatable="false">Left Arrow</string>
+    <string name="IBMKEY_LEFTDELETE" translatable="false">Backspace</string>
+    <string name="IBMKEY_PRINT" translatable="false">Print</string>
+    <string name="IBMKEY_HOME" translatable="false">Home</string>
+    <string name="IBMKEY_NEWLINE" translatable="false">Newline</string>
+    <string name="IBMKEY_CLREOF" translatable="false">Clear EOF</string>
+    <string name="IBMKEY_RIGHT" translatable="false">Right Arrow</string>
+    <string name="IBMKEY_UP" translatable="false">Up Arrow</string>
+    <string name="IBMKEY_DOWN" translatable="false">Down Arrow</string>
+    <string name="IBMKEY_F1" translatable="false">PF1</string>
+    <string name="IBMKEY_F2" translatable="false">PF2</string>
+    <string name="IBMKEY_F3" translatable="false">PF3</string>
+    <string name="IBMKEY_F4" translatable="false">PF4</string>
+    <string name="IBMKEY_F5" translatable="false">PF5</string>
+    <string name="IBMKEY_F6" translatable="false">PF6</string>
+    <string name="IBMKEY_F7" translatable="false">PF7</string>
+    <string name="IBMKEY_F8" translatable="false">PF8</string>
+    <string name="IBMKEY_F9" translatable="false">PF9</string>
+    <string name="IBMKEY_F10" translatable="false">PF10</string>
+    <string name="IBMKEY_F11" translatable="false">PF11</string>
+    <string name="IBMKEY_F12" translatable="false">PF12</string>
+    <string name="IBMKEY_F13" translatable="false">PF13</string>
+    <string name="IBMKEY_F14" translatable="false">PF14</string>
+    <string name="IBMKEY_F15" translatable="false">PF15</string>
+    <string name="IBMKEY_F16" translatable="false">PF16</string>
+    <string name="IBMKEY_F17" translatable="false">PF17</string>
+    <string name="IBMKEY_F18" translatable="false">PF18</string>
+    <string name="IBMKEY_F19" translatable="false">PF19</string>
+    <string name="IBMKEY_F20" translatable="false">PF20</string>
+    <string name="IBMKEY_F21" translatable="false">PF21</string>
+    <string name="IBMKEY_F22" translatable="false">PF22</string>
+    <string name="IBMKEY_F23" translatable="false">PF23</string>
+    <string name="IBMKEY_F24" translatable="false">PF24</string>
+    <string name="IBMKEY_PA1" translatable="false">PA1</string>
+    <string name="IBMKEY_PA2" translatable="false">PA2</string>
+    <string name="IBMKEY_PA3" translatable="false">PA3</string>
+    <string name="IBMKEY_FMARK" translatable="false">Field Mark</string>
     <string name="undefinedPhy">Undefined</string>
     <string name="phykey_title">Mapped Physical Key</string>
     <string name="phy_category_title">Category:</string>
     <string name="phy_title">Physical Key:</string>
-    <string name="shift_text">Shift</string>
-    <string name="ctrl_text">Ctrl</string>
-    <string name="alt_text">Alt</string>
+    <string name="shift_text" translatable="false">Shift</string>
+    <string name="ctrl_text" translatable="false">Ctrl</string>
+    <string name="alt_text" translatable="false">Alt</string>
     <string name="clear_key_text">Clear Key</string>
     <string name="trap_text">Trap</string>
     <string name="Msg_dup_key_mapped" >"The physical key combination has been mapped to %s. Do you want to replace it?"</string>
-    <string name="screen_autopop_sip_conn_key">screen_autopop_sip_conn_key</string>
+    <string name="screen_autopop_sip_conn_key" translatable="false">screen_autopop_sip_conn_key</string>
     <string name="screen_autopop_sip_conn">Auto Popup SIP On Connection</string>
     <string name="MSG_detect_key">\nPlease press a physical key\nWhen the key is unavailable, the screen would not be responding.\n\nPress \"ESC\" Key or \"Back\" to exit the dialog.</string>
     <string name="Msg_file_exist">This file already exists. Replace existing file?</string>
@@ -375,16 +374,15 @@
     <!-- Strings related to Settings -->
     <string name="host_profile">Host Profile</string>
     <string name="host_type">Host Type</string>
-    <string name="pref_user_HostName">Host Name</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
-    <string name="IBM5250Val">ibm5250</string>
-    <string name="IBM3270Val">ibm3270</string>
-    <string name="VT100Val">vt100</string>
-    <string name="VT102Val">vt102</string>
-    <string name="VT220Val">vt220</string>
-    <string name="ANSIVal">ansi</string>
-    <string name="pref_header_ip">IP</string>
+    <string name="IBM5250Val" translatable="false">ibm5250</string>
+    <string name="IBM3270Val" translatable="false">ibm3270</string>
+    <string name="VT100Val" translatable="false">vt100</string>
+    <string name="VT102Val" translatable="false">vt102</string>
+    <string name="VT220Val" translatable="false">vt220</string>
+    <string name="ANSIVal" translatable="false">ansi</string>
+    <string name="pref_header_ip" translatable="false">IP</string>
     <string name="pref_header_port">Port</string>
     <string name="more">More...</string>
     <string name="auto_connect">Auto Connect</string>
@@ -395,35 +393,35 @@
     <string name="host_auto_sign_term_prom">Term Login(VT Only)</string>
     <string name="host_auto_sign_pwd">Login Password</string>
     <string name="emulation_setting">Emulation Settings</string>
-    <string name="server_setting_key">server_setting_key</string>
+    <string name="server_setting_key" translatable="false">server_setting_key</string>
     <string name="server_setting">Server Settings</string>
     <string name="error_message">Error Message</string>
     <string name="screen">Screen</string>
     <string name="alarm">Alarm</string>
-    <string name="key_mapping_key">key_mapping_key</string>
+    <string name="key_mapping_key" translatable="false">key_mapping_key</string>
     <string name="key_mapping">Key Mapping</string>
-    <string name="ssh">SSH</string>
-    <string name="ssh_key">ssh_key</string>
+    <string name="ssh" translatable="false">SSH</string>
+    <string name="ssh_key" translatable="false">ssh_key</string>
     <string name="ssh_on">Use SSH</string>
     <string name="ssh_off">Not use</string>
     <string name="ssh_log">SSH Log</string>
     <string name="ssh_log_sum">Generate SSH Log</string>
-    <string name="ssh_log_key">ssh_log_key</string>
-    <string name="ssh_auth_cate_key">ssh_auth_cate_key</string>
+    <string name="ssh_log_key" translatable="false">ssh_log_key</string>
+    <string name="ssh_auth_cate_key" translatable="false">ssh_auth_cate_key</string>
     <string name="ssh_auth_cate">Authentication</string>
-    <string name="ssh_auth_type_key">ssh_auth_type_key</string>
+    <string name="ssh_auth_type_key" translatable="false">ssh_auth_type_key</string>
     <string name="ssh_auth_type">Authentication Type</string>
     <string name="ssh_auth_setting_title">Advance</string>
-    <string name="ssh_auth_setting_format_name_pwd">Name:%1$s\nPwd:%2$s</string>
-    <string name="ssh_auth_setting_format_key">Name:%1$s\nKey File:%2$s</string>
-    <string name="ssh_auth_setting_key">ssh_auth_setting_key</string>
-    <string name="ssh_set_name_pwd">SSH Name/Pwd</string>
-    <string name="ssh_set_key_file">SSH Key File</string>
-    <string name="ssh_name_key">ssh_name_key</string>
+    <string name="ssh_auth_setting_format_name_pwd" translatable="false">Name:%1$s\nPwd:%2$s</string>
+    <string name="ssh_auth_setting_format_key" translatable="false">Name:%1$s\nKey File:%2$s</string>
+    <string name="ssh_auth_setting_key" translatable="false">ssh_auth_setting_key</string>
+    <string name="ssh_set_name_pwd" translatable="false">SSH Name/Pwd</string>
+    <string name="ssh_set_key_file" translatable="false">SSH Key File</string>
+    <string name="ssh_name_key" translatable="false">ssh_name_key</string>
     <string name="ssh_name">Login Name</string>
-    <string name="ssh_pwd_key">ssh_pwd_key</string>
+    <string name="ssh_pwd_key" translatable="false">ssh_pwd_key</string>
     <string name="ssh_pwd">Password</string>
-    <string name="ssh_key_file_key">ssh_key_file_key</string>
+    <string name="ssh_key_file_key" translatable="false">ssh_key_file_key</string>
     <string name="ssh_key_file">Key File</string>
     <string name="ssh_mgr_key_files">Manage Key Files</string>
     <string name="ssh_add_key_files_title">Import Key File</string>
@@ -433,35 +431,35 @@
     <string name="ssh_add_key_files_edit_pha_2">Confirm Passphrase</string>
     <string name="ssh_add_key_files_done">Done</string>
     <string name="ssh_general_cate">General Options</string>
-    <string name="ssh_use_tcp_delay_key">ssh_use_tcp_delay_key</string>
-    <string name="ssh_use_tcp_delay">Use TCP No-Delay</string>
-    <string name="ssh_no_pseudo_key">ssh_no_pseudo_key</string>
+    <string name="ssh_use_tcp_delay_key" translatable="false">ssh_use_tcp_delay_key</string>
+    <string name="ssh_use_tcp_delay" translatable="false">Use TCP No-Delay</string>
+    <string name="ssh_no_pseudo_key" translatable="false">ssh_no_pseudo_key</string>
     <string name="ssh_no_pseudo">No Pseudo-Terminal on Host</string>
-    <string name="ssh_no_host_shell_key">ssh_no_host_shell_key</string>
+    <string name="ssh_no_host_shell_key" translatable="false">ssh_no_host_shell_key</string>
     <string name="ssh_no_host_shell">No Host Shell</string>
-    <string name="ssh_re_key_60_key">ssh_re_key_60_key</string>
+    <string name="ssh_re_key_60_key" translatable="false">ssh_re_key_60_key</string>
     <string name="ssh_re_key_60">Re-Key Every 60 Minutes</string>
-    <string name="ssh_re_key_1g_key">ssh_re_key_1g_key</string>
+    <string name="ssh_re_key_1g_key" translatable="false">ssh_re_key_1g_key</string>
     <string name="ssh_re_key_1g">Re-Key Every 1G of Traffic</string>
-    <string name="ssh_write_log_key">ssh_write_log_key</string>
+    <string name="ssh_write_log_key" translatable="false">ssh_write_log_key</string>
     <string name="ssh_write_log">Overwrite Existing Log File</string>
     <string name="ssh_server_cate">Server</string>
-    <string name="ssh_envir_key">ssh_envir_key</string>
+    <string name="ssh_envir_key" translatable="false">ssh_envir_key</string>
     <string name="ssh_envir">Environment</string>
-    <string name="ssh_cmd_key">ssh_cmd_key</string>
+    <string name="ssh_cmd_key" translatable="false">ssh_cmd_key</string>
     <string name="ssh_cmd">Commands</string>
-    <string name="ssh_tty_key">ssh_tty_key</string>
-    <string name="ssh_tty">TTY</string>
-    <string name="ssh_proxy_cate">Proxy</string>
-    <string name="ssh_proxy_type_key">ssh_type_key</string>
+    <string name="ssh_tty_key" translatable="false">ssh_tty_key</string>
+    <string name="ssh_tty" translatable="false">TTY</string>
+    <string name="ssh_proxy_cate" translatable="false">Proxy</string>
+    <string name="ssh_proxy_type_key" translatable="false">ssh_type_key</string>
     <string name="ssh_proxy_type">Type</string>
-    <string name="ssh_proxy_host_key">ssh_host_key</string>
-    <string name="ssh_proxy_host">Host</string>
-    <string name="ssh_proxy_port_key">ssh_port_key</string>
-    <string name="ssh_proxy_port">Port</string>
-    <string name="ssh_proxy_user_key">ssh_proxy_user_key</string>
+    <string name="ssh_proxy_host_key" translatable="false">ssh_host_key</string>
+    <string name="ssh_proxy_host" translatable="false">Host</string>
+    <string name="ssh_proxy_port_key" translatable="false">ssh_port_key</string>
+    <string name="ssh_proxy_port" translatable="false">Port</string>
+    <string name="ssh_proxy_user_key" translatable="false">ssh_proxy_user_key</string>
     <string name="ssh_proxy_user">User</string>
-    <string name="ssh_proxy_pwd_key">ssh_proxy_pwd_key</string>
+    <string name="ssh_proxy_pwd_key" translatable="false">ssh_proxy_pwd_key</string>
     <string name="ssh_proxy_pwd">Password</string>
     <string name="network">Network</string>
     <string name="keep_alive">Network Keep Alive</string>
@@ -477,7 +475,7 @@
     <string name="pref_header_fieldexceed">Field Length if Exceed</string>
     <string name="pref_header_remote_char">Remote Char Set</string>
     <!-- feedback command -->
-    <string name="pref_Title_FeedBack">Costom Command</string>
+    <string name="pref_Title_FeedBack">Custom Command</string>
     <string name="pref_Title_ReaderCmd">Control Reader</string>
     <string name="pref_Title_ReaderCmdEnable"> Reader Enable</string>
     <string name="pref_Title_ReaderCmdDisable"> Reader Disable</string>
@@ -485,17 +483,16 @@
     <string name="pref_Title_ControlCmdBadread">Bad Read</string>
     <string name="pref_Title_ControlCmdGoodread">Good Read</string>
     <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
+    <string name="pref_default_display_name" translatable="false">John Smith</string>
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <!-- Example settings for Data & Sync -->
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
     <string name="pref_title_new_message_notifications">New message notifications</string>
-    <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="MSG_AUTH_Densowave_BHT1600_Alert">Sorry, this application is only authorized to Denowave BHT1600</string>
-    <string name="program_name">Program</string>
+    <string name="program_name" translatable="false">Program</string>
     <string name="sample">Sample</string>
 
     <string-array name="icon_update_interval_array">
@@ -728,6 +725,7 @@
     </string-array>
     <string-array name="Languages">
         <item>English</item>
+        <item>Japanese</item>
     </string-array>
     <string-array name="show_wf_batt_info_array">
         <item>Show Status Bar</item>
