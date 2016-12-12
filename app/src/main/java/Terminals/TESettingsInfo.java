@@ -315,6 +315,9 @@ public class TESettingsInfo {
     }
 
     public static int getScreenOrientation() {
+        if(mTESettings == null || mTESettings.Common == null) {
+            return 2;//2:User define
+        }
         return mTESettings.Common.mScreenOrientation;
     }
 
