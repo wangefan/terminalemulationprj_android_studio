@@ -3,6 +3,7 @@
     <string name="MSG_FDChek_reject">バーコードデーターが存在しています。データをチェックしてください</string>
     <string name="MSG_WifiAlert">無線信号強度:%1$d</string>
     <string name="MSG_exit">終了してよろしいですか？</string>
+    <string name="MSG_restart_lan">言語の変更を有効にするには、アプリケーションを再起動する必要があります。 退室しますか？</string>
     <string name="MSG_BattAlert">バッテリ残量:%1$s</string>
     <string name="MSG_get_cust_dev_name">デバイス名</string>
     <string name="MSG_ChangeSession">セッション変更 %s</string>

@@ -66,6 +66,7 @@ public class MainActivity extends SetOrientationActivity
     private View mSessionStausView = null;
     private View mDecorView = null;
     private boolean mBFullScreen = false;
+    private boolean mBFirstCreate = false;
     private ContentView mContentView;
     private RelativeLayout mLogoView = null;
     private ImageView mLogoViewImage = null;
@@ -371,47 +372,8 @@ public class MainActivity extends SetOrientationActivity
         setTitle(TESettingsInfo.getProgramName());
     }
 
-    private void setSessionStatusView() {
-        if (TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
-            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
-            TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
-            tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
-                    serverTypeName,
-                    String.valueOf(TESettingsInfo.getSessionIndex() + 1),
-                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex())));
-            mSessionStausView.setVisibility(View.VISIBLE);
-        } else {
-            mSessionStausView.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        stdActivityRef.setCurrActivity(this);
-        //Must before setContentView
-        if(getResources().getBoolean(R.bool.bSpecialHandleLicense)) {
-            String appId = getResources().getString(R.string.application_Id);
-            if(appId.compareTo("com.densowave.terminalemulation") == 0) {
-                if(Build.DEVICE.compareTo("BHT1600") == 0) {
-                    stdActivityRef.gIsActivate = true;
-                } else {
-                    UIUtility.messageBox(MainActivity.this, R.string.MSG_AUTH_Densowave_BHT1600_Alert, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-                }
-            }
-        } else {
-            if (ActivateKeyUtility.verifyKeyFromDefaultFile(this) == true) {
-                stdActivityRef.gIsActivate = true;
-            }
-        }
-        
-        setContentView(R.layout.activity_main);
-
+    private void doOnCreate(Bundle savedInstanceState) {
+        setLocal();
         //Initialize Views
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -548,27 +510,13 @@ public class MainActivity extends SetOrientationActivity
         CipherReaderControl.InitReader(this, mReaderListener);
         TerminalProcess.initKeyCodeMap();
         UIUtility.init();
-
-        mTerminalProcessFrg = (TerminalProcessFrg) getSupportFragmentManager().findFragmentByTag(TAG_TERPROC_FRAGMENT);
-        // If the Fragment is null, then it is first create.
-        if (mTerminalProcessFrg == null) {
-            UIUtility.doLoadSettingProc(MainActivity.this, new UIUtility.OnLoadSettingProcListener() {
-                @Override
-                public void onLoadResult(boolean bSuccess) {
-                    if (bSuccess) {
-                        mTerminalProcessFrg = new TerminalProcessFrg();
-                        getSupportFragmentManager().beginTransaction().add(mTerminalProcessFrg, TAG_TERPROC_FRAGMENT).commit();
-                        mTerminalProcessFrg.syncSessionsFromSettings();
-                        syncSessionsFromSettings();
-                        Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
-                        if (bAutoConn)
-                            SessionConnect();
-                    } else {
-                        //Todo: give a warning
-                        finish();
-                    }
-                }
-            });
+        if (mBFirstCreate) {
+            mTerminalProcessFrg.syncSessionsFromSettings();
+            syncSessionsFromSettings();
+            Boolean bAutoConn = TESettingsInfo.getHostIsAutoconnectByIndex(TESettingsInfo.getSessionIndex());
+            if (bAutoConn) {
+                SessionConnect();
+            }
         } else { // If the Fragment is non-null, then it is being retained over a configuration change.
             // Restore saved state.
             syncSessionsFromSettings();
@@ -590,6 +538,70 @@ public class MainActivity extends SetOrientationActivity
             } else {
                 updateFABStatus(FABStatus.Connect);
             }
+        }
+    }
+
+    private void setSessionStatusView() {
+        if (TESettingsInfo.getHostIsShowSessionStatus(TESettingsInfo.getSessionIndex()) == true && mBFullScreen == false) {
+            String serverTypeName = TESettingsInfo.getHostTypeNameByIndex(TESettingsInfo.getSessionIndex());
+            TextView tv = (TextView) mSessionStausView.findViewById(R.id.id_session_statuse_title);
+            tv.setText(String.format(getResources().getString(R.string.Format_SessionStatus),
+                    serverTypeName,
+                    String.valueOf(TESettingsInfo.getSessionIndex() + 1),
+                    TESettingsInfo.getHostAddrByIndex(TESettingsInfo.getSessionIndex())));
+            mSessionStausView.setVisibility(View.VISIBLE);
+        } else {
+            mSessionStausView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        stdActivityRef.setCurrActivity(this);
+        //Must before setContentView
+        if(getResources().getBoolean(R.bool.bSpecialHandleLicense)) {
+            String appId = getResources().getString(R.string.application_Id);
+            if(appId.compareTo("com.densowave.terminalemulation") == 0) {
+                if(Build.DEVICE.compareTo("BHT1600") == 0) {
+                    stdActivityRef.gIsActivate = true;
+                } else {
+                    UIUtility.messageBox(MainActivity.this, R.string.MSG_AUTH_Densowave_BHT1600_Alert, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                }
+            }
+        } else {
+            if (ActivateKeyUtility.verifyKeyFromDefaultFile(this) == true) {
+                stdActivityRef.gIsActivate = true;
+            }
+        }
+
+        setContentView(R.layout.activity_main);
+        mBFirstCreate = false;
+        mTerminalProcessFrg = (TerminalProcessFrg) getSupportFragmentManager().findFragmentByTag(TAG_TERPROC_FRAGMENT);
+        // If the Fragment is null, then it is first create.
+        if (mTerminalProcessFrg == null) {
+            mTerminalProcessFrg = new TerminalProcessFrg();
+            getSupportFragmentManager().beginTransaction().add(mTerminalProcessFrg, TAG_TERPROC_FRAGMENT).commit();
+            mBFirstCreate = true;
+            final Bundle savedInstanceStateTemp = savedInstanceState;
+            UIUtility.doLoadSettingProc(MainActivity.this, new UIUtility.OnLoadSettingProcListener() {
+                @Override
+                public void onLoadResult(boolean bSuccess) {
+                    if (!bSuccess) {
+                        //Todo: give a warning
+                        finish();
+                    } else {
+                        doOnCreate(savedInstanceStateTemp);
+                    }
+                }
+            });
+        } else {
+            doOnCreate(savedInstanceState);
         }
     }
 
@@ -906,8 +918,21 @@ public class MainActivity extends SetOrientationActivity
                         new UIUtility.OnListMessageBoxListener() {
                             @Override
                             public void onSelResult(String result, int nSelIdx) {
-                                TESettingsInfo.setCurLanguageIdx(nSelIdx);
-                                setLocal();
+                                final int nSelIdxTemp = nSelIdx;
+                                String strMsg = getResources().getString(R.string.MSG_restart_lan);
+                                UIUtility.doYesNoDialog(MainActivity.this, strMsg, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which) {
+                                            case DialogInterface.BUTTON_POSITIVE:
+                                                TESettingsInfo.setCurLanguageIdx(nSelIdxTemp);
+                                                finish();
+                                                break;
+                                            case DialogInterface.BUTTON_NEGATIVE:
+                                                break;
+                                        }
+                                    }
+                                });
                             }
                         });
                 break;

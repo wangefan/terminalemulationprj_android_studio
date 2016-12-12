@@ -3,6 +3,7 @@
     <string name="MSG_FDChek_reject">Barcode data exceeds! The length is not allowed.</string>
     <string name="MSG_WifiAlert">Wi-Fi Signal Strength:%1$d</string>
     <string name="MSG_exit">Do you want o exit?</string>
+    <string name="MSG_restart_lan">You must restart application for the language change to take effect. Do you want o exit?</string>
     <string name="MSG_BattAlert">Battery Level:%1$s</string>
     <string name="MSG_get_cust_dev_name">Device Name</string>
     <string name="MSG_ChangeSession">Change session to %s</string>
