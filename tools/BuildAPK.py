@@ -26,8 +26,17 @@ new_version_code = input()
 print('Enter New version name(ex: 0.0.1):')
 new_version_name = input()
 os.chdir('..\\')
-#Step1:Write version name and version code to gradle.properties
-print('====== Step1:Write version name and version code to gradle.properties ========')
+
+#Step1:svn update code
+print('====== Step1:Execute [svn update] ========')
+svn_update_command ='svn update'
+status, output = executecmd(svn_update_command)
+if status != 0:
+    print('update fail, message = ' + output)
+    presstoexit()
+
+#Step2:Write version name and version code to gradle.properties
+print('====== Step2:Write version name and version code to gradle.properties ========')
 old_gradlePropt_path = '.\\gradle.properties'
 fh, new_gradlePropt_path = mkstemp() #Create temp file
 with open(new_gradlePropt_path,'w') as new_gradlePropt:
@@ -42,14 +51,6 @@ with open(new_gradlePropt_path,'w') as new_gradlePropt:
 close(fh)
 remove(old_gradlePropt_path) #Remove original file
 move(new_gradlePropt_path, old_gradlePropt_path)#Move new file
-
-#Step2:svn update code
-print('====== Step2:Execute [svn update] ========')
-svn_update_command ='svn update'
-status, output = executecmd(svn_update_command)
-if status != 0:
-    print('update fail, message = ' + output)
-    presstoexit()
   
 #Step3:call gradlew to clean and build apks
 print('====== Step3:Execute [clean old apks and build apks] ========')
@@ -65,5 +66,10 @@ if status != 0:
 #Step4: Move apks
 print('====== Step4:Move file ========')
 now = datetime.datetime.now()
+despath = 'tools/Build_apks_' + str(now.strftime("%Y-%m-%d_%H_%M")) + '/'
+if not os.path.exists(despath):
+    os.makedirs(despath)
 for srcfile in glob.glob('app/build/outputs/apk/*.apk'):
-    os.rename(srcfile, 'tools/Build_apks_' + now + '/' + os.path.basename(srcfile))
+    os.rename(srcfile,  despath + os.path.basename(srcfile))
+print('====== Done! ======')
+presstoexit()
