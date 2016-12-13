@@ -10,4 +10,4 @@ def executecmd(command):
     output, stderr = p.communicate()
     p.wait()
     status = p.returncode
-    return (status, output)
+    return (status, output.decode("utf-8"))
