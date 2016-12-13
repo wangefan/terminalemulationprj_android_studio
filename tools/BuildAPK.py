@@ -6,20 +6,9 @@ import glob
 from tempfile import mkstemp
 from shutil import move
 import os
-from os import remove, close, system
-import subprocess
+from os import remove, close
 
-def presstoexit():
-    print('Press to exit:')
-    input()
-    exit(-1)
-
-def executecmd(command):
-    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    output, stderr = p.communicate()
-    p.wait()
-    status = p.returncode
-    return (status, output)
+from utility import executecmd, presstoexit
 
 print('Enter New version code(integer):')
 new_version_code = input()
@@ -32,8 +21,7 @@ print('====== Step1:Execute [svn update] ========')
 svn_update_command ='svn update'
 status, output = executecmd(svn_update_command)
 if status != 0:
-    print('update fail, message = ' + output)
-    presstoexit()
+    presstoexit('update fail, message = ' + output)
 
 #Step2:Write version name and version code to gradle.properties
 print('====== Step2:Write version name and version code to gradle.properties ========')
@@ -60,8 +48,7 @@ for file in glob.glob("app/build/outputs/apk/*.apk"):
 build_apk_command = '.\gradlew -PversCode=' + str(new_version_code)+ ' -PversName=' + new_version_name +' clean assembleRelease' #ex: gradlew -PversCode=1 -PversName=0.0.1 clean assembleRelease
 status, output = executecmd(build_apk_command)
 if status != 0:
-    print('build apks fail, message = ' + str(output))
-    presstoexit()
+    presstoexit('build apks fail, message = ' + str(output))
 
 #Step4: Move apks
 print('====== Step4:Move file ========')
@@ -71,5 +58,4 @@ if not os.path.exists(despath):
     os.makedirs(despath)
 for srcfile in glob.glob('app/build/outputs/apk/*.apk'):
     os.rename(srcfile,  despath + os.path.basename(srcfile))
-print('====== Done! ======')
-presstoexit()
+presstoexit('====== Done! ======')
