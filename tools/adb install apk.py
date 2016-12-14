@@ -35,7 +35,20 @@ if len(devices) > 1:
 else:
     dest_device = devices[0]
 
+
 if len(dest_device) <= 0:
     presstoexit('=== not choose device====')
 
-#Todo:use adb shell to install
+#use adb shell to install
+uninstall_apk_command = 'adb -s ' + dest_device + ' uninstall com.cipherlab.terminalemulation'
+executecmd(uninstall_apk_command) #uninstall package name for debug version
+uninstall_apk_command = 'adb -s ' + dest_device + ' uninstall com.densowave.terminalemulation'
+executecmd(uninstall_apk_command) #uninstall package name for debug version
+
+install_apk_command = 'adb -s ' + dest_device + ' install ' + dest_apk
+
+status, output = executecmd(install_apk_command)
+if status != 0:
+    presstoexit('=== install ' + dest_apk + ' to ' + dest_device + ' fail====, message = ' + output)
+else:
+    presstoexit('=== install ' + dest_apk + ' to ' + dest_device + ' ok!====')
