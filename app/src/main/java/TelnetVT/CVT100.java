@@ -135,7 +135,7 @@ public class CVT100 extends CVT100Enum {
         }
     }
 
-    public static void initKeyCodeMap() {
+    static {
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_ENTER, VTKEY_ENTER);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, VTKEY_BS);
         gDefaultVT220KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_MOVE_END, VTKEY_DEL);  //End or Blue + Backspace, need confirm.

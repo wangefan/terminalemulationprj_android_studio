@@ -508,7 +508,6 @@ public class MainActivity extends SetOrientationActivity
         registerForContextMenu(mMainRelLayout);
 
         CipherReaderControl.InitReader(this, mReaderListener);
-        TerminalProcess.initKeyCodeMap();
         UIUtility.init();
         if (mBFirstCreate) {
             mTerminalProcessFrg.syncSessionsFromSettings();

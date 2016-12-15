@@ -31,11 +31,6 @@ public class TerminalProcess {
     public TerminalProcess() {
     }
 
-    static public void initKeyCodeMap() {
-        IBMHost5250.initKeyCodeMap();
-        CVT100.initKeyCodeMap();
-    }
-
     static public void clearKeyCodeMap() {
         IBMHost5250.clearKeyCodeMap();
         CVT100.clearKeyCodeMap();

@@ -117,7 +117,7 @@ public class IBMHost5250 extends IBMHostBase {
     public static java.util.Map<Integer, Integer> gDefaultTN_5250KeyCodeMap_Taurus = new java.util.HashMap<>();
     public static java.util.Map<Integer, Integer> gDefaultTN_5250KeyCodeMap = new java.util.HashMap<>();
     private static java.util.Map<Integer, String> mTNKeyCodeText = new java.util.HashMap<>();
-    public static void initKeyCodeMap() {
+    static {
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_BACKSLASH, IBMKEY_ATTN);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyMapUtility.encodePhyKeyCode(KeyEvent.KEYCODE_DPAD_UP, false, true, false), IBMKEY_PREV);
         gDefaultTN_5250KeyCodeMap_Taurus.put(KeyEvent.KEYCODE_DEL, IBMKEY_LEFTDELETE);
