@@ -1,6 +1,8 @@
 package com.te.UI;
 
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -814,12 +816,23 @@ public class MainActivity extends SetOrientationActivity
             case R.id.activation_key:
                 UIUtility.doActivationDialog(MainActivity.this, new UIUtility.OnActivationListener() {
                     @Override
-                    public void onResult(boolean bActivate) {
-                        if (bActivate == false) {
-                            Toast.makeText(MainActivity.this, R.string.MSG_Activate_Warn, Toast.LENGTH_SHORT).show();
-                        } else {
-                            ActivateKeyUtility.getInstance().genKeyFile(MainActivity.this);
-                            Toast.makeText(MainActivity.this, R.string.MSG_Activate_Succ, Toast.LENGTH_SHORT).show();
+                    public void onResult(int nActivate) {
+                        switch (nActivate) {
+                            case 2:
+                                ClipboardManager clipboard = (ClipboardManager)
+                                        getSystemService(Context.CLIPBOARD_SERVICE);
+                                // Creates a new text clip to put on the clipboard
+                                String key = ActivateKeyUtility.getValidKey();
+                                ClipData clip = ClipData.newPlainText("simple text", key);
+                                // Set the clipboard's primary clip.
+                                clipboard.setPrimaryClip(clip);
+                            case 0:
+                                Toast.makeText(MainActivity.this, R.string.MSG_Activate_Warn, Toast.LENGTH_LONG).show();
+                                break;
+                            case 1:
+                                ActivateKeyUtility.getInstance().genKeyFile(MainActivity.this);
+                                Toast.makeText(MainActivity.this, R.string.MSG_Activate_Succ, Toast.LENGTH_LONG).show();
+                                break;
                         }
                     }
                 });
@@ -955,17 +968,6 @@ public class MainActivity extends SetOrientationActivity
             case R.id.exit:
                 onExit();
                 break;
-            /*Todo:Will remove
-            case R.id.key_gen:
-                ClipboardManager clipboard = (ClipboardManager)
-                        getSystemService(Context.CLIPBOARD_SERVICE);
-                // Creates a new text clip to put on the clipboard
-                String key = ActivateKeyUtility.getValidKey();
-                ClipData clip = ClipData.newPlainText("simple text", key);
-                // Set the clipboard's primary clip.
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(MainActivity.this, String.format("%s\nSerial number copied!", key), Toast.LENGTH_LONG).show();
-                break;*/
         }
         return super.onOptionsItemSelected(item);
     }

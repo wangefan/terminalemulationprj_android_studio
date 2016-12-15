@@ -53,7 +53,7 @@ public class UIUtility {
 		void onValid();
 	}
 	public interface OnActivationListener {
-		void onResult(boolean bActivate);
+		void onResult(int nActiveType);	//0:not active, 1:active, 2:copy serial no, just for developer use
 	}
 	public interface OnSSHEditPassphraseListener {
 		void onDone(final String pass1, final String pass2);
@@ -240,7 +240,17 @@ public class UIUtility {
 				String inputKey = editKey.getText().toString();
 				boolean bAct = ActivateKeyUtility.getInstance().verifyKey(inputKey);
 				if(listener != null) {
-					listener.onResult(bAct);
+					if(!bAct) {
+						final String internalUsePwd = "2305851823058";
+						if(inputKey.compareTo(internalUsePwd) == 0) {
+							listener.onResult(2);
+						} else {
+							listener.onResult(0);
+						}
+					} else {
+						listener.onResult(1);
+					}
+
 				}
 			}
 		});
