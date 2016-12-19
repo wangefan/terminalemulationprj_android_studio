@@ -158,7 +158,7 @@ public class TESettingsInfo {
             Map.Entry entry = (Map.Entry) entries.next();
             Integer phyKeyCode = (Integer) entry.getKey();
             Integer serverKeycode = (Integer) entry.getValue();
-            keyMapListDest.addItem(KeyMapItem.createItem(serverKeycode, phyKeyCode, bIsTN));
+            keyMapListDest.addItem(keyMapListDest.createItem(serverKeycode, phyKeyCode));
         }
     }
 

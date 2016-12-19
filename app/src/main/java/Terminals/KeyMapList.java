@@ -12,4 +12,5 @@ public interface KeyMapList {
     boolean hasShift(int position);
     boolean hasCtrl(int position);
     boolean hasAlt(int position);
+    KeyMapItem createItem(Integer serverKeycode, Integer phyKeyCode);
 }

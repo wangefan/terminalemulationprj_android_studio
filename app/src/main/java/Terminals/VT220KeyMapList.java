@@ -106,4 +106,9 @@ public class VT220KeyMapList extends ArrayList<KeyMapItemVT> implements KeyMapLi
         }
         return bHasAlt.get();
     }
+
+    @Override
+    public KeyMapItem createItem(Integer serverKeycode, Integer phyKeyCode) {
+        return new KeyMapItemVT(serverKeycode, phyKeyCode);
+    }
 }

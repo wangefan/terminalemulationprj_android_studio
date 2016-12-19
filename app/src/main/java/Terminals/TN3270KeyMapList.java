@@ -106,4 +106,9 @@ public class TN3270KeyMapList extends ArrayList<KeyMapItemTN> implements KeyMapL
         }
         return bHasAlt.get();
     }
+
+    @Override
+    public KeyMapItem createItem(Integer serverKeycode, Integer phyKeyCode) {
+        return new KeyMapItemTN(serverKeycode, phyKeyCode);
+    }
 }

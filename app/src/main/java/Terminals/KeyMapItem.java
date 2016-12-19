@@ -12,12 +12,4 @@ public abstract class KeyMapItem {
 
     public KeyMapItem() {
     }
-
-    public static KeyMapItem createItem(Integer serverKeycode, Integer phyKeyCode, boolean bIsTN) {
-        if(bIsTN) {
-            return new KeyMapItemTN(serverKeycode, phyKeyCode);
-        } else {
-            return new KeyMapItemVT(serverKeycode, phyKeyCode);
-        }
-    }
 }
