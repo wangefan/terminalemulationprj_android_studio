@@ -338,9 +338,11 @@ public class SessionKeyMapEditingFrg extends Fragment {
             KeyMapItem keyItem = mapList.getItem(i);
             if(nServerKeyCode == keyItem.getServerKeycode()) {
                 keyItem.setPhysicalKeycode(nEncodedPhyKeyCode);
-                break;
+                return;
             }
         }
+        //Commit Server key to map list
+        mapList.addItem(mapList.createItem(nServerKeyCode, nEncodedPhyKeyCode));
     }
 
     private boolean checkIfMapped(int nEncodePhyKeycode, AtomicInteger mappedServerKeyCode) {
